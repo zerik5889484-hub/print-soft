@@ -46,14 +46,7 @@
       padding-bottom: calc(14px + env(safe-area-inset-bottom));
     }
 
-    /* ==================== ЗАСТАВКА ==================== */
-    .splash {
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10000;
-      background: linear-gradient(160deg, #14152b 0%, #0f1020 60%, #101a2a 100%);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 30px; overflow: hidden;
-      transition: opacity 0.7s ease, transform 0.7s ease, visibility 0.7s ease;
-    }
+    .splash { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10000; background: linear-gradient(160deg, #14152b 0%, #0f1020 60%, #101a2a 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; overflow: hidden; transition: opacity 0.7s ease, transform 0.7s ease, visibility 0.7s ease; }
     .splash.hidden { opacity: 0; transform: scale(1.08); visibility: hidden; pointer-events: none; }
     .splash-orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.35; animation: orbFloat 6s ease-in-out infinite; }
     .splash-orb.orb-1 { width: 320px; height: 320px; background: radial-gradient(circle, #a8d8e8 0%, transparent 70%); top: -100px; left: -100px; }
@@ -66,7 +59,7 @@
     .splash-icon-ring { position: absolute; inset: 0; border-radius: 50%; border: 2px solid transparent; border-top-color: #a8d8e8; border-right-color: #c9b8e8; animation: ringSpin 2.4s linear infinite; }
     .splash-icon-ring::after { content: ''; position: absolute; inset: 6px; border-radius: 50%; border: 1.5px solid transparent; border-bottom-color: #e8b8d8; border-left-color: #a8d8e8; animation: ringSpin 1.8s linear infinite reverse; }
     @keyframes ringSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    .splash-icon-core { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, rgba(168, 216, 232, 0.15), rgba(201, 184, 232, 0.15)); border: 1px solid rgba(168, 216, 232, 0.35); display: flex; align-items: center; justify-content: center; font-size: 34px; color: #a8d8e8; box-shadow: 0 0 30px rgba(168, 216, 232, 0.3), 0 0 60px rgba(201, 184, 232, 0.15); animation: iconPulse 2s ease-in-out infinite; }
+    .splash-icon-core { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, rgba(168, 216, 232, 0.15), rgba(201, 184, 232, 0.15)); border: 1px solid rgba(168, 216, 232, 0.35); display: flex; align-items: center; justify-content: center; font-size: 34px; color: #a8d8e8; box-shadow: 0 0 30px rgba(168, 216, 232, 0.3); animation: iconPulse 2s ease-in-out infinite; }
     @keyframes iconPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
     .splash-title { font-size: 32px; font-weight: 800; letter-spacing: 3px; background: linear-gradient(135deg, #a8d8e8 0%, #c9b8e8 50%, #e8b8d8 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-align: center; line-height: 1.1; }
     .splash-title .accent { background: linear-gradient(135deg, #c9b8e8 0%, #e8b8d8 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -84,7 +77,6 @@
     .splash-top-line { position: absolute; top: 0; left: 0; height: 3px; width: 100%; background: linear-gradient(90deg, transparent, #a8d8e8, #c9b8e8, #e8b8d8, transparent); opacity: 0; animation: topLineIn 1.2s ease 0.3s both; }
     @keyframes topLineIn { from { opacity: 0; transform: scaleX(0); } to { opacity: 0.6; transform: scaleX(1); } }
 
-    /* ==================== ОСНОВНОЕ ==================== */
     .app { width: 100%; max-width: 600px; background: var(--app-bg); border-radius: 32px 32px 24px 24px; border: 1px solid var(--border-1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45); padding: 16px 14px; display: flex; flex-direction: column; min-height: calc(100vh - 28px); position: relative; overflow: hidden; transition: background 0.3s ease; }
     .app.app-entering { animation: appEnter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
     @keyframes appEnter { from { opacity: 0; transform: translateY(20px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -180,7 +172,6 @@
     .cart-item-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .cart-item-price { font-weight: 700; color: var(--accent-3); font-size: 14px; white-space: nowrap; }
     .cart-remove { background: transparent; border: 1px solid rgba(232, 168, 200, 0.35); color: var(--pink); width: 34px; height: 34px; border-radius: 17px; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .cart-remove:active { transform: scale(0.9); }
     .total { font-size: 19px; font-weight: 700; margin: 14px 0; text-align: right; color: var(--text-primary); }
 
     .promo-row { display: flex; gap: 8px; margin-bottom: 12px; }
@@ -193,7 +184,6 @@
     .promo-status.ok { color: var(--success); }
     .promo-status.err { color: var(--danger); }
 
-    /* ========== ЗАГРУЗКА ФАЙЛОВ ========== */
     .upload-zone {
       background: rgba(168, 216, 232, 0.04);
       border: 2px dashed var(--border-2);
@@ -204,10 +194,7 @@
       transition: all 0.2s ease;
       margin-bottom: 10px;
     }
-    .upload-zone:hover, .upload-zone.dragover {
-      background: rgba(168, 216, 232, 0.08);
-      border-color: var(--accent-1);
-    }
+    .upload-zone:hover, .upload-zone.dragover { background: rgba(168, 216, 232, 0.08); border-color: var(--accent-1); }
     .upload-zone-icon { font-size: 28px; color: var(--accent-1); margin-bottom: 8px; opacity: 0.8; }
     .upload-zone-text { font-size: 13px; color: var(--text-primary); font-weight: 600; margin-bottom: 4px; }
     .upload-zone-hint { font-size: 11px; color: var(--text-muted); }
@@ -222,8 +209,7 @@
       padding: 10px 12px;
       transition: all 0.2s ease;
     }
-    .file-item.uploading { border-color: var(--accent-1); }
-    .file-item.done { border-color: var(--success); }
+    .file-item.ready { border-color: var(--success); }
     .file-item.error { border-color: var(--danger); }
     .file-icon {
       width: 36px; height: 36px;
@@ -240,20 +226,6 @@
     .file-info { flex: 1; min-width: 0; }
     .file-name { font-size: 12.5px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .file-size { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; }
-    .file-progress {
-      height: 3px;
-      background: rgba(168, 216, 232, 0.1);
-      border-radius: 2px;
-      margin-top: 6px;
-      overflow: hidden;
-    }
-    .file-progress-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-      border-radius: 2px;
-      transition: width 0.2s ease;
-    }
     .file-remove {
       background: transparent;
       border: 1px solid rgba(232, 168, 200, 0.35);
@@ -266,33 +238,6 @@
       flex-shrink: 0;
     }
     .file-remove:active { transform: scale(0.9); }
-
-    /* Вложения в заказах (клиент и админ) */
-    .order-files {
-      display: flex; flex-wrap: wrap; gap: 6px;
-      margin-top: 8px; margin-bottom: 8px;
-      padding-top: 8px;
-      border-top: 1px solid rgba(168, 216, 232, 0.08);
-    }
-    .order-file-chip {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 5px 10px;
-      background: rgba(168, 216, 232, 0.08);
-      border: 1px solid rgba(168, 216, 232, 0.2);
-      border-radius: 10px;
-      font-size: 11px;
-      color: var(--accent-1);
-      text-decoration: none;
-      transition: all 0.15s ease;
-      max-width: 100%;
-      cursor: pointer;
-    }
-    .order-file-chip:active { transform: scale(0.96); }
-    .order-file-chip .name {
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      max-width: 140px;
-    }
-    .order-file-chip i { flex-shrink: 0; }
 
     .login-card { background: var(--card-bg); border-radius: 24px; border: 1px solid rgba(232, 168, 200, 0.25); padding: 28px 22px; margin: auto 0; text-align: center; }
     .login-icon { width: 64px; height: 64px; border-radius: 32px; background: rgba(232, 168, 200, 0.1); border: 1px solid rgba(232, 168, 200, 0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: var(--pink); font-size: 26px; }
@@ -326,6 +271,28 @@
     .progress-step.progress-active { background: var(--warning); }
     .progress-step.done-active { background: var(--success); }
     .progress-step.cancel-active { background: var(--danger); }
+
+    .order-files {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-top: 8px; margin-bottom: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(168, 216, 232, 0.08);
+    }
+    .order-file-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 10px;
+      background: rgba(168, 216, 232, 0.08);
+      border: 1px solid rgba(168, 216, 232, 0.2);
+      border-radius: 10px;
+      font-size: 11px;
+      color: var(--accent-1);
+      text-decoration: none;
+      transition: all 0.15s ease;
+      max-width: 100%;
+      cursor: pointer;
+    }
+    .order-file-chip .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
+    .order-file-chip i { flex-shrink: 0; }
 
     .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
     .stat-card { background: var(--card-bg); border-radius: 16px; padding: 12px 8px; text-align: center; border: 1px solid var(--border-2); }
@@ -366,127 +333,27 @@
     .stock-badge-out { display: inline-block; font-size: 9.5px; padding: 2px 7px; border-radius: 8px; background: rgba(232, 140, 140, 0.15); color: var(--danger); border: 1px solid rgba(232, 140, 140, 0.35); font-weight: 700; text-transform: uppercase; }
     .stock-badge-in { display: inline-block; font-size: 9.5px; padding: 2px 7px; border-radius: 8px; background: rgba(140, 220, 160, 0.12); color: var(--success); border: 1px solid rgba(140, 220, 160, 0.3); font-weight: 700; text-transform: uppercase; }
 
-    /* ========== АНАЛИТИКА ========== */
-    .analytics-block {
-      background: var(--card-bg);
-      border: 1px solid var(--border-2);
-      border-radius: 18px;
-      padding: 16px;
-      margin-bottom: 12px;
-    }
-    .analytics-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 12px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .analytics-title span:last-child {
-      font-size: 11px;
-      color: var(--accent-1);
-      font-weight: 600;
-    }
-    .analytics-chart {
-      display: flex;
-      align-items: flex-end;
-      gap: 6px;
-      height: 120px;
-      padding-bottom: 20px;
-      position: relative;
-      margin-bottom: 8px;
-    }
-    .analytics-bar-wrap {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      height: 100%;
-      position: relative;
-      gap: 4px;
-    }
-    .analytics-bar-value {
-      font-size: 10px;
-      color: var(--accent-1);
-      font-weight: 700;
-      min-height: 12px;
-    }
-    .analytics-bar {
-      width: 100%;
-      max-width: 40px;
-      background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
-      border-radius: 4px 4px 0 0;
-      min-height: 3px;
-      transition: height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-      box-shadow: 0 0 12px rgba(168, 216, 232, 0.2);
-    }
-    .analytics-bar-label {
-      font-size: 9.5px;
-      color: var(--text-muted);
-      text-align: center;
-      position: absolute;
-      bottom: -18px;
-      left: 50%;
-      transform: translateX(-50%);
-      white-space: nowrap;
-    }
-
-    .analytics-list-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(168, 216, 232, 0.06);
-    }
+    .analytics-block { background: var(--card-bg); border: 1px solid var(--border-2); border-radius: 18px; padding: 16px; margin-bottom: 12px; }
+    .analytics-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+    .analytics-title span:last-child { font-size: 11px; color: var(--accent-1); font-weight: 600; }
+    .analytics-chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; padding-bottom: 20px; position: relative; margin-bottom: 8px; }
+    .analytics-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative; gap: 4px; }
+    .analytics-bar-value { font-size: 10px; color: var(--accent-1); font-weight: 700; min-height: 12px; }
+    .analytics-bar { width: 100%; max-width: 40px; background: linear-gradient(180deg, var(--accent-1), var(--accent-2)); border-radius: 4px 4px 0 0; min-height: 3px; transition: height 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+    .analytics-bar-label { font-size: 9.5px; color: var(--text-muted); text-align: center; position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+    .analytics-list-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(168, 216, 232, 0.06); }
     .analytics-list-item:last-child { border-bottom: none; padding-bottom: 0; }
-    .analytics-rank {
-      width: 24px;
-      height: 24px;
-      border-radius: 8px;
-      background: rgba(168, 216, 232, 0.1);
-      color: var(--accent-1);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 800;
-      flex-shrink: 0;
-    }
+    .analytics-rank { width: 24px; height: 24px; border-radius: 8px; background: rgba(168, 216, 232, 0.1); color: var(--accent-1); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
     .analytics-rank.top-1 { background: rgba(232, 200, 130, 0.2); color: var(--warning); }
     .analytics-rank.top-2 { background: rgba(200, 200, 220, 0.15); color: #c8c8e0; }
     .analytics-rank.top-3 { background: rgba(232, 168, 200, 0.15); color: var(--pink); }
     .analytics-list-info { flex: 1; min-width: 0; }
-    .analytics-list-name {
-      font-size: 12.5px;
-      font-weight: 600;
-      color: var(--text-primary);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .analytics-list-bar {
-      height: 4px;
-      background: rgba(168, 216, 232, 0.08);
-      border-radius: 2px;
-      margin-top: 5px;
-      overflow: hidden;
-    }
-    .analytics-list-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-      border-radius: 2px;
-      transition: width 0.5s ease;
-    }
-    .analytics-list-value {
-      font-size: 12.5px;
-      font-weight: 700;
-      color: var(--accent-1);
-      text-align: right;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .analytics-list-sub {
-      font-size: 10.5px;
-      color: var(--text-muted);
-      text-align: right;
-    }
+    .analytics-list-name { font-size: 12.5px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .analytics-list-bar { height: 4px; background: rgba(168, 216, 232, 0.08); border-radius: 2px; margin-top: 5px; overflow: hidden; }
+    .analytics-list-fill { height: 100%; background: linear-gradient(90deg, var(--accent-1), var(--accent-2)); border-radius: 2px; transition: width 0.5s ease; }
+    .analytics-list-value { font-size: 12.5px; font-weight: 700; color: var(--accent-1); text-align: right; white-space: nowrap; flex-shrink: 0; }
+    .analytics-list-sub { font-size: 10.5px; color: var(--text-muted); text-align: right; }
 
-    /* ========== МОДАЛКА ========== */
     .modal-backdrop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
     .modal-backdrop.visible { display: flex; }
     .modal { background: var(--app-bg); border-radius: 20px; border: 1px solid var(--border-1); padding: 20px 18px; width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto; }
@@ -555,9 +422,6 @@
       .code-input { font-size: 18px; letter-spacing: 5px; padding: 14px 16px; }
       .splash-title { font-size: 26px; }
       .live-indicator { display: none; }
-      .upload-zone { padding: 16px 12px; }
-      .upload-zone-icon { font-size: 24px; }
-      .analytics-chart { height: 100px; }
     }
 
     @media (min-width: 601px) and (max-width: 900px) {
@@ -574,7 +438,6 @@
       .nav-item { font-size: 11px; }
       .nav-item i { font-size: 19px; }
       .stats-grid { grid-template-columns: repeat(4, 1fr); }
-      .analytics-chart { height: 150px; }
     }
 
     @media (min-width: 901px) {
@@ -595,7 +458,6 @@
       .stat-value { font-size: 26px; }
       .splash-title { font-size: 48px; }
       .splash-progress-wrap { width: 360px; }
-      .analytics-chart { height: 180px; }
     }
   </style>
 </head>
@@ -605,7 +467,6 @@
     <span id="connectionText">Подключение...</span>
   </div>
 
-  <!-- ЗАСТАВКА -->
   <div class="splash" id="splash">
     <div class="splash-orb orb-1"></div>
     <div class="splash-orb orb-2"></div>
@@ -627,7 +488,6 @@
     <div class="splash-greeting" id="splashGreeting">Подключение к серверу...</div>
   </div>
 
-  <!-- ОСНОВНОЕ -->
   <div class="app" id="app" style="opacity: 0;">
     <div class="header">
       <div class="logo" id="logoText"><i class="fas fa-print"></i> <span>PRINT</span><span style="color:var(--accent-2);">SOFT</span></div>
@@ -642,7 +502,6 @@
       </div>
     </div>
 
-    <!-- ГЛАВНАЯ -->
     <div id="homePage" class="page active">
       <h2><i class="fas fa-store"></i> Маркетплейс полиграфии</h2>
       <div class="subhead">Печать А4 • чёрно-белое • быстро и дёшево</div>
@@ -655,13 +514,11 @@
       <div class="grid" id="servicesGrid"></div>
     </div>
 
-    <!-- ДЕТАЛИ -->
     <div id="detailPage" class="page">
       <button class="back-btn" id="backFromDetailBtn"><i class="fas fa-arrow-left"></i> Назад</button>
       <div class="detail-card" id="detailContent"></div>
     </div>
 
-    <!-- КОРЗИНА -->
     <div id="cartPage" class="page">
       <h2><i class="fas fa-shopping-bag"></i> Корзина</h2>
       <div class="subhead">Ваши выбранные услуги</div>
@@ -694,7 +551,6 @@
             <i class="fas fa-user-edit"></i> Ввести данные заново
           </button>
 
-          <!-- ЗАГРУЗКА ФАЙЛОВ -->
           <div style="font-size:13px; color:var(--accent-1); margin: 14px 0 10px; font-weight:600;">
             <i class="fas fa-paperclip" style="margin-right:6px;"></i>Файлы для печати
           </div>
@@ -702,7 +558,7 @@
             <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.txt">
             <div class="upload-zone-icon"><i class="fas fa-cloud-upload-alt"></i></div>
             <div class="upload-zone-text">Нажмите, чтобы выбрать файлы</div>
-            <div class="upload-zone-hint">PDF, JPG, PNG, DOCX • до 20 МБ каждый • до 10 файлов</div>
+            <div class="upload-zone-hint">PDF, JPG, PNG, DOCX • до 5 МБ каждый • до 10 файлов</div>
           </div>
           <div class="file-list" id="fileList"></div>
 
@@ -714,7 +570,6 @@
       <button class="btn btn-outline" id="clearCartBtn"><i class="fas fa-trash-alt"></i> Очистить корзину</button>
     </div>
 
-    <!-- ИСТОРИЯ -->
     <div id="historyPage" class="page">
       <h2><i class="fas fa-history"></i> Мои заказы</h2>
       <div class="subhead">Отслеживайте статус заказов</div>
@@ -728,14 +583,12 @@
       </button>
     </div>
 
-    <!-- ИЗБРАННОЕ -->
     <div id="favPage" class="page">
       <h2><i class="fas fa-heart"></i> Избранное</h2>
       <div class="subhead">Ваши любимые услуги</div>
       <div id="favContainer" style="flex:1;"></div>
     </div>
 
-    <!-- ЛОГИН -->
     <div id="loginPage" class="page">
       <div class="login-card">
         <div class="login-icon"><i class="fas fa-lock"></i></div>
@@ -748,7 +601,6 @@
       </div>
     </div>
 
-    <!-- ПАНЕЛЬ АДМИНА -->
     <div id="adminPage" class="page">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <h2 style="margin-bottom:0;"><i class="fas fa-clipboard-list"></i> Панель админа</h2>
@@ -762,7 +614,6 @@
         <button class="tab-switch-btn" data-section="analytics"><i class="fas fa-chart-bar"></i> Аналитика</button>
       </div>
 
-      <!-- ЗАКАЗЫ -->
       <div id="adminOrdersSection">
         <div class="stats-grid">
           <div class="stat-card"><span class="stat-value" id="statTotal">0</span><span class="stat-label">Всего</span></div>
@@ -785,14 +636,12 @@
         </div>
       </div>
 
-      <!-- ТОВАРЫ -->
       <div id="adminProductsSection" style="display:none;">
         <div class="info-banner"><i class="fas fa-info-circle" style="margin-right:6px;"></i>Управляйте наличием, ценой и добавляйте новые услуги.</div>
         <button class="btn btn-success" id="addProductBtn" style="margin-bottom:12px;"><i class="fas fa-plus"></i> Добавить услугу</button>
         <div id="adminProductsContainer"></div>
       </div>
 
-      <!-- АНАЛИТИКА -->
       <div id="adminAnalyticsSection" style="display:none;">
         <div class="stats-grid">
           <div class="stat-card"><span class="stat-value" id="anaRevenue">0 ₽</span><span class="stat-label">Выручка</span></div>
@@ -800,41 +649,25 @@
           <div class="stat-card"><span class="stat-value" id="anaAvg">0 ₽</span><span class="stat-label">Средний чек</span></div>
           <div class="stat-card"><span class="stat-value" id="anaDone">0%</span><span class="stat-label">Выполнено</span></div>
         </div>
-
         <div class="analytics-block">
-          <div class="analytics-title">
-            <span><i class="fas fa-chart-line" style="color:var(--accent-1);"></i> Заказы за 7 дней</span>
-            <span id="anaWeekTotal">0 шт</span>
-          </div>
+          <div class="analytics-title"><span><i class="fas fa-chart-line" style="color:var(--accent-1);"></i> Заказы за 7 дней</span><span id="anaWeekTotal">0 шт</span></div>
           <div class="analytics-chart" id="anaChart"></div>
         </div>
-
         <div class="analytics-block">
-          <div class="analytics-title">
-            <span><i class="fas fa-fire" style="color:var(--warning);"></i> Топ-5 услуг</span>
-            <span id="anaTopTotal">0 заказов</span>
-          </div>
+          <div class="analytics-title"><span><i class="fas fa-fire" style="color:var(--warning);"></i> Топ-5 услуг</span><span id="anaTopTotal">0 услуг</span></div>
           <div id="anaTopList"></div>
         </div>
-
         <div class="analytics-block">
-          <div class="analytics-title">
-            <span><i class="fas fa-users" style="color:var(--pink);"></i> Топ-5 клиентов</span>
-            <span id="anaTopClientsTotal">0 клиентов</span>
-          </div>
+          <div class="analytics-title"><span><i class="fas fa-users" style="color:var(--pink);"></i> Топ-5 клиентов</span><span id="anaTopClientsTotal">0 клиентов</span></div>
           <div id="anaTopClients"></div>
         </div>
-
         <div class="analytics-block">
-          <div class="analytics-title">
-            <span><i class="fas fa-clock" style="color:var(--accent-2);"></i> По статусам</span>
-          </div>
+          <div class="analytics-title"><span><i class="fas fa-clock" style="color:var(--accent-2);"></i> По статусам</span></div>
           <div id="anaStatuses"></div>
         </div>
       </div>
     </div>
 
-    <!-- МОДАЛКА ТОВАРА -->
     <div class="modal-backdrop" id="productModal">
       <div class="modal">
         <div class="modal-title">
@@ -870,7 +703,6 @@
     <div class="bottom-nav" id="bottomNav"></div>
   </div>
 
-  <!-- Install Banner -->
   <div class="install-banner" id="installBanner">
     <div style="display:flex; align-items:center; gap:12px;">
       <div style="width:44px; height:44px; border-radius:12px; background:linear-gradient(135deg, var(--accent-1), var(--accent-2)); display:flex; align-items:center; justify-content:center; font-size:20px; color:var(--app-bg); flex-shrink:0;">
@@ -887,15 +719,15 @@
     </div>
   </div>
 
-  <!-- Firebase SDK -->
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, serverTimestamp, getDocs, setDoc, writeBatch }
       from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-    import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject }
-      from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-    // ========== FIREBASE CONFIG ==========
+    // ========== FIREBASE ==========
     const firebaseConfig = {
       apiKey: "AIzaSyBrRslEbaHzPVVaUZgGJoi5BbCg4ZEjsWg",
       authDomain: "print-soft-24324.firebaseapp.com",
@@ -905,16 +737,22 @@
       appId: "1:533571835118:web:115508c68b2f1e5c88cfff",
       measurementId: "G-3MHKCDZFE6"
     };
-
     const firebaseApp = initializeApp(firebaseConfig);
     const db = getFirestore(firebaseApp);
-    const storage = getStorage(firebaseApp);
+
+    // ========== EMAILJS ==========
+    const EMAILJS_SERVICE_ID = 'service_8iz8jdq';
+    const EMAILJS_TEMPLATE_ID = 'template_2kr8zab';
+    const EMAILJS_PUBLIC_KEY = 'go_s_qh1yc-mW5DbF';
+    if (window.emailjs) {
+      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    }
 
     // ========== НАСТРОЙКИ ==========
     const ADMIN_CODE = '444555666';
     const SESSION_KEY = 'printsoft_admin_session';
     const SPLASH_DURATION = 3000;
-    const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20 МБ
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 МБ
     const MAX_FILES = 10;
 
     const PROMOCODES = {
@@ -951,7 +789,7 @@
       allOrders: [],
       favorites: new Set(),
       cartQty: {},
-      pendingFiles: [], // Файлы для загрузки: { file, status, progress, url, error }
+      pendingFiles: [],
       currentDetailId: null,
       currentPage: 'home',
       previousPage: 'home',
@@ -971,7 +809,6 @@
       unsubServices: null,
     };
 
-    // ========== ХРАНИЛИЩЕ ==========
     const S = { HISTORY: 'printsoft_history', FAV: 'printsoft_fav', THEME: 'printsoft_theme', CLIENT: 'printsoft_client' };
 
     function getSavedClient() { try { const c = localStorage.getItem(S.CLIENT); return c ? JSON.parse(c) : null; } catch (e) { return null; } }
@@ -982,7 +819,6 @@
     function loadLocalHistory() { try { const h = localStorage.getItem(S.HISTORY); if (h) state.myOrders = JSON.parse(h); } catch (e) {} }
     function saveLocalHistory() { try { localStorage.setItem(S.HISTORY, JSON.stringify(state.myOrders)); } catch (e) {} }
 
-    // ========== МАСКА ТЕЛЕФОНА ==========
     function extractDigits(str) { return String(str).replace(/\D/g, ''); }
     function formatPhone(value) {
       let digits = extractDigits(value);
@@ -1030,7 +866,6 @@
     function getActiveOrders(orders) { return orders.filter(o => { const s = o.status || 'new'; return s === 'new' || s === 'progress'; }); }
     function getArchiveOrders(orders) { return orders.filter(o => { const s = o.status || 'new'; return s === 'done' || s === 'cancel'; }); }
 
-    // ========== УТИЛИТЫ ==========
     function showToast(message) {
       let toastEl = document.querySelector('.toast');
       if (!toastEl) { toastEl = document.createElement('div'); toastEl.className = 'toast'; document.body.appendChild(toastEl); }
@@ -1060,13 +895,13 @@
     function formatBytes(bytes) {
       if (bytes === 0) return '0 Б';
       const k = 1024;
-      const sizes = ['Б', 'КБ', 'МБ', 'ГБ'];
+      const sizes = ['Б', 'КБ', 'МБ'];
       const i = Math.floor(Math.log(bytes) / Math.log(k));
       return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
     }
     function fileIconClass(name) {
       const ext = name.split('.').pop().toLowerCase();
-      if (['pdf'].includes(ext)) return 'pdf';
+      if (ext === 'pdf') return 'pdf';
       if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'].includes(ext)) return 'img';
       if (['doc', 'docx', 'txt', 'rtf'].includes(ext)) return 'doc';
       return '';
@@ -1212,7 +1047,6 @@
       }
     }
 
-    // ========== КАТЕГОРИИ ==========
     function renderCategories() {
       catFilters.innerHTML = CATEGORIES.map(c => `
         <button class="cat-btn ${state.currentCategory === c.id ? 'active' : ''}" data-cat="${c.id}">
@@ -1245,7 +1079,6 @@
       });
     }
 
-    // ========== РЕНДЕР УСЛУГ ==========
     function renderServices() {
       const list = getFilteredServices();
       if (list.length === 0) {
@@ -1328,7 +1161,6 @@
       }
     });
 
-    // ========== ДЕТАЛИ ==========
     function openDetail(id) {
       const service = state.services.find(s => s.id === id);
       if (!service) return;
@@ -1376,7 +1208,6 @@
       showPage('detail');
     }
 
-    // ========== КОРЗИНА ==========
     function addToCart(serviceId, qty = 1) {
       const service = state.services.find(s => s.id === serviceId);
       if (!service) return;
@@ -1481,20 +1312,15 @@
       renderCartItems();
     });
 
-    // ========== ЗАГРУЗКА ФАЙЛОВ ==========
+    // ========== ЗАГРУЗКА ФАЙЛОВ (без Storage — только в памяти для отправки) ==========
     uploadZone.addEventListener('click', () => fileInput.click());
-
-    uploadZone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      uploadZone.classList.add('dragover');
-    });
+    uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
     uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
     uploadZone.addEventListener('drop', (e) => {
       e.preventDefault();
       uploadZone.classList.remove('dragover');
       handleFiles(e.dataTransfer.files);
     });
-
     fileInput.addEventListener('change', (e) => {
       handleFiles(e.target.files);
       fileInput.value = '';
@@ -1508,94 +1334,25 @@
       }
       arr.forEach(file => {
         if (file.size > MAX_FILE_SIZE) {
-          showToast(`${file.name} слишком большой (макс. 20 МБ)`);
+          showToast(`${file.name} слишком большой (макс. 5 МБ)`);
           return;
         }
-        state.pendingFiles.push({
-          file,
-          status: 'pending',
-          progress: 0,
-          url: null,
-          error: null,
-        });
+        state.pendingFiles.push({ file, status: 'ready' });
       });
       renderFileList();
-      // Автозагрузка сразу
-      uploadAllFiles();
-    }
-
-    async function uploadAllFiles() {
-      const pending = state.pendingFiles.filter(f => f.status === 'pending');
-      for (const item of pending) {
-        await uploadOneFile(item);
-      }
-    }
-
-    async function uploadOneFile(item) {
-      item.status = 'uploading';
-      item.progress = 0;
-      renderFileList();
-
-      const uid = getClientUid();
-      const timestamp = Date.now();
-      const safeName = item.file.name.replace(/[^a-zA-Z0-9а-яА-Я._-]/g, '_');
-      const storagePath = `orders/${uid}/${timestamp}_${safeName}`;
-      const storageRef = ref(storage, storagePath);
-
-      return new Promise((resolve) => {
-        const uploadTask = uploadBytesResumable(storageRef, item.file);
-
-        uploadTask.on('state_changed',
-          (snapshot) => {
-            item.progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-            renderFileList();
-          },
-          (error) => {
-            console.error('Ошибка загрузки:', error);
-            item.status = 'error';
-            item.error = error.message;
-            renderFileList();
-            resolve();
-          },
-          async () => {
-            try {
-              const url = await getDownloadURL(uploadTask.snapshot.ref);
-              item.status = 'done';
-              item.url = url;
-              item.progress = 100;
-              renderFileList();
-            } catch (err) {
-              item.status = 'error';
-              item.error = err.message;
-              renderFileList();
-            }
-            resolve();
-          }
-        );
-      });
     }
 
     function renderFileList() {
-      if (state.pendingFiles.length === 0) {
-        fileList.innerHTML = '';
-        return;
-      }
+      if (state.pendingFiles.length === 0) { fileList.innerHTML = ''; return; }
       fileList.innerHTML = state.pendingFiles.map((f, i) => {
         const iconClass = fileIconClass(f.file.name);
         const iconFA = fileIconFA(f.file.name);
-        const statusClass = f.status === 'done' ? 'done' : f.status === 'error' ? 'error' : f.status === 'uploading' ? 'uploading' : '';
-        const sizeInfo = f.status === 'uploading'
-          ? `Загрузка ${f.progress}%`
-          : f.status === 'error'
-            ? `Ошибка: ${f.error || 'неизвестно'}`
-            : formatBytes(f.file.size);
         return `
-          <div class="file-item ${statusClass}" data-idx="${i}">
+          <div class="file-item ready" data-idx="${i}">
             <div class="file-icon ${iconClass}"><i class="fas ${iconFA}"></i></div>
             <div class="file-info">
               <div class="file-name">${f.file.name}</div>
-              <div class="file-size">${sizeInfo}</div>
-              ${f.status === 'uploading' ? `<div class="file-progress"><div class="file-progress-fill" style="width:${f.progress}%"></div></div>` : ''}
+              <div class="file-size">${formatBytes(f.file.size)}</div>
             </div>
             <button class="file-remove" data-remove="${i}"><i class="fas fa-times"></i></button>
           </div>
@@ -1607,17 +1364,82 @@
       const removeBtn = e.target.closest('[data-remove]');
       if (!removeBtn) return;
       const idx = parseInt(removeBtn.dataset.remove, 10);
-      const item = state.pendingFiles[idx];
-      if (item && item.url) {
-        // Удаляем из Storage
-        try {
-          const storageRef = ref(storage, item.url);
-          deleteObject(storageRef).catch(() => {});
-        } catch (err) {}
-      }
       state.pendingFiles.splice(idx, 1);
       renderFileList();
     });
+
+    // Конвертация файла в base64
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64 = reader.result.split(',')[1];
+          resolve(base64);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // ========== EMAILJS ОТПРАВКА ==========
+    async function sendEmailNotification(orderData) {
+      if (!window.emailjs) {
+        console.warn('EmailJS не загружен');
+        return { ok: false, error: 'EmailJS не загружен' };
+      }
+      if (!EMAILJS_SERVICE_ID || EMAILJS_SERVICE_ID === 'service_xxx') {
+        console.warn('EmailJS не настроен');
+        return { ok: false, error: 'EmailJS не настроен' };
+      }
+
+      // Формируем список услуг строкой
+      const itemsStr = orderData.items
+        .map(i => `• ${i.title} — ${i.qty} × ${i.price.toLocaleString()} ₽ = ${(i.qty * i.price).toLocaleString()} ₽`)
+        .join('\n');
+
+      // Формируем вложения (до 3 файлов, чтобы не превысить лимит EmailJS в 500 КБ)
+      const attachments = [];
+      const filesForAttach = state.pendingFiles.slice(0, 3);
+      for (const pf of filesForAttach) {
+        try {
+          const base64 = await fileToBase64(pf.file);
+          attachments.push({
+            name: pf.file.name,
+            data: base64,
+          });
+        } catch (err) {
+          console.warn('Не удалось прикрепить файл:', pf.file.name, err);
+        }
+      }
+
+      const templateParams = {
+        order_id: orderData.orderId,
+        client_name: orderData.client.name,
+        client_phone: displayPhone(orderData.client.phone),
+        client_comment: orderData.client.comment || '—',
+        order_items: itemsStr,
+        order_total: orderData.total.toLocaleString(),
+        promo_code: orderData.promo || '—',
+        order_date: orderData.date,
+        to_email: 'zerik5555566@mail.ru',
+      };
+
+      // Если есть файлы — добавляем вложения
+      if (attachments.length > 0) {
+        templateParams.attachments = attachments;
+        templateParams.files_count = attachments.length;
+        templateParams.files_list = state.pendingFiles.map(f => f.file.name).join(', ');
+      }
+
+      try {
+        const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+        console.log('EmailJS response:', response);
+        return { ok: true };
+      } catch (err) {
+        console.error('EmailJS error:', err);
+        return { ok: false, error: err.text || err.message || 'Ошибка отправки' };
+      }
+    }
 
     // ========== ОФОРМЛЕНИЕ ==========
     async function checkout() {
@@ -1628,18 +1450,6 @@
       });
       if (unavailable.length > 0) {
         showToast(`Нет в наличии: ${unavailable.map(i => i.title).join(', ')}`);
-        return;
-      }
-
-      // Проверяем, что все файлы загружены
-      const uploading = state.pendingFiles.filter(f => f.status === 'uploading' || f.status === 'pending');
-      if (uploading.length > 0) {
-        showToast('Подождите, файлы ещё загружаются');
-        return;
-      }
-      const failed = state.pendingFiles.filter(f => f.status === 'error');
-      if (failed.length > 0) {
-        showToast('Некоторые файлы не загрузились. Удалите их или попробуйте снова');
         return;
       }
 
@@ -1657,21 +1467,12 @@
       checkoutBtn.disabled = true;
       checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
 
-      const filesData = state.pendingFiles
-        .filter(f => f.status === 'done' && f.url)
-        .map(f => ({
-          name: f.file.name,
-          url: f.url,
-          size: f.file.size,
-          type: f.file.type,
-        }));
-
       const orderData = {
         orderId,
         date: new Date().toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
         client: { name, phone, comment },
         items: state.cart.map(item => ({ title: item.title, qty: item.quantity, price: item.price })),
-        files: filesData,
+        files: state.pendingFiles.map(f => ({ name: f.file.name, size: f.file.size, type: f.file.type })),
         total, baseTotal,
         promo: state.appliedPromo ? state.appliedPromo.code : null,
         status: 'new',
@@ -1679,6 +1480,16 @@
         clientUid: getClientUid(),
       };
 
+      // 1. Отправляем письмо админу через EmailJS
+      const emailResult = await sendEmailNotification(orderData);
+      if (emailResult.ok) {
+        showToast('📧 Письмо админу отправлено');
+      } else {
+        console.warn('EmailJS не сработал:', emailResult.error);
+        // Не блокируем заказ — просто предупреждаем
+      }
+
+      // 2. Сохраняем заказ в Firestore
       try {
         const docRef = await addDoc(collection(db, 'orders'), orderData);
         const localOrder = { ...orderData, id: docRef.id };
@@ -1704,29 +1515,14 @@
         showPage('history');
       } catch (err) {
         console.error('Ошибка отправки:', err);
-        showToast('Ошибка отправки. Проверьте интернет.');
+        showToast('Ошибка сохранения заказа');
       } finally {
         checkoutBtn.disabled = false;
         checkoutBtn.innerHTML = '<i class="fas fa-check-circle"></i> Оформить заказ';
       }
     }
 
-    // ========== ИСТОРИЯ КЛИЕНТА ==========
-    function renderOrderFiles(files) {
-      if (!files || files.length === 0) return '';
-      return `
-        <div class="order-files">
-          ${files.map(f => `
-            <a class="order-file-chip" href="${f.url}" target="_blank" download="${f.name}">
-              <i class="fas ${fileIconFA(f.name)}"></i>
-              <span class="name">${f.name}</span>
-              <i class="fas fa-download" style="opacity:0.6; font-size:10px;"></i>
-            </a>
-          `).join('')}
-        </div>
-      `;
-    }
-
+    // ========== ИСТОРИЯ ==========
     function renderHistory() {
       const allMine = state.myOrders;
       const active = getActiveOrders(allMine);
@@ -1760,7 +1556,13 @@
                 <i class="fas fa-comment" style="margin-right:4px;"></i>${order.client.comment}
               </div>
             ` : ''}
-            ${renderOrderFiles(order.files)}
+            ${order.files && order.files.length > 0 ? `
+              <div class="order-files">
+                ${order.files.map(f => `
+                  <span class="order-file-chip"><i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span></span>
+                `).join('')}
+              </div>
+            ` : ''}
             <div class="order-progress">
               ${stepActive.map(cls => `<div class="progress-step ${cls}"></div>`).join('')}
             </div>
@@ -1807,7 +1609,6 @@
       showToast('История очищена');
     }
 
-    // ========== АДМИН ==========
     function updateAdminBadge() {
       const newCount = state.allOrders.filter(o => (o.status || 'new') === 'new').length;
       if (newCount > 0 && !state.isAdminMode) {
@@ -1861,7 +1662,13 @@
             <div class="order-items">
               ${order.items.map(i => `• ${i.title} — ${i.qty} × ${i.price.toLocaleString()} ₽`).join('<br>')}
             </div>
-            ${renderOrderFiles(order.files)}
+            ${order.files && order.files.length > 0 ? `
+              <div class="order-files">
+                ${order.files.map(f => `
+                  <span class="order-file-chip"><i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span></span>
+                `).join('')}
+              </div>
+            ` : ''}
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
               <span class="order-status ${status}"><i class="fas ${statusIcon(status)}"></i> ${statusLabel(status)}</span>
               <span class="order-total">${order.total.toLocaleString()} ₽</span>
@@ -1930,7 +1737,6 @@
       document.getElementById('anaAvg').textContent = avg.toLocaleString() + ' ₽';
       document.getElementById('anaDone').textContent = donePercent + '%';
 
-      // === График за 7 дней ===
       const days = [];
       for (let i = 6; i >= 0; i--) {
         const d = new Date();
@@ -1941,7 +1747,7 @@
           return oDate.startsWith(key);
         }).length;
         const weekday = d.toLocaleDateString('ru-RU', { weekday: 'short' }).slice(0, 2);
-        days.push({ label: weekday, count, key, revenue: 0 });
+        days.push({ label: weekday, count, key });
       }
 
       const maxCount = Math.max(1, ...days.map(d => d.count));
@@ -1951,12 +1757,11 @@
       document.getElementById('anaChart').innerHTML = days.map(d => `
         <div class="analytics-bar-wrap">
           <div class="analytics-bar-value">${d.count > 0 ? d.count : ''}</div>
-          <div class="analytics-bar" style="height:${(d.count / maxCount) * 100}%;" title="${d.key}: ${d.count} заказов"></div>
+          <div class="analytics-bar" style="height:${(d.count / maxCount) * 100}%;"></div>
           <div class="analytics-bar-label">${d.label}</div>
         </div>
       `).join('');
 
-      // === Топ-5 услуг ===
       const itemCount = {};
       const itemRevenue = {};
       all.forEach(o => o.items.forEach(i => {
@@ -1988,7 +1793,6 @@
         }).join('');
       }
 
-      // === Топ-5 клиентов ===
       const clientStats = {};
       all.forEach(o => {
         const name = o.client?.name || 'Аноним';
@@ -2023,7 +1827,6 @@
         }).join('');
       }
 
-      // === По статусам ===
       const statuses = [
         { id: 'new', label: 'Новые', color: 'var(--accent-1)' },
         { id: 'progress', label: 'В работе', color: 'var(--warning)' },
@@ -2050,7 +1853,7 @@
       }).join('');
     }
 
-    // ========== УПРАВЛЕНИЕ ТОВАРАМИ ==========
+    // ========== ТОВАРЫ ==========
     function renderAdminProducts() {
       adminProductsContainer.innerHTML = state.services.map(s => {
         const available = s.available !== false;
@@ -2217,7 +2020,6 @@
       openLoginScreen();
     }
 
-    // ========== ТЕМА ==========
     function loadTheme() {
       try {
         const t = localStorage.getItem(S.THEME);
