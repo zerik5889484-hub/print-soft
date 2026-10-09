@@ -102,70 +102,15 @@
     h2 i { color: var(--accent-2); font-size: 17px; }
     .subhead { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 14px; }
 
-    /* ===== ИНФО О КОМПАНИИ ===== */
-    .company-info {
-      background: linear-gradient(135deg, rgba(168, 216, 232, 0.08), rgba(201, 184, 232, 0.08));
-      border: 1px solid var(--border-2);
-      border-radius: 20px;
-      padding: 16px 18px;
-      margin-bottom: 14px;
-      position: relative;
-      overflow: hidden;
-    }
-    .company-info::before {
-      content: '';
-      position: absolute;
-      top: -20px; right: -20px;
-      width: 100px; height: 100px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(168, 216, 232, 0.15), transparent 70%);
-      pointer-events: none;
-    }
-    .company-info-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
+    .company-info { background: linear-gradient(135deg, rgba(168, 216, 232, 0.08), rgba(201, 184, 232, 0.08)); border: 1px solid var(--border-2); border-radius: 20px; padding: 16px 18px; margin-bottom: 14px; position: relative; overflow: hidden; }
+    .company-info::before { content: ''; position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle, rgba(168, 216, 232, 0.15), transparent 70%); pointer-events: none; }
+    .company-info-title { font-size: 15px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
     .company-info-title i { color: var(--accent-1); font-size: 16px; }
-    .company-info-text {
-      font-size: 12.5px;
-      line-height: 1.6;
-      color: var(--text-secondary);
-      margin-bottom: 10px;
-    }
-    .company-info-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 12px;
-    }
-    .company-stat {
-      text-align: center;
-      padding: 8px 4px;
-      background: rgba(168, 216, 232, 0.06);
-      border: 1px solid var(--border-2);
-      border-radius: 12px;
-    }
-    .company-stat-value {
-      font-size: 16px;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      display: block;
-    }
-    .company-stat-label {
-      font-size: 9.5px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      margin-top: 2px;
-    }
+    .company-info-text { font-size: 12.5px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 10px; }
+    .company-info-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+    .company-stat { text-align: center; padding: 8px 4px; background: rgba(168, 216, 232, 0.06); border: 1px solid var(--border-2); border-radius: 12px; }
+    .company-stat-value { font-size: 16px; font-weight: 800; background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; display: block; }
+    .company-stat-label { font-size: 9.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
 
     .search-wrap { position: relative; margin-bottom: 10px; }
     .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 14px; pointer-events: none; }
@@ -340,9 +285,6 @@
     .stock-toggle.on .toggle-switch::after { transform: translateX(18px); background: var(--success); }
     .stock-toggle.off .toggle-switch { background: rgba(232, 140, 140, 0.15); border-color: var(--danger); }
     .stock-toggle.off .toggle-switch::after { background: var(--danger); }
-    .stock-label { font-size: 10.5px; font-weight: 700; white-space: nowrap; }
-    .stock-label.on { color: var(--success); }
-    .stock-label.off { color: var(--danger); }
 
     .stock-badge-out { display: inline-block; font-size: 9.5px; padding: 2px 7px; border-radius: 8px; background: rgba(232, 140, 140, 0.15); color: var(--danger); border: 1px solid rgba(232, 140, 140, 0.35); font-weight: 700; text-transform: uppercase; }
     .stock-badge-in { display: inline-block; font-size: 9.5px; padding: 2px 7px; border-radius: 8px; background: rgba(140, 220, 160, 0.12); color: var(--success); border: 1px solid rgba(140, 220, 160, 0.3); font-weight: 700; text-transform: uppercase; }
@@ -421,51 +363,17 @@
 
     .install-banner { display: none; position: fixed; bottom: calc(16px + env(safe-area-inset-bottom)); left: 16px; right: 16px; background: var(--card-bg); border: 1px solid var(--accent-1); border-radius: 20px; padding: 14px 16px; z-index: 9998; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); animation: toastIn 0.4s ease; }
 
-    .files-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.75); display: flex; align-items: center; justify-content: center; z-index: 1100; padding: 20px; animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from { opacity: 1; } to { opacity: 1; } }
+    .files-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.75); display: flex; align-items: center; justify-content: center; z-index: 1100; padding: 20px; }
     .files-modal-content { background: var(--app-bg); border-radius: 24px; border: 1px solid var(--border-1); padding: 24px 20px; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; }
 
-    /* Новый заказ уведомление для админа */
-    .new-order-notification {
-      position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(135deg, var(--success), #5ab878);
-      color: #0a0a1a;
-      padding: 14px 20px;
-      border-radius: 20px;
-      box-shadow: 0 8px 32px rgba(140, 220, 160, 0.5);
-      z-index: 1200;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 700;
-      font-size: 14px;
-      animation: notifSlide 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-      max-width: 90vw;
-      cursor: pointer;
-    }
-    @keyframes notifSlide {
-      from { opacity: 0; transform: translate(-50%, -30px); }
-      to { opacity: 1; transform: translate(-50%, 0); }
-    }
+    .new-order-notification { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--success), #5ab878); color: #0a0a1a; padding: 14px 20px; border-radius: 20px; box-shadow: 0 8px 32px rgba(140, 220, 160, 0.5); z-index: 1200; display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 14px; animation: notifSlide 0.5s cubic-bezier(0.22, 1, 0.36, 1); max-width: 90vw; cursor: pointer; }
+    @keyframes notifSlide { from { opacity: 0; transform: translate(-50%, -30px); } to { opacity: 1; transform: translate(-50%, 0); } }
     .new-order-notification i { font-size: 22px; }
     .new-order-notification .notif-info { display: flex; flex-direction: column; }
     .new-order-notification .notif-title { font-size: 14px; }
     .new-order-notification .notif-sub { font-size: 11.5px; opacity: 0.8; font-weight: 500; margin-top: 2px; }
 
-    /* Переключатель уведомлений */
-    .notif-toggle-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 14px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-2);
-      border-radius: 14px;
-      margin-bottom: 8px;
-    }
+    .notif-toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: var(--card-bg); border: 1px solid var(--border-2); border-radius: 14px; margin-bottom: 8px; }
     .notif-toggle-info { display: flex; flex-direction: column; }
     .notif-toggle-title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
     .notif-toggle-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
@@ -570,7 +478,6 @@
       <h2><i class="fas fa-store"></i> Маркетплейс полиграфии</h2>
       <div class="subhead">Печать А4 • чёрно-белое • быстро и дёшево</div>
 
-      <!-- ИНФО О КОМПАНИИ -->
       <div class="company-info">
         <div class="company-info-title">
           <i class="fas fa-building"></i>
@@ -676,7 +583,7 @@
       </div>
     </div>
 
-    <!-- УСЛУГИ (вместо Избранного) -->
+    <!-- УСЛУГИ -->
     <div id="servicesPage" class="page">
       <h2><i class="fas fa-th-large"></i> Все услуги</h2>
       <div class="subhead">Полный каталог полиграфических услуг</div>
@@ -765,7 +672,6 @@
         </div>
       </div>
 
-      <!-- НАСТРОЙКИ УВЕДОМЛЕНИЙ -->
       <div id="adminSettingsSection" style="display:none;">
         <h3 style="font-size:15px; font-weight:700; margin-bottom:12px; color:var(--text-primary);">
           <i class="fas fa-bell" style="color:var(--accent-1); margin-right:6px;"></i>Уведомления
@@ -775,7 +681,7 @@
             <div class="notif-toggle-title">Звук при новом заказе</div>
             <div class="notif-toggle-desc">Играть звук, когда приходит новый заказ</div>
           </div>
-          <div class="stock-toggle" id="notifSoundToggle">
+          <div class="stock-toggle on" id="notifSoundToggle">
             <div class="toggle-switch"></div>
           </div>
         </div>
@@ -784,7 +690,7 @@
             <div class="notif-toggle-title">Всплывающее уведомление</div>
             <div class="notif-toggle-desc">Показывать баннер сверху экрана</div>
           </div>
-          <div class="stock-toggle" id="notifBannerToggle">
+          <div class="stock-toggle on" id="notifBannerToggle">
             <div class="toggle-switch"></div>
           </div>
         </div>
@@ -793,7 +699,7 @@
             <div class="notif-toggle-title">Уведомления клиентам</div>
             <div class="notif-toggle-desc">Показывать клиенту изменение статуса заказа</div>
           </div>
-          <div class="stock-toggle" id="notifClientToggle">
+          <div class="stock-toggle on" id="notifClientToggle">
             <div class="toggle-switch"></div>
           </div>
         </div>
@@ -1260,7 +1166,6 @@
       renderServices();
     });
 
-    // Категории на странице "Услуги"
     function renderServicesPageCategories() {
       servicesPageCategories.innerHTML = CATEGORIES.map(c => `
         <button class="cat-btn ${state.servicesPageCategory === c.id ? 'active' : ''}" data-cat="${c.id}">
@@ -1299,7 +1204,6 @@
       });
     }
 
-    // ========== РЕНДЕР УСЛУГ (главная) ==========
     function renderServices() {
       const list = getFilteredServices();
       if (list.length === 0) {
@@ -1330,7 +1234,6 @@
       servicesGrid.appendChild(frag);
     }
 
-    // РЕНДЕР УСЛУГ (страница "Услуги")
     function renderServicesPage() {
       const list = getServicesPageList();
       if (list.length === 0) {
@@ -2418,7 +2321,7 @@
       openLoginScreen();
     }
 
-    // ========== НАСТРОЙКИ УВЕДОМЛЕНИЙ ==========
+    // ========== НАСТРОЙКИ УВЕДОМЛЕНИЙ (с защитой от null) ==========
     function renderNotifToggles() {
       const soundToggle = document.getElementById('notifSoundToggle');
       const bannerToggle = document.getElementById('notifBannerToggle');
@@ -2429,24 +2332,33 @@
       if (clientToggle) clientToggle.className = 'stock-toggle ' + (state.notifClient ? 'on' : 'off');
     }
 
-    document.getElementById('notifSoundToggle').addEventListener('click', () => {
-      state.notifSound = !state.notifSound;
-      saveNotifSettings();
-      renderNotifToggles();
-      showToast(state.notifSound ? '✓ Звук включён' : '✗ Звук выключен');
-    });
-    document.getElementById('notifBannerToggle').addEventListener('click', () => {
-      state.notifBanner = !state.notifBanner;
-      saveNotifSettings();
-      renderNotifToggles();
-      showToast(state.notifBanner ? '✓ Баннер включён' : '✗ Баннер выключен');
-    });
-    document.getElementById('notifClientToggle').addEventListener('click', () => {
-      state.notifClient = !state.notifClient;
-      saveNotifSettings();
-      renderNotifToggles();
-      showToast(state.notifClient ? '✓ Уведомления клиентам вкл' : '✗ Уведомления клиентам выкл');
-    });
+    const notifSoundToggleEl = document.getElementById('notifSoundToggle');
+    if (notifSoundToggleEl) {
+      notifSoundToggleEl.addEventListener('click', () => {
+        state.notifSound = !state.notifSound;
+        saveNotifSettings();
+        renderNotifToggles();
+        showToast(state.notifSound ? '✓ Звук включён' : '✗ Звук выключен');
+      });
+    }
+    const notifBannerToggleEl = document.getElementById('notifBannerToggle');
+    if (notifBannerToggleEl) {
+      notifBannerToggleEl.addEventListener('click', () => {
+        state.notifBanner = !state.notifBanner;
+        saveNotifSettings();
+        renderNotifToggles();
+        showToast(state.notifBanner ? '✓ Баннер включён' : '✗ Баннер выключен');
+      });
+    }
+    const notifClientToggleEl = document.getElementById('notifClientToggle');
+    if (notifClientToggleEl) {
+      notifClientToggleEl.addEventListener('click', () => {
+        state.notifClient = !state.notifClient;
+        saveNotifSettings();
+        renderNotifToggles();
+        showToast(state.notifClient ? '✓ Уведомления клиентам вкл' : '✗ Уведомления клиентам выкл');
+      });
+    }
 
     function loadTheme() {
       try {
@@ -2512,14 +2424,9 @@
           return tb - ta;
         });
 
-        // Проверяем, есть ли новый заказ
         const prevCount = state.allOrders.length;
-        const newOrders = all.filter(o => (o.status || 'new') === 'new');
-        const prevNewCount = state.allOrders.filter(o => (o.status || 'new') === 'new').length;
-
         state.allOrders = all;
 
-        // Уведомление админу о новом заказе
         if (state.isAdminMode && all.length > prevCount && prevCount > 0) {
           const newestOrder = all[0];
           if (state.notifBanner) showNewOrderNotification(newestOrder);
@@ -2711,7 +2618,7 @@
       });
     }
 
-    // ========== ЗАСТАВКА ==========
+    // ========== ЗАСТАВКА (запускается в конце, чтобы всё было готово) ==========
     const splash = document.getElementById('splash');
     const splashProgressFill = document.getElementById('splashProgressFill');
     const splashPercent = document.getElementById('splashPercent');
@@ -2726,6 +2633,7 @@
       { at: 95, text: 'Добро пожаловать!' }
     ];
 
+    // Загружаем настройки
     loadTheme();
     loadLocalFav();
     loadLocalHistory();
@@ -2738,11 +2646,13 @@
     renderHistory();
     renderNotifToggles();
 
+    // Запускаем Firebase (не блокирует заставку)
     initServicesFromFirestore().then(() => {
       subscribeServices();
       subscribeOrders();
     });
 
+    // Запускаем заставку
     let progress = 0;
     const startTime = Date.now();
     const step = () => {
