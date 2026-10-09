@@ -722,7 +722,7 @@
   </div>
 
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script src="https://unpkg.com/putput@latest/dist/putput.umd.js"></script>
+  <script src="https://js.puter.com/v2/"></script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -1339,49 +1339,51 @@
     });
 
     async function handleFiles(files) {
-      const arr = Array.from(files);
-      if (state.pendingFiles.length + arr.length > MAX_FILES) {
-        showToast(`Максимум ${MAX_FILES} файлов`);
-        return;
-      }
+  const arr = Array.from(files);
+  if (state.pendingFiles.length + arr.length > MAX_FILES) {
+    showToast(`Максимум ${MAX_FILES} файлов`);
+    return;
+  }
 
-      for (const file of arr) {
-        if (file.size > MAX_FILE_SIZE) {
-          showToast(`${file.name} слишком большой (макс. 5 МБ)`);
-          continue;
-        }
-
-        const fileObj = {
-          file,
-          status: 'uploading',
-          progress: 0,
-          url: null,
-          error: null
-        };
-        state.pendingFiles.push(fileObj);
-        renderFileList();
-
-        try {
-          if (typeof putput === 'undefined' || !putput.PutPutClient) {
-            throw new Error('PutPut SDK не загрузился');
-          }
-          const pp = new putput.PutPutClient();
-          const { token } = await pp.createGuestToken();
-          pp.setToken(token);
-
-          const result = await pp.upload(file, file.name, file.type);
-          fileObj.status = 'done';
-          fileObj.url = result.url;
-          fileObj.progress = 100;
-          console.log('✅ Файл загружен:', result.url);
-        } catch (err) {
-          console.error('❌ Ошибка PutPut:', err);
-          fileObj.status = 'error';
-          fileObj.error = err.message || 'Ошибка загрузки';
-        }
-        renderFileList();
-      }
+  for (const file of arr) {
+    if (file.size > MAX_FILE_SIZE) {
+      showToast(`${file.name} слишком большой (макс. 5 МБ)`);
+      continue;
     }
+
+    const fileObj = {
+      file,
+      status: 'uploading',
+      progress: 0,
+      url: null,
+      error: null
+    };
+    state.pendingFiles.push(fileObj);
+    renderFileList();
+
+    try {
+      if (typeof puter === 'undefined') {
+        throw new Error('Puter.js не загрузился');
+      }
+
+      // Загрузка файла в облако Puter
+      const uploadedFile = await puter.fs.write(file.name, file);
+
+      // Получаем публичную ссылку (действует 24 часа)
+      const readUrl = await puter.fs.getReadURL(uploadedFile.path);
+
+      fileObj.status = 'done';
+      fileObj.url = readUrl;
+      fileObj.progress = 100;
+      console.log('✅ Файл загружен:', readUrl);
+    } catch (err) {
+      console.error('❌ Ошибка Puter:', err);
+      fileObj.status = 'error';
+      fileObj.error = err.message || 'Ошибка загрузки';
+    }
+    renderFileList();
+  }
+}
 
     function renderFileList() {
       if (state.pendingFiles.length === 0) { fileList.innerHTML = ''; return; }
