@@ -1324,7 +1324,7 @@
       renderCartItems();
     });
 
-    // ========== ЗАГРУЗКА ФАЙЛОВ (PutPut) ==========
+    // ========== ЗАГРУЗКА ФАЙЛОВ (Puter.js) ==========
     uploadZone.addEventListener('click', () => fileInput.click());
     uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
     uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
@@ -1339,51 +1339,50 @@
     });
 
     async function handleFiles(files) {
-  const arr = Array.from(files);
-  if (state.pendingFiles.length + arr.length > MAX_FILES) {
-    showToast(`Максимум ${MAX_FILES} файлов`);
-    return;
-  }
-
-  for (const file of arr) {
-    if (file.size > MAX_FILE_SIZE) {
-      showToast(`${file.name} слишком большой (макс. 5 МБ)`);
-      continue;
-    }
-
-    const fileObj = {
-      file,
-      status: 'uploading',
-      progress: 0,
-      url: null,
-      error: null
-    };
-    state.pendingFiles.push(fileObj);
-    renderFileList();
-
-    try {
-      if (typeof puter === 'undefined') {
-        throw new Error('Puter.js не загрузился');
+      const arr = Array.from(files);
+      if (state.pendingFiles.length + arr.length > MAX_FILES) {
+        showToast(`Максимум ${MAX_FILES} файлов`);
+        return;
       }
 
-      // Загрузка файла в облако Puter
-      const uploadedFile = await puter.fs.write(file.name, file);
+      for (const file of arr) {
+        if (file.size > MAX_FILE_SIZE) {
+          showToast(`${file.name} слишком большой (макс. 5 МБ)`);
+          continue;
+        }
 
-      // Получаем публичную ссылку (действует 24 часа)
-      const readUrl = await puter.fs.getReadURL(uploadedFile.path);
+        const fileObj = {
+          file,
+          status: 'uploading',
+          progress: 0,
+          url: null,
+          error: null
+        };
+        state.pendingFiles.push(fileObj);
+        renderFileList();
 
-      fileObj.status = 'done';
-      fileObj.url = readUrl;
-      fileObj.progress = 100;
-      console.log('✅ Файл загружен:', readUrl);
-    } catch (err) {
-      console.error('❌ Ошибка Puter:', err);
-      fileObj.status = 'error';
-      fileObj.error = err.message || 'Ошибка загрузки';
+        try {
+          if (typeof puter === 'undefined') {
+            throw new Error('Puter.js не загрузился. Проверьте интернет.');
+          }
+
+          // Записываем файл в облако Puter
+          const uploaded = await puter.fs.write(file.name, file);
+          // Получаем ссылку на чтение (живёт 24 часа)
+          const readUrl = await puter.fs.getReadURL(uploaded.path);
+
+          fileObj.status = 'done';
+          fileObj.url = readUrl;
+          fileObj.progress = 100;
+          console.log('✅ Файл загружен:', readUrl);
+        } catch (err) {
+          console.error('❌ Ошибка Puter:', err);
+          fileObj.status = 'error';
+          fileObj.error = err.message || 'Ошибка загрузки';
+        }
+        renderFileList();
+      }
     }
-    renderFileList();
-  }
-}
 
     function renderFileList() {
       if (state.pendingFiles.length === 0) { fileList.innerHTML = ''; return; }
@@ -1402,7 +1401,7 @@
             <div class="file-info">
               <div class="file-name">${f.file.name}</div>
               <div class="file-size">${statusInfo}</div>
-              ${f.url ? `<div style="font-size:10.5px; color:var(--success); margin-top:2px; word-break:break-all;">${f.url}</div>` : ''}
+              ${f.url ? `<div style="font-size:10px; color:var(--success); margin-top:2px; word-break:break-all; opacity:0.7;">${f.url.substring(0, 50)}...</div>` : ''}
             </div>
             <button class="file-remove" data-remove="${i}"><i class="fas fa-times"></i></button>
           </div>
@@ -1418,7 +1417,7 @@
       renderFileList();
     });
 
-    // ========== EMAILJS ОТПРАВКА ==========
+    // ========== EMAILJS ==========
     async function sendEmailNotification(orderData) {
       try {
         await ensureEmailJSReady();
@@ -1472,6 +1471,9 @@
         showToast(`Нет в наличии: ${unavailable.map(i => i.title).join(', ')}`);
         return;
       }
+
+      const uploading = state.pendingFiles.filter(f => f.status === 'uploading');
+      if (uploading.length > 0) { showToast('Подождите, файлы загружаются'); return; }
 
       const name = clientName.value.trim();
       const phoneRaw = clientPhone.value;
@@ -1583,10 +1585,14 @@
             ` : ''}
             ${order.files && order.files.length > 0 ? `
               <div class="order-files">
-                ${order.files.map(f => `
-                  <a class="order-file-chip" href="${f.url || '#'}" target="_blank">
+                ${order.files.map(f => f.url ? `
+                  <a class="order-file-chip" href="${f.url}" target="_blank" rel="noopener">
                     <i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span>
                   </a>
+                ` : `
+                  <span class="order-file-chip">
+                    <i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span>
+                  </span>
                 `).join('')}
               </div>
             ` : ''}
@@ -1691,10 +1697,14 @@
             </div>
             ${order.files && order.files.length > 0 ? `
               <div class="order-files">
-                ${order.files.map(f => `
-                  <a class="order-file-chip" href="${f.url || '#'}" target="_blank">
+                ${order.files.map(f => f.url ? `
+                  <a class="order-file-chip" href="${f.url}" target="_blank" rel="noopener">
                     <i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span>
                   </a>
+                ` : `
+                  <span class="order-file-chip">
+                    <i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span>
+                  </span>
                 `).join('')}
               </div>
             ` : ''}
