@@ -8,75 +8,39 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="PRINT SOFT">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="description" content="Мини-маркетплейс полиграфии: печать А4 ч/б, копии, сканирование, ламинирование">
+  <meta name="description" content="Мини-маркетплейс полиграфии">
   <title>PRINT SOFT • мини-маркетплейс полиграфии</title>
   <link rel="manifest" href="./manifest.json">
   <link rel="apple-touch-icon" href="./icon-192.png">
   <link rel="icon" type="image/png" href="./icon-192.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-      font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
 
     :root {
-      --bg-1: #14152b;
-      --bg-2: #0f1020;
-      --bg-3: #101a2a;
-      --app-bg: #14162a;
-      --card-bg: #1c1e35;
-      --card-bg-hover: #232640;
-      --border-1: rgba(140, 200, 220, 0.15);
-      --border-2: rgba(168, 216, 232, 0.12);
-      --text-primary: #e8e8f5;
-      --text-secondary: #9a9ab8;
-      --text-muted: #8a8aa8;
-      --accent-1: #a8d8e8;
-      --accent-2: #c9b8e8;
-      --accent-3: #d8c8f0;
-      --success: #8cdca0;
-      --warning: #e8c882;
-      --danger: #e88c8c;
-      --pink: #e8b8d8;
+      --bg-1: #14152b; --bg-2: #0f1020; --bg-3: #101a2a;
+      --app-bg: #14162a; --card-bg: #1c1e35; --card-bg-hover: #232640;
+      --border-1: rgba(140, 200, 220, 0.15); --border-2: rgba(168, 216, 232, 0.12);
+      --text-primary: #e8e8f5; --text-secondary: #9a9ab8; --text-muted: #8a8aa8;
+      --accent-1: #a8d8e8; --accent-2: #c9b8e8; --accent-3: #d8c8f0;
+      --success: #8cdca0; --warning: #e8c882; --danger: #e88c8c; --pink: #e8b8d8;
     }
-
     body.light-theme {
-      --bg-1: #e8ecf5;
-      --bg-2: #f0f4fa;
-      --bg-3: #e0e8f0;
-      --app-bg: #ffffff;
-      --card-bg: #f5f7fc;
-      --card-bg-hover: #e8ecf5;
-      --border-1: rgba(100, 130, 180, 0.2);
-      --border-2: rgba(100, 130, 180, 0.15);
-      --text-primary: #1a1a2e;
-      --text-secondary: #5a5a78;
-      --text-muted: #7a7a98;
-      --accent-1: #3a7ca8;
-      --accent-2: #7a5ac8;
-      --accent-3: #6a4ab8;
-      --success: #2a9a4a;
-      --warning: #b88a20;
-      --danger: #c84a4a;
-      --pink: #b85a98;
+      --bg-1: #e8ecf5; --bg-2: #f0f4fa; --bg-3: #e0e8f0;
+      --app-bg: #ffffff; --card-bg: #f5f7fc; --card-bg-hover: #e8ecf5;
+      --border-1: rgba(100, 130, 180, 0.2); --border-2: rgba(100, 130, 180, 0.15);
+      --text-primary: #1a1a2e; --text-secondary: #5a5a78; --text-muted: #7a7a98;
+      --accent-1: #3a7ca8; --accent-2: #7a5ac8; --accent-3: #6a4ab8;
+      --success: #2a9a4a; --warning: #b88a20; --danger: #c84a4a; --pink: #b85a98;
     }
 
-    html, body {
-      overscroll-behavior-y: contain;
-      -webkit-touch-callout: none;
-    }
-
+    html, body { overscroll-behavior-y: contain; -webkit-touch-callout: none; }
     body {
       background-color: var(--bg-2);
       background-image: linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 60%, var(--bg-3) 100%);
-      color: var(--text-primary);
-      min-height: 100vh;
-      display: flex; justify-content: center;
-      padding: 14px;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
+      color: var(--text-primary); min-height: 100vh;
+      display: flex; justify-content: center; padding: 14px;
+      overflow-x: hidden; -webkit-font-smoothing: antialiased;
       transition: background 0.3s ease, color 0.3s ease;
       padding-top: calc(14px + env(safe-area-inset-top));
       padding-bottom: calc(14px + env(safe-area-inset-bottom));
@@ -84,1155 +48,503 @@
 
     /* ==================== ЗАСТАВКА ==================== */
     .splash {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      z-index: 10000;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10000;
       background: linear-gradient(160deg, #14152b 0%, #0f1020 60%, #101a2a 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 30px;
-      overflow: hidden;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 30px; overflow: hidden;
       transition: opacity 0.7s ease, transform 0.7s ease, visibility 0.7s ease;
     }
-
-    .splash.hidden {
-      opacity: 0;
-      transform: scale(1.08);
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .splash-orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.35;
-      animation: orbFloat 6s ease-in-out infinite;
-    }
-    .splash-orb.orb-1 {
-      width: 320px; height: 320px;
-      background: radial-gradient(circle, #a8d8e8 0%, transparent 70%);
-      top: -100px; left: -100px;
-    }
-    .splash-orb.orb-2 {
-      width: 280px; height: 280px;
-      background: radial-gradient(circle, #c9b8e8 0%, transparent 70%);
-      bottom: -80px; right: -80px;
-      animation-delay: 2s;
-    }
-    .splash-orb.orb-3 {
-      width: 200px; height: 200px;
-      background: radial-gradient(circle, #e8b8d8 0%, transparent 70%);
-      top: 40%; left: 50%;
-      transform: translate(-50%, -50%);
-      animation-delay: 4s;
-      opacity: 0.2;
-    }
-
-    @keyframes orbFloat {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(20px, -30px) scale(1.15); }
-    }
-
-    .splash-logo {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 18px;
-      animation: logoEnter 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-
-    @keyframes logoEnter {
-      from { opacity: 0; transform: translateY(24px) scale(0.85); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .splash-icon-wrap {
-      position: relative;
-      width: 110px;
-      height: 110px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .splash-icon-ring {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      border: 2px solid transparent;
-      border-top-color: #a8d8e8;
-      border-right-color: #c9b8e8;
-      animation: ringSpin 2.4s linear infinite;
-    }
-    .splash-icon-ring::after {
-      content: '';
-      position: absolute;
-      inset: 6px;
-      border-radius: 50%;
-      border: 1.5px solid transparent;
-      border-bottom-color: #e8b8d8;
-      border-left-color: #a8d8e8;
-      animation: ringSpin 1.8s linear infinite reverse;
-    }
-
-    @keyframes ringSpin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .splash-icon-core {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(168, 216, 232, 0.15), rgba(201, 184, 232, 0.15));
-      border: 1px solid rgba(168, 216, 232, 0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 34px;
-      color: #a8d8e8;
-      box-shadow: 
-        0 0 30px rgba(168, 216, 232, 0.3),
-        0 0 60px rgba(201, 184, 232, 0.15),
-        inset 0 0 20px rgba(168, 216, 232, 0.08);
-      animation: iconPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes iconPulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(168, 216, 232, 0.3), 0 0 60px rgba(201, 184, 232, 0.15); }
-      50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(168, 216, 232, 0.5), 0 0 80px rgba(201, 184, 232, 0.25); }
-    }
-
-    .splash-title {
-      font-size: 32px;
-      font-weight: 800;
-      letter-spacing: 3px;
-      background: linear-gradient(135deg, #a8d8e8 0%, #c9b8e8 50%, #e8b8d8 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-align: center;
-      line-height: 1.1;
-    }
-
-    .splash-title .accent {
-      background: linear-gradient(135deg, #c9b8e8 0%, #e8b8d8 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .splash-subtitle {
-      font-size: 13px;
-      color: #8a8aa8;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      font-weight: 600;
-      margin-top: -6px;
-    }
-
-    .splash-progress-wrap {
-      position: relative;
-      z-index: 2;
-      margin-top: 42px;
-      width: 240px;
-      max-width: 75vw;
-    }
-
-    .splash-progress-bar {
-      height: 4px;
-      background: rgba(168, 216, 232, 0.1);
-      border-radius: 10px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .splash-progress-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #a8d8e8, #c9b8e8, #e8b8d8);
-      border-radius: 10px;
-      transition: width 0.15s linear;
-      box-shadow: 0 0 12px rgba(168, 216, 232, 0.6);
-    }
-
-    .splash-percent {
-      font-size: 12px;
-      color: #8a8aa8;
-      text-align: center;
-      margin-top: 12px;
-      letter-spacing: 1.5px;
-      font-weight: 600;
-    }
-
-    .splash-dots {
-      display: flex;
-      gap: 6px;
-      justify-content: center;
-      margin-top: 8px;
-    }
-
-    .splash-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #a8d8e8;
-      opacity: 0.3;
-      animation: dotPulse 1.4s ease-in-out infinite;
-    }
+    .splash.hidden { opacity: 0; transform: scale(1.08); visibility: hidden; pointer-events: none; }
+    .splash-orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.35; animation: orbFloat 6s ease-in-out infinite; }
+    .splash-orb.orb-1 { width: 320px; height: 320px; background: radial-gradient(circle, #a8d8e8 0%, transparent 70%); top: -100px; left: -100px; }
+    .splash-orb.orb-2 { width: 280px; height: 280px; background: radial-gradient(circle, #c9b8e8 0%, transparent 70%); bottom: -80px; right: -80px; animation-delay: 2s; }
+    .splash-orb.orb-3 { width: 200px; height: 200px; background: radial-gradient(circle, #e8b8d8 0%, transparent 70%); top: 40%; left: 50%; transform: translate(-50%, -50%); animation-delay: 4s; opacity: 0.2; }
+    @keyframes orbFloat { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(20px, -30px) scale(1.15); } }
+    .splash-logo { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 18px; animation: logoEnter 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    @keyframes logoEnter { from { opacity: 0; transform: translateY(24px) scale(0.85); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .splash-icon-wrap { position: relative; width: 110px; height: 110px; display: flex; align-items: center; justify-content: center; }
+    .splash-icon-ring { position: absolute; inset: 0; border-radius: 50%; border: 2px solid transparent; border-top-color: #a8d8e8; border-right-color: #c9b8e8; animation: ringSpin 2.4s linear infinite; }
+    .splash-icon-ring::after { content: ''; position: absolute; inset: 6px; border-radius: 50%; border: 1.5px solid transparent; border-bottom-color: #e8b8d8; border-left-color: #a8d8e8; animation: ringSpin 1.8s linear infinite reverse; }
+    @keyframes ringSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .splash-icon-core { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, rgba(168, 216, 232, 0.15), rgba(201, 184, 232, 0.15)); border: 1px solid rgba(168, 216, 232, 0.35); display: flex; align-items: center; justify-content: center; font-size: 34px; color: #a8d8e8; box-shadow: 0 0 30px rgba(168, 216, 232, 0.3), 0 0 60px rgba(201, 184, 232, 0.15); animation: iconPulse 2s ease-in-out infinite; }
+    @keyframes iconPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    .splash-title { font-size: 32px; font-weight: 800; letter-spacing: 3px; background: linear-gradient(135deg, #a8d8e8 0%, #c9b8e8 50%, #e8b8d8 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-align: center; line-height: 1.1; }
+    .splash-title .accent { background: linear-gradient(135deg, #c9b8e8 0%, #e8b8d8 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .splash-subtitle { font-size: 13px; color: #8a8aa8; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 600; margin-top: -6px; }
+    .splash-progress-wrap { position: relative; z-index: 2; margin-top: 42px; width: 240px; max-width: 75vw; }
+    .splash-progress-bar { height: 4px; background: rgba(168, 216, 232, 0.1); border-radius: 10px; overflow: hidden; }
+    .splash-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #a8d8e8, #c9b8e8, #e8b8d8); border-radius: 10px; transition: width 0.15s linear; box-shadow: 0 0 12px rgba(168, 216, 232, 0.6); }
+    .splash-percent { font-size: 12px; color: #8a8aa8; text-align: center; margin-top: 12px; letter-spacing: 1.5px; font-weight: 600; }
+    .splash-dots { display: flex; gap: 6px; justify-content: center; margin-top: 8px; }
+    .splash-dot { width: 6px; height: 6px; border-radius: 50%; background: #a8d8e8; opacity: 0.3; animation: dotPulse 1.4s ease-in-out infinite; }
     .splash-dot:nth-child(2) { animation-delay: 0.2s; background: #c9b8e8; }
     .splash-dot:nth-child(3) { animation-delay: 0.4s; background: #e8b8d8; }
+    @keyframes dotPulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.15); } }
+    .splash-greeting { position: relative; z-index: 2; margin-top: 24px; font-size: 12.5px; color: #8a8aa8; letter-spacing: 0.5px; text-align: center; max-width: 280px; line-height: 1.5; transition: opacity 0.3s ease; }
+    .splash-top-line { position: absolute; top: 0; left: 0; height: 3px; width: 100%; background: linear-gradient(90deg, transparent, #a8d8e8, #c9b8e8, #e8b8d8, transparent); opacity: 0; animation: topLineIn 1.2s ease 0.3s both; }
+    @keyframes topLineIn { from { opacity: 0; transform: scaleX(0); } to { opacity: 0.6; transform: scaleX(1); } }
 
-    @keyframes dotPulse {
-      0%, 100% { opacity: 0.3; transform: scale(0.8); }
-      50% { opacity: 1; transform: scale(1.15); }
-    }
+    /* ==================== ОСНОВНОЕ ==================== */
+    .app { width: 100%; max-width: 600px; background: var(--app-bg); border-radius: 32px 32px 24px 24px; border: 1px solid var(--border-1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45); padding: 16px 14px; display: flex; flex-direction: column; min-height: calc(100vh - 28px); position: relative; overflow: hidden; transition: background 0.3s ease; }
+    .app.app-entering { animation: appEnter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    @keyframes appEnter { from { opacity: 0; transform: translateY(20px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
-    .splash-greeting {
-      position: relative;
-      z-index: 2;
-      margin-top: 24px;
-      font-size: 12.5px;
-      color: #8a8aa8;
-      letter-spacing: 0.5px;
-      text-align: center;
-      max-width: 280px;
-      line-height: 1.5;
-      transition: opacity 0.3s ease;
-    }
-
-    .splash-top-line {
-      position: absolute;
-      top: 0; left: 0;
-      height: 3px;
-      width: 100%;
-      background: linear-gradient(90deg, transparent, #a8d8e8, #c9b8e8, #e8b8d8, transparent);
-      opacity: 0;
-      animation: topLineIn 1.2s ease 0.3s both;
-    }
-
-    @keyframes topLineIn {
-      from { opacity: 0; transform: scaleX(0); }
-      to { opacity: 0.6; transform: scaleX(1); }
-    }
-
-    /* ==================== ОСНОВНОЙ КОНТЕНТ ==================== */
-    .app {
-      width: 100%; max-width: 600px;
-      background: var(--app-bg);
-      border-radius: 32px 32px 24px 24px;
-      border: 1px solid var(--border-1);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-      padding: 16px 14px;
-      display: flex; flex-direction: column;
-      min-height: calc(100vh - 28px);
-      position: relative;
-      overflow: hidden;
-      transition: background 0.3s ease;
-    }
-
-    .app.app-entering {
-      animation: appEnter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-
-    @keyframes appEnter {
-      from { opacity: 0; transform: translateY(20px) scale(0.97); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    /* ===== ШАПКА ===== */
-    .header {
-      display: flex; justify-content: space-between; align-items: center;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border-2);
-      margin-bottom: 14px;
-    }
-
-    .logo {
-      font-size: 20px; font-weight: 700; letter-spacing: 1.5px;
-      background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
-      -webkit-background-clip: text; background-clip: text;
-      color: transparent;
-      display: flex; align-items: center; gap: 8px;
-    }
+    .header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border-2); margin-bottom: 14px; }
+    .logo { font-size: 20px; font-weight: 700; letter-spacing: 1.5px; background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; display: flex; align-items: center; gap: 8px; }
     .logo i { color: var(--accent-1); font-size: 21px; }
-
     .header-actions { display: flex; gap: 6px; align-items: center; }
-
-    .live-indicator {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 9.5px;
-      color: var(--success);
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      padding: 4px 8px;
-      border-radius: 12px;
-      background: rgba(140, 220, 160, 0.1);
-      border: 1px solid rgba(140, 220, 160, 0.25);
-    }
-    .live-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--success);
-      animation: livePulse 1.6s ease-in-out infinite;
-    }
-    @keyframes livePulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.85); }
-    }
-
-    .icon-btn {
-      background: rgba(168, 216, 232, 0.06);
-      border: 1px solid var(--border-2);
-      color: var(--accent-1);
-      width: 40px; height: 40px; border-radius: 22px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px; cursor: pointer;
-      transition: background-color 0.18s ease, transform 0.18s ease;
-      position: relative;
-    }
+    .live-indicator { display: inline-flex; align-items: center; gap: 4px; font-size: 9.5px; color: var(--success); font-weight: 700; letter-spacing: 0.5px; padding: 4px 8px; border-radius: 12px; background: rgba(140, 220, 160, 0.1); border: 1px solid rgba(140, 220, 160, 0.25); }
+    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: livePulse 1.6s ease-in-out infinite; }
+    @keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.85); } }
+    .icon-btn { background: rgba(168, 216, 232, 0.06); border: 1px solid var(--border-2); color: var(--accent-1); width: 40px; height: 40px; border-radius: 22px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; transition: background-color 0.18s ease, transform 0.18s ease; position: relative; }
     .icon-btn:active { background: rgba(168, 216, 232, 0.18); transform: scale(0.94); }
-    .icon-btn.admin-active {
-      background: rgba(232, 168, 200, 0.15);
-      border-color: rgba(232, 168, 200, 0.5);
-      color: var(--pink);
-    }
+    .icon-btn.admin-active { background: rgba(232, 168, 200, 0.15); border-color: rgba(232, 168, 200, 0.5); color: var(--pink); }
 
-    /* ===== ПЕРЕХОДЫ ===== */
     .page { display: none; flex-direction: column; flex: 1; }
-    .page.active {
-      display: flex;
-      animation: pageIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-    .page.leaving {
-      display: flex;
-      position: absolute;
-      top: 16px; left: 14px; right: 14px; bottom: 16px;
-      animation: pageOut 0.22s cubic-bezier(0.4, 0, 1, 1) both;
-      pointer-events: none; z-index: 0;
-    }
-    @keyframes pageOut {
-      from { opacity: 1; transform: translate3d(0, 0, 0); }
-      to { opacity: 0; transform: translate3d(-16px, 0, 0); }
-    }
-    @keyframes pageIn {
-      from { opacity: 0; transform: translate3d(16px, 0, 0); }
-      to { opacity: 1; transform: translate3d(0, 0, 0); }
-    }
+    .page.active { display: flex; animation: pageIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .page.leaving { display: flex; position: absolute; top: 16px; left: 14px; right: 14px; bottom: 16px; animation: pageOut 0.22s cubic-bezier(0.4, 0, 1, 1) both; pointer-events: none; z-index: 0; }
+    @keyframes pageOut { from { opacity: 1; transform: translate3d(0, 0, 0); } to { opacity: 0; transform: translate3d(-16px, 0, 0); } }
+    @keyframes pageIn { from { opacity: 0; transform: translate3d(16px, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
 
-    h2 {
-      font-size: 18px; font-weight: 600; margin-bottom: 4px;
-      display: flex; align-items: center; gap: 8px;
-      color: var(--text-primary);
-    }
+    h2 { font-size: 18px; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; color: var(--text-primary); }
     h2 i { color: var(--accent-2); font-size: 17px; }
     .subhead { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 14px; }
 
     .search-wrap { position: relative; margin-bottom: 10px; }
-    .search-icon {
-      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-      color: var(--text-muted); font-size: 14px; pointer-events: none;
-    }
-    .search-input {
-      width: 100%; background: var(--card-bg);
-      border: 1px solid var(--border-2);
-      color: var(--text-primary);
-      padding: 11px 40px 11px 38px;
-      border-radius: 14px; font-size: 13.5px;
-      outline: none; font-family: inherit;
-      transition: border-color 0.2s ease;
-    }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 14px; pointer-events: none; }
+    .search-input { width: 100%; background: var(--card-bg); border: 1px solid var(--border-2); color: var(--text-primary); padding: 11px 40px 11px 38px; border-radius: 14px; font-size: 13.5px; outline: none; font-family: inherit; transition: border-color 0.2s ease; }
     .search-input:focus { border-color: var(--accent-1); }
     .search-input::placeholder { color: var(--text-muted); }
-    .search-clear {
-      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-      background: transparent; border: none;
-      color: var(--text-muted); font-size: 15px;
-      cursor: pointer; padding: 6px; border-radius: 50%;
-      display: none;
-    }
+    .search-clear { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--text-muted); font-size: 15px; cursor: pointer; padding: 6px; border-radius: 50%; display: none; }
     .search-clear.visible { display: block; }
 
-    .cat-filters {
-      display: flex; gap: 6px; overflow-x: auto;
-      padding-bottom: 4px; margin-bottom: 12px;
-      scrollbar-width: none;
-    }
+    .cat-filters { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 12px; scrollbar-width: none; }
     .cat-filters::-webkit-scrollbar { display: none; }
-    .cat-btn {
-      background: var(--card-bg);
-      border: 1px solid var(--border-2);
-      color: var(--text-secondary);
-      padding: 7px 14px; border-radius: 20px;
-      font-size: 12px; font-weight: 600;
-      cursor: pointer; white-space: nowrap;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
-      display: flex; align-items: center; gap: 5px;
-    }
-    .cat-btn.active {
-      background: rgba(168, 216, 232, 0.15);
-      border-color: var(--accent-1);
-      color: var(--accent-1);
-    }
+    .cat-btn { background: var(--card-bg); border: 1px solid var(--border-2); color: var(--text-secondary); padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: all 0.2s ease; flex-shrink: 0; display: flex; align-items: center; gap: 5px; }
+    .cat-btn.active { background: rgba(168, 216, 232, 0.15); border-color: var(--accent-1); color: var(--accent-1); }
     .cat-btn:active { transform: scale(0.96); }
     .cat-btn i { font-size: 11px; }
 
-    .tab-switcher {
-      display: flex; gap: 4px;
-      background: var(--card-bg);
-      padding: 4px; border-radius: 30px;
-      margin-bottom: 14px;
-      border: 1px solid var(--border-2);
-    }
-    .tab-switch-btn {
-      flex: 1; background: transparent; border: none;
-      color: var(--text-muted);
-      padding: 9px 10px; border-radius: 24px;
-      font-size: 12.5px; font-weight: 600;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      display: flex; align-items: center; justify-content: center; gap: 5px;
-    }
-    .tab-switch-btn.active {
-      background: rgba(168, 216, 232, 0.12);
-      color: var(--accent-1);
-    }
+    .tab-switcher { display: flex; gap: 4px; background: var(--card-bg); padding: 4px; border-radius: 30px; margin-bottom: 14px; border: 1px solid var(--border-2); overflow-x: auto; scrollbar-width: none; }
+    .tab-switcher::-webkit-scrollbar { display: none; }
+    .tab-switch-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 9px 10px; border-radius: 24px; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; justify-content: center; gap: 5px; white-space: nowrap; font-family: inherit; }
+    .tab-switch-btn.active { background: rgba(168, 216, 232, 0.12); color: var(--accent-1); }
     .tab-switch-btn:active { transform: scale(0.97); }
-    .tab-switch-btn .tab-count {
-      background: rgba(168, 216, 232, 0.2);
-      color: var(--accent-1);
-      border-radius: 10px; padding: 1px 7px;
-      font-size: 10.5px; font-weight: 700; min-width: 18px;
-    }
-    .tab-switch-btn.active .tab-count {
-      background: var(--accent-1);
-      color: var(--app-bg);
-    }
+    .tab-switch-btn .tab-count { background: rgba(168, 216, 232, 0.2); color: var(--accent-1); border-radius: 10px; padding: 1px 7px; font-size: 10.5px; font-weight: 700; min-width: 18px; }
+    .tab-switch-btn.active .tab-count { background: var(--accent-1); color: var(--app-bg); }
 
     .grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-2);
-      border-radius: 20px; padding: 14px 16px;
-      display: flex; align-items: center; justify-content: space-between;
-      cursor: pointer;
-      transition: transform 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, opacity 0.25s ease;
-      position: relative; gap: 8px;
-    }
-    .card:active {
-      background: var(--card-bg-hover);
-      border-color: var(--accent-2);
-      transform: scale(0.985);
-    }
-    .card.out-of-stock {
-      opacity: 0.45; cursor: not-allowed;
-      border-color: rgba(232, 140, 140, 0.2);
-    }
+    .card { background: var(--card-bg); border: 1px solid var(--border-2); border-radius: 20px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: transform 0.18s ease, background-color 0.18s ease; position: relative; gap: 8px; }
+    .card:active { background: var(--card-bg-hover); border-color: var(--accent-2); transform: scale(0.985); }
+    .card.out-of-stock { opacity: 0.45; cursor: not-allowed; }
     .card.out-of-stock:active { transform: none; }
     .card.out-of-stock .price-tag { color: var(--text-muted); text-decoration: line-through; }
-
-    .out-badge {
-      position: absolute; top: -6px; right: 12px;
-      background: var(--danger); color: var(--app-bg);
-      border-radius: 10px; padding: 2px 8px;
-      font-size: 9.5px; font-weight: 800;
-      letter-spacing: 0.5px; text-transform: uppercase;
-    }
-
-    .fav-btn {
-      background: transparent; border: none;
-      color: var(--text-muted); font-size: 16px;
-      cursor: pointer; padding: 6px; border-radius: 50%;
-      transition: color 0.2s ease, transform 0.2s ease;
-      flex-shrink: 0; position: relative; z-index: 2;
-    }
+    .out-badge { position: absolute; top: -6px; right: 12px; background: var(--danger); color: var(--app-bg); border-radius: 10px; padding: 2px 8px; font-size: 9.5px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; }
+    .fav-btn { background: transparent; border: none; color: var(--text-muted); font-size: 16px; cursor: pointer; padding: 6px; border-radius: 50%; transition: color 0.2s ease, transform 0.2s ease; flex-shrink: 0; position: relative; z-index: 2; }
     .fav-btn.active { color: var(--pink); }
     .fav-btn:active { transform: scale(0.85); }
-
     .card-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
-    .card-title {
-      font-weight: 600; font-size: 15px;
-      display: flex; align-items: center; gap: 6px;
-      color: var(--text-primary); flex-wrap: wrap;
-    }
+    .card-title { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 6px; color: var(--text-primary); flex-wrap: wrap; }
     .card-title i { color: var(--accent-1); font-size: 14px; flex-shrink: 0; }
-    .card-desc {
-      font-size: 12px; color: var(--text-secondary);
-      margin-top: 3px;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .price-tag {
-      font-size: 15px; font-weight: 700; color: var(--accent-1);
-      white-space: nowrap; flex-shrink: 0;
-    }
+    .card-desc { font-size: 12px; color: var(--text-secondary); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .price-tag { font-size: 15px; font-weight: 700; color: var(--accent-1); white-space: nowrap; flex-shrink: 0; }
 
-    .btn {
-      border: 1px solid var(--accent-1);
-      background: rgba(168, 216, 232, 0.08);
-      color: var(--accent-1);
-      padding: 13px 18px; border-radius: 46px;
-      font-weight: 600; font-size: 14.5px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      cursor: pointer;
-      transition: background-color 0.18s ease, transform 0.18s ease, opacity 0.2s ease;
-      width: 100%; margin-bottom: 8px;
-      font-family: inherit;
-    }
+    .btn { border: 1px solid var(--accent-1); background: rgba(168, 216, 232, 0.08); color: var(--accent-1); padding: 13px 18px; border-radius: 46px; font-weight: 600; font-size: 14.5px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: all 0.18s ease; width: 100%; margin-bottom: 8px; font-family: inherit; }
     .btn:active { background: rgba(168, 216, 232, 0.2); transform: scale(0.98); }
-    .btn:disabled {
-      opacity: 0.4; cursor: not-allowed;
-      background: rgba(120, 120, 140, 0.1);
-      border-color: rgba(120, 120, 140, 0.2);
-      color: var(--text-muted);
-    }
-    .btn:disabled:active { transform: none; }
-    .btn-outline {
-      background: transparent;
-      border-color: rgba(200, 180, 232, 0.3);
-      color: var(--accent-2);
-    }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-outline { background: transparent; border-color: rgba(200, 180, 232, 0.3); color: var(--accent-2); }
     .btn-outline:active { background: rgba(200, 180, 232, 0.12); }
-    .btn-small {
-      padding: 8px 14px; font-size: 12.5px; border-radius: 30px;
-      width: auto; margin-bottom: 0;
-    }
-    .btn-success {
-      background: rgba(140, 220, 160, 0.15);
-      border-color: var(--success); color: var(--success);
-    }
-    .btn-danger {
-      background: rgba(232, 140, 140, 0.1);
-      border-color: var(--danger); color: var(--danger);
-    }
+    .btn-small { padding: 8px 14px; font-size: 12.5px; border-radius: 30px; width: auto; margin-bottom: 0; }
+    .btn-success { background: rgba(140, 220, 160, 0.15); border-color: var(--success); color: var(--success); }
+    .btn-danger { background: rgba(232, 140, 140, 0.1); border-color: var(--danger); color: var(--danger); }
 
-    .detail-card {
-      background: var(--card-bg);
-      border-radius: 20px;
-      border: 1px solid var(--border-2);
-      padding: 20px 18px; margin-bottom: 14px;
-    }
-    .detail-title {
-      font-size: 19px; font-weight: 700;
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 12px; color: var(--text-primary);
-      flex-wrap: wrap;
-    }
+    .detail-card { background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border-2); padding: 20px 18px; margin-bottom: 14px; }
+    .detail-title { font-size: 19px; font-weight: 700; display: flex; align-items: center; gap: 10px; margin-bottom: 12px; color: var(--text-primary); flex-wrap: wrap; }
     .detail-title i { color: var(--accent-1); font-size: 20px; }
     .detail-desc { font-size: 14px; line-height: 1.55; color: var(--text-secondary); margin-bottom: 16px; }
 
-    .calc-block {
-      background: rgba(168, 216, 232, 0.06);
-      border: 1px solid var(--border-2);
-      border-radius: 16px;
-      padding: 14px 16px;
-      margin: 12px 0 16px;
-    }
-    .calc-label {
-      font-size: 12.5px; color: var(--text-secondary);
-      margin-bottom: 8px; font-weight: 600;
-      display: flex; align-items: center; gap: 6px;
-    }
+    .calc-block { background: rgba(168, 216, 232, 0.06); border: 1px solid var(--border-2); border-radius: 16px; padding: 14px 16px; margin: 12px 0 16px; }
+    .calc-label { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
     .calc-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-    .qty-btn {
-      background: var(--card-bg); border: 1px solid var(--border-2);
-      color: var(--accent-1);
-      width: 38px; height: 38px; border-radius: 12px;
-      font-size: 18px; font-weight: 700;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.15s ease; flex-shrink: 0;
-    }
+    .qty-btn { background: var(--card-bg); border: 1px solid var(--border-2); color: var(--accent-1); width: 38px; height: 38px; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s ease; flex-shrink: 0; }
     .qty-btn:active { background: rgba(168, 216, 232, 0.2); transform: scale(0.9); }
-    .qty-input {
-      flex: 1; background: var(--card-bg);
-      border: 1px solid var(--border-2);
-      color: var(--text-primary);
-      padding: 10px 14px; border-radius: 12px;
-      font-size: 16px; font-weight: 700;
-      text-align: center; outline: none;
-      font-family: inherit; min-width: 0;
-    }
-    .qty-input:focus { border-color: var(--accent-1); }
-    .calc-total {
-      display: flex; justify-content: space-between; align-items: center;
-      padding-top: 12px;
-      border-top: 1px solid rgba(168, 216, 232, 0.1);
-    }
+    .qty-input { flex: 1; background: var(--card-bg); border: 1px solid var(--border-2); color: var(--text-primary); padding: 10px 14px; border-radius: 12px; font-size: 16px; font-weight: 700; text-align: center; outline: none; font-family: inherit; min-width: 0; }
+    .calc-total { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid rgba(168, 216, 232, 0.1); }
     .calc-total .label { color: var(--text-secondary); font-size: 13px; }
     .calc-total .value { font-size: 22px; font-weight: 800; color: var(--accent-1); }
 
-    .cart-item {
-      display: flex; justify-content: space-between; align-items: center;
-      background: var(--card-bg);
-      border-radius: 16px; padding: 12px 14px;
-      margin-bottom: 8px;
-      border: 1px solid var(--border-2);
-      gap: 10px;
-    }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); border-radius: 16px; padding: 12px 14px; margin-bottom: 8px; border: 1px solid var(--border-2); gap: 10px; }
     .cart-item-info { flex: 1; min-width: 0; }
-    .cart-item-title {
-      font-weight: 600; color: var(--text-primary);
-      font-size: 13.5px;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
+    .cart-item-title { font-weight: 600; color: var(--text-primary); font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .cart-item-sub { font-size: 11.5px; color: var(--text-secondary); margin-top: 2px; }
     .cart-item-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .cart-item-price { font-weight: 700; color: var(--accent-3); font-size: 14px; white-space: nowrap; }
-    .cart-remove {
-      background: transparent;
-      border: 1px solid rgba(232, 168, 200, 0.35);
-      color: var(--pink);
-      width: 34px; height: 34px; border-radius: 17px;
-      font-size: 13px; cursor: pointer;
-      transition: background-color 0.18s ease, transform 0.18s ease;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .cart-remove:active { background: rgba(232, 168, 200, 0.18); transform: scale(0.9); }
+    .cart-remove { background: transparent; border: 1px solid rgba(232, 168, 200, 0.35); color: var(--pink); width: 34px; height: 34px; border-radius: 17px; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .cart-remove:active { transform: scale(0.9); }
     .total { font-size: 19px; font-weight: 700; margin: 14px 0; text-align: right; color: var(--text-primary); }
 
     .promo-row { display: flex; gap: 8px; margin-bottom: 12px; }
-    .promo-input {
-      flex: 1; background: var(--card-bg);
-      border: 1px solid var(--border-2);
-      color: var(--text-primary);
-      padding: 10px 14px; border-radius: 12px;
-      font-size: 13px; outline: none;
-      font-family: inherit;
-      text-transform: uppercase; letter-spacing: 1px;
-    }
+    .promo-input { flex: 1; background: var(--card-bg); border: 1px solid var(--border-2); color: var(--text-primary); padding: 10px 14px; border-radius: 12px; font-size: 13px; outline: none; font-family: inherit; text-transform: uppercase; letter-spacing: 1px; }
     .promo-input:focus { border-color: var(--accent-1); }
     .promo-input::placeholder { color: var(--text-muted); text-transform: none; letter-spacing: 0; }
-    .promo-btn {
-      background: rgba(168, 216, 232, 0.1);
-      border: 1px solid var(--accent-1);
-      color: var(--accent-1);
-      padding: 0 16px; border-radius: 12px;
-      font-size: 13px; font-weight: 600;
-      cursor: pointer; transition: all 0.15s ease;
-      font-family: inherit; flex-shrink: 0;
-    }
+    .promo-btn { background: rgba(168, 216, 232, 0.1); border: 1px solid var(--accent-1); color: var(--accent-1); padding: 0 16px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; flex-shrink: 0; }
     .promo-btn:active { transform: scale(0.95); }
-    .promo-status {
-      font-size: 11.5px; margin-top: -6px; margin-bottom: 10px;
-      padding-left: 4px; min-height: 14px; font-weight: 600;
-    }
+    .promo-status { font-size: 11.5px; margin-top: -6px; margin-bottom: 10px; padding-left: 4px; min-height: 14px; font-weight: 600; }
     .promo-status.ok { color: var(--success); }
     .promo-status.err { color: var(--danger); }
 
-    .login-card {
+    /* ========== ЗАГРУЗКА ФАЙЛОВ ========== */
+    .upload-zone {
+      background: rgba(168, 216, 232, 0.04);
+      border: 2px dashed var(--border-2);
+      border-radius: 14px;
+      padding: 20px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 10px;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      background: rgba(168, 216, 232, 0.08);
+      border-color: var(--accent-1);
+    }
+    .upload-zone-icon { font-size: 28px; color: var(--accent-1); margin-bottom: 8px; opacity: 0.8; }
+    .upload-zone-text { font-size: 13px; color: var(--text-primary); font-weight: 600; margin-bottom: 4px; }
+    .upload-zone-hint { font-size: 11px; color: var(--text-muted); }
+    .upload-zone input[type="file"] { display: none; }
+
+    .file-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+    .file-item {
+      display: flex; align-items: center; gap: 10px;
       background: var(--card-bg);
-      border-radius: 24px;
-      border: 1px solid rgba(232, 168, 200, 0.25);
-      padding: 28px 22px; margin: auto 0; text-align: center;
+      border: 1px solid var(--border-2);
+      border-radius: 12px;
+      padding: 10px 12px;
+      transition: all 0.2s ease;
     }
-    .login-icon {
-      width: 64px; height: 64px; border-radius: 32px;
-      background: rgba(232, 168, 200, 0.1);
-      border: 1px solid rgba(232, 168, 200, 0.3);
+    .file-item.uploading { border-color: var(--accent-1); }
+    .file-item.done { border-color: var(--success); }
+    .file-item.error { border-color: var(--danger); }
+    .file-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: rgba(168, 216, 232, 0.1);
+      color: var(--accent-1);
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 16px;
-      color: var(--pink); font-size: 26px;
+      font-size: 16px;
+      flex-shrink: 0;
     }
+    .file-icon.pdf { background: rgba(232, 140, 140, 0.15); color: var(--danger); }
+    .file-icon.img { background: rgba(140, 220, 160, 0.15); color: var(--success); }
+    .file-icon.doc { background: rgba(168, 216, 232, 0.15); color: var(--accent-1); }
+    .file-info { flex: 1; min-width: 0; }
+    .file-name { font-size: 12.5px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .file-size { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; }
+    .file-progress {
+      height: 3px;
+      background: rgba(168, 216, 232, 0.1);
+      border-radius: 2px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+    .file-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      border-radius: 2px;
+      transition: width 0.2s ease;
+    }
+    .file-remove {
+      background: transparent;
+      border: 1px solid rgba(232, 168, 200, 0.35);
+      color: var(--pink);
+      width: 28px; height: 28px;
+      border-radius: 14px;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .file-remove:active { transform: scale(0.9); }
+
+    /* Вложения в заказах (клиент и админ) */
+    .order-files {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-top: 8px; margin-bottom: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(168, 216, 232, 0.08);
+    }
+    .order-file-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 10px;
+      background: rgba(168, 216, 232, 0.08);
+      border: 1px solid rgba(168, 216, 232, 0.2);
+      border-radius: 10px;
+      font-size: 11px;
+      color: var(--accent-1);
+      text-decoration: none;
+      transition: all 0.15s ease;
+      max-width: 100%;
+      cursor: pointer;
+    }
+    .order-file-chip:active { transform: scale(0.96); }
+    .order-file-chip .name {
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: 140px;
+    }
+    .order-file-chip i { flex-shrink: 0; }
+
+    .login-card { background: var(--card-bg); border-radius: 24px; border: 1px solid rgba(232, 168, 200, 0.25); padding: 28px 22px; margin: auto 0; text-align: center; }
+    .login-icon { width: 64px; height: 64px; border-radius: 32px; background: rgba(232, 168, 200, 0.1); border: 1px solid rgba(232, 168, 200, 0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: var(--pink); font-size: 26px; }
     .login-title { font-size: 18px; font-weight: 700; color: var(--pink); margin-bottom: 6px; }
     .login-desc { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 20px; }
-
-    .code-input {
-      width: 100%;
-      background: var(--app-bg);
-      border: 1.5px solid rgba(232, 168, 200, 0.3);
-      color: var(--text-primary);
-      padding: 16px 20px; border-radius: 16px;
-      font-size: 22px; font-weight: 700;
-      letter-spacing: 6px; text-align: center;
-      outline: none; font-family: 'Courier New', monospace;
-      transition: border-color 0.2s ease;
-      margin-bottom: 14px;
-    }
+    .code-input { width: 100%; background: var(--app-bg); border: 1.5px solid rgba(232, 168, 200, 0.3); color: var(--text-primary); padding: 16px 20px; border-radius: 16px; font-size: 22px; font-weight: 700; letter-spacing: 6px; text-align: center; outline: none; font-family: 'Courier New', monospace; transition: border-color 0.2s ease; margin-bottom: 14px; }
     .code-input:focus { border-color: rgba(232, 168, 200, 0.65); }
     .code-input.error { border-color: var(--danger); animation: shake 0.4s ease; }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20% { transform: translateX(-8px); }
-      40% { transform: translateX(8px); }
-      60% { transform: translateX(-5px); }
-      80% { transform: translateX(5px); }
-    }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(5px); } }
     .login-error { color: var(--danger); font-size: 12.5px; margin-bottom: 12px; min-height: 18px; font-weight: 500; }
 
-    .order-card {
-      background: var(--card-bg);
-      border-radius: 18px; padding: 14px 16px;
-      margin-bottom: 10px;
-      border: 1px solid var(--border-2);
-      transition: border-color 0.35s ease, box-shadow 0.35s ease;
-      position: relative; overflow: hidden;
-    }
+    .order-card { background: var(--card-bg); border-radius: 18px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid var(--border-2); transition: all 0.35s ease; position: relative; overflow: hidden; }
     .order-card.status-new { border-color: rgba(168, 216, 232, 0.4); }
     .order-card.status-progress { border-color: rgba(232, 200, 130, 0.4); }
     .order-card.status-done { border-color: rgba(140, 220, 160, 0.35); }
     .order-card.status-cancel { border-color: rgba(232, 140, 140, 0.3); opacity: 0.75; }
-
-    .order-header {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 8px; flex-wrap: wrap; gap: 6px;
-    }
+    .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
     .order-id { font-weight: 700; font-size: 13.5px; color: var(--accent-1); }
     .order-date { font-size: 12px; color: var(--text-muted); }
-    .order-client {
-      font-size: 12.5px; color: var(--accent-2);
-      margin-bottom: 6px;
-      display: flex; align-items: center; gap: 6px;
-      flex-wrap: wrap;
-    }
+    .order-client { font-size: 12.5px; color: var(--accent-2); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
     .order-items { font-size: 12.5px; color: var(--text-secondary); line-height: 1.45; margin-bottom: 8px; }
     .order-total { font-size: 14.5px; font-weight: 700; text-align: right; color: var(--accent-3); }
-
-    .order-status {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: 11.5px;
-      padding: 4px 10px; border-radius: 10px;
-      background: rgba(168, 216, 232, 0.1);
-      color: var(--accent-1);
-      border: 1px solid rgba(168, 216, 232, 0.2);
-      font-weight: 600;
-    }
+    .order-status { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; padding: 4px 10px; border-radius: 10px; background: rgba(168, 216, 232, 0.1); color: var(--accent-1); border: 1px solid rgba(168, 216, 232, 0.2); font-weight: 600; }
     .order-status.new { background: rgba(168, 216, 232, 0.15); color: var(--accent-1); border-color: rgba(168, 216, 232, 0.4); }
     .order-status.progress { background: rgba(232, 200, 130, 0.15); color: var(--warning); border-color: rgba(232, 200, 130, 0.4); }
     .order-status.done { background: rgba(140, 220, 160, 0.15); color: var(--success); border-color: rgba(140, 220, 160, 0.4); }
     .order-status.cancel { background: rgba(232, 140, 140, 0.15); color: var(--danger); border-color: rgba(232, 140, 140, 0.4); }
-
     .order-progress { display: flex; gap: 4px; margin-top: 10px; margin-bottom: 4px; }
-    .progress-step {
-      flex: 1; height: 4px;
-      background: rgba(168, 216, 232, 0.08);
-      border-radius: 2px; transition: background-color 0.35s ease;
-    }
+    .progress-step { flex: 1; height: 4px; background: rgba(168, 216, 232, 0.08); border-radius: 2px; transition: background-color 0.35s ease; }
     .progress-step.active { background: var(--accent-1); }
     .progress-step.progress-active { background: var(--warning); }
     .progress-step.done-active { background: var(--success); }
     .progress-step.cancel-active { background: var(--danger); }
 
-    .refresh-status-btn {
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-      background: transparent;
-      border: 1px dashed var(--border-2);
-      color: var(--accent-1);
-      padding: 10px 14px; border-radius: 30px;
-      font-size: 12.5px; font-weight: 600;
-      cursor: pointer;
-      transition: all 0.18s ease;
-      width: 100%; margin-bottom: 10px;
-      font-family: inherit;
-    }
-    .refresh-status-btn:active { background: rgba(168, 216, 232, 0.1); transform: scale(0.97); }
-    .refresh-status-btn i { transition: transform 0.6s ease; }
-    .refresh-status-btn.spinning i { transform: rotate(360deg); }
-
-    .new-status-badge {
-      position: absolute; top: 10px; right: 12px;
-      background: var(--accent-1); color: var(--app-bg);
-      border-radius: 12px; padding: 2px 8px;
-      font-size: 10px; font-weight: 800;
-    }
-
-    .rating-stars {
-      display: flex; gap: 3px; margin-top: 8px; padding-top: 8px;
-      border-top: 1px solid rgba(168, 216, 232, 0.08);
-    }
-    .star {
-      background: transparent; border: none;
-      color: var(--text-muted); font-size: 18px;
-      cursor: pointer; padding: 2px;
-      transition: color 0.15s ease, transform 0.15s ease;
-    }
-    .star.active { color: var(--warning); }
-    .star:active { transform: scale(0.85); }
-    .review-text {
-      font-size: 11.5px; color: var(--text-muted);
-      margin-top: 4px; font-style: italic;
-    }
-
-    .stats-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 8px; margin-bottom: 14px;
-    }
-    .stat-card {
-      background: var(--card-bg);
-      border-radius: 16px; padding: 12px 8px;
-      text-align: center;
-      border: 1px solid var(--border-2);
-    }
+    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
+    .stat-card { background: var(--card-bg); border-radius: 16px; padding: 12px 8px; text-align: center; border: 1px solid var(--border-2); }
     .stat-value { font-size: 20px; font-weight: 800; color: var(--accent-3); display: block; }
-    .stat-label {
-      font-size: 10.5px; color: var(--text-muted);
-      margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px;
-    }
+    .stat-label { font-size: 10.5px; color: var(--text-muted); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
 
     .filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-    .filter-btn {
-      background: transparent;
-      border: 1px solid var(--border-2);
-      color: var(--text-secondary);
-      padding: 6px 12px; border-radius: 20px;
-      font-size: 12px; cursor: pointer;
-      transition: all 0.18s ease;
-      font-family: inherit;
-    }
-    .filter-btn.active {
-      background: rgba(168, 216, 232, 0.12);
-      border-color: var(--accent-1);
-      color: var(--accent-1);
-    }
+    .filter-btn { background: transparent; border: 1px solid var(--border-2); color: var(--text-secondary); padding: 6px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; transition: all 0.18s ease; font-family: inherit; }
+    .filter-btn.active { background: rgba(168, 216, 232, 0.12); border-color: var(--accent-1); color: var(--accent-1); }
     .filter-btn:active { transform: scale(0.95); }
 
-    .order-actions {
-      display: flex; gap: 6px; flex-wrap: wrap;
-      margin-top: 10px; padding-top: 10px;
-      border-top: 1px solid rgba(168, 216, 232, 0.08);
-    }
+    .order-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(168, 216, 232, 0.08); }
 
-    .product-manage-card {
-      background: var(--card-bg);
-      border-radius: 16px; padding: 12px 14px;
-      margin-bottom: 8px;
-      border: 1px solid var(--border-2);
-      display: flex; align-items: center;
-      justify-content: space-between; gap: 10px;
-    }
-    .product-manage-card.out {
-      border-color: rgba(232, 140, 140, 0.25);
-      opacity: 0.75;
-    }
+    .product-manage-card { background: var(--card-bg); border-radius: 16px; padding: 12px 14px; margin-bottom: 8px; border: 1px solid var(--border-2); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .product-manage-card.out { border-color: rgba(232, 140, 140, 0.25); opacity: 0.75; }
     .product-manage-info { flex: 1; min-width: 0; }
-    .product-manage-title {
-      font-size: 13px; font-weight: 600;
-      color: var(--text-primary);
-      display: flex; align-items: center; gap: 6px;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
+    .product-manage-title { font-size: 13px; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .product-manage-title i { color: var(--accent-1); font-size: 12px; flex-shrink: 0; }
     .product-manage-price { font-size: 11.5px; color: var(--text-secondary); margin-top: 3px; }
     .product-manage-price strong { color: var(--accent-3); }
-
     .product-actions { display: flex; gap: 4px; flex-shrink: 0; }
-    .mini-btn {
-      background: var(--app-bg);
-      border: 1px solid var(--border-2);
-      color: var(--text-secondary);
-      width: 30px; height: 30px; border-radius: 8px;
-      font-size: 12px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.15s ease; padding: 0; font-family: inherit;
-    }
+    .mini-btn { background: var(--app-bg); border: 1px solid var(--border-2); color: var(--text-secondary); width: 30px; height: 30px; border-radius: 8px; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; font-family: inherit; }
     .mini-btn:active { transform: scale(0.9); }
     .mini-btn.edit { color: var(--accent-1); border-color: rgba(168, 216, 232, 0.35); }
     .mini-btn.del { color: var(--danger); border-color: rgba(232, 140, 140, 0.35); }
 
-    .stock-toggle {
-      display: flex; align-items: center; gap: 6px;
-      flex-shrink: 0; cursor: pointer; user-select: none;
-    }
-    .toggle-switch {
-      position: relative; width: 42px; height: 24px;
-      background: var(--app-bg);
-      border: 1px solid var(--border-2);
-      border-radius: 30px;
-      transition: background-color 0.25s ease, border-color 0.25s ease;
-      flex-shrink: 0;
-    }
-    .toggle-switch::after {
-      content: ''; position: absolute;
-      top: 2px; left: 2px;
-      width: 18px; height: 18px;
-      background: var(--text-muted); border-radius: 50%;
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.25s ease;
-    }
-    .stock-toggle.on .toggle-switch {
-      background: rgba(140, 220, 160, 0.25);
-      border-color: var(--success);
-    }
-    .stock-toggle.on .toggle-switch::after {
-      transform: translateX(18px);
-      background: var(--success);
-    }
-    .stock-toggle.off .toggle-switch {
-      background: rgba(232, 140, 140, 0.15);
-      border-color: var(--danger);
-    }
+    .stock-toggle { display: flex; align-items: center; gap: 6px; flex-shrink: 0; cursor: pointer; user-select: none; }
+    .toggle-switch { position: relative; width: 42px; height: 24px; background: var(--app-bg); border: 1px solid var(--border-2); border-radius: 30px; transition: all 0.25s ease; flex-shrink: 0; }
+    .toggle-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background: var(--text-muted); border-radius: 50%; transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.25s ease; }
+    .stock-toggle.on .toggle-switch { background: rgba(140, 220, 160, 0.25); border-color: var(--success); }
+    .stock-toggle.on .toggle-switch::after { transform: translateX(18px); background: var(--success); }
+    .stock-toggle.off .toggle-switch { background: rgba(232, 140, 140, 0.15); border-color: var(--danger); }
     .stock-toggle.off .toggle-switch::after { background: var(--danger); }
-    .stock-label { font-size: 10.5px; font-weight: 700; letter-spacing: 0.3px; white-space: nowrap; }
+    .stock-label { font-size: 10.5px; font-weight: 700; white-space: nowrap; }
     .stock-label.on { color: var(--success); }
     .stock-label.off { color: var(--danger); }
 
-    .stock-badge-out {
-      display: inline-block; font-size: 9.5px;
-      padding: 2px 7px; border-radius: 8px;
-      background: rgba(232, 140, 140, 0.15);
-      color: var(--danger);
-      border: 1px solid rgba(232, 140, 140, 0.35);
-      font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase;
-    }
-    .stock-badge-in {
-      display: inline-block; font-size: 9.5px;
-      padding: 2px 7px; border-radius: 8px;
-      background: rgba(140, 220, 160, 0.12);
-      color: var(--success);
-      border: 1px solid rgba(140, 220, 160, 0.3);
-      font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase;
-    }
+    .stock-badge-out { display: inline-block; font-size: 9.5px; padding: 2px 7px; border-radius: 8px; background: rgba(232, 140, 140, 0.15); color: var(--danger); border: 1px solid rgba(232, 140, 140, 0.35); font-weight: 700; text-transform: uppercase; }
+    .stock-badge-in { display: inline-block; font-size: 9.5px; padding: 2px 7px; border-radius: 8px; background: rgba(140, 220, 160, 0.12); color: var(--success); border: 1px solid rgba(140, 220, 160, 0.3); font-weight: 700; text-transform: uppercase; }
 
-    .modal-backdrop {
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      display: none; align-items: center; justify-content: center;
-      z-index: 1000; padding: 20px;
-      animation: fadeIn 0.2s ease;
+    /* ========== АНАЛИТИКА ========== */
+    .analytics-block {
+      background: var(--card-bg);
+      border: 1px solid var(--border-2);
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 12px;
     }
-    .modal-backdrop.visible { display: flex; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    .modal {
-      background: var(--app-bg);
-      border-radius: 20px;
-      border: 1px solid var(--border-1);
-      padding: 20px 18px;
-      width: 100%; max-width: 420px;
-      max-height: 90vh; overflow-y: auto;
-    }
-    .modal-title {
-      font-size: 17px; font-weight: 700;
-      color: var(--text-primary); margin-bottom: 14px;
+    .analytics-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .modal-close {
-      background: transparent; border: none;
-      color: var(--text-muted); font-size: 20px;
-      cursor: pointer; padding: 4px;
+    .analytics-title span:last-child {
+      font-size: 11px;
+      color: var(--accent-1);
+      font-weight: 600;
     }
-    .form-label {
-      font-size: 11.5px; color: var(--text-secondary);
-      margin-bottom: 4px; display: block; font-weight: 600;
+    .analytics-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 120px;
+      padding-bottom: 20px;
+      position: relative;
+      margin-bottom: 8px;
+    }
+    .analytics-bar-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+      position: relative;
+      gap: 4px;
+    }
+    .analytics-bar-value {
+      font-size: 10px;
+      color: var(--accent-1);
+      font-weight: 700;
+      min-height: 12px;
+    }
+    .analytics-bar {
+      width: 100%;
+      max-width: 40px;
+      background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
+      border-radius: 4px 4px 0 0;
+      min-height: 3px;
+      transition: height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow: 0 0 12px rgba(168, 216, 232, 0.2);
+    }
+    .analytics-bar-label {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      text-align: center;
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
     }
 
-    .bottom-nav {
-      display: flex; justify-content: space-around; align-items: center;
-      margin-top: auto; padding-top: 12px;
-      border-top: 1px solid var(--border-2);
-      gap: 2px; z-index: 10;
-      padding-bottom: env(safe-area-inset-bottom);
+    .analytics-list-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(168, 216, 232, 0.06);
     }
-    .nav-item {
-      display: flex; flex-direction: column; align-items: center; gap: 2px;
-      background: transparent; border: none;
-      color: var(--text-muted); font-size: 10px; font-weight: 500;
-      cursor: pointer; padding: 8px 4px; border-radius: 16px;
-      transition: color 0.2s ease, background-color 0.2s ease;
-      flex: 1; position: relative; font-family: inherit;
+    .analytics-list-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .analytics-rank {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      background: rgba(168, 216, 232, 0.1);
+      color: var(--accent-1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800;
+      flex-shrink: 0;
     }
+    .analytics-rank.top-1 { background: rgba(232, 200, 130, 0.2); color: var(--warning); }
+    .analytics-rank.top-2 { background: rgba(200, 200, 220, 0.15); color: #c8c8e0; }
+    .analytics-rank.top-3 { background: rgba(232, 168, 200, 0.15); color: var(--pink); }
+    .analytics-list-info { flex: 1; min-width: 0; }
+    .analytics-list-name {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .analytics-list-bar {
+      height: 4px;
+      background: rgba(168, 216, 232, 0.08);
+      border-radius: 2px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+    .analytics-list-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      border-radius: 2px;
+      transition: width 0.5s ease;
+    }
+    .analytics-list-value {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--accent-1);
+      text-align: right;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .analytics-list-sub {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    /* ========== МОДАЛКА ========== */
+    .modal-backdrop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+    .modal-backdrop.visible { display: flex; }
+    .modal { background: var(--app-bg); border-radius: 20px; border: 1px solid var(--border-1); padding: 20px 18px; width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto; }
+    .modal-title { font-size: 17px; font-weight: 700; color: var(--text-primary); margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
+    .modal-close { background: transparent; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; padding: 4px; }
+    .form-label { font-size: 11.5px; color: var(--text-secondary); margin-bottom: 4px; display: block; font-weight: 600; }
+
+    .bottom-nav { display: flex; justify-content: space-around; align-items: center; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border-2); gap: 2px; z-index: 10; padding-bottom: env(safe-area-inset-bottom); }
+    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; background: transparent; border: none; color: var(--text-muted); font-size: 10px; font-weight: 500; cursor: pointer; padding: 8px 4px; border-radius: 16px; transition: all 0.2s ease; flex: 1; position: relative; font-family: inherit; }
     .nav-item i { font-size: 17px; transition: transform 0.2s ease; }
     .nav-item.active { color: var(--accent-1); background: rgba(168, 216, 232, 0.07); }
     .nav-item.active i { color: var(--accent-1); transform: translateY(-1px) scale(1.12); }
     .nav-item:active i { transform: scale(0.9); }
-    .nav-item.active::after {
-      content: ''; position: absolute; bottom: 2px; left: 50%;
-      width: 14px; height: 2px; border-radius: 2px;
-      background: var(--accent-1);
-      transform: translateX(-50%);
-    }
-    .nav-badge {
-      position: absolute; top: 2px; right: 8px;
-      background: var(--pink); color: var(--app-bg);
-      border-radius: 12px; padding: 1px 6px;
-      font-size: 9.5px; font-weight: 800;
-    }
+    .nav-item.active::after { content: ''; position: absolute; bottom: 2px; left: 50%; width: 14px; height: 2px; border-radius: 2px; background: var(--accent-1); transform: translateX(-50%); }
+    .nav-badge { position: absolute; top: 2px; right: 8px; background: var(--pink); color: var(--app-bg); border-radius: 12px; padding: 1px 6px; font-size: 9.5px; font-weight: 800; }
 
-    .empty-message {
-      text-align: center; padding: 32px 14px;
-      color: var(--text-muted);
-      border: 1px dashed var(--border-2);
-      border-radius: 20px; font-size: 13.5px;
-    }
-    .empty-message i {
-      font-size: 28px; display: block; margin-bottom: 10px;
-      color: var(--accent-1); opacity: 0.7;
-    }
+    .empty-message { text-align: center; padding: 32px 14px; color: var(--text-muted); border: 1px dashed var(--border-2); border-radius: 20px; font-size: 13.5px; }
+    .empty-message i { font-size: 28px; display: block; margin-bottom: 10px; color: var(--accent-1); opacity: 0.7; }
 
-    .back-btn {
-      background: transparent;
-      border: 1px solid rgba(200, 180, 232, 0.3);
-      color: var(--accent-2);
-      border-radius: 26px;
-      padding: 9px 14px; font-size: 13.5px; font-weight: 600;
-      display: flex; align-items: center; gap: 6px;
-      cursor: pointer;
-      transition: all 0.18s ease;
-      margin-bottom: 12px; width: fit-content;
-      font-family: inherit;
-    }
+    .back-btn { background: transparent; border: 1px solid rgba(200, 180, 232, 0.3); color: var(--accent-2); border-radius: 26px; padding: 9px 14px; font-size: 13.5px; font-weight: 600; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: all 0.18s ease; margin-bottom: 12px; width: fit-content; font-family: inherit; }
     .back-btn:active { background: rgba(200, 180, 232, 0.12); transform: translateX(-2px); }
 
-    .toast {
-      position: fixed; bottom: calc(24px + env(safe-area-inset-bottom)); left: 50%;
-      background: var(--app-bg);
-      border: 1px solid var(--accent-1);
-      color: var(--text-primary);
-      padding: 11px 20px; border-radius: 36px;
-      font-weight: 500; font-size: 13.5px;
-      z-index: 999;
-      animation: toastIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-      pointer-events: none; white-space: nowrap;
-      max-width: 90vw; overflow: hidden; text-overflow: ellipsis;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    }
-    @keyframes toastIn {
-      from { opacity: 0; transform: translate3d(-50%, 12px, 0); }
-      to { opacity: 1; transform: translate3d(-50%, 0, 0); }
-    }
+    .toast { position: fixed; bottom: calc(24px + env(safe-area-inset-bottom)); left: 50%; background: var(--app-bg); border: 1px solid var(--accent-1); color: var(--text-primary); padding: 11px 20px; border-radius: 36px; font-weight: 500; font-size: 13.5px; z-index: 999; animation: toastIn 0.28s cubic-bezier(0.22, 1, 0.36, 1); pointer-events: none; white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); }
+    @keyframes toastIn { from { opacity: 0; transform: translate3d(-50%, 12px, 0); } to { opacity: 1; transform: translate3d(-50%, 0, 0); } }
 
-    .cart-badge {
-      position: absolute; top: -5px; right: -5px;
-      background: var(--accent-3); color: var(--app-bg);
-      border-radius: 18px; padding: 2px 6px;
-      font-size: 10.5px; font-weight: 800;
-    }
-    .admin-badge {
-      position: absolute; top: -5px; right: -5px;
-      background: var(--pink); color: var(--app-bg);
-      border-radius: 18px; padding: 2px 6px;
-      font-size: 10.5px; font-weight: 800;
-      animation: pulse 1.5s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-    }
+    .cart-badge { position: absolute; top: -5px; right: -5px; background: var(--accent-3); color: var(--app-bg); border-radius: 18px; padding: 2px 6px; font-size: 10.5px; font-weight: 800; }
+    .admin-badge { position: absolute; top: -5px; right: -5px; background: var(--pink); color: var(--app-bg); border-radius: 18px; padding: 2px 6px; font-size: 10.5px; font-weight: 800; animation: pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
 
-    .input-field {
-      width: 100%;
-      background: var(--app-bg);
-      border: 1px solid var(--border-2);
-      color: var(--text-primary);
-      padding: 10px 14px; border-radius: 12px;
-      font-size: 13.5px; margin-bottom: 8px;
-      outline: none; font-family: inherit;
-      transition: border-color 0.2s ease;
-    }
+    .input-field { width: 100%; background: var(--app-bg); border: 1px solid var(--border-2); color: var(--text-primary); padding: 10px 14px; border-radius: 12px; font-size: 13.5px; margin-bottom: 8px; outline: none; font-family: inherit; transition: border-color 0.2s ease; }
     .input-field:focus { border-color: var(--accent-1); }
     .input-field::placeholder { color: var(--text-muted); }
-    .input-field.error { border-color: var(--danger); animation: shake 0.4s ease; }
+    .input-field.error { border-color: var(--danger); }
     .input-field.valid { border-color: var(--success); }
-
-    .field-hint {
-      font-size: 11.5px; margin-top: -4px; margin-bottom: 8px;
-      padding-left: 4px; min-height: 14px; font-weight: 500;
-    }
+    .field-hint { font-size: 11.5px; margin-top: -4px; margin-bottom: 8px; padding-left: 4px; min-height: 14px; font-weight: 500; }
     .field-hint.error { color: var(--danger); }
     .field-hint.valid { color: var(--success); }
-
     textarea.input-field { resize: vertical; min-height: 70px; line-height: 1.4; }
 
-    .chb-badge {
-      display: inline-block; font-size: 9.5px;
-      padding: 2px 7px; border-radius: 8px;
-      background: rgba(200, 200, 220, 0.1);
-      color: var(--text-muted);
-      border: 1px solid rgba(200, 200, 220, 0.2);
-      font-weight: 600; letter-spacing: 0.5px;
-    }
-
-    .info-banner {
-      background: rgba(168, 216, 232, 0.06);
-      border: 1px solid var(--border-2);
-      border-radius: 14px;
-      padding: 12px 14px; margin-bottom: 12px;
-      font-size: 12.5px; color: var(--accent-1); line-height: 1.5;
-    }
-
-    .remember-row {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 12.5px; color: var(--text-secondary);
-      margin-bottom: 8px; cursor: pointer; user-select: none;
-    }
-    .remember-row input[type="checkbox"] {
-      width: 16px; height: 16px;
-      accent-color: var(--accent-1);
-      cursor: pointer; flex-shrink: 0;
-    }
-    .client-saved-hint {
-      display: flex; align-items: center; gap: 6px;
-      font-size: 11.5px; color: var(--success);
-      padding: 6px 10px;
-      background: rgba(140, 220, 160, 0.08);
-      border: 1px solid rgba(140, 220, 160, 0.2);
-      border-radius: 10px; margin-bottom: 10px;
-    }
-    .client-saved-hint i { font-size: 12px; }
-    .clear-client-btn {
-      background: transparent;
-      border: 1px dashed var(--border-2);
-      color: var(--text-muted);
-      padding: 8px 12px; border-radius: 10px;
-      font-size: 11.5px; cursor: pointer;
-      margin-bottom: 8px; font-family: inherit;
-      width: 100%; transition: all 0.15s ease;
-    }
+    .info-banner { background: rgba(168, 216, 232, 0.06); border: 1px solid var(--border-2); border-radius: 14px; padding: 12px 14px; margin-bottom: 12px; font-size: 12.5px; color: var(--accent-1); line-height: 1.5; }
+    .remember-row { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-secondary); margin-bottom: 8px; cursor: pointer; user-select: none; }
+    .remember-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent-1); cursor: pointer; flex-shrink: 0; }
+    .client-saved-hint { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--success); padding: 6px 10px; background: rgba(140, 220, 160, 0.08); border: 1px solid rgba(140, 220, 160, 0.2); border-radius: 10px; margin-bottom: 10px; }
+    .clear-client-btn { background: transparent; border: 1px dashed var(--border-2); color: var(--text-muted); padding: 8px 12px; border-radius: 10px; font-size: 11.5px; cursor: pointer; margin-bottom: 8px; font-family: inherit; width: 100%; }
     .clear-client-btn:active { background: rgba(232, 140, 140, 0.08); color: var(--danger); }
 
-    .connection-status {
-      position: fixed; top: 8px; left: 50%;
-      transform: translateX(-50%);
-      padding: 6px 14px; border-radius: 20px;
-      font-size: 11.5px; font-weight: 600;
-      z-index: 9999;
-      display: none;
-      align-items: center; gap: 6px;
-    }
-    .connection-status.offline {
-      display: flex;
-      background: rgba(232, 140, 140, 0.95);
-      color: #fff;
-    }
-    .connection-status.online {
-      display: flex;
-      background: rgba(140, 220, 160, 0.95);
-      color: #1a1a2e;
-      animation: fadeOutStatus 2s ease forwards;
-    }
-    @keyframes fadeOutStatus {
-      0%, 70% { opacity: 1; }
-      100% { opacity: 0; }
-    }
+    .connection-status { position: fixed; top: 8px; left: 50%; transform: translateX(-50%); padding: 6px 14px; border-radius: 20px; font-size: 11.5px; font-weight: 600; z-index: 9999; display: none; align-items: center; gap: 6px; }
+    .connection-status.offline { display: flex; background: rgba(232, 140, 140, 0.95); color: #fff; }
+    .connection-status.online { display: flex; background: rgba(140, 220, 160, 0.95); color: #1a1a2e; animation: fadeOutStatus 2s ease forwards; }
+    @keyframes fadeOutStatus { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }
 
-    /* ===== PWA Установка баннер ===== */
-    .install-banner {
-      display: none;
-      position: fixed;
-      bottom: calc(16px + env(safe-area-inset-bottom));
-      left: 16px; right: 16px;
-      background: var(--card-bg);
-      border: 1px solid var(--accent-1);
-      border-radius: 20px;
-      padding: 14px 16px;
-      z-index: 9998;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-      animation: toastIn 0.4s ease;
-    }
+    .install-banner { display: none; position: fixed; bottom: calc(16px + env(safe-area-inset-bottom)); left: 16px; right: 16px; background: var(--card-bg); border: 1px solid var(--accent-1); border-radius: 20px; padding: 14px 16px; z-index: 9998; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); animation: toastIn 0.4s ease; }
 
-    /* ==================== АДАПТАЦИЯ ==================== */
     @media (max-width: 400px) {
       .app { padding: 12px 11px 14px; border-radius: 26px 26px 18px 18px; }
       .logo { font-size: 17px; } .logo i { font-size: 19px; }
       .card { padding: 12px 14px; }
       .card-title { font-size: 14px; }
-      .card-desc { font-size: 11.5px; }
       .price-tag { font-size: 14px; }
       .btn { padding: 11px 14px; font-size: 13.5px; }
       .detail-title { font-size: 17px; }
@@ -1243,6 +555,9 @@
       .code-input { font-size: 18px; letter-spacing: 5px; padding: 14px 16px; }
       .splash-title { font-size: 26px; }
       .live-indicator { display: none; }
+      .upload-zone { padding: 16px 12px; }
+      .upload-zone-icon { font-size: 24px; }
+      .analytics-chart { height: 100px; }
     }
 
     @media (min-width: 601px) and (max-width: 900px) {
@@ -1259,6 +574,7 @@
       .nav-item { font-size: 11px; }
       .nav-item i { font-size: 19px; }
       .stats-grid { grid-template-columns: repeat(4, 1fr); }
+      .analytics-chart { height: 150px; }
     }
 
     @media (min-width: 901px) {
@@ -1279,11 +595,11 @@
       .stat-value { font-size: 26px; }
       .splash-title { font-size: 48px; }
       .splash-progress-wrap { width: 360px; }
+      .analytics-chart { height: 180px; }
     }
   </style>
 </head>
 <body>
-  <!-- Статус соединения -->
   <div class="connection-status" id="connectionStatus">
     <i class="fas fa-wifi"></i>
     <span id="connectionText">Подключение...</span>
@@ -1295,82 +611,57 @@
     <div class="splash-orb orb-2"></div>
     <div class="splash-orb orb-3"></div>
     <div class="splash-top-line"></div>
-
     <div class="splash-logo">
       <div class="splash-icon-wrap">
         <div class="splash-icon-ring"></div>
-        <div class="splash-icon-core">
-          <i class="fas fa-print"></i>
-        </div>
+        <div class="splash-icon-core"><i class="fas fa-print"></i></div>
       </div>
-      <div class="splash-title">
-        PRINT<span class="accent">SOFT</span>
-      </div>
+      <div class="splash-title">PRINT<span class="accent">SOFT</span></div>
       <div class="splash-subtitle">Полиграфия</div>
     </div>
-
     <div class="splash-progress-wrap">
-      <div class="splash-progress-bar">
-        <div class="splash-progress-fill" id="splashProgressFill"></div>
-      </div>
+      <div class="splash-progress-bar"><div class="splash-progress-fill" id="splashProgressFill"></div></div>
       <div class="splash-percent" id="splashPercent">0%</div>
-      <div class="splash-dots">
-        <span class="splash-dot"></span>
-        <span class="splash-dot"></span>
-        <span class="splash-dot"></span>
-      </div>
+      <div class="splash-dots"><span class="splash-dot"></span><span class="splash-dot"></span><span class="splash-dot"></span></div>
     </div>
-
-    <div class="splash-greeting" id="splashGreeting">
-      Подключение к серверу...
-    </div>
+    <div class="splash-greeting" id="splashGreeting">Подключение к серверу...</div>
   </div>
 
-  <!-- ОСНОВНОЕ ПРИЛОЖЕНИЕ -->
+  <!-- ОСНОВНОЕ -->
   <div class="app" id="app" style="opacity: 0;">
     <div class="header">
-      <div class="logo" id="logoText">
-        <i class="fas fa-print"></i> <span>PRINT</span><span style="color:var(--accent-2);">SOFT</span>
-      </div>
+      <div class="logo" id="logoText"><i class="fas fa-print"></i> <span>PRINT</span><span style="color:var(--accent-2);">SOFT</span></div>
       <div class="header-actions">
-        <button class="icon-btn" id="installPwaBtn" style="display:none;" aria-label="Установить приложение" title="Установить приложение">
+        <button class="icon-btn" id="installPwaBtn" style="display:none;" aria-label="Установить">
           <i class="fas fa-download"></i>
         </button>
-        <div class="live-indicator" id="liveIndicator">
-          <span class="live-dot"></span> LIVE
-        </div>
-        <button class="icon-btn" id="themeToggleBtn" aria-label="Тема">
-          <i class="fas fa-moon" id="themeIcon"></i>
-        </button>
-        <button class="icon-btn" id="cartIconBtn" aria-label="Корзина">
-          <i class="fas fa-shopping-cart"></i>
-        </button>
-        <button class="icon-btn" id="adminToggleBtn" aria-label="Панель">
-          <i class="fas fa-clipboard-list"></i>
-        </button>
+        <div class="live-indicator" id="liveIndicator"><span class="live-dot"></span> LIVE</div>
+        <button class="icon-btn" id="themeToggleBtn" aria-label="Тема"><i class="fas fa-moon" id="themeIcon"></i></button>
+        <button class="icon-btn" id="cartIconBtn" aria-label="Корзина"><i class="fas fa-shopping-cart"></i></button>
+        <button class="icon-btn" id="adminToggleBtn" aria-label="Панель"><i class="fas fa-clipboard-list"></i></button>
       </div>
     </div>
 
+    <!-- ГЛАВНАЯ -->
     <div id="homePage" class="page active">
       <h2><i class="fas fa-store"></i> Маркетплейс полиграфии</h2>
       <div class="subhead">Печать А4 • чёрно-белое • быстро и дёшево</div>
-
       <div class="search-wrap">
         <i class="fas fa-search search-icon"></i>
         <input type="text" id="searchInput" class="search-input" placeholder="Поиск услуг...">
         <button class="search-clear" id="searchClear"><i class="fas fa-times"></i></button>
       </div>
-
       <div class="cat-filters" id="catFilters"></div>
-
       <div class="grid" id="servicesGrid"></div>
     </div>
 
+    <!-- ДЕТАЛИ -->
     <div id="detailPage" class="page">
       <button class="back-btn" id="backFromDetailBtn"><i class="fas fa-arrow-left"></i> Назад</button>
       <div class="detail-card" id="detailContent"></div>
     </div>
 
+    <!-- КОРЗИНА -->
     <div id="cartPage" class="page">
       <h2><i class="fas fa-shopping-bag"></i> Корзина</h2>
       <div class="subhead">Ваши выбранные услуги</div>
@@ -1388,24 +679,32 @@
           <div style="font-size:13px; color:var(--accent-1); margin-bottom:10px; font-weight:600;">
             <i class="fas fa-user-circle" style="margin-right:6px;"></i>Ваши контакты
           </div>
-
           <div class="client-saved-hint" id="clientSavedHint" style="display:none;">
             <i class="fas fa-check-circle"></i>
             <span>Данные подставлены из прошлого заказа</span>
           </div>
-
           <input type="text" id="clientName" class="input-field" placeholder="Ваше имя" autocomplete="name">
           <input type="tel" id="clientPhone" class="input-field" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" maxlength="18">
           <div class="field-hint" id="phoneHint"></div>
-
           <label class="remember-row">
             <input type="checkbox" id="rememberMe" checked>
-            Запомнить мои данные для следующих заказов
+            Запомнить мои данные
           </label>
-
           <button type="button" class="clear-client-btn" id="clearSavedClientBtn">
             <i class="fas fa-user-edit"></i> Ввести данные заново
           </button>
+
+          <!-- ЗАГРУЗКА ФАЙЛОВ -->
+          <div style="font-size:13px; color:var(--accent-1); margin: 14px 0 10px; font-weight:600;">
+            <i class="fas fa-paperclip" style="margin-right:6px;"></i>Файлы для печати
+          </div>
+          <div class="upload-zone" id="uploadZone">
+            <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.txt">
+            <div class="upload-zone-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+            <div class="upload-zone-text">Нажмите, чтобы выбрать файлы</div>
+            <div class="upload-zone-hint">PDF, JPG, PNG, DOCX • до 20 МБ каждый • до 10 файлов</div>
+          </div>
+          <div class="file-list" id="fileList"></div>
 
           <textarea id="clientComment" class="input-field" placeholder="Комментарий к заказу (необязательно)"></textarea>
         </div>
@@ -1415,34 +714,28 @@
       <button class="btn btn-outline" id="clearCartBtn"><i class="fas fa-trash-alt"></i> Очистить корзину</button>
     </div>
 
+    <!-- ИСТОРИЯ -->
     <div id="historyPage" class="page">
       <h2><i class="fas fa-history"></i> Мои заказы</h2>
       <div class="subhead">Отслеживайте статус заказов</div>
-
       <div class="tab-switcher" id="clientTabSwitcher">
-        <button class="tab-switch-btn active" data-tab="active">
-          <i class="fas fa-hourglass-half"></i> Активные
-          <span class="tab-count" id="activeCount">0</span>
-        </button>
-        <button class="tab-switch-btn" data-tab="archive">
-          <i class="fas fa-archive"></i> Архив
-          <span class="tab-count" id="archiveCount">0</span>
-        </button>
+        <button class="tab-switch-btn active" data-tab="active"><i class="fas fa-hourglass-half"></i> Активные <span class="tab-count" id="activeCount">0</span></button>
+        <button class="tab-switch-btn" data-tab="archive"><i class="fas fa-archive"></i> Архив <span class="tab-count" id="archiveCount">0</span></button>
       </div>
-
       <div id="historyContainer" style="flex:1;"></div>
-
       <button class="btn btn-outline" id="clearHistoryBtn" style="margin-top:10px;">
         <i class="fas fa-eraser"></i> Очистить историю
       </button>
     </div>
 
+    <!-- ИЗБРАННОЕ -->
     <div id="favPage" class="page">
       <h2><i class="fas fa-heart"></i> Избранное</h2>
       <div class="subhead">Ваши любимые услуги</div>
       <div id="favContainer" style="flex:1;"></div>
     </div>
 
+    <!-- ЛОГИН -->
     <div id="loginPage" class="page">
       <div class="login-card">
         <div class="login-icon"><i class="fas fa-lock"></i></div>
@@ -1455,78 +748,93 @@
       </div>
     </div>
 
+    <!-- ПАНЕЛЬ АДМИНА -->
     <div id="adminPage" class="page">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <h2 style="margin-bottom:0;"><i class="fas fa-clipboard-list"></i> Панель админа</h2>
-        <button class="btn btn-outline btn-small" id="refreshOrdersBtn">
-          <i class="fas fa-sync-alt"></i>
-        </button>
+        <button class="btn btn-outline btn-small" id="refreshOrdersBtn"><i class="fas fa-sync-alt"></i></button>
       </div>
       <div class="subhead">Управление заказами и товарами</div>
 
       <div class="tab-switcher" id="adminSectionSwitcher">
-        <button class="tab-switch-btn active" data-section="orders">
-          <i class="fas fa-shopping-bag"></i> Заказы
-        </button>
-        <button class="tab-switch-btn" data-section="products">
-          <i class="fas fa-boxes"></i> Товары
-        </button>
+        <button class="tab-switch-btn active" data-section="orders"><i class="fas fa-shopping-bag"></i> Заказы</button>
+        <button class="tab-switch-btn" data-section="products"><i class="fas fa-boxes"></i> Товары</button>
+        <button class="tab-switch-btn" data-section="analytics"><i class="fas fa-chart-bar"></i> Аналитика</button>
       </div>
 
+      <!-- ЗАКАЗЫ -->
       <div id="adminOrdersSection">
         <div class="stats-grid">
-          <div class="stat-card">
-            <span class="stat-value" id="statTotal">0</span>
-            <span class="stat-label">Всего</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-value" id="statNew">0</span>
-            <span class="stat-label">Новых</span>
-          </div>
+          <div class="stat-card"><span class="stat-value" id="statTotal">0</span><span class="stat-label">Всего</span></div>
+          <div class="stat-card"><span class="stat-value" id="statNew">0</span><span class="stat-label">Новых</span></div>
         </div>
-
         <div class="tab-switcher" id="adminTabSwitcher">
-          <button class="tab-switch-btn active" data-tab="active">
-            <i class="fas fa-hourglass-half"></i> Активные
-            <span class="tab-count" id="adminActiveCount">0</span>
-          </button>
-          <button class="tab-switch-btn" data-tab="archive">
-            <i class="fas fa-archive"></i> Архив
-            <span class="tab-count" id="adminArchiveCount">0</span>
-          </button>
+          <button class="tab-switch-btn active" data-tab="active"><i class="fas fa-hourglass-half"></i> Активные <span class="tab-count" id="adminActiveCount">0</span></button>
+          <button class="tab-switch-btn" data-tab="archive"><i class="fas fa-archive"></i> Архив <span class="tab-count" id="adminArchiveCount">0</span></button>
         </div>
-
         <div class="filter-row" id="adminFilters">
           <button class="filter-btn active" data-filter="all">Все</button>
           <button class="filter-btn" data-filter="new">Новые</button>
           <button class="filter-btn" data-filter="progress">В работе</button>
           <button class="filter-btn" data-filter="cancel">Отменены</button>
         </div>
-
         <div id="adminOrdersContainer" style="flex:1;"></div>
-
         <div style="display:flex; gap:6px; margin-top:10px;">
-          <button class="btn btn-outline btn-small" id="exportCsvBtn" style="flex:1;">
-            <i class="fas fa-file-csv"></i> CSV
-          </button>
-          <button class="btn btn-outline btn-small" id="clearAllOrdersBtn" style="flex:1;">
-            <i class="fas fa-trash-alt"></i> Удалить
-          </button>
+          <button class="btn btn-outline btn-small" id="exportCsvBtn" style="flex:1;"><i class="fas fa-file-csv"></i> CSV</button>
+          <button class="btn btn-outline btn-small" id="clearAllOrdersBtn" style="flex:1;"><i class="fas fa-trash-alt"></i> Удалить</button>
         </div>
       </div>
 
+      <!-- ТОВАРЫ -->
       <div id="adminProductsSection" style="display:none;">
-        <div class="info-banner">
-          <i class="fas fa-info-circle" style="margin-right:6px;"></i>
-          Управляйте наличием, ценой и добавляйте новые услуги.
-        </div>
-        <button class="btn btn-success" id="addProductBtn" style="margin-bottom:12px;">
-          <i class="fas fa-plus"></i> Добавить услугу
-        </button>
+        <div class="info-banner"><i class="fas fa-info-circle" style="margin-right:6px;"></i>Управляйте наличием, ценой и добавляйте новые услуги.</div>
+        <button class="btn btn-success" id="addProductBtn" style="margin-bottom:12px;"><i class="fas fa-plus"></i> Добавить услугу</button>
         <div id="adminProductsContainer"></div>
+      </div>
+
+      <!-- АНАЛИТИКА -->
+      <div id="adminAnalyticsSection" style="display:none;">
+        <div class="stats-grid">
+          <div class="stat-card"><span class="stat-value" id="anaRevenue">0 ₽</span><span class="stat-label">Выручка</span></div>
+          <div class="stat-card"><span class="stat-value" id="anaOrders">0</span><span class="stat-label">Заказов</span></div>
+          <div class="stat-card"><span class="stat-value" id="anaAvg">0 ₽</span><span class="stat-label">Средний чек</span></div>
+          <div class="stat-card"><span class="stat-value" id="anaDone">0%</span><span class="stat-label">Выполнено</span></div>
+        </div>
+
+        <div class="analytics-block">
+          <div class="analytics-title">
+            <span><i class="fas fa-chart-line" style="color:var(--accent-1);"></i> Заказы за 7 дней</span>
+            <span id="anaWeekTotal">0 шт</span>
+          </div>
+          <div class="analytics-chart" id="anaChart"></div>
+        </div>
+
+        <div class="analytics-block">
+          <div class="analytics-title">
+            <span><i class="fas fa-fire" style="color:var(--warning);"></i> Топ-5 услуг</span>
+            <span id="anaTopTotal">0 заказов</span>
+          </div>
+          <div id="anaTopList"></div>
+        </div>
+
+        <div class="analytics-block">
+          <div class="analytics-title">
+            <span><i class="fas fa-users" style="color:var(--pink);"></i> Топ-5 клиентов</span>
+            <span id="anaTopClientsTotal">0 клиентов</span>
+          </div>
+          <div id="anaTopClients"></div>
+        </div>
+
+        <div class="analytics-block">
+          <div class="analytics-title">
+            <span><i class="fas fa-clock" style="color:var(--accent-2);"></i> По статусам</span>
+          </div>
+          <div id="anaStatuses"></div>
+        </div>
       </div>
     </div>
 
+    <!-- МОДАЛКА ТОВАРА -->
     <div class="modal-backdrop" id="productModal">
       <div class="modal">
         <div class="modal-title">
@@ -1552,14 +860,9 @@
         <input type="text" id="modalUnitInput" class="input-field" placeholder="₽ / стр.">
         <label class="form-label">Полное описание</label>
         <textarea id="modalDetailsInput" class="input-field"></textarea>
-
         <div style="display:flex; gap:8px; margin-top:10px;">
-          <button class="btn btn-success" id="modalSaveBtn" style="flex:1; margin-bottom:0;">
-            <i class="fas fa-save"></i> Сохранить
-          </button>
-          <button class="btn btn-outline" id="modalCancelBtn" style="flex:1; margin-bottom:0;">
-            Отмена
-          </button>
+          <button class="btn btn-success" id="modalSaveBtn" style="flex:1; margin-bottom:0;"><i class="fas fa-save"></i> Сохранить</button>
+          <button class="btn btn-outline" id="modalCancelBtn" style="flex:1; margin-bottom:0;">Отмена</button>
         </div>
       </div>
     </div>
@@ -1567,7 +870,7 @@
     <div class="bottom-nav" id="bottomNav"></div>
   </div>
 
-  <!-- PWA Install Banner -->
+  <!-- Install Banner -->
   <div class="install-banner" id="installBanner">
     <div style="display:flex; align-items:center; gap:12px;">
       <div style="width:44px; height:44px; border-radius:12px; background:linear-gradient(135deg, var(--accent-1), var(--accent-2)); display:flex; align-items:center; justify-content:center; font-size:20px; color:var(--app-bg); flex-shrink:0;">
@@ -1589,6 +892,8 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, serverTimestamp, getDocs, setDoc, writeBatch }
       from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject }
+      from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
     // ========== FIREBASE CONFIG ==========
     const firebaseConfig = {
@@ -1603,11 +908,14 @@
 
     const firebaseApp = initializeApp(firebaseConfig);
     const db = getFirestore(firebaseApp);
+    const storage = getStorage(firebaseApp);
 
     // ========== НАСТРОЙКИ ==========
     const ADMIN_CODE = '444555666';
     const SESSION_KEY = 'printsoft_admin_session';
     const SPLASH_DURATION = 3000;
+    const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20 МБ
+    const MAX_FILES = 10;
 
     const PROMOCODES = {
       'PRINT10': { discount: 10, type: 'percent', label: '-10%' },
@@ -1635,15 +943,15 @@
       { id: 8, title: 'Печать А4 (пакет 100)', desc: 'Экономия 20%', price: 400, icon: 'fa-layer-group', details: 'Пакет 100 страниц.', unit: '₽ / 100 стр.', category: 'print', available: true },
     ];
 
-    // ========== ГЛОБАЛЬНОЕ СОСТОЯНИЕ ==========
+    // ========== СОСТОЯНИЕ ==========
     const state = {
       services: [...DEFAULT_SERVICES],
       cart: [],
       myOrders: [],
       allOrders: [],
       favorites: new Set(),
-      reviews: {},
       cartQty: {},
+      pendingFiles: [], // Файлы для загрузки: { file, status, progress, url, error }
       currentDetailId: null,
       currentPage: 'home',
       previousPage: 'home',
@@ -1664,12 +972,7 @@
     };
 
     // ========== ХРАНИЛИЩЕ ==========
-    const S = {
-      HISTORY: 'printsoft_history',
-      FAV: 'printsoft_fav',
-      THEME: 'printsoft_theme',
-      CLIENT: 'printsoft_client',
-    };
+    const S = { HISTORY: 'printsoft_history', FAV: 'printsoft_fav', THEME: 'printsoft_theme', CLIENT: 'printsoft_client' };
 
     function getSavedClient() { try { const c = localStorage.getItem(S.CLIENT); return c ? JSON.parse(c) : null; } catch (e) { return null; } }
     function saveClient(name, phone) { try { localStorage.setItem(S.CLIENT, JSON.stringify({ name, phone, savedAt: Date.now() })); } catch (e) {} }
@@ -1715,12 +1018,8 @@
       return value;
     }
 
-    function statusIcon(status) {
-      return { new: 'fa-circle', progress: 'fa-hourglass-half', done: 'fa-check-circle', cancel: 'fa-times-circle' }[status] || 'fa-circle';
-    }
-    function statusLabel(status) {
-      return { new: 'Новый', progress: 'В работе', done: 'Выполнен', cancel: 'Отменён' }[status] || 'Новый';
-    }
+    function statusIcon(status) { return { new: 'fa-circle', progress: 'fa-hourglass-half', done: 'fa-check-circle', cancel: 'fa-times-circle' }[status] || 'fa-circle'; }
+    function statusLabel(status) { return { new: 'Новый', progress: 'В работе', done: 'Выполнен', cancel: 'Отменён' }[status] || 'Новый'; }
     function getProgressSteps(status) {
       if (status === 'new') return ['active', '', '', ''];
       if (status === 'progress') return ['progress-active', 'progress-active', '', ''];
@@ -1728,29 +1027,17 @@
       if (status === 'cancel') return ['cancel-active', 'cancel-active', 'cancel-active', 'cancel-active'];
       return ['', '', '', ''];
     }
-    function getActiveOrders(orders) {
-      return orders.filter(o => { const s = o.status || 'new'; return s === 'new' || s === 'progress'; });
-    }
-    function getArchiveOrders(orders) {
-      return orders.filter(o => { const s = o.status || 'new'; return s === 'done' || s === 'cancel'; });
-    }
+    function getActiveOrders(orders) { return orders.filter(o => { const s = o.status || 'new'; return s === 'new' || s === 'progress'; }); }
+    function getArchiveOrders(orders) { return orders.filter(o => { const s = o.status || 'new'; return s === 'done' || s === 'cancel'; }); }
 
-    // ========== UI-утилиты ==========
-    let toastEl = null, toastTimer = null;
+    // ========== УТИЛИТЫ ==========
     function showToast(message) {
-      if (!toastEl) {
-        toastEl = document.createElement('div');
-        toastEl.className = 'toast';
-        document.body.appendChild(toastEl);
-      }
+      let toastEl = document.querySelector('.toast');
+      if (!toastEl) { toastEl = document.createElement('div'); toastEl.className = 'toast'; document.body.appendChild(toastEl); }
       toastEl.textContent = message;
-      toastEl.style.animation = 'none';
-      void toastEl.offsetWidth;
-      toastEl.style.animation = '';
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => { if (toastEl) { toastEl.remove(); toastEl = null; } }, 2000);
+      toastEl.style.animation = 'none'; void toastEl.offsetWidth; toastEl.style.animation = '';
+      setTimeout(() => { if (toastEl && toastEl.parentNode) toastEl.remove(); }, 2200);
     }
-
     function showConnectionStatus(online) {
       const el = document.getElementById('connectionStatus');
       const txt = document.getElementById('connectionText');
@@ -1759,18 +1046,43 @@
       txt.textContent = online ? 'Подключено' : 'Нет соединения';
       if (online) setTimeout(() => { el.className = 'connection-status'; }, 2200);
     }
-
     function playSound(type) {
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
+        const osc = ctx.createOscillator(); const gain = ctx.createGain();
         osc.connect(gain); gain.connect(ctx.destination);
         osc.frequency.value = type === 'new' ? 880 : 660;
         gain.gain.setValueAtTime(0.08, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
         osc.start(); osc.stop(ctx.currentTime + 0.3);
       } catch (e) {}
+    }
+    function formatBytes(bytes) {
+      if (bytes === 0) return '0 Б';
+      const k = 1024;
+      const sizes = ['Б', 'КБ', 'МБ', 'ГБ'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    }
+    function fileIconClass(name) {
+      const ext = name.split('.').pop().toLowerCase();
+      if (['pdf'].includes(ext)) return 'pdf';
+      if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'].includes(ext)) return 'img';
+      if (['doc', 'docx', 'txt', 'rtf'].includes(ext)) return 'doc';
+      return '';
+    }
+    function fileIconFA(name) {
+      const ext = name.split('.').pop().toLowerCase();
+      if (ext === 'pdf') return 'fa-file-pdf';
+      if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'].includes(ext)) return 'fa-file-image';
+      if (['doc', 'docx'].includes(ext)) return 'fa-file-word';
+      if (ext === 'txt') return 'fa-file-alt';
+      return 'fa-file';
+    }
+    function getClientUid() {
+      let uid = localStorage.getItem('printsoft_uid');
+      if (!uid) { uid = 'u_' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36); localStorage.setItem('printsoft_uid', uid); }
+      return uid;
     }
 
     // ========== DOM ==========
@@ -1819,6 +1131,7 @@
     const adminArchiveCount = document.getElementById('adminArchiveCount');
     const adminOrdersSection = document.getElementById('adminOrdersSection');
     const adminProductsSection = document.getElementById('adminProductsSection');
+    const adminAnalyticsSection = document.getElementById('adminAnalyticsSection');
     const adminProductsContainer = document.getElementById('adminProductsContainer');
     const searchInput = document.getElementById('searchInput');
     const searchClear = document.getElementById('searchClear');
@@ -1839,6 +1152,9 @@
     const modalSaveBtn = document.getElementById('modalSaveBtn');
     const modalCancelBtn = document.getElementById('modalCancelBtn');
     const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const fileList = document.getElementById('fileList');
 
     // ========== НАВИГАЦИЯ ==========
     function showPage(pageId) {
@@ -1892,13 +1208,11 @@
           <button class="nav-item ${state.currentPage === 'cart' ? 'active' : ''}" data-page="cart"><i class="fas fa-shopping-cart"></i> Корзина</button>
           <button class="nav-item ${state.currentPage === 'history' ? 'active' : ''}" data-page="history"><i class="fas fa-history"></i> Заказы${historyBadge}</button>
         `;
-        bottomNav.querySelectorAll('.nav-item').forEach(btn => {
-          btn.addEventListener('click', () => showPage(btn.dataset.page));
-        });
+        bottomNav.querySelectorAll('.nav-item').forEach(btn => btn.addEventListener('click', () => showPage(btn.dataset.page)));
       }
     }
 
-    // ========== КАТЕГОРИИ И ПОИСК ==========
+    // ========== КАТЕГОРИИ ==========
     function renderCategories() {
       catFilters.innerHTML = CATEGORIES.map(c => `
         <button class="cat-btn ${state.currentCategory === c.id ? 'active' : ''}" data-cat="${c.id}">
@@ -1920,18 +1234,13 @@
       renderServices();
     });
     searchClear.addEventListener('click', () => {
-      searchInput.value = '';
-      state.searchQuery = '';
-      searchClear.classList.remove('visible');
-      renderServices();
+      searchInput.value = ''; state.searchQuery = ''; searchClear.classList.remove('visible'); renderServices();
     });
 
     function getFilteredServices() {
       return state.services.filter(s => {
         const matchCat = state.currentCategory === 'all' || s.category === state.currentCategory;
-        const matchSearch = !state.searchQuery ||
-          s.title.toLowerCase().includes(state.searchQuery) ||
-          (s.desc || '').toLowerCase().includes(state.searchQuery);
+        const matchSearch = !state.searchQuery || s.title.toLowerCase().includes(state.searchQuery) || (s.desc || '').toLowerCase().includes(state.searchQuery);
         return matchCat && matchSearch;
       });
     }
@@ -1951,22 +1260,15 @@
         card.className = 'card' + (available ? '' : ' out-of-stock');
         card.dataset.id = s.id;
         const stockBadge = available ? '' : `<span class="out-badge">нет в наличии</span>`;
-        const stockLine = available
-          ? `<span class="stock-badge-in">есть</span>`
-          : `<span class="stock-badge-out">нет</span>`;
+        const stockLine = available ? `<span class="stock-badge-in">есть</span>` : `<span class="stock-badge-out">нет</span>`;
         card.innerHTML = `
           ${stockBadge}
           <div class="card-info">
-            <div class="card-title">
-              <i class="fas ${s.icon}"></i> ${s.title}
-              ${stockLine}
-            </div>
+            <div class="card-title"><i class="fas ${s.icon}"></i> ${s.title} ${stockLine}</div>
             <div class="card-desc">${s.desc || ''}</div>
           </div>
           <div class="price-tag">${s.price.toLocaleString()} ₽</div>
-          <button class="fav-btn ${isFav ? 'active' : ''}" data-fav="${s.id}">
-            <i class="fas fa-heart"></i>
-          </button>
+          <button class="fav-btn ${isFav ? 'active' : ''}" data-fav="${s.id}"><i class="fas fa-heart"></i></button>
         `;
         frag.appendChild(card);
       });
@@ -1976,12 +1278,7 @@
 
     servicesGrid.addEventListener('click', (e) => {
       const favBtn = e.target.closest('[data-fav]');
-      if (favBtn) {
-        e.stopPropagation();
-        const id = parseInt(favBtn.dataset.fav, 10);
-        toggleFav(id);
-        return;
-      }
+      if (favBtn) { e.stopPropagation(); toggleFav(parseInt(favBtn.dataset.fav, 10)); return; }
       const card = e.target.closest('.card');
       if (!card) return;
       const id = parseInt(card.dataset.id, 10);
@@ -2021,11 +1318,7 @@
     }
     favContainer.addEventListener('click', (e) => {
       const favBtn = e.target.closest('[data-fav]');
-      if (favBtn) {
-        e.stopPropagation();
-        toggleFav(parseInt(favBtn.dataset.fav, 10));
-        return;
-      }
+      if (favBtn) { e.stopPropagation(); toggleFav(parseInt(favBtn.dataset.fav, 10)); return; }
       const card = e.target.closest('.card');
       if (card) {
         const id = parseInt(card.dataset.id, 10);
@@ -2049,11 +1342,8 @@
           ${available ? `<span class="stock-badge-in">в наличии</span>` : `<span class="stock-badge-out">нет в наличии</span>`}
         </div>
         <div class="detail-desc">${service.details || service.desc || ''}</div>
-
         <div class="calc-block">
-          <div class="calc-label">
-            <i class="fas fa-calculator"></i> Количество (${service.unit || '₽ / шт.'})
-          </div>
+          <div class="calc-label"><i class="fas fa-calculator"></i> Количество (${service.unit || '₽ / шт.'})</div>
           <div class="calc-row">
             <button class="qty-btn" id="qtyMinus">−</button>
             <input type="number" class="qty-input" id="qtyInput" value="${state.cartQty[id]}" min="1" max="10000">
@@ -2064,7 +1354,6 @@
             <span class="value" id="calcTotal">${(service.price * state.cartQty[id]).toLocaleString()} ₽</span>
           </div>
         </div>
-
         <button class="btn" id="addToCartFromDetailBtn" ${available ? '' : 'disabled'}>
           <i class="fas ${available ? 'fa-cart-plus' : 'fa-ban'}"></i>
           ${available ? 'Добавить в корзину' : 'Нет в наличии'}
@@ -2075,26 +1364,15 @@
       const calcTotal = document.getElementById('calcTotal');
       const updateTotal = () => {
         let v = parseInt(qtyInput.value) || 1;
-        if (v < 1) v = 1;
-        if (v > 10000) v = 10000;
+        if (v < 1) v = 1; if (v > 10000) v = 10000;
         state.cartQty[id] = v;
         calcTotal.textContent = (service.price * v).toLocaleString() + ' ₽';
       };
-      document.getElementById('qtyMinus').addEventListener('click', () => {
-        qtyInput.value = Math.max(1, (parseInt(qtyInput.value) || 1) - 1);
-        updateTotal();
-      });
-      document.getElementById('qtyPlus').addEventListener('click', () => {
-        qtyInput.value = Math.min(10000, (parseInt(qtyInput.value) || 1) + 1);
-        updateTotal();
-      });
+      document.getElementById('qtyMinus').addEventListener('click', () => { qtyInput.value = Math.max(1, (parseInt(qtyInput.value) || 1) - 1); updateTotal(); });
+      document.getElementById('qtyPlus').addEventListener('click', () => { qtyInput.value = Math.min(10000, (parseInt(qtyInput.value) || 1) + 1); updateTotal(); });
       qtyInput.addEventListener('input', updateTotal);
 
-      if (available) {
-        document.getElementById('addToCartFromDetailBtn').addEventListener('click', () => {
-          addToCart(service.id, state.cartQty[id] || 1);
-        });
-      }
+      if (available) document.getElementById('addToCartFromDetailBtn').addEventListener('click', () => addToCart(service.id, state.cartQty[id] || 1));
       showPage('detail');
     }
 
@@ -2109,20 +1387,19 @@
       updateCartUI();
       showToast(`✓ ${service.title} ×${qty}`);
     }
-
     function removeFromCart(id) {
       const i = state.cart.findIndex(item => item.id === id);
       if (i !== -1) { state.cart.splice(i, 1); updateCartUI(); }
     }
-
     function clearCart() {
       if (state.cart.length === 0) return;
       state.cart = []; state.appliedPromo = null;
+      state.pendingFiles = [];
       promoInput.value = ''; promoStatus.textContent = ''; promoStatus.className = 'promo-status';
+      renderFileList();
       updateCartUI();
       showToast('Корзина очищена');
     }
-
     function getCartTotal() {
       let total = state.cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
       if (state.appliedPromo) {
@@ -2131,15 +1408,11 @@
       }
       return total;
     }
-
     function updateCartUI() {
       renderCartItems();
       const totalItems = state.cart.reduce((sum, item) => sum + item.quantity, 0);
-      cartIconBtn.innerHTML = totalItems > 0
-        ? `<i class="fas fa-shopping-cart"></i><span class="cart-badge">${totalItems}</span>`
-        : `<i class="fas fa-shopping-cart"></i>`;
+      cartIconBtn.innerHTML = totalItems > 0 ? `<i class="fas fa-shopping-cart"></i><span class="cart-badge">${totalItems}</span>` : `<i class="fas fa-shopping-cart"></i>`;
     }
-
     function renderCartItems() {
       if (state.cart.length === 0) {
         cartItemsContainer.innerHTML = `<div class="empty-message"><i class="fas fa-shopping-cart"></i> Корзина пуста</div>`;
@@ -2174,7 +1447,6 @@
       clientForm.style.display = 'block';
       prefillClientForm();
     }
-
     function prefillClientForm() {
       if (clientName.value.trim() && clientPhone.value && isValidPhone(clientPhone.value)) return;
       const saved = getSavedClient();
@@ -2191,26 +1463,17 @@
       if (rememberMe) rememberMe.checked = true;
       if (clientSavedHint) clientSavedHint.style.display = 'flex';
     }
-
     cartItemsContainer.addEventListener('click', (e) => {
       const btn = e.target.closest('.cart-remove');
       if (btn) { e.stopPropagation(); removeFromCart(parseInt(btn.dataset.id, 10)); }
     });
-
     promoApplyBtn.addEventListener('click', () => {
       const code = promoInput.value.trim().toUpperCase();
-      if (!code) {
-        promoStatus.textContent = 'Введите промокод';
-        promoStatus.className = 'promo-status err';
-        return;
-      }
+      if (!code) { promoStatus.textContent = 'Введите промокод'; promoStatus.className = 'promo-status err'; return; }
       const promo = PROMOCODES[code];
       if (!promo) {
-        promoStatus.textContent = '✗ Промокод не найден';
-        promoStatus.className = 'promo-status err';
-        state.appliedPromo = null;
-        renderCartItems();
-        return;
+        promoStatus.textContent = '✗ Промокод не найден'; promoStatus.className = 'promo-status err';
+        state.appliedPromo = null; renderCartItems(); return;
       }
       state.appliedPromo = { ...promo, code };
       promoStatus.textContent = `✓ Применён ${promo.label}`;
@@ -2218,7 +1481,145 @@
       renderCartItems();
     });
 
-    // ========== ОФОРМЛЕНИЕ ЗАКАЗА ==========
+    // ========== ЗАГРУЗКА ФАЙЛОВ ==========
+    uploadZone.addEventListener('click', () => fileInput.click());
+
+    uploadZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadZone.classList.add('dragover');
+    });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+    uploadZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      handleFiles(e.target.files);
+      fileInput.value = '';
+    });
+
+    function handleFiles(files) {
+      const arr = Array.from(files);
+      if (state.pendingFiles.length + arr.length > MAX_FILES) {
+        showToast(`Максимум ${MAX_FILES} файлов`);
+        return;
+      }
+      arr.forEach(file => {
+        if (file.size > MAX_FILE_SIZE) {
+          showToast(`${file.name} слишком большой (макс. 20 МБ)`);
+          return;
+        }
+        state.pendingFiles.push({
+          file,
+          status: 'pending',
+          progress: 0,
+          url: null,
+          error: null,
+        });
+      });
+      renderFileList();
+      // Автозагрузка сразу
+      uploadAllFiles();
+    }
+
+    async function uploadAllFiles() {
+      const pending = state.pendingFiles.filter(f => f.status === 'pending');
+      for (const item of pending) {
+        await uploadOneFile(item);
+      }
+    }
+
+    async function uploadOneFile(item) {
+      item.status = 'uploading';
+      item.progress = 0;
+      renderFileList();
+
+      const uid = getClientUid();
+      const timestamp = Date.now();
+      const safeName = item.file.name.replace(/[^a-zA-Z0-9а-яА-Я._-]/g, '_');
+      const storagePath = `orders/${uid}/${timestamp}_${safeName}`;
+      const storageRef = ref(storage, storagePath);
+
+      return new Promise((resolve) => {
+        const uploadTask = uploadBytesResumable(storageRef, item.file);
+
+        uploadTask.on('state_changed',
+          (snapshot) => {
+            item.progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            renderFileList();
+          },
+          (error) => {
+            console.error('Ошибка загрузки:', error);
+            item.status = 'error';
+            item.error = error.message;
+            renderFileList();
+            resolve();
+          },
+          async () => {
+            try {
+              const url = await getDownloadURL(uploadTask.snapshot.ref);
+              item.status = 'done';
+              item.url = url;
+              item.progress = 100;
+              renderFileList();
+            } catch (err) {
+              item.status = 'error';
+              item.error = err.message;
+              renderFileList();
+            }
+            resolve();
+          }
+        );
+      });
+    }
+
+    function renderFileList() {
+      if (state.pendingFiles.length === 0) {
+        fileList.innerHTML = '';
+        return;
+      }
+      fileList.innerHTML = state.pendingFiles.map((f, i) => {
+        const iconClass = fileIconClass(f.file.name);
+        const iconFA = fileIconFA(f.file.name);
+        const statusClass = f.status === 'done' ? 'done' : f.status === 'error' ? 'error' : f.status === 'uploading' ? 'uploading' : '';
+        const sizeInfo = f.status === 'uploading'
+          ? `Загрузка ${f.progress}%`
+          : f.status === 'error'
+            ? `Ошибка: ${f.error || 'неизвестно'}`
+            : formatBytes(f.file.size);
+        return `
+          <div class="file-item ${statusClass}" data-idx="${i}">
+            <div class="file-icon ${iconClass}"><i class="fas ${iconFA}"></i></div>
+            <div class="file-info">
+              <div class="file-name">${f.file.name}</div>
+              <div class="file-size">${sizeInfo}</div>
+              ${f.status === 'uploading' ? `<div class="file-progress"><div class="file-progress-fill" style="width:${f.progress}%"></div></div>` : ''}
+            </div>
+            <button class="file-remove" data-remove="${i}"><i class="fas fa-times"></i></button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    fileList.addEventListener('click', (e) => {
+      const removeBtn = e.target.closest('[data-remove]');
+      if (!removeBtn) return;
+      const idx = parseInt(removeBtn.dataset.remove, 10);
+      const item = state.pendingFiles[idx];
+      if (item && item.url) {
+        // Удаляем из Storage
+        try {
+          const storageRef = ref(storage, item.url);
+          deleteObject(storageRef).catch(() => {});
+        } catch (err) {}
+      }
+      state.pendingFiles.splice(idx, 1);
+      renderFileList();
+    });
+
+    // ========== ОФОРМЛЕНИЕ ==========
     async function checkout() {
       if (state.cart.length === 0) { showToast('Корзина пуста'); return; }
       const unavailable = state.cart.filter(item => {
@@ -2229,6 +1630,19 @@
         showToast(`Нет в наличии: ${unavailable.map(i => i.title).join(', ')}`);
         return;
       }
+
+      // Проверяем, что все файлы загружены
+      const uploading = state.pendingFiles.filter(f => f.status === 'uploading' || f.status === 'pending');
+      if (uploading.length > 0) {
+        showToast('Подождите, файлы ещё загружаются');
+        return;
+      }
+      const failed = state.pendingFiles.filter(f => f.status === 'error');
+      if (failed.length > 0) {
+        showToast('Некоторые файлы не загрузились. Удалите их или попробуйте снова');
+        return;
+      }
+
       const name = clientName.value.trim();
       const phoneRaw = clientPhone.value;
       const comment = clientComment.value.trim();
@@ -2243,11 +1657,21 @@
       checkoutBtn.disabled = true;
       checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
 
+      const filesData = state.pendingFiles
+        .filter(f => f.status === 'done' && f.url)
+        .map(f => ({
+          name: f.file.name,
+          url: f.url,
+          size: f.file.size,
+          type: f.file.type,
+        }));
+
       const orderData = {
         orderId,
         date: new Date().toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
         client: { name, phone, comment },
         items: state.cart.map(item => ({ title: item.title, qty: item.quantity, price: item.price })),
+        files: filesData,
         total, baseTotal,
         promo: state.appliedPromo ? state.appliedPromo.code : null,
         status: 'new',
@@ -2265,6 +1689,8 @@
         else clearSavedClient();
 
         state.cart = []; state.appliedPromo = null;
+        state.pendingFiles = [];
+        renderFileList();
         clientName.value = ''; clientPhone.value = ''; clientComment.value = '';
         clientPhone.classList.remove('valid', 'error');
         promoInput.value = ''; promoStatus.textContent = ''; promoStatus.className = 'promo-status';
@@ -2285,16 +1711,22 @@
       }
     }
 
-    function getClientUid() {
-      let uid = localStorage.getItem('printsoft_uid');
-      if (!uid) {
-        uid = 'u_' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
-        localStorage.setItem('printsoft_uid', uid);
-      }
-      return uid;
+    // ========== ИСТОРИЯ КЛИЕНТА ==========
+    function renderOrderFiles(files) {
+      if (!files || files.length === 0) return '';
+      return `
+        <div class="order-files">
+          ${files.map(f => `
+            <a class="order-file-chip" href="${f.url}" target="_blank" download="${f.name}">
+              <i class="fas ${fileIconFA(f.name)}"></i>
+              <span class="name">${f.name}</span>
+              <i class="fas fa-download" style="opacity:0.6; font-size:10px;"></i>
+            </a>
+          `).join('')}
+        </div>
+      `;
     }
 
-    // ========== ИСТОРИЯ КЛИЕНТА ==========
     function renderHistory() {
       const allMine = state.myOrders;
       const active = getActiveOrders(allMine);
@@ -2328,6 +1760,7 @@
                 <i class="fas fa-comment" style="margin-right:4px;"></i>${order.client.comment}
               </div>
             ` : ''}
+            ${renderOrderFiles(order.files)}
             <div class="order-progress">
               ${stepActive.map(cls => `<div class="progress-step ${cls}"></div>`).join('')}
             </div>
@@ -2347,10 +1780,7 @@
 
     historyContainer.addEventListener('click', (e) => {
       const repeatBtn = e.target.closest('[data-repeat]');
-      if (repeatBtn) {
-        e.stopPropagation();
-        repeatOrder(repeatBtn.dataset.repeat);
-      }
+      if (repeatBtn) { e.stopPropagation(); repeatOrder(repeatBtn.dataset.repeat); }
     });
 
     function repeatOrder(orderId) {
@@ -2373,10 +1803,7 @@
 
     function clearHistory() {
       if (state.myOrders.length === 0) return;
-      state.myOrders = [];
-      saveLocalHistory();
-      renderHistory();
-      renderBottomNav();
+      state.myOrders = []; saveLocalHistory(); renderHistory(); renderBottomNav();
       showToast('История очищена');
     }
 
@@ -2387,9 +1814,7 @@
         adminToggleBtn.innerHTML = `<i class="fas fa-clipboard-list"></i><span class="admin-badge">${newCount}</span>`;
       } else if (state.allOrders.length > 0 && !state.isAdminMode) {
         adminToggleBtn.innerHTML = `<i class="fas fa-clipboard-list"></i><span class="admin-badge" style="animation:none; background:var(--accent-1);">${state.allOrders.length}</span>`;
-      } else {
-        adminToggleBtn.innerHTML = `<i class="fas fa-clipboard-list"></i>`;
-      }
+      } else adminToggleBtn.innerHTML = `<i class="fas fa-clipboard-list"></i>`;
     }
 
     function renderAdminStats() {
@@ -2436,6 +1861,7 @@
             <div class="order-items">
               ${order.items.map(i => `• ${i.title} — ${i.qty} × ${i.price.toLocaleString()} ₽`).join('<br>')}
             </div>
+            ${renderOrderFiles(order.files)}
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
               <span class="order-status ${status}"><i class="fas ${statusIcon(status)}"></i> ${statusLabel(status)}</span>
               <span class="order-total">${order.total.toLocaleString()} ₽</span>
@@ -2457,14 +1883,10 @@
       const id = btn.dataset.id;
       const action = btn.dataset.action;
       try {
-        const orderRef = doc(db, 'orders', id);
-        await updateDoc(orderRef, { status: action });
+        await updateDoc(doc(db, 'orders', id), { status: action });
         showToast(`Статус: ${statusLabel(action)}`);
         playSound('status');
-      } catch (err) {
-        console.error(err);
-        showToast('Ошибка обновления');
-      }
+      } catch (err) { console.error(err); showToast('Ошибка обновления'); }
     });
 
     async function clearAllOrders() {
@@ -2480,10 +1902,11 @@
 
     function exportCSV() {
       if (state.allOrders.length === 0) { showToast('Нет заказов'); return; }
-      const rows = [['ID', 'Дата', 'Имя', 'Телефон', 'Услуги', 'Сумма', 'Статус']];
+      const rows = [['ID', 'Дата', 'Имя', 'Телефон', 'Услуги', 'Файлы', 'Сумма', 'Статус']];
       state.allOrders.forEach(o => {
         const items = o.items.map(i => `${i.title}×${i.qty}`).join('; ');
-        rows.push([o.orderId || o.id, o.date, o.client.name, displayPhone(o.client.phone), items, o.total, statusLabel(o.status || 'new')]);
+        const files = (o.files || []).map(f => f.name).join('; ');
+        rows.push([o.orderId || o.id, o.date, o.client.name, displayPhone(o.client.phone), items, files, o.total, statusLabel(o.status || 'new')]);
       });
       const csv = '\uFEFF' + rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -2494,6 +1917,139 @@
       showToast('✓ CSV скачан');
     }
 
+    // ========== АНАЛИТИКА ==========
+    function renderAnalytics() {
+      const all = state.allOrders;
+      const done = all.filter(o => o.status === 'done');
+      const revenue = done.reduce((s, o) => s + o.total, 0);
+      const avg = done.length > 0 ? Math.round(revenue / done.length) : 0;
+      const donePercent = all.length > 0 ? Math.round(done.length / all.length * 100) : 0;
+
+      document.getElementById('anaRevenue').textContent = revenue.toLocaleString() + ' ₽';
+      document.getElementById('anaOrders').textContent = all.length;
+      document.getElementById('anaAvg').textContent = avg.toLocaleString() + ' ₽';
+      document.getElementById('anaDone').textContent = donePercent + '%';
+
+      // === График за 7 дней ===
+      const days = [];
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const key = d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' });
+        const count = all.filter(o => {
+          const oDate = (o.date || '').split(',')[0].trim();
+          return oDate.startsWith(key);
+        }).length;
+        const weekday = d.toLocaleDateString('ru-RU', { weekday: 'short' }).slice(0, 2);
+        days.push({ label: weekday, count, key, revenue: 0 });
+      }
+
+      const maxCount = Math.max(1, ...days.map(d => d.count));
+      const totalWeek = days.reduce((s, d) => s + d.count, 0);
+      document.getElementById('anaWeekTotal').textContent = totalWeek + ' шт';
+
+      document.getElementById('anaChart').innerHTML = days.map(d => `
+        <div class="analytics-bar-wrap">
+          <div class="analytics-bar-value">${d.count > 0 ? d.count : ''}</div>
+          <div class="analytics-bar" style="height:${(d.count / maxCount) * 100}%;" title="${d.key}: ${d.count} заказов"></div>
+          <div class="analytics-bar-label">${d.label}</div>
+        </div>
+      `).join('');
+
+      // === Топ-5 услуг ===
+      const itemCount = {};
+      const itemRevenue = {};
+      all.forEach(o => o.items.forEach(i => {
+        itemCount[i.title] = (itemCount[i.title] || 0) + i.qty;
+        itemRevenue[i.title] = (itemRevenue[i.title] || 0) + (i.price * i.qty);
+      }));
+      const topItems = Object.entries(itemCount).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      document.getElementById('anaTopTotal').textContent = Object.keys(itemCount).length + ' услуг';
+
+      if (topItems.length === 0) {
+        document.getElementById('anaTopList').innerHTML = `<div style="text-align:center; padding:16px; color:var(--text-muted); font-size:12px;">Пока нет данных</div>`;
+      } else {
+        const maxTop = topItems[0][1];
+        document.getElementById('anaTopList').innerHTML = topItems.map(([name, count], i) => {
+          const rankClass = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : '';
+          return `
+            <div class="analytics-list-item">
+              <div class="analytics-rank ${rankClass}">${i + 1}</div>
+              <div class="analytics-list-info">
+                <div class="analytics-list-name">${name}</div>
+                <div class="analytics-list-bar"><div class="analytics-list-fill" style="width:${(count / maxTop) * 100}%"></div></div>
+              </div>
+              <div>
+                <div class="analytics-list-value">${count} шт</div>
+                <div class="analytics-list-sub">${(itemRevenue[name] || 0).toLocaleString()} ₽</div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // === Топ-5 клиентов ===
+      const clientStats = {};
+      all.forEach(o => {
+        const name = o.client?.name || 'Аноним';
+        const phone = o.client?.phone || '';
+        const key = phone || name;
+        if (!clientStats[key]) clientStats[key] = { name, phone, orders: 0, total: 0 };
+        clientStats[key].orders++;
+        clientStats[key].total += o.total || 0;
+      });
+      const topClients = Object.entries(clientStats).sort((a, b) => b[1].total - a[1].total).slice(0, 5);
+      document.getElementById('anaTopClientsTotal').textContent = Object.keys(clientStats).length + ' клиентов';
+
+      if (topClients.length === 0) {
+        document.getElementById('anaTopClients').innerHTML = `<div style="text-align:center; padding:16px; color:var(--text-muted); font-size:12px;">Пока нет данных</div>`;
+      } else {
+        const maxClient = topClients[0][1].total;
+        document.getElementById('anaTopClients').innerHTML = topClients.map(([key, c], i) => {
+          const rankClass = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : '';
+          return `
+            <div class="analytics-list-item">
+              <div class="analytics-rank ${rankClass}">${i + 1}</div>
+              <div class="analytics-list-info">
+                <div class="analytics-list-name">${c.name}</div>
+                <div class="analytics-list-bar"><div class="analytics-list-fill" style="width:${(c.total / maxClient) * 100}%"></div></div>
+              </div>
+              <div>
+                <div class="analytics-list-value">${c.total.toLocaleString()} ₽</div>
+                <div class="analytics-list-sub">${c.orders} заказ${c.orders === 1 ? '' : c.orders < 5 ? 'а' : 'ов'}</div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // === По статусам ===
+      const statuses = [
+        { id: 'new', label: 'Новые', color: 'var(--accent-1)' },
+        { id: 'progress', label: 'В работе', color: 'var(--warning)' },
+        { id: 'done', label: 'Выполнены', color: 'var(--success)' },
+        { id: 'cancel', label: 'Отменены', color: 'var(--danger)' },
+      ];
+      const totalAll = all.length || 1;
+      document.getElementById('anaStatuses').innerHTML = statuses.map(st => {
+        const count = all.filter(o => (o.status || 'new') === st.id).length;
+        const pct = Math.round((count / totalAll) * 100);
+        return `
+          <div class="analytics-list-item" style="padding: 8px 0;">
+            <div style="width:10px; height:10px; border-radius:50%; background:${st.color}; flex-shrink:0;"></div>
+            <div class="analytics-list-info">
+              <div class="analytics-list-name">${st.label}</div>
+              <div class="analytics-list-bar"><div class="analytics-list-fill" style="width:${pct}%; background:${st.color};"></div></div>
+            </div>
+            <div>
+              <div class="analytics-list-value" style="color:${st.color};">${count}</div>
+              <div class="analytics-list-sub">${pct}%</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
     // ========== УПРАВЛЕНИЕ ТОВАРАМИ ==========
     function renderAdminProducts() {
       adminProductsContainer.innerHTML = state.services.map(s => {
@@ -2501,12 +2057,8 @@
         return `
           <div class="product-manage-card ${available ? '' : 'out'}" data-id="${s.id}">
             <div class="product-manage-info">
-              <div class="product-manage-title">
-                <i class="fas ${s.icon}"></i> ${s.title}
-              </div>
-              <div class="product-manage-price">
-                <strong>${s.price.toLocaleString()} ₽</strong> • ${s.unit || ''}
-              </div>
+              <div class="product-manage-title"><i class="fas ${s.icon}"></i> ${s.title}</div>
+              <div class="product-manage-price"><strong>${s.price.toLocaleString()} ₽</strong> • ${s.unit || ''}</div>
             </div>
             <div class="product-actions">
               <button class="mini-btn edit" data-edit="${s.id}"><i class="fas fa-pen"></i></button>
@@ -2584,28 +2136,19 @@
       const price = parseInt(modalPriceInput.value, 10);
       const unit = modalUnitInput.value.trim() || '₽ / шт.';
       const details = modalDetailsInput.value.trim() || desc;
-
       if (!title) { showToast('Введите название'); return; }
       if (!price || price < 1) { showToast('Введите цену'); return; }
-
       try {
         if (state.editingProductId) {
-          await updateDoc(doc(db, 'services', String(state.editingProductId)), {
-            title, desc, icon, category, price, unit, details
-          });
+          await updateDoc(doc(db, 'services', String(state.editingProductId)), { title, desc, icon, category, price, unit, details });
           showToast('✓ Обновлено');
         } else {
           const newId = Math.max(0, ...state.services.map(s => s.id)) + 1;
-          await setDoc(doc(db, 'services', String(newId)), {
-            id: newId, title, desc, icon, category, price, unit, details, available: true
-          });
+          await setDoc(doc(db, 'services', String(newId)), { id: newId, title, desc, icon, category, price, unit, details, available: true });
           showToast('✓ Добавлено');
         }
         closeProductModal();
-      } catch (err) {
-        console.error(err);
-        showToast('Ошибка сохранения');
-      }
+      } catch (err) { console.error(err); showToast('Ошибка сохранения'); }
     });
 
     modalCancelBtn.addEventListener('click', closeProductModal);
@@ -2622,7 +2165,6 @@
       showPage('login');
       setTimeout(() => adminCodeInput.focus(), 350);
     }
-
     function tryLogin() {
       const entered = adminCodeInput.value.trim();
       if (entered === ADMIN_CODE) {
@@ -2635,6 +2177,7 @@
         logoText.innerHTML = `<i class="fas fa-clipboard-list" style="color:var(--pink);"></i> <span>PRINT</span><span style="color:var(--pink);">ADMIN</span>`;
         renderAdminOrders();
         renderAdminProducts();
+        renderAnalytics();
         setTimeout(() => { showPage('admin'); showToast('Режим админа'); }, 350);
       } else {
         loginError.style.color = 'var(--danger)';
@@ -2644,14 +2187,11 @@
         setTimeout(() => { adminCodeInput.classList.remove('error'); adminCodeInput.focus(); }, 500);
       }
     }
-
     function cancelLogin() {
-      adminCodeInput.value = '';
-      loginError.textContent = '';
+      adminCodeInput.value = ''; loginError.textContent = '';
       adminCodeInput.classList.remove('error');
       showPage(state.previousPage === 'login' ? 'home' : state.previousPage);
     }
-
     function onAdminIconClick() {
       if (state.isAdminMode) {
         sessionStorage.removeItem(SESSION_KEY);
@@ -2670,6 +2210,7 @@
         logoText.innerHTML = `<i class="fas fa-clipboard-list" style="color:var(--pink);"></i> <span>PRINT</span><span style="color:var(--pink);">ADMIN</span>`;
         renderAdminOrders();
         renderAdminProducts();
+        renderAnalytics();
         showPage('admin');
         return;
       }
@@ -2680,10 +2221,7 @@
     function loadTheme() {
       try {
         const t = localStorage.getItem(S.THEME);
-        if (t === 'light') {
-          document.body.classList.add('light-theme');
-          document.getElementById('themeIcon').className = 'fas fa-sun';
-        }
+        if (t === 'light') { document.body.classList.add('light-theme'); document.getElementById('themeIcon').className = 'fas fa-sun'; }
       } catch (e) {}
     }
     function toggleTheme() {
@@ -2716,7 +2254,6 @@
         renderCategories();
       }
     }
-
     function subscribeServices() {
       state.unsubServices = onSnapshot(collection(db, 'services'), (snapshot) => {
         const arr = [];
@@ -2729,7 +2266,6 @@
         if (state.currentPage === 'detail' && state.currentDetailId) openDetail(state.currentDetailId);
       }, (err) => console.error('Ошибка подписки на услуги:', err));
     }
-
     function subscribeOrders() {
       state.unsubOrders = onSnapshot(collection(db, 'orders'), (snapshot) => {
         const all = [];
@@ -2747,13 +2283,13 @@
         saveLocalHistory();
 
         if (state.currentPage === 'history') renderHistory();
-        if (state.isAdminMode) renderAdminOrders();
+        if (state.isAdminMode) {
+          renderAdminOrders();
+          if (state.adminSection === 'analytics') renderAnalytics();
+        }
         updateAdminBadge();
         renderBottomNav();
-      }, (err) => {
-        console.error('Ошибка подписки на заказы:', err);
-        showConnectionStatus(false);
-      });
+      }, (err) => { console.error('Ошибка подписки на заказы:', err); showConnectionStatus(false); });
     }
 
     // ========== ОБРАБОТЧИКИ ==========
@@ -2768,15 +2304,17 @@
     checkoutBtn.addEventListener('click', checkout);
     clearCartBtn.addEventListener('click', clearCart);
     clearHistoryBtn.addEventListener('click', clearHistory);
-    refreshOrdersBtn.addEventListener('click', () => { renderAdminOrders(); renderAdminProducts(); showToast('Обновлено'); });
+    refreshOrdersBtn.addEventListener('click', () => {
+      renderAdminOrders(); renderAdminProducts(); renderAnalytics();
+      showToast('Обновлено');
+    });
     clearAllOrdersBtn.addEventListener('click', clearAllOrders);
     exportCsvBtn.addEventListener('click', exportCSV);
 
     if (clearSavedClientBtn) {
       clearSavedClientBtn.addEventListener('click', () => {
         clearSavedClient();
-        clientName.value = '';
-        clientPhone.value = '';
+        clientName.value = ''; clientPhone.value = '';
         clientPhone.classList.remove('valid', 'error');
         const hint = document.getElementById('phoneHint');
         if (hint) { hint.textContent = ''; hint.className = 'field-hint'; }
@@ -2802,7 +2340,6 @@
       state.adminFilter = btn.dataset.filter;
       renderAdminOrders();
     });
-
     document.getElementById('clientTabSwitcher').addEventListener('click', (e) => {
       const btn = e.target.closest('.tab-switch-btn');
       if (!btn) return;
@@ -2811,7 +2348,6 @@
       state.clientTab = btn.dataset.tab;
       renderHistory();
     });
-
     document.getElementById('adminTabSwitcher').addEventListener('click', (e) => {
       const btn = e.target.closest('.tab-switch-btn');
       if (!btn) return;
@@ -2823,7 +2359,6 @@
       document.querySelector('#adminFilters .filter-btn[data-filter="all"]').classList.add('active');
       renderAdminOrders();
     });
-
     document.getElementById('adminSectionSwitcher').addEventListener('click', (e) => {
       const btn = e.target.closest('.tab-switch-btn');
       if (!btn) return;
@@ -2832,7 +2367,9 @@
       state.adminSection = btn.dataset.section;
       adminOrdersSection.style.display = state.adminSection === 'orders' ? 'block' : 'none';
       adminProductsSection.style.display = state.adminSection === 'products' ? 'block' : 'none';
+      adminAnalyticsSection.style.display = state.adminSection === 'analytics' ? 'block' : 'none';
       if (state.adminSection === 'products') renderAdminProducts();
+      if (state.adminSection === 'analytics') renderAnalytics();
     });
 
     clientPhone.addEventListener('input', (e) => {
@@ -2862,7 +2399,7 @@
       }
     });
 
-    // ========== PWA УСТАНОВКА ==========
+    // ========== PWA ==========
     let deferredPrompt = null;
     const installPwaBtn = document.getElementById('installPwaBtn');
     const installBanner = document.getElementById('installBanner');
@@ -2874,12 +2411,9 @@
       deferredPrompt = e;
       if (installPwaBtn) installPwaBtn.style.display = 'flex';
       if (!localStorage.getItem('pwa_banner_hidden')) {
-        setTimeout(() => {
-          if (installBanner) installBanner.style.display = 'block';
-        }, 4000);
+        setTimeout(() => { if (installBanner) installBanner.style.display = 'block'; }, 4000);
       }
     });
-
     if (installPwaBtn) {
       installPwaBtn.addEventListener('click', async () => {
         if (!deferredPrompt) return;
@@ -2893,7 +2427,6 @@
         deferredPrompt = null;
       });
     }
-
     if (installBannerBtn) {
       installBannerBtn.addEventListener('click', async () => {
         if (!deferredPrompt) return;
@@ -2907,21 +2440,18 @@
         deferredPrompt = null;
       });
     }
-
     if (installBannerClose) {
       installBannerClose.addEventListener('click', () => {
         installBanner.style.display = 'none';
         localStorage.setItem('pwa_banner_hidden', '1');
       });
     }
-
     window.addEventListener('appinstalled', () => {
       showToast('✓ Приложение установлено!');
       if (installPwaBtn) installPwaBtn.style.display = 'none';
       if (installBanner) installBanner.style.display = 'none';
       deferredPrompt = null;
     });
-
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
@@ -2930,7 +2460,7 @@
       });
     }
 
-    // ========== ЗАСТАВКА И ИНИЦИАЛИЗАЦИЯ ==========
+    // ========== ЗАСТАВКА ==========
     const splash = document.getElementById('splash');
     const splashProgressFill = document.getElementById('splashProgressFill');
     const splashPercent = document.getElementById('splashPercent');
@@ -2966,17 +2496,12 @@
       progress = raw < 90 ? raw : 90 + (raw - 90) * 0.8;
       splashProgressFill.style.width = progress + '%';
       splashPercent.textContent = Math.floor(progress) + '%';
-
       let phrase = splashPhrases[0].text;
       for (const p of splashPhrases) if (progress >= p.at) phrase = p.text;
       if (splashGreeting.textContent !== phrase) {
         splashGreeting.style.opacity = '0';
-        setTimeout(() => {
-          splashGreeting.textContent = phrase;
-          splashGreeting.style.opacity = '1';
-        }, 150);
+        setTimeout(() => { splashGreeting.textContent = phrase; splashGreeting.style.opacity = '1'; }, 150);
       }
-
       if (elapsed < SPLASH_DURATION) {
         requestAnimationFrame(step);
       } else {
@@ -2987,15 +2512,12 @@
           splash.classList.add('hidden');
           appEl.style.opacity = '1';
           appEl.classList.add('app-entering');
-          setTimeout(() => {
-            if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
-          }, 800);
+          setTimeout(() => { if (splash && splash.parentNode) splash.parentNode.removeChild(splash); }, 800);
         }, 200);
       }
     };
     requestAnimationFrame(step);
 
-    // ========== ОФФЛАЙН / ОНЛАЙН ==========
     window.addEventListener('online', () => showConnectionStatus(true));
     window.addEventListener('offline', () => showConnectionStatus(false));
   </script>
