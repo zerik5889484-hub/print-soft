@@ -722,7 +722,7 @@
   <!-- EmailJS SDK -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-  <script type="module">
+    <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, serverTimestamp, getDocs, setDoc, writeBatch }
       from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -744,15 +744,30 @@
     const EMAILJS_SERVICE_ID = 'service_8iz8jdq';
     const EMAILJS_TEMPLATE_ID = 'template_2kr8zab';
     const EMAILJS_PUBLIC_KEY = 'go_s_qh1yc-mW5DbF';
-    if (window.emailjs) {
-      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+    // Инициализируем EmailJS с ожиданием загрузки SDK
+    async function ensureEmailJSReady() {
+      // Ждём, пока emailjs появится в window (макс. 5 сек)
+      const start = Date.now();
+      while (!window.emailjs && Date.now() - start < 5000) {
+        await new Promise(r => setTimeout(r, 100));
+      }
+      if (!window.emailjs) {
+        throw new Error('EmailJS SDK не загрузился');
+      }
+      // Инициализируем только один раз
+      if (!window.__emailjsInitialized) {
+        window.emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+        window.__emailjsInitialized = true;
+        console.log('[EmailJS] Инициализирован');
+      }
     }
 
     // ========== НАСТРОЙКИ ==========
     const ADMIN_CODE = '444555666';
     const SESSION_KEY = 'printsoft_admin_session';
     const SPLASH_DURATION = 3000;
-    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 МБ
+    const MAX_FILE_SIZE = 5 * 1024 * 1024;
     const MAX_FILES = 10;
 
     const PROMOCODES = {
@@ -1312,7 +1327,7 @@
       renderCartItems();
     });
 
-    // ========== ЗАГРУЗКА ФАЙЛОВ (без Storage — только в памяти для отправки) ==========
+    // ========== ЗАГРУЗКА ФАЙЛОВ ==========
     uploadZone.addEventListener('click', () => fileInput.click());
     uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
     uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
@@ -1368,28 +1383,13 @@
       renderFileList();
     });
 
-    // Конвертация файла в base64
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const base64 = reader.result.split(',')[1];
-          resolve(base64);
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-
-    // ========== EMAILJS ОТПРАВКА ==========
+    // ========== EMAILJS ОТПРАВКА (ИСПРАВЛЕНО) ==========
     async function sendEmailNotification(orderData) {
-      if (!window.emailjs) {
-        console.warn('EmailJS не загружен');
+      try {
+        await ensureEmailJSReady();
+      } catch (err) {
+        console.error('[EmailJS] SDK не готов:', err);
         return { ok: false, error: 'EmailJS не загружен' };
-      }
-      if (!EMAILJS_SERVICE_ID || EMAILJS_SERVICE_ID === 'service_xxx') {
-        console.warn('EmailJS не настроен');
-        return { ok: false, error: 'EmailJS не настроен' };
       }
 
       // Формируем список услуг строкой
@@ -1397,20 +1397,10 @@
         .map(i => `• ${i.title} — ${i.qty} × ${i.price.toLocaleString()} ₽ = ${(i.qty * i.price).toLocaleString()} ₽`)
         .join('\n');
 
-      // Формируем вложения (до 3 файлов, чтобы не превысить лимит EmailJS в 500 КБ)
-      const attachments = [];
-      const filesForAttach = state.pendingFiles.slice(0, 3);
-      for (const pf of filesForAttach) {
-        try {
-          const base64 = await fileToBase64(pf.file);
-          attachments.push({
-            name: pf.file.name,
-            data: base64,
-          });
-        } catch (err) {
-          console.warn('Не удалось прикрепить файл:', pf.file.name, err);
-        }
-      }
+      // Формируем список файлов (без вложений!)
+      const filesList = state.pendingFiles.length > 0
+        ? state.pendingFiles.map(f => `• ${f.file.name} (${formatBytes(f.file.size)})`).join('\n')
+        : '—';
 
       const templateParams = {
         order_id: orderData.orderId,
@@ -1421,22 +1411,18 @@
         order_total: orderData.total.toLocaleString(),
         promo_code: orderData.promo || '—',
         order_date: orderData.date,
-        to_email: 'zerik5555566@mail.ru',
+        files_list: filesList,
+        files_count: state.pendingFiles.length,
+        to_email: 'zelp363@gmail.com',
       };
 
-      // Если есть файлы — добавляем вложения
-      if (attachments.length > 0) {
-        templateParams.attachments = attachments;
-        templateParams.files_count = attachments.length;
-        templateParams.files_list = state.pendingFiles.map(f => f.file.name).join(', ');
-      }
-
       try {
+        console.log('[EmailJS] Отправка...', templateParams);
         const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
-        console.log('EmailJS response:', response);
+        console.log('[EmailJS] Успех:', response);
         return { ok: true };
       } catch (err) {
-        console.error('EmailJS error:', err);
+        console.error('[EmailJS] Ошибка:', err);
         return { ok: false, error: err.text || err.message || 'Ошибка отправки' };
       }
     }
@@ -1480,16 +1466,16 @@
         clientUid: getClientUid(),
       };
 
-      // 1. Отправляем письмо админу через EmailJS
+      // 1. Отправляем письмо
       const emailResult = await sendEmailNotification(orderData);
       if (emailResult.ok) {
-        showToast('📧 Письмо админу отправлено');
+        showToast('📧 Письмо отправлено');
       } else {
         console.warn('EmailJS не сработал:', emailResult.error);
-        // Не блокируем заказ — просто предупреждаем
+        showToast('⚠️ Заказ сохранён, но письмо не ушло');
       }
 
-      // 2. Сохраняем заказ в Firestore
+      // 2. Сохраняем в Firestore
       try {
         const docRef = await addDoc(collection(db, 'orders'), orderData);
         const localOrder = { ...orderData, id: docRef.id };
@@ -1514,7 +1500,7 @@
         showToast('✨ Заказ отправлен!');
         showPage('history');
       } catch (err) {
-        console.error('Ошибка отправки:', err);
+        console.error('Ошибка:', err);
         showToast('Ошибка сохранения заказа');
       } finally {
         checkoutBtn.disabled = false;
@@ -2323,5 +2309,3 @@
     window.addEventListener('online', () => showConnectionStatus(true));
     window.addEventListener('offline', () => showConnectionStatus(false));
   </script>
-</body>
-</html>
