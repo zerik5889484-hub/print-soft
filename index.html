@@ -102,6 +102,71 @@
     h2 i { color: var(--accent-2); font-size: 17px; }
     .subhead { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 14px; }
 
+    /* ===== ИНФО О КОМПАНИИ ===== */
+    .company-info {
+      background: linear-gradient(135deg, rgba(168, 216, 232, 0.08), rgba(201, 184, 232, 0.08));
+      border: 1px solid var(--border-2);
+      border-radius: 20px;
+      padding: 16px 18px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .company-info::before {
+      content: '';
+      position: absolute;
+      top: -20px; right: -20px;
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168, 216, 232, 0.15), transparent 70%);
+      pointer-events: none;
+    }
+    .company-info-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .company-info-title i { color: var(--accent-1); font-size: 16px; }
+    .company-info-text {
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+    .company-info-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .company-stat {
+      text-align: center;
+      padding: 8px 4px;
+      background: rgba(168, 216, 232, 0.06);
+      border: 1px solid var(--border-2);
+      border-radius: 12px;
+    }
+    .company-stat-value {
+      font-size: 16px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: block;
+    }
+    .company-stat-label {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-top: 2px;
+    }
+
     .search-wrap { position: relative; margin-bottom: 10px; }
     .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 14px; pointer-events: none; }
     .search-input { width: 100%; background: var(--card-bg); border: 1px solid var(--border-2); color: var(--text-primary); padding: 11px 40px 11px 38px; border-radius: 14px; font-size: 13.5px; outline: none; font-family: inherit; transition: border-color 0.2s ease; }
@@ -184,16 +249,7 @@
     .promo-status.ok { color: var(--success); }
     .promo-status.err { color: var(--danger); }
 
-    .upload-zone {
-      background: rgba(168, 216, 232, 0.04);
-      border: 2px dashed var(--border-2);
-      border-radius: 14px;
-      padding: 20px 16px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      margin-bottom: 10px;
-    }
+    .upload-zone { background: rgba(168, 216, 232, 0.04); border: 2px dashed var(--border-2); border-radius: 14px; padding: 20px 16px; text-align: center; cursor: pointer; transition: all 0.2s ease; margin-bottom: 10px; }
     .upload-zone:hover, .upload-zone.dragover { background: rgba(168, 216, 232, 0.08); border-color: var(--accent-1); }
     .upload-zone-icon { font-size: 28px; color: var(--accent-1); margin-bottom: 8px; opacity: 0.8; }
     .upload-zone-text { font-size: 13px; color: var(--text-primary); font-weight: 600; margin-bottom: 4px; }
@@ -201,41 +257,15 @@
     .upload-zone input[type="file"] { display: none; }
 
     .file-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
-    .file-item {
-      display: flex; align-items: center; gap: 10px;
-      background: var(--card-bg);
-      border: 1px solid var(--success);
-      border-radius: 12px;
-      padding: 10px 12px;
-      transition: all 0.2s ease;
-    }
-    .file-icon {
-      width: 36px; height: 36px;
-      border-radius: 10px;
-      background: rgba(168, 216, 232, 0.1);
-      color: var(--accent-1);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px;
-      flex-shrink: 0;
-    }
+    .file-item { display: flex; align-items: center; gap: 10px; background: var(--card-bg); border: 1px solid var(--success); border-radius: 12px; padding: 10px 12px; }
+    .file-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(168, 216, 232, 0.1); color: var(--accent-1); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
     .file-icon.pdf { background: rgba(232, 140, 140, 0.15); color: var(--danger); }
     .file-icon.img { background: rgba(140, 220, 160, 0.15); color: var(--success); }
     .file-icon.doc { background: rgba(168, 216, 232, 0.15); color: var(--accent-1); }
     .file-info { flex: 1; min-width: 0; }
     .file-name { font-size: 12.5px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .file-size { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; }
-    .file-remove {
-      background: transparent;
-      border: 1px solid rgba(232, 168, 200, 0.35);
-      color: var(--pink);
-      width: 28px; height: 28px;
-      border-radius: 14px;
-      font-size: 11px;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .file-remove:active { transform: scale(0.9); }
+    .file-remove { background: transparent; border: 1px solid rgba(232, 168, 200, 0.35); color: var(--pink); width: 28px; height: 28px; border-radius: 14px; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
     .login-card { background: var(--card-bg); border-radius: 24px; border: 1px solid rgba(232, 168, 200, 0.25); padding: 28px 22px; margin: auto 0; text-align: center; }
     .login-icon { width: 64px; height: 64px; border-radius: 32px; background: rgba(232, 168, 200, 0.1); border: 1px solid rgba(232, 168, 200, 0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: var(--pink); font-size: 26px; }
@@ -270,24 +300,13 @@
     .progress-step.done-active { background: var(--success); }
     .progress-step.cancel-active { background: var(--danger); }
 
-    .order-files {
-      display: flex; flex-wrap: wrap; gap: 6px;
-      margin-top: 8px; margin-bottom: 8px;
-      padding-top: 8px;
-      border-top: 1px solid rgba(168, 216, 232, 0.08);
-    }
-    .order-file-chip {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 5px 10px;
-      background: rgba(168, 216, 232, 0.08);
-      border: 1px solid rgba(168, 216, 232, 0.2);
-      border-radius: 10px;
-      font-size: 11px;
-      color: var(--accent-1);
-      max-width: 100%;
-    }
+    .order-files { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; margin-bottom: 8px; padding-top: 8px; border-top: 1px solid rgba(168, 216, 232, 0.08); }
+    .order-file-chip { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; background: rgba(168, 216, 232, 0.08); border: 1px solid rgba(168, 216, 232, 0.2); border-radius: 10px; font-size: 11px; color: var(--accent-1); max-width: 100%; }
     .order-file-chip .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
-    .order-file-chip i { flex-shrink: 0; }
+
+    .order-actions-row { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+    .order-actions-row .btn { flex: 1; min-width: 100px; margin-bottom: 0; padding: 9px 12px; font-size: 12.5px; }
+    .order-actions-row .btn-danger { flex: 0 0 auto; }
 
     .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
     .stat-card { background: var(--card-bg); border-radius: 16px; padding: 12px 8px; text-align: center; border: 1px solid var(--border-2); }
@@ -402,10 +421,54 @@
 
     .install-banner { display: none; position: fixed; bottom: calc(16px + env(safe-area-inset-bottom)); left: 16px; right: 16px; background: var(--card-bg); border: 1px solid var(--accent-1); border-radius: 20px; padding: 14px 16px; z-index: 9998; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); animation: toastIn 0.4s ease; }
 
-    /* Модалка с инструкцией по файлам */
     .files-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.75); display: flex; align-items: center; justify-content: center; z-index: 1100; padding: 20px; animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeIn { from { opacity: 1; } to { opacity: 1; } }
     .files-modal-content { background: var(--app-bg); border-radius: 24px; border: 1px solid var(--border-1); padding: 24px 20px; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; }
+
+    /* Новый заказ уведомление для админа */
+    .new-order-notification {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--success), #5ab878);
+      color: #0a0a1a;
+      padding: 14px 20px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(140, 220, 160, 0.5);
+      z-index: 1200;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      animation: notifSlide 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      max-width: 90vw;
+      cursor: pointer;
+    }
+    @keyframes notifSlide {
+      from { opacity: 0; transform: translate(-50%, -30px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+    .new-order-notification i { font-size: 22px; }
+    .new-order-notification .notif-info { display: flex; flex-direction: column; }
+    .new-order-notification .notif-title { font-size: 14px; }
+    .new-order-notification .notif-sub { font-size: 11.5px; opacity: 0.8; font-weight: 500; margin-top: 2px; }
+
+    /* Переключатель уведомлений */
+    .notif-toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-2);
+      border-radius: 14px;
+      margin-bottom: 8px;
+    }
+    .notif-toggle-info { display: flex; flex-direction: column; }
+    .notif-toggle-title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .notif-toggle-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
     @media (max-width: 400px) {
       .app { padding: 12px 11px 14px; border-radius: 26px 26px 18px 18px; }
@@ -502,9 +565,36 @@
       </div>
     </div>
 
+    <!-- ГЛАВНАЯ -->
     <div id="homePage" class="page active">
       <h2><i class="fas fa-store"></i> Маркетплейс полиграфии</h2>
       <div class="subhead">Печать А4 • чёрно-белое • быстро и дёшево</div>
+
+      <!-- ИНФО О КОМПАНИИ -->
+      <div class="company-info">
+        <div class="company-info-title">
+          <i class="fas fa-building"></i>
+          PRINT SOFT — ваша типография онлайн
+        </div>
+        <div class="company-info-text">
+          Мы — команда профессионалов в области полиграфии. Работаем с 2018 года, обслужили более 5000 клиентов. Печатаем документы, дипломы, рефераты и брошюры быстро и качественно.
+        </div>
+        <div class="company-info-stats">
+          <div class="company-stat">
+            <span class="company-stat-value">7+</span>
+            <span class="company-stat-label">лет на рынке</span>
+          </div>
+          <div class="company-stat">
+            <span class="company-stat-value">5000+</span>
+            <span class="company-stat-label">клиентов</span>
+          </div>
+          <div class="company-stat">
+            <span class="company-stat-value">24/7</span>
+            <span class="company-stat-label">приём заказов</span>
+          </div>
+        </div>
+      </div>
+
       <div class="search-wrap">
         <i class="fas fa-search search-icon"></i>
         <input type="text" id="searchInput" class="search-input" placeholder="Поиск услуг...">
@@ -519,6 +609,7 @@
       <div class="detail-card" id="detailContent"></div>
     </div>
 
+    <!-- КОРЗИНА -->
     <div id="cartPage" class="page">
       <h2><i class="fas fa-shopping-bag"></i> Корзина</h2>
       <div class="subhead">Ваши выбранные услуги</div>
@@ -570,6 +661,7 @@
       <button class="btn btn-outline" id="clearCartBtn"><i class="fas fa-trash-alt"></i> Очистить корзину</button>
     </div>
 
+    <!-- ИСТОРИЯ -->
     <div id="historyPage" class="page">
       <h2><i class="fas fa-history"></i> Мои заказы</h2>
       <div class="subhead">Отслеживайте статус заказов</div>
@@ -578,17 +670,21 @@
         <button class="tab-switch-btn" data-tab="archive"><i class="fas fa-archive"></i> Архив <span class="tab-count" id="archiveCount">0</span></button>
       </div>
       <div id="historyContainer" style="flex:1;"></div>
-      <button class="btn btn-outline" id="clearHistoryBtn" style="margin-top:10px;">
-        <i class="fas fa-eraser"></i> Очистить историю
-      </button>
+      <div class="info-banner" style="margin-top:10px; font-size:11.5px; text-align:center;">
+        <i class="fas fa-info-circle" style="margin-right:6px;"></i>
+        Архив заказов может очистить только администратор
+      </div>
     </div>
 
-    <div id="favPage" class="page">
-      <h2><i class="fas fa-heart"></i> Избранное</h2>
-      <div class="subhead">Ваши любимые услуги</div>
-      <div id="favContainer" style="flex:1;"></div>
+    <!-- УСЛУГИ (вместо Избранного) -->
+    <div id="servicesPage" class="page">
+      <h2><i class="fas fa-th-large"></i> Все услуги</h2>
+      <div class="subhead">Полный каталог полиграфических услуг</div>
+      <div class="cat-filters" id="servicesPageCategories"></div>
+      <div id="servicesPageContainer" style="flex:1;"></div>
     </div>
 
+    <!-- ЛОГИН -->
     <div id="loginPage" class="page">
       <div class="login-card">
         <div class="login-icon"><i class="fas fa-lock"></i></div>
@@ -601,6 +697,7 @@
       </div>
     </div>
 
+    <!-- ПАНЕЛЬ АДМИНА -->
     <div id="adminPage" class="page">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <h2 style="margin-bottom:0;"><i class="fas fa-clipboard-list"></i> Панель админа</h2>
@@ -612,6 +709,7 @@
         <button class="tab-switch-btn active" data-section="orders"><i class="fas fa-shopping-bag"></i> Заказы</button>
         <button class="tab-switch-btn" data-section="products"><i class="fas fa-boxes"></i> Товары</button>
         <button class="tab-switch-btn" data-section="analytics"><i class="fas fa-chart-bar"></i> Аналитика</button>
+        <button class="tab-switch-btn" data-section="settings"><i class="fas fa-cog"></i> Настройки</button>
       </div>
 
       <div id="adminOrdersSection">
@@ -664,6 +762,44 @@
         <div class="analytics-block">
           <div class="analytics-title"><span><i class="fas fa-clock" style="color:var(--accent-2);"></i> По статусам</span></div>
           <div id="anaStatuses"></div>
+        </div>
+      </div>
+
+      <!-- НАСТРОЙКИ УВЕДОМЛЕНИЙ -->
+      <div id="adminSettingsSection" style="display:none;">
+        <h3 style="font-size:15px; font-weight:700; margin-bottom:12px; color:var(--text-primary);">
+          <i class="fas fa-bell" style="color:var(--accent-1); margin-right:6px;"></i>Уведомления
+        </h3>
+        <div class="notif-toggle-row">
+          <div class="notif-toggle-info">
+            <div class="notif-toggle-title">Звук при новом заказе</div>
+            <div class="notif-toggle-desc">Играть звук, когда приходит новый заказ</div>
+          </div>
+          <div class="stock-toggle" id="notifSoundToggle">
+            <div class="toggle-switch"></div>
+          </div>
+        </div>
+        <div class="notif-toggle-row">
+          <div class="notif-toggle-info">
+            <div class="notif-toggle-title">Всплывающее уведомление</div>
+            <div class="notif-toggle-desc">Показывать баннер сверху экрана</div>
+          </div>
+          <div class="stock-toggle" id="notifBannerToggle">
+            <div class="toggle-switch"></div>
+          </div>
+        </div>
+        <div class="notif-toggle-row">
+          <div class="notif-toggle-info">
+            <div class="notif-toggle-title">Уведомления клиентам</div>
+            <div class="notif-toggle-desc">Показывать клиенту изменение статуса заказа</div>
+          </div>
+          <div class="stock-toggle" id="notifClientToggle">
+            <div class="toggle-switch"></div>
+          </div>
+        </div>
+        <div class="info-banner" style="margin-top:12px;">
+          <i class="fas fa-info-circle" style="margin-right:6px;"></i>
+          Настройки сохраняются автоматически
         </div>
       </div>
     </div>
@@ -754,7 +890,6 @@
       if (!window.__emailjsInitialized) {
         window.emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
         window.__emailjsInitialized = true;
-        console.log('[EmailJS] Инициализирован');
       }
     }
 
@@ -812,14 +947,19 @@
       adminSection: 'orders',
       newStatusCount: 0,
       currentCategory: 'all',
+      servicesPageCategory: 'all',
       searchQuery: '',
       appliedPromo: null,
       editingProductId: null,
       unsubOrders: null,
       unsubServices: null,
+      lastOrdersCount: 0,
+      notifSound: true,
+      notifBanner: true,
+      notifClient: true,
     };
 
-    const S = { HISTORY: 'printsoft_history', FAV: 'printsoft_fav', THEME: 'printsoft_theme', CLIENT: 'printsoft_client' };
+    const S = { HISTORY: 'printsoft_history', FAV: 'printsoft_fav', THEME: 'printsoft_theme', CLIENT: 'printsoft_client', NOTIF: 'printsoft_notif' };
 
     function getSavedClient() { try { const c = localStorage.getItem(S.CLIENT); return c ? JSON.parse(c) : null; } catch (e) { return null; } }
     function saveClient(name, phone) { try { localStorage.setItem(S.CLIENT, JSON.stringify({ name, phone, savedAt: Date.now() })); } catch (e) {} }
@@ -828,6 +968,27 @@
     function saveFav() { try { localStorage.setItem(S.FAV, JSON.stringify([...state.favorites])); } catch (e) {} }
     function loadLocalHistory() { try { const h = localStorage.getItem(S.HISTORY); if (h) state.myOrders = JSON.parse(h); } catch (e) {} }
     function saveLocalHistory() { try { localStorage.setItem(S.HISTORY, JSON.stringify(state.myOrders)); } catch (e) {} }
+
+    function loadNotifSettings() {
+      try {
+        const n = localStorage.getItem(S.NOTIF);
+        if (n) {
+          const parsed = JSON.parse(n);
+          state.notifSound = parsed.sound !== false;
+          state.notifBanner = parsed.banner !== false;
+          state.notifClient = parsed.client !== false;
+        }
+      } catch (e) {}
+    }
+    function saveNotifSettings() {
+      try {
+        localStorage.setItem(S.NOTIF, JSON.stringify({
+          sound: state.notifSound,
+          banner: state.notifBanner,
+          client: state.notifClient
+        }));
+      } catch (e) {}
+    }
 
     function extractDigits(str) { return String(str).replace(/\D/g, ''); }
     function formatPhone(value) {
@@ -897,9 +1058,9 @@
         const osc = ctx.createOscillator(); const gain = ctx.createGain();
         osc.connect(gain); gain.connect(ctx.destination);
         osc.frequency.value = type === 'new' ? 880 : 660;
-        gain.gain.setValueAtTime(0.08, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
-        osc.start(); osc.stop(ctx.currentTime + 0.3);
+        gain.gain.setValueAtTime(0.1, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+        osc.start(); osc.stop(ctx.currentTime + 0.4);
       } catch (e) {}
     }
     function formatBytes(bytes) {
@@ -930,13 +1091,38 @@
       return uid;
     }
 
+    // Уведомление о новом заказе
+    function showNewOrderNotification(order) {
+      if (!state.isAdminMode) return;
+      const oldNotif = document.querySelector('.new-order-notification');
+      if (oldNotif) oldNotif.remove();
+
+      const notif = document.createElement('div');
+      notif.className = 'new-order-notification';
+      notif.innerHTML = `
+        <i class="fas fa-bell"></i>
+        <div class="notif-info">
+          <div class="notif-title">Новый заказ!</div>
+          <div class="notif-sub">${order.client.name} • ${order.total.toLocaleString()} ₽</div>
+        </div>
+      `;
+      notif.addEventListener('click', () => {
+        notif.remove();
+        showPage('admin');
+      });
+      document.body.appendChild(notif);
+      setTimeout(() => {
+        if (notif.parentNode) notif.remove();
+      }, 5000);
+    }
+
     // ========== DOM ==========
     const pages = {
       home: document.getElementById('homePage'),
       detail: document.getElementById('detailPage'),
       cart: document.getElementById('cartPage'),
       history: document.getElementById('historyPage'),
-      fav: document.getElementById('favPage'),
+      services: document.getElementById('servicesPage'),
       login: document.getElementById('loginPage'),
       admin: document.getElementById('adminPage'),
     };
@@ -945,7 +1131,8 @@
     const cartItemsContainer = document.getElementById('cartItemsContainer');
     const cartTotalEl = document.getElementById('cartTotal');
     const historyContainer = document.getElementById('historyContainer');
-    const favContainer = document.getElementById('favContainer');
+    const servicesPageContainer = document.getElementById('servicesPageContainer');
+    const servicesPageCategories = document.getElementById('servicesPageCategories');
     const adminOrdersContainer = document.getElementById('adminOrdersContainer');
     const backFromDetailBtn = document.getElementById('backFromDetailBtn');
     const cartIconBtn = document.getElementById('cartIconBtn');
@@ -977,6 +1164,7 @@
     const adminOrdersSection = document.getElementById('adminOrdersSection');
     const adminProductsSection = document.getElementById('adminProductsSection');
     const adminAnalyticsSection = document.getElementById('adminAnalyticsSection');
+    const adminSettingsSection = document.getElementById('adminSettingsSection');
     const adminProductsContainer = document.getElementById('adminProductsContainer');
     const searchInput = document.getElementById('searchInput');
     const searchClear = document.getElementById('searchClear');
@@ -1012,7 +1200,7 @@
       nextEl.classList.add('active');
       state.currentPage = pageId;
       if (pageId === 'history') { renderHistory(); state.newStatusCount = 0; }
-      if (pageId === 'fav') renderFavorites();
+      if (pageId === 'services') renderServicesPage();
       if (pageId === 'home') renderServices();
       renderBottomNav();
       clearTimeout(state.transitionTimer);
@@ -1046,10 +1234,9 @@
       } else {
         const unseen = state.newStatusCount;
         const historyBadge = unseen > 0 ? `<span class="nav-badge">${unseen}</span>` : '';
-        const favBadge = state.favorites.size > 0 ? `<span class="nav-badge">${state.favorites.size}</span>` : '';
         bottomNav.innerHTML = `
           <button class="nav-item ${state.currentPage === 'home' || state.currentPage === 'detail' ? 'active' : ''}" data-page="home"><i class="fas fa-home"></i> Главная</button>
-          <button class="nav-item ${state.currentPage === 'fav' ? 'active' : ''}" data-page="fav"><i class="fas fa-heart"></i> Избранное${favBadge}</button>
+          <button class="nav-item ${state.currentPage === 'services' ? 'active' : ''}" data-page="services"><i class="fas fa-th-large"></i> Услуги</button>
           <button class="nav-item ${state.currentPage === 'cart' ? 'active' : ''}" data-page="cart"><i class="fas fa-shopping-cart"></i> Корзина</button>
           <button class="nav-item ${state.currentPage === 'history' ? 'active' : ''}" data-page="history"><i class="fas fa-history"></i> Заказы${historyBadge}</button>
         `;
@@ -1057,6 +1244,7 @@
       }
     }
 
+    // ========== КАТЕГОРИИ ==========
     function renderCategories() {
       catFilters.innerHTML = CATEGORIES.map(c => `
         <button class="cat-btn ${state.currentCategory === c.id ? 'active' : ''}" data-cat="${c.id}">
@@ -1070,6 +1258,22 @@
       state.currentCategory = btn.dataset.cat;
       renderCategories();
       renderServices();
+    });
+
+    // Категории на странице "Услуги"
+    function renderServicesPageCategories() {
+      servicesPageCategories.innerHTML = CATEGORIES.map(c => `
+        <button class="cat-btn ${state.servicesPageCategory === c.id ? 'active' : ''}" data-cat="${c.id}">
+          <i class="fas ${c.icon}"></i> ${c.name}
+        </button>
+      `).join('');
+    }
+    servicesPageCategories.addEventListener('click', (e) => {
+      const btn = e.target.closest('.cat-btn');
+      if (!btn) return;
+      state.servicesPageCategory = btn.dataset.cat;
+      renderServicesPageCategories();
+      renderServicesPage();
     });
 
     searchInput.addEventListener('input', (e) => {
@@ -1089,6 +1293,13 @@
       });
     }
 
+    function getServicesPageList() {
+      return state.services.filter(s => {
+        return state.servicesPageCategory === 'all' || s.category === state.servicesPageCategory;
+      });
+    }
+
+    // ========== РЕНДЕР УСЛУГ (главная) ==========
     function renderServices() {
       const list = getFilteredServices();
       if (list.length === 0) {
@@ -1119,9 +1330,47 @@
       servicesGrid.appendChild(frag);
     }
 
+    // РЕНДЕР УСЛУГ (страница "Услуги")
+    function renderServicesPage() {
+      const list = getServicesPageList();
+      if (list.length === 0) {
+        servicesPageContainer.innerHTML = `<div class="empty-message"><i class="fas fa-box-open"></i> Услуг пока нет</div>`;
+        return;
+      }
+      const frag = document.createDocumentFragment();
+      list.forEach(s => {
+        const available = s.available !== false;
+        const card = document.createElement('div');
+        card.className = 'card' + (available ? '' : ' out-of-stock');
+        card.dataset.id = s.id;
+        const stockBadge = available ? '' : `<span class="out-badge">нет в наличии</span>`;
+        const stockLine = available ? `<span class="stock-badge-in">есть</span>` : `<span class="stock-badge-out">нет</span>`;
+        card.innerHTML = `
+          ${stockBadge}
+          <div class="card-info">
+            <div class="card-title"><i class="fas ${s.icon}"></i> ${s.title} ${stockLine}</div>
+            <div class="card-desc">${s.desc || ''}</div>
+          </div>
+          <div class="price-tag">${s.price.toLocaleString()} ₽</div>
+        `;
+        frag.appendChild(card);
+      });
+      servicesPageContainer.innerHTML = '';
+      servicesPageContainer.appendChild(frag);
+    }
+
     servicesGrid.addEventListener('click', (e) => {
       const favBtn = e.target.closest('[data-fav]');
       if (favBtn) { e.stopPropagation(); toggleFav(parseInt(favBtn.dataset.fav, 10)); return; }
+      const card = e.target.closest('.card');
+      if (!card) return;
+      const id = parseInt(card.dataset.id, 10);
+      const s = state.services.find(x => x.id === id);
+      if (!s || s.available === false) { showToast('Товара нет в наличии'); return; }
+      openDetail(id);
+    });
+
+    servicesPageContainer.addEventListener('click', (e) => {
       const card = e.target.closest('.card');
       if (!card) return;
       const id = parseInt(card.dataset.id, 10);
@@ -1135,41 +1384,8 @@
       else { state.favorites.add(id); showToast('Добавлено в избранное'); }
       saveFav();
       renderServices();
-      if (state.currentPage === 'fav') renderFavorites();
       renderBottomNav();
     }
-
-    function renderFavorites() {
-      const list = state.services.filter(s => state.favorites.has(s.id));
-      if (list.length === 0) {
-        favContainer.innerHTML = `<div class="empty-message"><i class="fas fa-heart"></i> Пока ничего нет в избранном</div>`;
-        return;
-      }
-      favContainer.innerHTML = `<div class="grid">${list.map(s => {
-        const available = s.available !== false;
-        return `
-          <div class="card ${available ? '' : 'out-of-stock'}" data-id="${s.id}">
-            <div class="card-info">
-              <div class="card-title"><i class="fas ${s.icon}"></i> ${s.title}</div>
-              <div class="card-desc">${s.desc || ''}</div>
-            </div>
-            <div class="price-tag">${s.price.toLocaleString()} ₽</div>
-            <button class="fav-btn active" data-fav="${s.id}"><i class="fas fa-heart"></i></button>
-          </div>
-        `;
-      }).join('')}</div>`;
-    }
-    favContainer.addEventListener('click', (e) => {
-      const favBtn = e.target.closest('[data-fav]');
-      if (favBtn) { e.stopPropagation(); toggleFav(parseInt(favBtn.dataset.fav, 10)); return; }
-      const card = e.target.closest('.card');
-      if (card) {
-        const id = parseInt(card.dataset.id, 10);
-        const s = state.services.find(x => x.id === id);
-        if (!s || s.available === false) { showToast('Нет в наличии'); return; }
-        openDetail(id);
-      }
-    });
 
     function openDetail(id) {
       const service = state.services.find(s => s.id === id);
@@ -1322,7 +1538,7 @@
       renderCartItems();
     });
 
-    // ========== ЗАГРУЗКА ФАЙЛОВ (только сохранение в память) ==========
+    // ========== ЗАГРУЗКА ФАЙЛОВ ==========
     uploadZone.addEventListener('click', () => fileInput.click());
     uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
     uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
@@ -1396,7 +1612,7 @@
         : '— (файлов нет)';
 
       const filesNote = state.pendingFiles.length > 0
-        ? '\n\n⚠️ ВНИМАНИЕ: файлы НЕ прикреплены к письму.\nКлиент отправит их отдельным письмом на этот адрес с темой "Заказ ' + orderData.orderId + '".'
+        ? '\n\n⚠️ Файлы НЕ прикреплены. Клиент отправит их отдельно на этот адрес.'
         : '';
 
       const templateParams = {
@@ -1414,9 +1630,7 @@
       };
 
       try {
-        console.log('[EmailJS] Отправка...', templateParams);
         const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
-        console.log('[EmailJS] Успех:', response);
         return { ok: true };
       } catch (err) {
         console.error('[EmailJS] Ошибка:', err);
@@ -1424,7 +1638,88 @@
       }
     }
 
-    // ========== МОДАЛКА С ИНСТРУКЦИЕЙ ПО ФАЙЛАМ ==========
+    // ========== ЧЕК ==========
+    function generateReceipt(order) {
+      const itemsHtml = order.items.map(i => `
+        <tr>
+          <td style="padding: 6px 0; border-bottom: 1px dashed #ccc;">${i.title}</td>
+          <td style="padding: 6px 0; border-bottom: 1px dashed #ccc; text-align:center;">${i.qty}</td>
+          <td style="padding: 6px 0; border-bottom: 1px dashed #ccc; text-align:right;">${i.price.toLocaleString()} ₽</td>
+          <td style="padding: 6px 0; border-bottom: 1px dashed #ccc; text-align:right;">${(i.qty * i.price).toLocaleString()} ₽</td>
+        </tr>
+      `).join('');
+
+      const filesHtml = order.files && order.files.length > 0
+        ? `<div style="margin-top: 16px;"><strong>Файлы:</strong><br>${order.files.map(f => `• ${f.name}`).join('<br>')}</div>`
+        : '';
+
+      const receiptHtml = `
+        <!DOCTYPE html>
+        <html lang="ru">
+        <head>
+          <meta charset="UTF-8">
+          <title>Чек ${order.orderId}</title>
+          <style>
+            body { font-family: 'Courier New', monospace; max-width: 500px; margin: 20px auto; padding: 20px; color: #000; }
+            .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 12px; margin-bottom: 16px; }
+            .header h1 { font-size: 22px; margin-bottom: 6px; letter-spacing: 2px; }
+            .header p { font-size: 12px; color: #555; }
+            .info { font-size: 13px; margin-bottom: 12px; }
+            .info div { display: flex; justify-content: space-between; padding: 3px 0; }
+            table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+            th { text-align: left; padding: 6px 0; border-bottom: 2px solid #000; font-size: 12px; }
+            .total { display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; margin-top: 16px; padding-top: 12px; border-top: 2px solid #000; }
+            .footer { text-align: center; margin-top: 24px; font-size: 11px; color: #666; }
+            @media print {
+              body { margin: 0; padding: 10px; }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h1>PRINT SOFT</h1>
+            <p>Чек к заказу ${order.orderId}</p>
+          </div>
+          <div class="info">
+            <div><span>Дата:</span><span>${order.date}</span></div>
+            <div><span>Клиент:</span><span>${order.client.name}</span></div>
+            <div><span>Телефон:</span><span>${displayPhone(order.client.phone)}</span></div>
+            ${order.client.comment ? `<div><span>Комментарий:</span><span>${order.client.comment}</span></div>` : ''}
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Наименование</th>
+                <th style="text-align:center;">Кол-во</th>
+                <th style="text-align:right;">Цена</th>
+                <th style="text-align:right;">Сумма</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${itemsHtml}
+            </tbody>
+          </table>
+          ${order.promo ? `<div style="font-size:12px; margin-top:8px;">Промокод: ${order.promo}</div>` : ''}
+          <div class="total">
+            <span>ИТОГО:</span>
+            <span>${order.total.toLocaleString()} ₽</span>
+          </div>
+          ${filesHtml}
+          <div class="footer">
+            Спасибо за заказ!<br>
+            PRINT SOFT • полиграфия
+          </div>
+          <script>window.print();<\/script>
+        </body>
+        </html>
+      `;
+
+      const win = window.open('', '_blank', 'width=600,height=800');
+      win.document.write(receiptHtml);
+      win.document.close();
+    }
+
+    // ========== МОДАЛКА С ФАЙЛАМИ ==========
     function showFilesModal(orderId, files) {
       const oldModal = document.getElementById('filesModalBackdrop');
       if (oldModal) oldModal.remove();
@@ -1457,17 +1752,16 @@
               <div style="background:rgba(232,200,130,0.08); border:1px solid rgba(232,200,130,0.3); border-radius:14px; padding:12px 14px; margin-bottom:14px;">
                 <div style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:var(--warning); margin-bottom:8px;">
                   <i class="fas fa-exclamation-triangle"></i>
-                  Важно: отправьте файлы на почту
+                  Отправьте файлы на почту
                 </div>
                 <div style="font-size:12px; color:var(--text-secondary); line-height:1.5; margin-bottom:10px;">
-                  Файлы не передаются автоматически. Отправьте их на почту админа с темой письма <b style="color:var(--accent-1);">«Заказ ${orderId}»</b>.
+                  Отправьте файлы на почту админа с темой <b style="color:var(--accent-1);">«Заказ ${orderId}»</b>.
                 </div>
-                <div style="font-size:11.5px; color:var(--text-muted); margin-bottom:8px; font-weight:600;">Ваши файлы:</div>
                 ${filesHtml}
               </div>
 
               <div style="background:rgba(168,216,232,0.06); border:1px solid rgba(168,216,232,0.15); border-radius:14px; padding:12px 14px; margin-bottom:14px;">
-                <div style="font-size:11.5px; color:var(--text-muted); margin-bottom:6px; font-weight:600;">Отправить на почту:</div>
+                <div style="font-size:11.5px; color:var(--text-muted); margin-bottom:6px; font-weight:600;">Почта админа:</div>
                 <div style="display:flex; align-items:center; gap:8px;">
                   <div style="flex:1; background:var(--app-bg); border:1px solid var(--border-2); border-radius:10px; padding:9px 12px; font-size:13px; color:var(--accent-1); font-family:'Courier New', monospace; font-weight:700; overflow:hidden; text-overflow:ellipsis;">${ADMIN_EMAIL}</div>
                   <button id="copyEmailBtn" class="btn btn-small" style="width:auto; margin:0; padding:9px 14px; font-size:12.5px;">
@@ -1478,7 +1772,7 @@
             ` : `
               <div style="background:rgba(140,220,160,0.08); border:1px solid rgba(140,220,160,0.3); border-radius:14px; padding:14px; margin-bottom:14px; font-size:13px; color:var(--success); text-align:center;">
                 <i class="fas fa-check-circle" style="margin-right:6px;"></i>
-                Файлы не прикреплены — всё готово к работе!
+                Файлы не прикреплены — всё готово!
               </div>
             `}
 
@@ -1495,34 +1789,16 @@
       const closeBtn = document.getElementById('filesModalCloseBtn');
       const copyBtn = document.getElementById('copyEmailBtn');
 
-      closeBtn.addEventListener('click', () => {
-        backdrop.remove();
-      });
-
-      backdrop.addEventListener('click', (e) => {
-        if (e.target === backdrop) backdrop.remove();
-      });
+      closeBtn.addEventListener('click', () => backdrop.remove());
+      backdrop.addEventListener('click', (e) => { if (e.target === backdrop) backdrop.remove(); });
 
       if (copyBtn) {
         copyBtn.addEventListener('click', () => {
           if (navigator.clipboard) {
             navigator.clipboard.writeText(ADMIN_EMAIL).then(() => {
               copyBtn.innerHTML = '<i class="fas fa-check"></i> Скопировано';
-              setTimeout(() => {
-                copyBtn.innerHTML = '<i class="fas fa-copy"></i> Копировать';
-              }, 2000);
+              setTimeout(() => { copyBtn.innerHTML = '<i class="fas fa-copy"></i> Копировать'; }, 2000);
             });
-          } else {
-            const input = document.createElement('input');
-            input.value = ADMIN_EMAIL;
-            document.body.appendChild(input);
-            input.select();
-            document.execCommand('copy');
-            document.body.removeChild(input);
-            copyBtn.innerHTML = '<i class="fas fa-check"></i> Скопировано';
-            setTimeout(() => {
-              copyBtn.innerHTML = '<i class="fas fa-copy"></i> Копировать';
-            }, 2000);
           }
         });
       }
@@ -1574,12 +1850,7 @@
       };
 
       const emailResult = await sendEmailNotification(orderData);
-      if (emailResult.ok) {
-        showToast('📧 Письмо отправлено');
-      } else {
-        console.warn('EmailJS не сработал:', emailResult.error);
-        showToast('⚠️ Заказ сохранён, но письмо не ушло');
-      }
+      if (emailResult.ok) showToast('📧 Письмо отправлено');
 
       try {
         const docRef = await addDoc(collection(db, 'orders'), orderData);
@@ -1665,8 +1936,11 @@
               <span class="order-status ${status}"><i class="fas ${statusIcon(status)}"></i> ${statusLabel(status)}</span>
               <span class="order-total">${order.total.toLocaleString()} ₽</span>
             </div>
-            <div style="display:flex; gap:6px; margin-top:8px;">
-              <button class="btn btn-outline btn-small" data-repeat="${order.orderId}" style="flex:1;">
+            <div class="order-actions-row">
+              <button class="btn btn-outline btn-small" data-receipt="${order.orderId}">
+                <i class="fas fa-receipt"></i> Чек
+              </button>
+              <button class="btn btn-outline btn-small" data-repeat="${order.orderId}">
                 <i class="fas fa-redo"></i> Повторить
               </button>
             </div>
@@ -1676,9 +1950,17 @@
     }
 
     historyContainer.addEventListener('click', (e) => {
+      const receiptBtn = e.target.closest('[data-receipt]');
+      if (receiptBtn) { e.stopPropagation(); openReceipt(receiptBtn.dataset.receipt); return; }
       const repeatBtn = e.target.closest('[data-repeat]');
       if (repeatBtn) { e.stopPropagation(); repeatOrder(repeatBtn.dataset.repeat); }
     });
+
+    function openReceipt(orderId) {
+      const order = state.myOrders.find(o => o.orderId === orderId);
+      if (!order) return;
+      generateReceipt(order);
+    }
 
     function repeatOrder(orderId) {
       const order = state.myOrders.find(o => o.orderId === orderId);
@@ -1699,9 +1981,7 @@
     }
 
     function clearHistory() {
-      if (state.myOrders.length === 0) return;
-      state.myOrders = []; saveLocalHistory(); renderHistory(); renderBottomNav();
-      showToast('История очищена');
+      showToast('Архив может очистить только администратор');
     }
 
     function updateAdminBadge() {
@@ -1773,6 +2053,8 @@
               <button class="btn btn-outline btn-small" data-action="progress" data-id="${order.id}"><i class="fas fa-hourglass-half" style="color:var(--warning);"></i></button>
               <button class="btn btn-outline btn-small" data-action="done" data-id="${order.id}"><i class="fas fa-check-circle" style="color:var(--success);"></i></button>
               <button class="btn btn-outline btn-small" data-action="cancel" data-id="${order.id}"><i class="fas fa-times-circle" style="color:var(--danger);"></i></button>
+              <button class="btn btn-outline btn-small" data-admin-receipt="${oid}"><i class="fas fa-receipt"></i></button>
+              <button class="btn btn-outline btn-small btn-danger" data-delete-order="${order.id}"><i class="fas fa-trash"></i></button>
             </div>
           </div>
         `;
@@ -1780,15 +2062,34 @@
     }
 
     adminOrdersContainer.addEventListener('click', async (e) => {
-      const btn = e.target.closest('[data-action]');
-      if (!btn) return;
-      const id = btn.dataset.id;
-      const action = btn.dataset.action;
-      try {
-        await updateDoc(doc(db, 'orders', id), { status: action });
-        showToast(`Статус: ${statusLabel(action)}`);
-        playSound('status');
-      } catch (err) { console.error(err); showToast('Ошибка обновления'); }
+      const actionBtn = e.target.closest('[data-action]');
+      if (actionBtn) {
+        const id = actionBtn.dataset.id;
+        const action = actionBtn.dataset.action;
+        try {
+          await updateDoc(doc(db, 'orders', id), { status: action });
+          showToast(`Статус: ${statusLabel(action)}`);
+          playSound('status');
+        } catch (err) { showToast('Ошибка обновления'); }
+        return;
+      }
+      const receiptBtn = e.target.closest('[data-admin-receipt]');
+      if (receiptBtn) {
+        e.stopPropagation();
+        const order = state.allOrders.find(o => (o.orderId || o.id) === receiptBtn.dataset.adminReceipt);
+        if (order) generateReceipt(order);
+        return;
+      }
+      const deleteBtn = e.target.closest('[data-delete-order]');
+      if (deleteBtn) {
+        e.stopPropagation();
+        if (confirm('Удалить этот заказ?')) {
+          try {
+            await deleteDoc(doc(db, 'orders', deleteBtn.dataset.deleteOrder));
+            showToast('Заказ удалён');
+          } catch (err) { showToast('Ошибка удаления'); }
+        }
+      }
     });
 
     async function clearAllOrders() {
@@ -2046,7 +2347,7 @@
           showToast('✓ Добавлено');
         }
         closeProductModal();
-      } catch (err) { console.error(err); showToast('Ошибка сохранения'); }
+      } catch (err) { showToast('Ошибка сохранения'); }
     });
 
     modalCancelBtn.addEventListener('click', closeProductModal);
@@ -2076,6 +2377,7 @@
         renderAdminOrders();
         renderAdminProducts();
         renderAnalytics();
+        renderNotifToggles();
         setTimeout(() => { showPage('admin'); showToast('Режим админа'); }, 350);
       } else {
         loginError.style.color = 'var(--danger)';
@@ -2109,11 +2411,42 @@
         renderAdminOrders();
         renderAdminProducts();
         renderAnalytics();
+        renderNotifToggles();
         showPage('admin');
         return;
       }
       openLoginScreen();
     }
+
+    // ========== НАСТРОЙКИ УВЕДОМЛЕНИЙ ==========
+    function renderNotifToggles() {
+      const soundToggle = document.getElementById('notifSoundToggle');
+      const bannerToggle = document.getElementById('notifBannerToggle');
+      const clientToggle = document.getElementById('notifClientToggle');
+
+      if (soundToggle) soundToggle.className = 'stock-toggle ' + (state.notifSound ? 'on' : 'off');
+      if (bannerToggle) bannerToggle.className = 'stock-toggle ' + (state.notifBanner ? 'on' : 'off');
+      if (clientToggle) clientToggle.className = 'stock-toggle ' + (state.notifClient ? 'on' : 'off');
+    }
+
+    document.getElementById('notifSoundToggle').addEventListener('click', () => {
+      state.notifSound = !state.notifSound;
+      saveNotifSettings();
+      renderNotifToggles();
+      showToast(state.notifSound ? '✓ Звук включён' : '✗ Звук выключен');
+    });
+    document.getElementById('notifBannerToggle').addEventListener('click', () => {
+      state.notifBanner = !state.notifBanner;
+      saveNotifSettings();
+      renderNotifToggles();
+      showToast(state.notifBanner ? '✓ Баннер включён' : '✗ Баннер выключен');
+    });
+    document.getElementById('notifClientToggle').addEventListener('click', () => {
+      state.notifClient = !state.notifClient;
+      saveNotifSettings();
+      renderNotifToggles();
+      showToast(state.notifClient ? '✓ Уведомления клиентам вкл' : '✗ Уведомления клиентам выкл');
+    });
 
     function loadTheme() {
       try {
@@ -2144,11 +2477,15 @@
         }
         renderServices();
         renderCategories();
+        renderServicesPage();
+        renderServicesPageCategories();
       } catch (err) {
         console.error('Ошибка загрузки услуг:', err);
         state.services = [...DEFAULT_SERVICES];
         renderServices();
         renderCategories();
+        renderServicesPage();
+        renderServicesPageCategories();
       }
     }
     function subscribeServices() {
@@ -2159,6 +2496,8 @@
         state.services = arr;
         renderServices();
         renderCategories();
+        renderServicesPage();
+        renderServicesPageCategories();
         if (state.isAdminMode) renderAdminProducts();
         if (state.currentPage === 'detail' && state.currentDetailId) openDetail(state.currentDetailId);
       }, (err) => console.error('Ошибка подписки на услуги:', err));
@@ -2172,7 +2511,20 @@
           const tb = b.createdAt && b.createdAt.toMillis ? b.createdAt.toMillis() : 0;
           return tb - ta;
         });
+
+        // Проверяем, есть ли новый заказ
+        const prevCount = state.allOrders.length;
+        const newOrders = all.filter(o => (o.status || 'new') === 'new');
+        const prevNewCount = state.allOrders.filter(o => (o.status || 'new') === 'new').length;
+
         state.allOrders = all;
+
+        // Уведомление админу о новом заказе
+        if (state.isAdminMode && all.length > prevCount && prevCount > 0) {
+          const newestOrder = all[0];
+          if (state.notifBanner) showNewOrderNotification(newestOrder);
+          if (state.notifSound) playSound('new');
+        }
 
         const myUid = getClientUid();
         const mine = all.filter(o => o.clientUid === myUid);
@@ -2265,8 +2617,10 @@
       adminOrdersSection.style.display = state.adminSection === 'orders' ? 'block' : 'none';
       adminProductsSection.style.display = state.adminSection === 'products' ? 'block' : 'none';
       adminAnalyticsSection.style.display = state.adminSection === 'analytics' ? 'block' : 'none';
+      adminSettingsSection.style.display = state.adminSection === 'settings' ? 'block' : 'none';
       if (state.adminSection === 'products') renderAdminProducts();
       if (state.adminSection === 'analytics') renderAnalytics();
+      if (state.adminSection === 'settings') renderNotifToggles();
     });
 
     clientPhone.addEventListener('input', (e) => {
@@ -2375,10 +2729,14 @@
     loadTheme();
     loadLocalFav();
     loadLocalHistory();
+    loadNotifSettings();
     renderCategories();
+    renderServicesPageCategories();
     renderServices();
+    renderServicesPage();
     renderBottomNav();
     renderHistory();
+    renderNotifToggles();
 
     initServicesFromFirestore().then(() => {
       subscribeServices();
