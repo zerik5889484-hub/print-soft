@@ -211,6 +211,8 @@
     }
     .file-item.ready { border-color: var(--success); }
     .file-item.error { border-color: var(--danger); }
+    .file-item.uploading { border-color: var(--accent-1); }
+    .file-item.done { border-color: var(--success); }
     .file-icon {
       width: 36px; height: 36px;
       border-radius: 10px;
@@ -719,10 +721,10 @@
     </div>
   </div>
 
-  <!-- EmailJS SDK -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="https://unpkg.com/putput@latest/dist/putput.umd.js"></script>
 
-    <script type="module">
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, serverTimestamp, getDocs, setDoc, writeBatch }
       from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -745,17 +747,12 @@
     const EMAILJS_TEMPLATE_ID = 'template_2kr8zab';
     const EMAILJS_PUBLIC_KEY = 'go_s_qh1yc-mW5DbF';
 
-    // Инициализируем EmailJS с ожиданием загрузки SDK
     async function ensureEmailJSReady() {
-      // Ждём, пока emailjs появится в window (макс. 5 сек)
       const start = Date.now();
       while (!window.emailjs && Date.now() - start < 5000) {
         await new Promise(r => setTimeout(r, 100));
       }
-      if (!window.emailjs) {
-        throw new Error('EmailJS SDK не загрузился');
-      }
-      // Инициализируем только один раз
+      if (!window.emailjs) throw new Error('EmailJS SDK не загрузился');
       if (!window.__emailjsInitialized) {
         window.emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
         window.__emailjsInitialized = true;
@@ -1327,7 +1324,7 @@
       renderCartItems();
     });
 
-    // ========== ЗАГРУЗКА ФАЙЛОВ ==========
+    // ========== ЗАГРУЗКА ФАЙЛОВ (PutPut) ==========
     uploadZone.addEventListener('click', () => fileInput.click());
     uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
     uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
@@ -1341,20 +1338,49 @@
       fileInput.value = '';
     });
 
-    function handleFiles(files) {
+    async function handleFiles(files) {
       const arr = Array.from(files);
       if (state.pendingFiles.length + arr.length > MAX_FILES) {
         showToast(`Максимум ${MAX_FILES} файлов`);
         return;
       }
-      arr.forEach(file => {
+
+      for (const file of arr) {
         if (file.size > MAX_FILE_SIZE) {
           showToast(`${file.name} слишком большой (макс. 5 МБ)`);
-          return;
+          continue;
         }
-        state.pendingFiles.push({ file, status: 'ready' });
-      });
-      renderFileList();
+
+        const fileObj = {
+          file,
+          status: 'uploading',
+          progress: 0,
+          url: null,
+          error: null
+        };
+        state.pendingFiles.push(fileObj);
+        renderFileList();
+
+        try {
+          if (typeof putput === 'undefined' || !putput.PutPutClient) {
+            throw new Error('PutPut SDK не загрузился');
+          }
+          const pp = new putput.PutPutClient();
+          const { token } = await pp.createGuestToken();
+          pp.setToken(token);
+
+          const result = await pp.upload(file, file.name, file.type);
+          fileObj.status = 'done';
+          fileObj.url = result.url;
+          fileObj.progress = 100;
+          console.log('✅ Файл загружен:', result.url);
+        } catch (err) {
+          console.error('❌ Ошибка PutPut:', err);
+          fileObj.status = 'error';
+          fileObj.error = err.message || 'Ошибка загрузки';
+        }
+        renderFileList();
+      }
     }
 
     function renderFileList() {
@@ -1362,12 +1388,19 @@
       fileList.innerHTML = state.pendingFiles.map((f, i) => {
         const iconClass = fileIconClass(f.file.name);
         const iconFA = fileIconFA(f.file.name);
+        let statusInfo = '';
+        if (f.status === 'uploading') statusInfo = `Загрузка...`;
+        else if (f.status === 'done') statusInfo = `✅ Ссылка готова`;
+        else if (f.status === 'error') statusInfo = `❌ ${f.error || 'Ошибка'}`;
+        else statusInfo = formatBytes(f.file.size);
+
         return `
-          <div class="file-item ready" data-idx="${i}">
+          <div class="file-item ${f.status}" data-idx="${i}">
             <div class="file-icon ${iconClass}"><i class="fas ${iconFA}"></i></div>
             <div class="file-info">
               <div class="file-name">${f.file.name}</div>
-              <div class="file-size">${formatBytes(f.file.size)}</div>
+              <div class="file-size">${statusInfo}</div>
+              ${f.url ? `<div style="font-size:10.5px; color:var(--success); margin-top:2px; word-break:break-all;">${f.url}</div>` : ''}
             </div>
             <button class="file-remove" data-remove="${i}"><i class="fas fa-times"></i></button>
           </div>
@@ -1383,7 +1416,7 @@
       renderFileList();
     });
 
-    // ========== EMAILJS ОТПРАВКА (ИСПРАВЛЕНО) ==========
+    // ========== EMAILJS ОТПРАВКА ==========
     async function sendEmailNotification(orderData) {
       try {
         await ensureEmailJSReady();
@@ -1392,15 +1425,14 @@
         return { ok: false, error: 'EmailJS не загружен' };
       }
 
-      // Формируем список услуг строкой
       const itemsStr = orderData.items
         .map(i => `• ${i.title} — ${i.qty} × ${i.price.toLocaleString()} ₽ = ${(i.qty * i.price).toLocaleString()} ₽`)
         .join('\n');
 
-      // Формируем список файлов (без вложений!)
-      const filesList = state.pendingFiles.length > 0
-        ? state.pendingFiles.map(f => `• ${f.file.name} (${formatBytes(f.file.size)})`).join('\n')
-        : '—';
+      const filesWithLinks = state.pendingFiles.filter(f => f.url);
+      const filesList = filesWithLinks.length > 0
+        ? filesWithLinks.map(f => `• ${f.file.name} — ${f.url}`).join('\n')
+        : '— (файлов нет)';
 
       const templateParams = {
         order_id: orderData.orderId,
@@ -1412,7 +1444,7 @@
         promo_code: orderData.promo || '—',
         order_date: orderData.date,
         files_list: filesList,
-        files_count: state.pendingFiles.length,
+        files_count: filesWithLinks.length,
         to_email: 'zelp363@gmail.com',
       };
 
@@ -1453,12 +1485,19 @@
       checkoutBtn.disabled = true;
       checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
 
+      const filesList = state.pendingFiles.map(f => ({
+        name: f.file.name,
+        size: f.file.size,
+        type: f.file.type,
+        url: f.url
+      }));
+
       const orderData = {
         orderId,
         date: new Date().toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
         client: { name, phone, comment },
         items: state.cart.map(item => ({ title: item.title, qty: item.quantity, price: item.price })),
-        files: state.pendingFiles.map(f => ({ name: f.file.name, size: f.file.size, type: f.file.type })),
+        files: filesList,
         total, baseTotal,
         promo: state.appliedPromo ? state.appliedPromo.code : null,
         status: 'new',
@@ -1466,7 +1505,6 @@
         clientUid: getClientUid(),
       };
 
-      // 1. Отправляем письмо
       const emailResult = await sendEmailNotification(orderData);
       if (emailResult.ok) {
         showToast('📧 Письмо отправлено');
@@ -1475,7 +1513,6 @@
         showToast('⚠️ Заказ сохранён, но письмо не ушло');
       }
 
-      // 2. Сохраняем в Firestore
       try {
         const docRef = await addDoc(collection(db, 'orders'), orderData);
         const localOrder = { ...orderData, id: docRef.id };
@@ -1545,7 +1582,9 @@
             ${order.files && order.files.length > 0 ? `
               <div class="order-files">
                 ${order.files.map(f => `
-                  <span class="order-file-chip"><i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span></span>
+                  <a class="order-file-chip" href="${f.url || '#'}" target="_blank">
+                    <i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span>
+                  </a>
                 `).join('')}
               </div>
             ` : ''}
@@ -1651,7 +1690,9 @@
             ${order.files && order.files.length > 0 ? `
               <div class="order-files">
                 ${order.files.map(f => `
-                  <span class="order-file-chip"><i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span></span>
+                  <a class="order-file-chip" href="${f.url || '#'}" target="_blank">
+                    <i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span>
+                  </a>
                 `).join('')}
               </div>
             ` : ''}
@@ -2309,3 +2350,5 @@
     window.addEventListener('online', () => showConnectionStatus(true));
     window.addEventListener('offline', () => showConnectionStatus(false));
   </script>
+</body>
+</html>
