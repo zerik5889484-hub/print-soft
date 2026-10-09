@@ -2459,7 +2459,8 @@
     backFromDetailBtn.addEventListener('click', () => showPage('home'));
     checkoutBtn.addEventListener('click', checkout);
     clearCartBtn.addEventListener('click', clearCart);
-    clearHistoryBtn.addEventListener('click', clearHistory);
+    const clearHistoryBtnEl = document.getElementById('clearHistoryBtn');
+if (clearHistoryBtnEl) clearHistoryBtnEl.addEventListener('click', clearHistory);
     refreshOrdersBtn.addEventListener('click', () => {
       renderAdminOrders(); renderAdminProducts(); renderAnalytics();
       showToast('Обновлено');
