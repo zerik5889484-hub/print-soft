@@ -3,10 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <meta name="theme-color" content="#0f1020">
+  <meta name="theme-color" content="#14162a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PRINT SOFT">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="description" content="Мини-маркетплейс полиграфии: печать А4 ч/б, копии, сканирование, ламинирование">
   <title>PRINT SOFT • мини-маркетплейс полиграфии</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <link rel="icon" type="image/png" href="./icon-192.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * {
@@ -57,6 +63,11 @@
       --pink: #b85a98;
     }
 
+    html, body {
+      overscroll-behavior-y: contain;
+      -webkit-touch-callout: none;
+    }
+
     body {
       background-color: var(--bg-2);
       background-image: linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 60%, var(--bg-3) 100%);
@@ -67,6 +78,8 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       transition: background 0.3s ease, color 0.3s ease;
+      padding-top: calc(14px + env(safe-area-inset-top));
+      padding-bottom: calc(14px + env(safe-area-inset-bottom));
     }
 
     /* ==================== ЗАСТАВКА ==================== */
@@ -1014,6 +1027,7 @@
       margin-top: auto; padding-top: 12px;
       border-top: 1px solid var(--border-2);
       gap: 2px; z-index: 10;
+      padding-bottom: env(safe-area-inset-bottom);
     }
     .nav-item {
       display: flex; flex-direction: column; align-items: center; gap: 2px;
@@ -1066,7 +1080,7 @@
     .back-btn:active { background: rgba(200, 180, 232, 0.12); transform: translateX(-2px); }
 
     .toast {
-      position: fixed; bottom: 24px; left: 50%;
+      position: fixed; bottom: calc(24px + env(safe-area-inset-bottom)); left: 50%;
       background: var(--app-bg);
       border: 1px solid var(--accent-1);
       color: var(--text-primary);
@@ -1172,25 +1186,6 @@
     }
     .clear-client-btn:active { background: rgba(232, 140, 140, 0.08); color: var(--danger); }
 
-    /* Индикатор загрузки */
-    .loading-indicator {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 40px 20px;
-      color: var(--text-muted); font-size: 13px; gap: 12px;
-    }
-    .loading-spinner {
-      width: 32px; height: 32px;
-      border: 3px solid rgba(168, 216, 232, 0.2);
-      border-top-color: var(--accent-1);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* Connection status */
     .connection-status {
       position: fixed; top: 8px; left: 50%;
       transform: translateX(-50%);
@@ -1216,6 +1211,22 @@
       100% { opacity: 0; }
     }
 
+    /* ===== PWA Установка баннер ===== */
+    .install-banner {
+      display: none;
+      position: fixed;
+      bottom: calc(16px + env(safe-area-inset-bottom));
+      left: 16px; right: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--accent-1);
+      border-radius: 20px;
+      padding: 14px 16px;
+      z-index: 9998;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      animation: toastIn 0.4s ease;
+    }
+
+    /* ==================== АДАПТАЦИЯ ==================== */
     @media (max-width: 400px) {
       .app { padding: 12px 11px 14px; border-radius: 26px 26px 18px 18px; }
       .logo { font-size: 17px; } .logo i { font-size: 19px; }
@@ -1228,9 +1239,7 @@
       .nav-item { font-size: 9.5px; padding: 6px 3px; }
       .nav-item i { font-size: 16px; }
       .order-card { padding: 12px 13px; }
-      .page.leaving { top: 12px; left: 11px; right: 11px; bottom: 14px; }
       .icon-btn { width: 36px; height: 36px; font-size: 14px; }
-      .login-card { padding: 22px 16px; }
       .code-input { font-size: 18px; letter-spacing: 5px; padding: 14px 16px; }
       .splash-title { font-size: 26px; }
       .live-indicator { display: none; }
@@ -1324,6 +1333,9 @@
         <i class="fas fa-print"></i> <span>PRINT</span><span style="color:var(--accent-2);">SOFT</span>
       </div>
       <div class="header-actions">
+        <button class="icon-btn" id="installPwaBtn" style="display:none;" aria-label="Установить приложение" title="Установить приложение">
+          <i class="fas fa-download"></i>
+        </button>
         <div class="live-indicator" id="liveIndicator">
           <span class="live-dot"></span> LIVE
         </div>
@@ -1555,10 +1567,27 @@
     <div class="bottom-nav" id="bottomNav"></div>
   </div>
 
+  <!-- PWA Install Banner -->
+  <div class="install-banner" id="installBanner">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <div style="width:44px; height:44px; border-radius:12px; background:linear-gradient(135deg, var(--accent-1), var(--accent-2)); display:flex; align-items:center; justify-content:center; font-size:20px; color:var(--app-bg); flex-shrink:0;">
+        <i class="fas fa-print"></i>
+      </div>
+      <div style="flex:1; min-width:0;">
+        <div style="font-weight:700; font-size:13.5px; color:var(--text-primary); margin-bottom:2px;">Установить PRINT SOFT</div>
+        <div style="font-size:11.5px; color:var(--text-secondary);">Работает как обычное приложение</div>
+      </div>
+      <button id="installBannerBtn" class="btn btn-small" style="width:auto; margin:0; padding:8px 14px; font-size:12.5px;">Установить</button>
+      <button id="installBannerClose" style="background:transparent; border:none; color:var(--text-muted); font-size:16px; padding:6px; cursor:pointer;">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
   <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, setDoc, writeBatch }
+    import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, serverTimestamp, getDocs, setDoc, writeBatch }
       from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     // ========== FIREBASE CONFIG ==========
@@ -1579,7 +1608,6 @@
     const ADMIN_CODE = '444555666';
     const SESSION_KEY = 'printsoft_admin_session';
     const SPLASH_DURATION = 3000;
-    const AUTO_REFRESH_MS = 3000;
 
     const PROMOCODES = {
       'PRINT10': { discount: 10, type: 'percent', label: '-10%' },
@@ -1608,7 +1636,7 @@
     ];
 
     // ========== ГЛОБАЛЬНОЕ СОСТОЯНИЕ ==========
-    window.__printsoft = {
+    const state = {
       services: [...DEFAULT_SERVICES],
       cart: [],
       myOrders: [],
@@ -1633,13 +1661,9 @@
       editingProductId: null,
       unsubOrders: null,
       unsubServices: null,
-      ordersLoaded: false,
-      servicesLoaded: false,
     };
 
-    const state = window.__printsoft;
-
-    // ========== ХРАНИЛИЩЕ (локальные данные) ==========
+    // ========== ХРАНИЛИЩЕ ==========
     const S = {
       HISTORY: 'printsoft_history',
       FAV: 'printsoft_fav',
@@ -1733,9 +1757,7 @@
       if (!el || !txt) return;
       el.className = 'connection-status ' + (online ? 'online' : 'offline');
       txt.textContent = online ? 'Подключено' : 'Нет соединения';
-      if (online) {
-        setTimeout(() => { el.className = 'connection-status'; }, 2200);
-      }
+      if (online) setTimeout(() => { el.className = 'connection-status'; }, 2200);
     }
 
     function playSound(type) {
@@ -1828,10 +1850,7 @@
       if (currentEl) { currentEl.classList.remove('active'); currentEl.classList.add('leaving'); }
       nextEl.classList.add('active');
       state.currentPage = pageId;
-      if (pageId === 'history') {
-        renderHistory(false);
-        state.newStatusCount = 0;
-      }
+      if (pageId === 'history') { renderHistory(); state.newStatusCount = 0; }
       if (pageId === 'fav') renderFavorites();
       if (pageId === 'home') renderServices();
       renderBottomNav();
@@ -2199,7 +2218,7 @@
       renderCartItems();
     });
 
-    // ========== ОФОРМЛЕНИЕ ЗАКАЗА — ОТПРАВКА В FIREBASE ==========
+    // ========== ОФОРМЛЕНИЕ ЗАКАЗА ==========
     async function checkout() {
       if (state.cart.length === 0) { showToast('Корзина пуста'); return; }
       const unavailable = state.cart.filter(item => {
@@ -2238,7 +2257,6 @@
 
       try {
         const docRef = await addDoc(collection(db, 'orders'), orderData);
-        // Локально также сохраняем, чтобы работало оффлайн
         const localOrder = { ...orderData, id: docRef.id };
         state.myOrders.unshift(localOrder);
         saveLocalHistory();
@@ -2267,7 +2285,6 @@
       }
     }
 
-    // Уникальный ID клиента — чтобы фильтровать "мои" заказы
     function getClientUid() {
       let uid = localStorage.getItem('printsoft_uid');
       if (!uid) {
@@ -2277,7 +2294,7 @@
       return uid;
     }
 
-    // ========== ИСТОРИЯ ЗАКАЗОВ КЛИЕНТА (из Firestore) ==========
+    // ========== ИСТОРИЯ КЛИЕНТА ==========
     function renderHistory() {
       const allMine = state.myOrders;
       const active = getActiveOrders(allMine);
@@ -2296,8 +2313,6 @@
       historyContainer.innerHTML = list.map(order => {
         const status = order.status || 'new';
         const stepActive = getProgressSteps(status);
-        const review = state.reviews[order.orderId];
-
         return `
           <div class="order-card status-${status}" data-id="${order.orderId}" data-status="${status}">
             <div class="order-header">
@@ -2365,7 +2380,7 @@
       showToast('История очищена');
     }
 
-    // ========== АДМИН: FIREBASE СИНХРОНИЗАЦИЯ ==========
+    // ========== АДМИН ==========
     function updateAdminBadge() {
       const newCount = state.allOrders.filter(o => (o.status || 'new') === 'new').length;
       if (newCount > 0 && !state.isAdminMode) {
@@ -2457,14 +2472,10 @@
       if (!confirm('Удалить ВСЕ заказы?')) return;
       try {
         const batch = writeBatch(db);
-        state.allOrders.forEach(o => {
-          batch.delete(doc(db, 'orders', o.id));
-        });
+        state.allOrders.forEach(o => batch.delete(doc(db, 'orders', o.id)));
         await batch.commit();
         showToast('Удалено');
-      } catch (e) {
-        showToast('Ошибка удаления');
-      }
+      } catch (e) { showToast('Ошибка удаления'); }
     }
 
     function exportCSV() {
@@ -2681,16 +2692,13 @@
       try { localStorage.setItem(S.THEME, isLight ? 'light' : 'dark'); } catch (e) {}
     }
 
-    // ========== FIREBASE: ЗАГРУЗКА УСЛУГ ИЗ FIRESTORE ==========
+    // ========== FIREBASE ==========
     async function initServicesFromFirestore() {
       try {
         const snapshot = await getDocs(collection(db, 'services'));
         if (snapshot.empty) {
-          // Первый запуск — заполняем базу дефолтными услугами
           const batch = writeBatch(db);
-          DEFAULT_SERVICES.forEach(s => {
-            batch.set(doc(db, 'services', String(s.id)), s);
-          });
+          DEFAULT_SERVICES.forEach(s => batch.set(doc(db, 'services', String(s.id)), s));
           await batch.commit();
           state.services = [...DEFAULT_SERVICES];
         } else {
@@ -2699,19 +2707,16 @@
           arr.sort((a, b) => a.id - b.id);
           state.services = arr;
         }
-        state.servicesLoaded = true;
         renderServices();
         renderCategories();
       } catch (err) {
         console.error('Ошибка загрузки услуг:', err);
         state.services = [...DEFAULT_SERVICES];
-        state.servicesLoaded = true;
         renderServices();
         renderCategories();
       }
     }
 
-    // Слушаем изменения услуг в реальном времени
     function subscribeServices() {
       state.unsubServices = onSnapshot(collection(db, 'services'), (snapshot) => {
         const arr = [];
@@ -2721,22 +2726,14 @@
         renderServices();
         renderCategories();
         if (state.isAdminMode) renderAdminProducts();
-        if (state.currentPage === 'detail' && state.currentDetailId) {
-          openDetail(state.currentDetailId);
-        }
-      }, (err) => {
-        console.error('Ошибка подписки на услуги:', err);
-      });
+        if (state.currentPage === 'detail' && state.currentDetailId) openDetail(state.currentDetailId);
+      }, (err) => console.error('Ошибка подписки на услуги:', err));
     }
 
-    // ========== FIREBASE: СЛУШАЕМ ЗАКАЗЫ В РЕАЛЬНОМ ВРЕМЕНИ ==========
     function subscribeOrders() {
-      // Админ слушает ВСЕ заказы, клиент — только свои
-      const ordersRef = collection(db, 'orders');
-      state.unsubOrders = onSnapshot(ordersRef, (snapshot) => {
+      state.unsubOrders = onSnapshot(collection(db, 'orders'), (snapshot) => {
         const all = [];
         snapshot.forEach(d => all.push({ ...d.data(), id: d.id }));
-        // Сортируем по createdAt (новые сверху)
         all.sort((a, b) => {
           const ta = a.createdAt && a.createdAt.toMillis ? a.createdAt.toMillis() : 0;
           const tb = b.createdAt && b.createdAt.toMillis ? b.createdAt.toMillis() : 0;
@@ -2744,32 +2741,15 @@
         });
         state.allOrders = all;
 
-        // Клиентские заказы (мои)
         const myUid = getClientUid();
         const mine = all.filter(o => o.clientUid === myUid);
-        const prevCount = state.myOrders.length;
         state.myOrders = mine;
         saveLocalHistory();
 
-        // Уведомления
-        if (mine.length > prevCount && prevCount > 0) {
-          // Обновление статусов
-          const unseen = mine.filter(o => {
-            const localSeen = localStorage.getItem('seen_' + o.orderId);
-            return localSeen !== o.status;
-          });
-          if (unseen.length > 0) {
-            state.newStatusCount = unseen.length;
-            playSound('status');
-          }
-        }
-
-        // Если сейчас страница истории — рендерим
         if (state.currentPage === 'history') renderHistory();
         if (state.isAdminMode) renderAdminOrders();
         updateAdminBadge();
         renderBottomNav();
-        state.ordersLoaded = true;
       }, (err) => {
         console.error('Ошибка подписки на заказы:', err);
         showConnectionStatus(false);
@@ -2882,6 +2862,74 @@
       }
     });
 
+    // ========== PWA УСТАНОВКА ==========
+    let deferredPrompt = null;
+    const installPwaBtn = document.getElementById('installPwaBtn');
+    const installBanner = document.getElementById('installBanner');
+    const installBannerBtn = document.getElementById('installBannerBtn');
+    const installBannerClose = document.getElementById('installBannerClose');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (installPwaBtn) installPwaBtn.style.display = 'flex';
+      if (!localStorage.getItem('pwa_banner_hidden')) {
+        setTimeout(() => {
+          if (installBanner) installBanner.style.display = 'block';
+        }, 4000);
+      }
+    });
+
+    if (installPwaBtn) {
+      installPwaBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          showToast('✓ Приложение установлено!');
+          installPwaBtn.style.display = 'none';
+          if (installBanner) installBanner.style.display = 'none';
+        }
+        deferredPrompt = null;
+      });
+    }
+
+    if (installBannerBtn) {
+      installBannerBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          showToast('✓ Приложение установлено!');
+          if (installBanner) installBanner.style.display = 'none';
+          if (installPwaBtn) installPwaBtn.style.display = 'none';
+        }
+        deferredPrompt = null;
+      });
+    }
+
+    if (installBannerClose) {
+      installBannerClose.addEventListener('click', () => {
+        installBanner.style.display = 'none';
+        localStorage.setItem('pwa_banner_hidden', '1');
+      });
+    }
+
+    window.addEventListener('appinstalled', () => {
+      showToast('✓ Приложение установлено!');
+      if (installPwaBtn) installPwaBtn.style.display = 'none';
+      if (installBanner) installBanner.style.display = 'none';
+      deferredPrompt = null;
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((reg) => console.log('[PWA] SW зарегистрирован:', reg.scope))
+          .catch((err) => console.warn('[PWA] Ошибка SW:', err));
+      });
+    }
+
     // ========== ЗАСТАВКА И ИНИЦИАЛИЗАЦИЯ ==========
     const splash = document.getElementById('splash');
     const splashProgressFill = document.getElementById('splashProgressFill');
@@ -2905,13 +2953,11 @@
     renderBottomNav();
     renderHistory();
 
-    // Подключаемся к Firebase
     initServicesFromFirestore().then(() => {
       subscribeServices();
       subscribeOrders();
     });
 
-    // ========== АНИМАЦИЯ ЗАСТАВКИ ==========
     let progress = 0;
     const startTime = Date.now();
     const step = () => {
@@ -2952,9 +2998,6 @@
     // ========== ОФФЛАЙН / ОНЛАЙН ==========
     window.addEventListener('online', () => showConnectionStatus(true));
     window.addEventListener('offline', () => showConnectionStatus(false));
-
-    // Экспорт для отладки
-    window.__printsoftDebug = { db, state };
   </script>
 </body>
 </html>
