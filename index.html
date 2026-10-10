@@ -881,7 +881,7 @@
         ana_week: '7 күн', ana_hours: 'Чааhынан', ana_top: 'Топ-5 өҥө', ana_clients: 'Топ-5 клиен', ana_statuses: 'Статустарынан',
         order: 'Заказ', status_new: 'Саҥа', status_progress: 'Үлэлэhэр', status_done: 'Толоруллубут', status_cancel: 'Киллэммит',
         receipt: 'Чек', repeat: 'Хатылаа', cancel_order: 'Киллэр',
-        empty_cart: 'Кураанах', empty_өҥөлөр: 'Өҥөлөр суохтар', not_found: 'Көстүбэтэ',
+        empty_cart: 'Кураанах', empty_services: 'Өҥөлөр суохтар', not_found: 'Көстүбэтэ',
         delete: 'Сот', add_product: 'Өҥө эп',
       }
     };
@@ -1301,6 +1301,8 @@
               sessionStorage.removeItem(SESSION_KEY);
               state.isAdminMode = false;
               adminToggleBtn.classList.remove('admin-active');
+              if (scanBtn) scanBtn.style.display = 'none';
+              if (isScanning) stopScanning();
               logoText.innerHTML = `<i class="fas fa-print"></i> <span>PRINT</span><span style="color:var(--accent-2);">SOFT</span>`;
               updateAdminBadge();
               showToast('OK');
@@ -1943,7 +1945,45 @@
       });
     }
 
-    // ==================== QR КЛИЕНТА ====================
+    // ==================== QR КЛИЕНТА (ИСПРАВЛЕНО) ====================
+    async function ensureQRCodeLib() {
+      // Если уже загружена — ок
+      if (window.QRCode && typeof window.QRCode.toCanvas === 'function') return true;
+
+      // Ждём до 5 секунд (вдруг ещё грузится)
+      const start = Date.now();
+      while (!window.QRCode && Date.now() - start < 5000) {
+        await new Promise(r => setTimeout(r, 100));
+      }
+      if (window.QRCode && typeof window.QRCode.toCanvas === 'function') return true;
+
+      // Пробуем подгрузить резервный CDN №1
+      try {
+        await new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = 'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js';
+          s.onload = resolve;
+          s.onerror = reject;
+          document.head.appendChild(s);
+        });
+        if (window.QRCode && typeof window.QRCode.toCanvas === 'function') return true;
+      } catch (e) {}
+
+      // Резервный CDN №2
+      try {
+        await new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = 'https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js';
+          s.onload = resolve;
+          s.onerror = reject;
+          document.head.appendChild(s);
+        });
+        return !!(window.QRCode && typeof window.QRCode.toCanvas === 'function');
+      } catch (e) {
+        return false;
+      }
+    }
+
     async function showQRModal(orderId) {
       const old = document.getElementById('qrModalBackdrop');
       if (old) old.remove();
@@ -1953,7 +1993,9 @@
           <div class="files-modal-content" style="text-align:center;">
             <div style="font-size:17px;font-weight:700;color:var(--text-primary);margin-bottom:6px;">Ваш QR-код</div>
             <div style="font-size:12px;color:var(--text-secondary);margin-bottom:16px;">Покажите этот код администратору при получении заказа</div>
-            <div id="qrCanvasHolder" style="display:flex;justify-content:center;margin-bottom:16px;background:#fff;padding:16px;border-radius:16px;"></div>
+            <div id="qrCanvasHolder" style="display:flex;justify-content:center;align-items:center;margin-bottom:16px;background:#fff;padding:16px;border-radius:16px;min-height:272px;">
+              <div id="qrLoading" style="color:#14162a;font-size:13px;">Генерация...</div>
+            </div>
             <div style="font-size:15px;font-weight:800;color:var(--accent-1);margin-bottom:16px;letter-spacing:1px;">${orderId}</div>
             <button class="btn" id="qrModalCloseBtn" style="margin-bottom:0;"><i class="fas fa-check"></i> Закрыть</button>
           </div>
@@ -1961,19 +2003,36 @@
       `;
       document.body.insertAdjacentHTML('beforeend', modalHtml);
 
-      const holder = document.getElementById('qrCanvasHolder');
-      const canvas = document.createElement('canvas');
-      holder.appendChild(canvas);
-      try {
-        await QRCode.toCanvas(canvas, orderId, { width: 240, margin: 1, color: { dark: '#14162a', light: '#ffffff' } });
-      } catch (e) {
-        holder.innerHTML = '<div style="color:#000;">Ошибка генерации QR</div>';
-      }
-
       const backdrop = document.getElementById('qrModalBackdrop');
       const closeBtn = document.getElementById('qrModalCloseBtn');
       closeBtn.addEventListener('click', () => backdrop.remove());
       backdrop.addEventListener('click', (e) => { if (e.target === backdrop) backdrop.remove(); });
+
+      const holder = document.getElementById('qrCanvasHolder');
+
+      const libOk = await ensureQRCodeLib();
+      if (!libOk) {
+        holder.innerHTML = `<div style="color:#c84a4a;font-size:13px;padding:20px;text-align:center;">Не удалось загрузить библиотеку QR.<br>Проверьте интернет и попробуйте снова.</div>`;
+        return;
+      }
+
+      // Создаём canvas
+      const canvas = document.createElement('canvas');
+      canvas.style.display = 'block';
+      holder.innerHTML = '';
+      holder.appendChild(canvas);
+
+      try {
+        await window.QRCode.toCanvas(canvas, String(orderId), {
+          width: 240,
+          margin: 1,
+          errorCorrectionLevel: 'M',
+          color: { dark: '#14162a', light: '#ffffff' }
+        });
+      } catch (err) {
+        console.error('QR error:', err);
+        holder.innerHTML = `<div style="color:#c84a4a;font-size:13px;padding:20px;text-align:center;">Ошибка QR: ${err.message || 'неизвестно'}</div>`;
+      }
     }
 
     // ==================== СКАНЕР АДМИНА ====================
