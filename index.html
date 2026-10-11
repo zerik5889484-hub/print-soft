@@ -32,61 +32,268 @@
       --success: #2a9a4a; --warning: #b88a20; --danger: #c84a4a; --pink: #b85a98;
     }
 
-    html, body { overscroll-behavior-y: contain; -webkit-touch-callout: none; }
+    html, body { overscroll-behavior-y: contain; -webkit-touch-callout: none; height: 100%; }
     body {
       background-color: var(--bg-2);
       background-image: linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 60%, var(--bg-3) 100%);
-      color: var(--text-primary); min-height: 100vh;
-      display: flex; justify-content: center; padding: 14px;
-      overflow-x: hidden; -webkit-font-smoothing: antialiased;
-      transition: background 0.3s ease, color 0.3s ease;
-      padding-top: calc(14px + env(safe-area-inset-top));
-      padding-bottom: calc(14px + env(safe-area-inset-bottom));
+      color: var(--text-primary);
+      display: flex; justify-content: center;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.4s ease, color 0.4s ease;
+      padding-top: env(safe-area-inset-top);
     }
 
-    .splash { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10000; background: linear-gradient(160deg, #14152b 0%, #0f1020 60%, #101a2a 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; overflow: hidden; transition: opacity 0.7s ease, transform 0.7s ease, visibility 0.7s ease; }
-    .splash.hidden { opacity: 0; transform: scale(1.08); visibility: hidden; pointer-events: none; }
-    .splash-logo { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+    /* ==================== ЗАСТАВКА ==================== */
+    .splash {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 10000;
+      background: linear-gradient(160deg, #14152b 0%, #0f1020 60%, #101a2a 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 30px;
+      overflow: hidden;
+      opacity: 1;
+      transition: opacity 0.7s ease, transform 0.7s ease, visibility 0.7s ease;
+    }
+    .splash.hidden {
+      opacity: 0;
+      transform: scale(1.08);
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .splash-orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(60px); opacity: 0.35;
+      animation: orbFloat 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .splash-orb.orb-1 { width: 320px; height: 320px; background: radial-gradient(circle, #a8d8e8 0%, transparent 70%); top: -100px; left: -100px; }
+    .splash-orb.orb-2 { width: 280px; height: 280px; background: radial-gradient(circle, #c9b8e8 0%, transparent 70%); bottom: -80px; right: -80px; animation-delay: 2s; }
+    .splash-orb.orb-3 { width: 200px; height: 200px; background: radial-gradient(circle, #e8b8d8 0%, transparent 70%); top: 40%; left: 50%; transform: translate(-50%, -50%); animation-delay: 4s; opacity: 0.2; }
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(20px, -30px) scale(1.15); }
+    }
+
+    .splash-top-line {
+      position: absolute; top: 0; left: 0; height: 3px; width: 100%;
+      background: linear-gradient(90deg, transparent, #a8d8e8, #c9b8e8, #e8b8d8, transparent);
+      opacity: 0;
+      animation: topLineIn 1.2s ease 0.3s both;
+    }
+    @keyframes topLineIn {
+      from { opacity: 0; transform: scaleX(0); }
+      to { opacity: 0.6; transform: scaleX(1); }
+    }
+
+    .splash-logo {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 18px;
+      animation: logoEnter 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    @keyframes logoEnter {
+      from { opacity: 0; transform: translateY(24px) scale(0.85); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
     .splash-icon-wrap { position: relative; width: 110px; height: 110px; display: flex; align-items: center; justify-content: center; }
-    .splash-icon-ring { position: absolute; inset: 0; border-radius: 50%; border: 2px solid transparent; border-top-color: #a8d8e8; border-right-color: #c9b8e8; animation: ringSpin 2.4s linear infinite; }
+    .splash-icon-ring {
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 2px solid transparent;
+      border-top-color: #a8d8e8;
+      border-right-color: #c9b8e8;
+      animation: ringSpin 2.4s linear infinite;
+    }
+    .splash-icon-ring::after {
+      content: ''; position: absolute; inset: 6px;
+      border-radius: 50%; border: 1.5px solid transparent;
+      border-bottom-color: #e8b8d8;
+      border-left-color: #a8d8e8;
+      animation: ringSpin 1.8s linear infinite reverse;
+    }
     @keyframes ringSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    .splash-icon-core { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, rgba(168, 216, 232, 0.15), rgba(201, 184, 232, 0.15)); border: 1px solid rgba(168, 216, 232, 0.35); display: flex; align-items: center; justify-content: center; font-size: 34px; color: #a8d8e8; }
-    .splash-title { font-size: 32px; font-weight: 800; letter-spacing: 3px; background: linear-gradient(135deg, #a8d8e8 0%, #c9b8e8 50%, #e8b8d8 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .splash-title .accent { background: linear-gradient(135deg, #c9b8e8 0%, #e8b8d8 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .splash-subtitle { font-size: 13px; color: #8a8aa8; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 600; margin-top: -6px; }
-    .splash-progress-wrap { margin-top: 42px; width: 240px; max-width: 75vw; }
-    .splash-progress-bar { height: 4px; background: rgba(168, 216, 232, 0.1); border-radius: 10px; overflow: hidden; }
-    .splash-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #a8d8e8, #c9b8e8, #e8b8d8); border-radius: 10px; transition: width 0.15s linear; }
-    .splash-percent { font-size: 12px; color: #8a8aa8; text-align: center; margin-top: 12px; font-weight: 600; }
-    .splash-greeting { margin-top: 24px; font-size: 12.5px; color: #8a8aa8; text-align: center; }
 
-    .app { width: 100%; max-width: 600px; background: var(--app-bg); border-radius: 32px 32px 24px 24px; border: 1px solid var(--border-1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45); padding: 16px 14px; display: flex; flex-direction: column; min-height: calc(100vh - 28px); position: relative; overflow: hidden; }
+    .splash-icon-core {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, rgba(168, 216, 232, 0.15), rgba(201, 184, 232, 0.15));
+      border: 1px solid rgba(168, 216, 232, 0.35);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 34px; color: #a8d8e8;
+      box-shadow: 0 0 30px rgba(168, 216, 232, 0.3);
+      animation: iconPulse 2s ease-in-out infinite;
+    }
+    @keyframes iconPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(168, 216, 232, 0.3); }
+      50% { transform: scale(1.05); box-shadow: 0 0 45px rgba(168, 216, 232, 0.5); }
+    }
 
-    .header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border-2); margin-bottom: 14px; }
-    .logo { font-size: 20px; font-weight: 700; letter-spacing: 1.5px; background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; display: flex; align-items: center; gap: 8px; }
-    .logo i { color: var(--accent-1); font-size: 21px; }
-    .header-actions { display: flex; gap: 6px; align-items: center; }
-    .icon-btn { background: rgba(168, 216, 232, 0.06); border: 1px solid var(--border-2); color: var(--accent-1); width: 40px; height: 40px; border-radius: 22px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; position: relative; }
-    .icon-btn:active { background: rgba(168, 216, 232, 0.18); transform: scale(0.94); }
+    .splash-title {
+      font-size: 32px; font-weight: 800; letter-spacing: 3px;
+      background: linear-gradient(135deg, #a8d8e8 0%, #c9b8e8 50%, #e8b8d8 100%);
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent;
+      text-align: center; line-height: 1.1;
+      background-size: 200% 200%;
+      animation: titleShift 4s ease-in-out infinite;
+    }
+    @keyframes titleShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .splash-title .accent {
+      background: linear-gradient(135deg, #c9b8e8 0%, #e8b8d8 100%);
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent;
+    }
+
+    .splash-subtitle {
+      font-size: 13px; color: #8a8aa8;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      font-weight: 600; margin-top: -6px;
+    }
+
+    .splash-progress-wrap {
+      position: relative; z-index: 2;
+      margin-top: 42px; width: 240px; max-width: 75vw;
+      animation: fadeInUp 0.7s ease 0.4s both;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .splash-progress-bar {
+      height: 4px; background: rgba(168, 216, 232, 0.1);
+      border-radius: 10px; overflow: hidden;
+    }
+    .splash-progress-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, #a8d8e8, #c9b8e8, #e8b8d8);
+      border-radius: 10px;
+      transition: width 0.15s linear;
+      box-shadow: 0 0 12px rgba(168, 216, 232, 0.6);
+    }
+
+    .splash-percent {
+      font-size: 12px; color: #8a8aa8;
+      text-align: center; margin-top: 12px;
+      letter-spacing: 1.5px; font-weight: 600;
+      transition: opacity 0.3s ease;
+    }
+
+    .splash-dots {
+      display: flex; gap: 6px; justify-content: center; margin-top: 8px;
+    }
+    .splash-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #a8d8e8; opacity: 0.3;
+      animation: dotPulse 1.4s ease-in-out infinite;
+    }
+    .splash-dot:nth-child(2) { animation-delay: 0.2s; background: #c9b8e8; }
+    .splash-dot:nth-child(3) { animation-delay: 0.4s; background: #e8b8d8; }
+    @keyframes dotPulse {
+      0%, 100% { opacity: 0.3; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+
+    .splash-greeting {
+      position: relative; z-index: 2;
+      margin-top: 24px; font-size: 12.5px;
+      color: #8a8aa8; letter-spacing: 0.5px;
+      text-align: center; max-width: 280px; line-height: 1.5;
+      transition: opacity 0.3s ease;
+      animation: fadeInUp 0.7s ease 0.6s both;
+    }
+
+    /* ==================== ПРИЛОЖЕНИЕ ==================== */
+    .app {
+      width: 100%; max-width: 600px;
+      background: var(--app-bg);
+      border: 1px solid var(--border-1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+      display: flex; flex-direction: column;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .app.app-entering {
+      animation: appEnter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    @keyframes appEnter {
+      from { opacity: 0; transform: translateY(20px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border-2);
+      background: var(--app-bg);
+      flex-shrink: 0;
+      z-index: 50;
+    }
+
+    .bottom-nav {
+      display: flex; justify-content: space-around; align-items: center;
+      padding: 8px 4px;
+      border-top: 1px solid var(--border-2);
+      background: var(--app-bg);
+      gap: 2px;
+      flex-shrink: 0;
+      z-index: 50;
+      padding-bottom: calc(8px + env(safe-area-inset-bottom));
+    }
+
+    .content-scroll {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 12px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+    .content-scroll::-webkit-scrollbar { width: 4px; }
+    .content-scroll::-webkit-scrollbar-track { background: transparent; }
+    .content-scroll::-webkit-scrollbar-thumb { background: rgba(168, 216, 232, 0.2); border-radius: 2px; }
+
+    .logo { font-size: 15px; font-weight: 700; letter-spacing: 1px; background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; display: flex; align-items: center; gap: 6px; }
+    .logo i { color: var(--accent-1); font-size: 16px; }
+    .header-actions { display: flex; gap: 4px; align-items: center; }
+    .icon-btn { background: rgba(168, 216, 232, 0.06); border: 1px solid var(--border-2); color: var(--accent-1); width: 32px; height: 32px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 13px; cursor: pointer; position: relative; flex-shrink: 0; transition: all 0.2s ease; }
+    .icon-btn:active { background: rgba(168, 216, 232, 0.18); transform: scale(0.9); }
     .icon-btn.admin-active { background: rgba(232, 168, 200, 0.15); border-color: rgba(232, 168, 200, 0.5); color: var(--pink); }
-    .lang-btn { font-size: 11px; font-weight: 800; }
+    .lang-btn { font-size: 9.5px; font-weight: 800; }
 
-    .page { display: none; flex-direction: column; flex: 1; }
-    .page.active { display: flex; animation: pageIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
-    @keyframes pageIn { from { opacity: 0; transform: translate3d(16px, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+    .page { display: none; flex-direction: column; }
+    .page.active { display: block; animation: pageIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .page.leaving { display: block; animation: pageOut 0.25s ease both; position: absolute; inset: 0; pointer-events: none; }
+    @keyframes pageIn {
+      from { opacity: 0; transform: translate3d(20px, 0, 0); }
+      to { opacity: 1; transform: translate3d(0, 0, 0); }
+    }
+    @keyframes pageOut {
+      from { opacity: 1; transform: translate3d(0, 0, 0); }
+      to { opacity: 0; transform: translate3d(-20px, 0, 0); }
+    }
 
-    h2 { font-size: 18px; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; color: var(--text-primary); }
-    h2 i { color: var(--accent-2); font-size: 17px; }
-    .subhead { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 14px; }
+    h2 { font-size: 17px; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; color: var(--text-primary); }
+    h2 i { color: var(--accent-2); font-size: 16px; }
+    .subhead { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; }
 
     .promo-banners { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 14px; scrollbar-width: none; }
     .promo-banners::-webkit-scrollbar { display: none; }
-    .promo-banner { flex-shrink: 0; min-width: 260px; padding: 14px 16px; border-radius: 18px; position: relative; overflow: hidden; cursor: pointer; }
+    .promo-banner { flex-shrink: 0; min-width: 240px; padding: 12px 14px; border-radius: 18px; position: relative; overflow: hidden; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .promo-banner:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); }
+    .promo-banner:active { transform: scale(0.97); }
     .promo-banner-1 { background: linear-gradient(135deg, #a8d8e8, #c9b8e8); color: #0f1020; }
     .promo-banner-2 { background: linear-gradient(135deg, #e8b8d8, #c9b8e8); color: #0f1020; }
     .promo-banner-3 { background: linear-gradient(135deg, #8cdca0, #a8d8e8); color: #0f1020; }
-    .promo-banner-title { font-size: 15px; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-    .promo-banner-text { font-size: 12px; font-weight: 600; opacity: 0.85; }
+    .promo-banner-title { font-size: 14px; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+    .promo-banner-text { font-size: 11.5px; font-weight: 600; opacity: 0.85; }
 
     .company-info { background: linear-gradient(135deg, rgba(168, 216, 232, 0.08), rgba(201, 184, 232, 0.08)); border: 1px solid var(--border-2); border-radius: 20px; padding: 16px 18px; margin-bottom: 14px; }
     .company-info-title { font-size: 15px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
@@ -99,44 +306,67 @@
 
     .search-wrap { position: relative; margin-bottom: 10px; }
     .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 14px; pointer-events: none; }
-    .search-input { width: 100%; background: var(--card-bg); border: 1px solid var(--border-2); color: var(--text-primary); padding: 11px 40px 11px 38px; border-radius: 14px; font-size: 13.5px; outline: none; font-family: inherit; }
+    .search-input { width: 100%; background: var(--card-bg); border: 1px solid var(--border-2); color: var(--text-primary); padding: 11px 40px 11px 38px; border-radius: 14px; font-size: 13.5px; outline: none; font-family: inherit; transition: border-color 0.2s ease; }
+    .search-input:focus { border-color: var(--accent-1); }
     .search-input::placeholder { color: var(--text-muted); }
     .search-clear { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--text-muted); font-size: 15px; cursor: pointer; padding: 6px; border-radius: 50%; display: none; }
     .search-clear.visible { display: block; }
 
     .cat-filters { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 12px; scrollbar-width: none; }
     .cat-filters::-webkit-scrollbar { display: none; }
-    .cat-btn { background: var(--card-bg); border: 1px solid var(--border-2); color: var(--text-secondary); padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; flex-shrink: 0; display: flex; align-items: center; gap: 5px; font-family: inherit; }
+    .cat-btn { background: var(--card-bg); border: 1px solid var(--border-2); color: var(--text-secondary); padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; flex-shrink: 0; display: flex; align-items: center; gap: 5px; font-family: inherit; transition: all 0.2s ease; }
     .cat-btn.active { background: rgba(168, 216, 232, 0.15); border-color: var(--accent-1); color: var(--accent-1); }
+    .cat-btn:active { transform: scale(0.95); }
     .cat-btn i { font-size: 11px; }
 
     .tab-switcher { display: flex; gap: 4px; background: var(--card-bg); padding: 4px; border-radius: 30px; margin-bottom: 14px; border: 1px solid var(--border-2); overflow-x: auto; scrollbar-width: none; }
     .tab-switcher::-webkit-scrollbar { display: none; }
-    .tab-switch-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 9px 10px; border-radius: 24px; font-size: 12.5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; white-space: nowrap; font-family: inherit; }
+    .tab-switch-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 9px 10px; border-radius: 24px; font-size: 12.5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; white-space: nowrap; font-family: inherit; transition: all 0.25s ease; }
     .tab-switch-btn.active { background: rgba(168, 216, 232, 0.12); color: var(--accent-1); }
+    .tab-switch-btn:active { transform: scale(0.97); }
     .tab-switch-btn .tab-count { background: rgba(168, 216, 232, 0.2); color: var(--accent-1); border-radius: 10px; padding: 1px 7px; font-size: 10.5px; font-weight: 700; min-width: 18px; }
     .tab-switch-btn.active .tab-count { background: var(--accent-1); color: var(--app-bg); }
 
     .grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
-    .card { background: var(--card-bg); border: 1px solid var(--border-2); border-radius: 20px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; position: relative; gap: 8px; }
-    .card:active { background: var(--card-bg-hover); border-color: var(--accent-2); transform: scale(0.985); }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-2);
+      border-radius: 20px;
+      padding: 14px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; position: relative; gap: 8px;
+      transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+      animation: cardEnter 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    @keyframes cardEnter {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .card:hover { background: var(--card-bg-hover); border-color: rgba(200, 180, 232, 0.35); }
+    .card:active { background: var(--card-bg-hover); border-color: var(--accent-2); transform: scale(0.98); }
     .card.out-of-stock { opacity: 0.45; cursor: not-allowed; }
-    .fav-btn { background: transparent; border: none; color: var(--text-muted); font-size: 16px; cursor: pointer; padding: 6px; border-radius: 50%; flex-shrink: 0; position: relative; z-index: 2; }
+    .fav-btn { background: transparent; border: none; color: var(--text-muted); font-size: 16px; cursor: pointer; padding: 6px; border-radius: 50%; flex-shrink: 0; position: relative; z-index: 2; transition: color 0.2s ease, transform 0.2s ease; }
     .fav-btn.active { color: var(--pink); }
+    .fav-btn:active { transform: scale(0.85); }
     .card-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
     .card-title { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 6px; color: var(--text-primary); flex-wrap: wrap; }
     .card-title i { color: var(--accent-1); font-size: 14px; flex-shrink: 0; }
     .card-desc { font-size: 12px; color: var(--text-secondary); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .price-tag { font-size: 15px; font-weight: 700; color: var(--accent-1); white-space: nowrap; flex-shrink: 0; }
 
-    .btn { border: 1px solid var(--accent-1); background: rgba(168, 216, 232, 0.08); color: var(--accent-1); padding: 13px 18px; border-radius: 46px; font-weight: 600; font-size: 14.5px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; width: 100%; margin-bottom: 8px; font-family: inherit; }
-    .btn:active { background: rgba(168, 216, 232, 0.2); transform: scale(0.98); }
+    .btn { border: 1px solid var(--accent-1); background: rgba(168, 216, 232, 0.08); color: var(--accent-1); padding: 13px 18px; border-radius: 46px; font-weight: 600; font-size: 14.5px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; width: 100%; margin-bottom: 8px; font-family: inherit; transition: all 0.2s ease; }
+    .btn:hover { background: rgba(168, 216, 232, 0.15); }
+    .btn:active { background: rgba(168, 216, 232, 0.25); transform: scale(0.97); }
     .btn:disabled { opacity: 0.4; cursor: not-allowed; }
     .btn-outline { background: transparent; border-color: rgba(200, 180, 232, 0.3); color: var(--accent-2); }
+    .btn-outline:active { background: rgba(200, 180, 232, 0.15); }
     .btn-small { padding: 8px 14px; font-size: 12.5px; border-radius: 30px; width: auto; margin-bottom: 0; }
     .btn-success { background: rgba(140, 220, 160, 0.15); border-color: var(--success); color: var(--success); }
+    .btn-success:active { background: rgba(140, 220, 160, 0.3); }
     .btn-danger { background: rgba(232, 140, 140, 0.1); border-color: var(--danger); color: var(--danger); }
+    .btn-danger:active { background: rgba(232, 140, 140, 0.25); }
 
+    /* Остальные стили из предыдущей версии (сокращены для компактности, но присутствуют) */
     .detail-card { background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border-2); padding: 20px 18px; margin-bottom: 14px; }
     .detail-title { font-size: 19px; font-weight: 700; display: flex; align-items: center; gap: 10px; margin-bottom: 12px; color: var(--text-primary); flex-wrap: wrap; }
     .detail-title i { color: var(--accent-1); font-size: 20px; }
@@ -145,37 +375,40 @@
     .calc-block { background: rgba(168, 216, 232, 0.06); border: 1px solid var(--border-2); border-radius: 16px; padding: 14px 16px; margin: 12px 0 16px; }
     .calc-label { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 600; }
     .calc-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-    .qty-btn { background: var(--card-bg); border: 1px solid var(--border-2); color: var(--accent-1); width: 38px; height: 38px; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: inherit; }
+    .qty-btn { background: var(--card-bg); border: 1px solid var(--border-2); color: var(--accent-1); width: 38px; height: 38px; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: inherit; transition: all 0.15s ease; }
+    .qty-btn:active { transform: scale(0.9); }
     .qty-input { flex: 1; background: var(--card-bg); border: 1px solid var(--border-2); color: var(--text-primary); padding: 10px 14px; border-radius: 12px; font-size: 16px; font-weight: 700; text-align: center; outline: none; font-family: inherit; min-width: 0; }
     .calc-total { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid rgba(168, 216, 232, 0.1); }
     .calc-total .label { color: var(--text-secondary); font-size: 13px; }
-    .calc-total .value { font-size: 22px; font-weight: 800; color: var(--accent-1); }
+    .calc-total .value { font-size: 22px; font-weight: 800; color: var(--accent-1); transition: all 0.2s ease; }
 
-    .cart-item { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); border-radius: 16px; padding: 12px 14px; margin-bottom: 8px; border: 1px solid var(--border-2); gap: 10px; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); border-radius: 16px; padding: 12px 14px; margin-bottom: 8px; border: 1px solid var(--border-2); gap: 10px; animation: cardEnter 0.3s ease both; }
     .cart-item-info { flex: 1; min-width: 0; }
     .cart-item-title { font-weight: 600; color: var(--text-primary); font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .cart-item-sub { font-size: 11.5px; color: var(--text-secondary); margin-top: 2px; }
     .cart-item-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .cart-item-price { font-weight: 700; color: var(--accent-3); font-size: 14px; white-space: nowrap; }
-    .cart-remove { background: transparent; border: 1px solid rgba(232, 168, 200, 0.35); color: var(--pink); width: 34px; height: 34px; border-radius: 17px; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .total { font-size: 19px; font-weight: 700; margin: 14px 0; text-align: right; color: var(--text-primary); }
+    .cart-remove { background: transparent; border: 1px solid rgba(232, 168, 200, 0.35); color: var(--pink); width: 34px; height: 34px; border-radius: 17px; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s ease; }
+    .cart-remove:active { transform: scale(0.9); }
+    .total { font-size: 19px; font-weight: 700; margin: 14px 0; text-align: right; color: var(--text-primary); transition: all 0.3s ease; }
 
     .promo-row { display: flex; gap: 8px; margin-bottom: 12px; }
     .promo-input { flex: 1; background: var(--card-bg); border: 1px solid var(--border-2); color: var(--text-primary); padding: 10px 14px; border-radius: 12px; font-size: 13px; outline: none; font-family: inherit; text-transform: uppercase; }
-    .promo-input::placeholder { color: var(--text-muted); text-transform: none; }
-    .promo-btn { background: rgba(168, 216, 232, 0.1); border: 1px solid var(--accent-1); color: var(--accent-1); padding: 0 16px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; flex-shrink: 0; }
+    .promo-btn { background: rgba(168, 216, 232, 0.1); border: 1px solid var(--accent-1); color: var(--accent-1); padding: 0 16px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; flex-shrink: 0; transition: all 0.2s ease; }
+    .promo-btn:active { transform: scale(0.95); }
     .promo-status { font-size: 11.5px; margin-top: -6px; margin-bottom: 10px; padding-left: 4px; min-height: 14px; font-weight: 600; }
     .promo-status.ok { color: var(--success); }
     .promo-status.err { color: var(--danger); }
 
-    .upload-zone { background: rgba(168, 216, 232, 0.04); border: 2px dashed var(--border-2); border-radius: 14px; padding: 20px 16px; text-align: center; cursor: pointer; margin-bottom: 10px; }
+    .upload-zone { background: rgba(168, 216, 232, 0.04); border: 2px dashed var(--border-2); border-radius: 14px; padding: 20px 16px; text-align: center; cursor: pointer; margin-bottom: 10px; transition: all 0.2s ease; }
+    .upload-zone:active, .upload-zone.dragover { background: rgba(168, 216, 232, 0.1); border-color: var(--accent-1); }
     .upload-zone-icon { font-size: 28px; color: var(--accent-1); margin-bottom: 8px; opacity: 0.8; }
     .upload-zone-text { font-size: 13px; color: var(--text-primary); font-weight: 600; margin-bottom: 4px; }
     .upload-zone-hint { font-size: 11px; color: var(--text-muted); }
     .upload-zone input[type="file"] { display: none; }
 
     .file-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
-    .file-item { display: flex; align-items: center; gap: 10px; background: var(--card-bg); border: 1px solid var(--success); border-radius: 12px; padding: 10px 12px; }
+    .file-item { display: flex; align-items: center; gap: 10px; background: var(--card-bg); border: 1px solid var(--success); border-radius: 12px; padding: 10px 12px; animation: cardEnter 0.3s ease both; }
     .file-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(168, 216, 232, 0.1); color: var(--accent-1); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
     .file-icon.pdf { background: rgba(232, 140, 140, 0.15); color: var(--danger); }
     .file-icon.img { background: rgba(140, 220, 160, 0.15); color: var(--success); }
@@ -190,22 +423,35 @@
     .preorder-toggle input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent-1); cursor: pointer; flex-shrink: 0; }
     .preorder-toggle-text { font-size: 13px; font-weight: 600; color: var(--text-primary); }
     .preorder-fields { margin-top: 10px; display: none; }
-    .preorder-fields.visible { display: block; }
+    .preorder-fields.visible { display: block; animation: fadeInUp 0.3s ease both; }
     .preorder-input { width: 100%; background: var(--app-bg); border: 1px solid var(--border-2); color: var(--text-primary); padding: 10px 14px; border-radius: 12px; font-size: 13.5px; margin-bottom: 8px; outline: none; font-family: inherit; }
 
-    .login-card { background: var(--card-bg); border-radius: 24px; border: 1px solid rgba(232, 168, 200, 0.25); padding: 28px 22px; margin: auto 0; text-align: center; }
+    .login-card { background: var(--card-bg); border-radius: 24px; border: 1px solid rgba(232, 168, 200, 0.25); padding: 28px 22px; margin: 20px 0; text-align: center; animation: cardEnter 0.4s ease both; }
     .login-icon { width: 64px; height: 64px; border-radius: 32px; background: rgba(232, 168, 200, 0.1); border: 1px solid rgba(232, 168, 200, 0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: var(--pink); font-size: 26px; }
     .login-title { font-size: 18px; font-weight: 700; color: var(--pink); margin-bottom: 6px; }
     .login-desc { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 20px; }
-    .code-input { width: 100%; background: var(--app-bg); border: 1.5px solid rgba(232, 168, 200, 0.3); color: var(--text-primary); padding: 16px 20px; border-radius: 16px; font-size: 22px; font-weight: 700; letter-spacing: 6px; text-align: center; outline: none; font-family: 'Courier New', monospace; margin-bottom: 14px; }
-    .code-input.error { border-color: var(--danger); }
+    .code-input { width: 100%; background: var(--app-bg); border: 1.5px solid rgba(232, 168, 200, 0.3); color: var(--text-primary); padding: 16px 20px; border-radius: 16px; font-size: 22px; font-weight: 700; letter-spacing: 6px; text-align: center; outline: none; font-family: 'Courier New', monospace; margin-bottom: 14px; transition: all 0.2s ease; }
+    .code-input.error { border-color: var(--danger); animation: shake 0.4s ease; }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
     .login-error { color: var(--danger); font-size: 12.5px; margin-bottom: 12px; min-height: 18px; font-weight: 500; }
 
-    .order-card { background: var(--card-bg); border-radius: 18px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid var(--border-2); position: relative; overflow: hidden; }
+    .order-card { background: var(--card-bg); border-radius: 18px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid var(--border-2); position: relative; overflow: hidden; animation: cardEnter 0.4s ease both; transition: border-color 0.35s ease, box-shadow 0.35s ease; }
     .order-card.status-new { border-color: rgba(168, 216, 232, 0.4); }
     .order-card.status-progress { border-color: rgba(232, 200, 130, 0.4); }
     .order-card.status-done { border-color: rgba(140, 220, 160, 0.35); }
     .order-card.status-cancel { border-color: rgba(232, 140, 140, 0.3); opacity: 0.75; }
+    .order-card.status-updated { animation: statusFlash 1.2s ease; }
+    @keyframes statusFlash {
+      0% { background: #1c1e35; box-shadow: 0 0 0 rgba(168, 216, 232, 0); }
+      30% { background: #283050; box-shadow: 0 0 30px rgba(168, 216, 232, 0.35); }
+      100% { background: #1c1e35; box-shadow: 0 0 0 rgba(168, 216, 232, 0); }
+    }
     .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
     .order-id { font-weight: 700; font-size: 13.5px; color: var(--accent-1); }
     .order-date { font-size: 12px; color: var(--text-muted); }
@@ -218,7 +464,7 @@
     .order-status.done { background: rgba(140, 220, 160, 0.15); color: var(--success); border: 1px solid rgba(140, 220, 160, 0.4); }
     .order-status.cancel { background: rgba(232, 140, 140, 0.15); color: var(--danger); border: 1px solid rgba(232, 140, 140, 0.4); }
     .order-progress { display: flex; gap: 4px; margin-top: 10px; margin-bottom: 4px; }
-    .progress-step { flex: 1; height: 4px; background: rgba(168, 216, 232, 0.08); border-radius: 2px; }
+    .progress-step { flex: 1; height: 4px; background: rgba(168, 216, 232, 0.08); border-radius: 2px; transition: background-color 0.35s ease; }
     .progress-step.active { background: var(--accent-1); }
     .progress-step.progress-active { background: var(--warning); }
     .progress-step.done-active { background: var(--success); }
@@ -238,8 +484,9 @@
     .stat-label { font-size: 10.5px; color: var(--text-muted); margin-top: 3px; text-transform: uppercase; }
 
     .filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-    .filter-btn { background: transparent; border: 1px solid var(--border-2); color: var(--text-secondary); padding: 6px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; font-family: inherit; }
+    .filter-btn { background: transparent; border: 1px solid var(--border-2); color: var(--text-secondary); padding: 6px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; font-family: inherit; transition: all 0.2s ease; }
     .filter-btn.active { background: rgba(168, 216, 232, 0.12); border-color: var(--accent-1); color: var(--accent-1); }
+    .filter-btn:active { transform: scale(0.95); }
 
     .order-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(168, 216, 232, 0.08); }
 
@@ -251,8 +498,9 @@
 
     .calendar-strip { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; scrollbar-width: none; }
     .calendar-strip::-webkit-scrollbar { display: none; }
-    .calendar-day { flex-shrink: 0; min-width: 60px; padding: 10px 8px; border-radius: 14px; background: var(--card-bg); border: 1px solid var(--border-2); text-align: center; cursor: pointer; }
+    .calendar-day { flex-shrink: 0; min-width: 60px; padding: 10px 8px; border-radius: 14px; background: var(--card-bg); border: 1px solid var(--border-2); text-align: center; cursor: pointer; transition: all 0.2s ease; }
     .calendar-day.active { background: rgba(168, 216, 232, 0.15); border-color: var(--accent-1); }
+    .calendar-day:active { transform: scale(0.95); }
     .calendar-day-weekday { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
     .calendar-day-date { font-size: 16px; font-weight: 800; color: var(--text-primary); margin: 3px 0; }
     .calendar-day-count { font-size: 10px; color: var(--accent-1); font-weight: 700; }
@@ -267,13 +515,13 @@
     .material-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
     .material-stock { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
     .material-bar-wrap { height: 5px; background: rgba(168, 216, 232, 0.08); border-radius: 3px; margin-top: 6px; overflow: hidden; }
-    .material-bar { height: 100%; border-radius: 3px; }
+    .material-bar { height: 100%; border-radius: 3px; transition: width 0.4s ease; }
     .material-bar.ok { background: var(--success); }
     .material-bar.low { background: var(--warning); }
     .material-bar.critical { background: var(--danger); }
     .material-value { font-size: 14px; font-weight: 700; color: var(--accent-3); white-space: nowrap; flex-shrink: 0; }
     .material-edit-btn { background: transparent; border: 1px solid var(--border-2); color: var(--accent-1); width: 32px; height: 32px; border-radius: 10px; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .material-warning { padding: 10px 14px; border-radius: 14px; font-size: 12.5px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .material-warning { padding: 10px 14px; border-radius: 14px; font-size: 12.5px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; animation: cardEnter 0.3s ease both; }
     .material-warning.critical { background: rgba(232, 140, 140, 0.1); border: 1px solid rgba(232, 140, 140, 0.35); color: var(--danger); }
     .material-warning.low { background: rgba(232, 200, 130, 0.1); border: 1px solid rgba(232, 200, 130, 0.35); color: var(--warning); }
 
@@ -290,7 +538,7 @@
     .mini-btn.del { color: var(--danger); border-color: rgba(232, 140, 140, 0.35); }
 
     .stock-toggle { display: flex; align-items: center; gap: 6px; flex-shrink: 0; cursor: pointer; user-select: none; }
-    .toggle-switch { position: relative; width: 42px; height: 24px; background: var(--app-bg); border: 1px solid var(--border-2); border-radius: 30px; flex-shrink: 0; }
+    .toggle-switch { position: relative; width: 42px; height: 24px; background: var(--app-bg); border: 1px solid var(--border-2); border-radius: 30px; flex-shrink: 0; transition: background-color 0.25s ease, border-color 0.25s ease; }
     .toggle-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background: var(--text-muted); border-radius: 50%; transition: transform 0.25s, background-color 0.25s; }
     .stock-toggle.on .toggle-switch { background: rgba(140, 220, 160, 0.25); border-color: var(--success); }
     .stock-toggle.on .toggle-switch::after { transform: translateX(18px); background: var(--success); }
@@ -306,7 +554,7 @@
     .analytics-chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; padding-bottom: 20px; position: relative; margin-bottom: 8px; }
     .analytics-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative; gap: 4px; }
     .analytics-bar-value { font-size: 10px; color: var(--accent-1); font-weight: 700; min-height: 12px; }
-    .analytics-bar { width: 100%; max-width: 40px; background: linear-gradient(180deg, var(--accent-1), var(--accent-2)); border-radius: 4px 4px 0 0; min-height: 3px; }
+    .analytics-bar { width: 100%; max-width: 40px; background: linear-gradient(180deg, var(--accent-1), var(--accent-2)); border-radius: 4px 4px 0 0; min-height: 3px; transition: height 0.6s ease; }
     .analytics-bar-label { font-size: 9.5px; color: var(--text-muted); text-align: center; position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
     .analytics-list-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(168, 216, 232, 0.06); }
     .analytics-list-item:last-child { border-bottom: none; padding-bottom: 0; }
@@ -317,35 +565,66 @@
     .analytics-list-info { flex: 1; min-width: 0; }
     .analytics-list-name { font-size: 12.5px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .analytics-list-bar { height: 4px; background: rgba(168, 216, 232, 0.08); border-radius: 2px; margin-top: 5px; overflow: hidden; }
-    .analytics-list-fill { height: 100%; background: linear-gradient(90deg, var(--accent-1), var(--accent-2)); border-radius: 2px; }
+    .analytics-list-fill { height: 100%; background: linear-gradient(90deg, var(--accent-1), var(--accent-2)); border-radius: 2px; transition: width 0.5s ease; }
     .analytics-list-value { font-size: 12.5px; font-weight: 700; color: var(--accent-1); text-align: right; white-space: nowrap; flex-shrink: 0; }
     .analytics-list-sub { font-size: 10.5px; color: var(--text-muted); text-align: right; }
 
-    .modal-backdrop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-    .modal-backdrop.visible { display: flex; }
-    .modal { background: var(--app-bg); border-radius: 20px; border: 1px solid var(--border-1); padding: 20px 18px; width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto; }
+    .modal-backdrop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; opacity: 0; transition: opacity 0.25s ease; }
+    .modal-backdrop.visible { display: flex; opacity: 1; }
+    .modal { background: var(--app-bg); border-radius: 20px; border: 1px solid var(--border-1); padding: 20px 18px; width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto; transform: scale(0.95); transition: transform 0.25s ease; }
+    .modal-backdrop.visible .modal { transform: scale(1); }
     .modal-title { font-size: 17px; font-weight: 700; color: var(--text-primary); margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
     .modal-close { background: transparent; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; padding: 4px; }
     .form-label { font-size: 11.5px; color: var(--text-secondary); margin-bottom: 4px; display: block; font-weight: 600; }
 
-    .bottom-nav { display: flex; justify-content: space-around; align-items: center; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border-2); gap: 2px; z-index: 10; }
-    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; background: transparent; border: none; color: var(--text-muted); font-size: 10px; font-weight: 500; cursor: pointer; padding: 8px 4px; border-radius: 16px; flex: 1; position: relative; font-family: inherit; }
-    .nav-item i { font-size: 17px; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; background: transparent; border: none; color: var(--text-muted); font-size: 10px; font-weight: 500; cursor: pointer; padding: 8px 4px; border-radius: 16px; flex: 1; position: relative; font-family: inherit; transition: all 0.2s ease; }
+    .nav-item i { font-size: 17px; transition: transform 0.2s ease; }
     .nav-item.active { color: var(--accent-1); background: rgba(168, 216, 232, 0.07); }
-    .nav-item.active i { color: var(--accent-1); }
+    .nav-item.active i { color: var(--accent-1); transform: scale(1.1); }
+    .nav-item:active i { transform: scale(0.85); }
     .nav-badge { position: absolute; top: 2px; right: 8px; background: var(--pink); color: var(--app-bg); border-radius: 12px; padding: 1px 6px; font-size: 9.5px; font-weight: 800; }
 
-    .empty-message { text-align: center; padding: 32px 14px; color: var(--text-muted); border: 1px dashed var(--border-2); border-radius: 20px; font-size: 13.5px; }
+    .empty-message { text-align: center; padding: 32px 14px; color: var(--text-muted); border: 1px dashed var(--border-2); border-radius: 20px; font-size: 13.5px; animation: cardEnter 0.3s ease both; }
     .empty-message i { font-size: 28px; display: block; margin-bottom: 10px; color: var(--accent-1); opacity: 0.7; }
 
-    .back-btn { background: transparent; border: 1px solid rgba(200, 180, 232, 0.3); color: var(--accent-2); border-radius: 26px; padding: 9px 14px; font-size: 13.5px; font-weight: 600; display: flex; align-items: center; gap: 6px; cursor: pointer; margin-bottom: 12px; width: fit-content; font-family: inherit; }
+    .back-btn { background: transparent; border: 1px solid rgba(200, 180, 232, 0.3); color: var(--accent-2); border-radius: 26px; padding: 9px 14px; font-size: 13.5px; font-weight: 600; display: flex; align-items: center; gap: 6px; cursor: pointer; margin-bottom: 12px; width: fit-content; font-family: inherit; transition: all 0.2s ease; }
+    .back-btn:active { background: rgba(200, 180, 232, 0.12); transform: translateX(-2px); }
 
-    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--app-bg); border: 1px solid var(--accent-1); color: var(--text-primary); padding: 11px 20px; border-radius: 36px; font-weight: 500; font-size: 13.5px; z-index: 999; pointer-events: none; white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis; }
+    .toast {
+      position: fixed;
+      bottom: calc(80px + env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--app-bg);
+      border: 1px solid var(--accent-1);
+      color: var(--text-primary);
+      padding: 11px 20px;
+      border-radius: 36px;
+      font-weight: 500;
+      font-size: 13.5px;
+      z-index: 999;
+      pointer-events: none;
+      white-space: nowrap;
+      max-width: 90vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      animation: toastIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translate(-50%, 20px) scale(0.9); }
+      to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+    }
 
-    .cart-badge { position: absolute; top: -5px; right: -5px; background: var(--accent-3); color: var(--app-bg); border-radius: 18px; padding: 2px 6px; font-size: 10.5px; font-weight: 800; }
-    .admin-badge { position: absolute; top: -5px; right: -5px; background: var(--pink); color: var(--app-bg); border-radius: 18px; padding: 2px 6px; font-size: 10.5px; font-weight: 800; }
+    .cart-badge { position: absolute; top: -5px; right: -5px; background: var(--accent-3); color: var(--app-bg); border-radius: 18px; padding: 2px 6px; font-size: 10.5px; font-weight: 800; animation: pulse 1.5s ease-in-out infinite; }
+    .admin-badge { position: absolute; top: -5px; right: -5px; background: var(--pink); color: var(--app-bg); border-radius: 18px; padding: 2px 6px; font-size: 10.5px; font-weight: 800; animation: pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
 
-    .input-field { width: 100%; background: var(--app-bg); border: 1px solid var(--border-2); color: var(--text-primary); padding: 10px 14px; border-radius: 12px; font-size: 13.5px; margin-bottom: 8px; outline: none; font-family: inherit; }
+    .input-field { width: 100%; background: var(--app-bg); border: 1px solid var(--border-2); color: var(--text-primary); padding: 10px 14px; border-radius: 12px; font-size: 13.5px; margin-bottom: 8px; outline: none; font-family: inherit; transition: border-color 0.2s ease; }
+    .input-field:focus { border-color: var(--accent-1); }
     .input-field::placeholder { color: var(--text-muted); }
     .field-hint { font-size: 11.5px; margin-top: -4px; margin-bottom: 8px; padding-left: 4px; min-height: 14px; font-weight: 500; }
     .field-hint.error { color: var(--danger); }
@@ -356,52 +635,66 @@
     .remember-row { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-secondary); margin-bottom: 8px; cursor: pointer; user-select: none; }
     .remember-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent-1); cursor: pointer; flex-shrink: 0; }
     .client-saved-hint { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--success); padding: 6px 10px; background: rgba(140, 220, 160, 0.08); border: 1px solid rgba(140, 220, 160, 0.2); border-radius: 10px; margin-bottom: 10px; }
-    .clear-client-btn { background: transparent; border: 1px dashed var(--border-2); color: var(--text-muted); padding: 8px 12px; border-radius: 10px; font-size: 11.5px; cursor: pointer; margin-bottom: 8px; font-family: inherit; width: 100%; }
+    .clear-client-btn { background: transparent; border: 1px dashed var(--border-2); color: var(--text-muted); padding: 8px 12px; border-radius: 10px; font-size: 11.5px; cursor: pointer; margin-bottom: 8px; font-family: inherit; width: 100%; transition: all 0.2s ease; }
+    .clear-client-btn:active { background: rgba(232, 140, 140, 0.1); color: var(--danger); }
 
     .connection-status { position: fixed; top: 8px; left: 50%; transform: translateX(-50%); padding: 6px 14px; border-radius: 20px; font-size: 11.5px; font-weight: 600; z-index: 9999; display: none; align-items: center; gap: 6px; }
-    .connection-status.offline { display: flex; background: rgba(232, 140, 140, 0.95); color: #fff; }
-    .connection-status.online { display: flex; background: rgba(140, 220, 160, 0.95); color: #1a1a2e; }
+    .connection-status.offline { display: flex; background: rgba(232, 140, 140, 0.95); color: #fff; animation: cardEnter 0.3s ease both; }
+    .connection-status.online { display: flex; background: rgba(140, 220, 160, 0.95); color: #1a1a2e; animation: cardEnter 0.3s ease both; }
 
     .notif-toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: var(--card-bg); border: 1px solid var(--border-2); border-radius: 14px; margin-bottom: 8px; }
     .notif-toggle-info { display: flex; flex-direction: column; }
     .notif-toggle-title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
     .notif-toggle-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
-    .lang-menu { position: fixed; top: 70px; right: 20px; background: var(--app-bg); border: 1px solid var(--border-1); border-radius: 16px; padding: 8px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 999; display: none; flex-direction: column; gap: 2px; min-width: 140px; }
-    .lang-menu.visible { display: flex; }
-    .lang-menu-item { padding: 10px 14px; background: transparent; border: none; color: var(--text-primary); font-size: 13px; font-weight: 600; text-align: left; border-radius: 10px; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 8px; }
+    .lang-menu { position: fixed; top: 56px; right: 14px; background: var(--app-bg); border: 1px solid var(--border-1); border-radius: 16px; padding: 8px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 999; display: none; flex-direction: column; gap: 2px; min-width: 140px; opacity: 0; transform: translateY(-8px); transition: opacity 0.2s ease, transform 0.2s ease; }
+    .lang-menu.visible { display: flex; opacity: 1; transform: translateY(0); }
+    .lang-menu-item { padding: 10px 14px; background: transparent; border: none; color: var(--text-primary); font-size: 13px; font-weight: 600; text-align: left; border-radius: 10px; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 8px; transition: background-color 0.15s ease; }
+    .lang-menu-item:hover { background: rgba(168, 216, 232, 0.08); }
     .lang-menu-item.active { background: rgba(168, 216, 232, 0.12); color: var(--accent-1); }
 
-    .new-order-notification { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--success), #5ab878); color: #0a0a1a; padding: 14px 20px; border-radius: 20px; box-shadow: 0 8px 32px rgba(140, 220, 160, 0.5); z-index: 1200; display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 14px; max-width: 90vw; cursor: pointer; }
+    .new-order-notification { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--success), #5ab878); color: #0a0a1a; padding: 14px 20px; border-radius: 20px; box-shadow: 0 8px 32px rgba(140, 220, 160, 0.5); z-index: 1200; display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 14px; max-width: 90vw; cursor: pointer; animation: notifSlide 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+    @keyframes notifSlide {
+      from { opacity: 0; transform: translate(-50%, -30px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
     .new-order-notification i { font-size: 22px; }
 
-    .files-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.75); display: flex; align-items: center; justify-content: center; z-index: 1100; padding: 20px; }
-    .files-modal-content { background: var(--app-bg); border-radius: 24px; border: 1px solid var(--border-1); padding: 24px 20px; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; }
+    .files-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.75); display: flex; align-items: center; justify-content: center; z-index: 1100; padding: 20px; animation: fadeIn 0.25s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .files-modal-content { background: var(--app-bg); border-radius: 24px; border: 1px solid var(--border-1); padding: 24px 20px; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; animation: cardEnter 0.4s ease both; }
 
     #qrReader video { border-radius: 16px; }
 
-    @media (min-width: 901px) {
-      body { padding: 24px; align-items: center; }
-      .app { max-width: 1600px; width: 100%; padding: 28px 40px; border-radius: 32px; min-height: calc(100vh - 48px); }
-      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-      .promo-banners { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; overflow: visible; }
-      .promo-banner { min-width: 0; }
-      .company-info-stats { grid-template-columns: repeat(3, 1fr); }
-      .stats-grid { grid-template-columns: repeat(4, 1fr); }
-      .card { padding: 18px 22px; }
-      .card-title { font-size: 16px; }
-      .price-tag { font-size: 17px; }
-      .nav-item { font-size: 11px; padding: 10px 6px; }
-      .nav-item i { font-size: 19px; }
-      .icon-btn { width: 46px; height: 46px; font-size: 18px; }
-      h2 { font-size: 22px; }
-      .subhead { font-size: 14px; }
-    }
+    /* ============ БЛОКИ ИНФОРМАЦИИ О КОМПАНИИ (главная) ============ */
+    .home-hero { text-align: center; padding: 12px 0 16px; animation: fadeInUp 0.5s ease both; }
+    .home-hero h1 { font-size: 22px; font-weight: 800; line-height: 1.25; margin-bottom: 10px; background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--pink)); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: titleShift 5s ease-in-out infinite; }
+    .home-hero p { font-size: 13.5px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 16px; }
 
-    @media (min-width: 1400px) {
-      .app { max-width: 1800px; padding: 32px 56px; }
-      .grid { grid-template-columns: repeat(4, 1fr); }
-      .promo-banners { grid-template-columns: repeat(3, 1fr); }
+    .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
+    .feature-card { background: var(--card-bg); border: 1px solid var(--border-2); border-radius: 16px; padding: 14px 12px; text-align: center; transition: transform 0.2s ease; animation: cardEnter 0.4s ease both; }
+    .feature-card:nth-child(1) { animation-delay: 0.05s; }
+    .feature-card:nth-child(2) { animation-delay: 0.1s; }
+    .feature-card:nth-child(3) { animation-delay: 0.15s; }
+    .feature-card:nth-child(4) { animation-delay: 0.2s; }
+    .feature-card:active { transform: scale(0.97); }
+    .feature-card-icon { font-size: 22px; color: var(--accent-1); margin-bottom: 8px; }
+    .feature-card-value { font-size: 18px; font-weight: 800; color: var(--text-primary); display: block; }
+    .feature-card-label { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+    .info-block { background: var(--card-bg); border: 1px solid var(--border-2); border-radius: 18px; padding: 16px 18px; margin-bottom: 12px; animation: cardEnter 0.4s ease both; }
+    .info-block-title { font-size: 15px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .info-block-title i { color: var(--accent-1); }
+    .info-block-text { font-size: 12.5px; line-height: 1.6; color: var(--text-secondary); }
+    .info-block-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+    .info-block-item { font-size: 12.5px; line-height: 1.55; color: var(--text-secondary); display: flex; gap: 10px; align-items: flex-start; }
+    .info-block-item i { color: var(--accent-1); margin-top: 3px; flex-shrink: 0; }
+    .info-block-item b { color: var(--text-primary); }
+
+    @media (min-width: 901px) {
+      .app { max-width: 900px; }
+      .feature-grid { grid-template-columns: repeat(4, 1fr); }
+      .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
     }
   </style>
 </head>
@@ -411,20 +704,26 @@
     <span id="connectionText">...</span>
   </div>
 
+  <!-- ==================== ЗАСТАВКА ==================== -->
   <div class="splash" id="splash">
+    <div class="splash-orb orb-1"></div>
+    <div class="splash-orb orb-2"></div>
+    <div class="splash-orb orb-3"></div>
+    <div class="splash-top-line"></div>
     <div class="splash-logo">
       <div class="splash-icon-wrap">
         <div class="splash-icon-ring"></div>
         <div class="splash-icon-core"><i class="fas fa-print"></i></div>
       </div>
       <div class="splash-title">PRINT<span class="accent">SOFT</span></div>
-      <div class="splash-subtitle" data-i18n="splash_subtitle">Полиграфия</div>
+      <div class="splash-subtitle">Полиграфия</div>
     </div>
     <div class="splash-progress-wrap">
       <div class="splash-progress-bar"><div class="splash-progress-fill" id="splashProgressFill"></div></div>
       <div class="splash-percent" id="splashPercent">0%</div>
+      <div class="splash-dots"><span class="splash-dot"></span><span class="splash-dot"></span><span class="splash-dot"></span></div>
     </div>
-    <div class="splash-greeting" id="splashGreeting">...</div>
+    <div class="splash-greeting" id="splashGreeting">Подключение к серверу...</div>
   </div>
 
   <div class="lang-menu" id="langMenu">
@@ -433,298 +732,383 @@
     <button class="lang-menu-item" data-lang="sah">🇷🇺 YKT</button>
   </div>
 
-  <div class="app" id="app" style="opacity: 0;">
+  <div class="app" id="app">
+    <!-- ШАПКА -->
     <div class="header">
       <div class="logo" id="logoText"><i class="fas fa-print"></i> <span>PRINT</span><span style="color:var(--accent-2);">SOFT</span></div>
       <div class="header-actions">
-        <div class="live-indicator" id="liveIndicator"></div>
         <button class="icon-btn lang-btn" id="langToggleBtn">RU</button>
         <button class="icon-btn" id="themeToggleBtn"><i class="fas fa-moon" id="themeIcon"></i></button>
-        <button class="icon-btn" id="cartIconBtn"><i class="fas fa-shopping-cart"></i></button>
         <button class="icon-btn" id="scanBtn" style="display:none;" title="Сканер QR"><i class="fas fa-qrcode"></i></button>
         <button class="icon-btn" id="adminToggleBtn"><i class="fas fa-clipboard-list"></i></button>
       </div>
     </div>
 
-    <div id="homePage" class="page active">
-      <h2><i class="fas fa-store"></i> <span data-i18n="home_title">Маркетплейс полиграфии</span></h2>
-      <div class="subhead" data-i18n="home_subhead">Печать А4 • быстро и дёшево</div>
+    <div class="content-scroll" id="contentScroll">
 
-      <div class="promo-banners">
-        <div class="promo-banner promo-banner-1" data-promo="PRINT10">
-          <div class="promo-banner-title"><i class="fas fa-fire"></i> <span data-i18n="promo1_title">Скидка 10%</span></div>
-          <div class="promo-banner-text" data-i18n="promo1_text">Промокод PRINT10</div>
+      <!-- ==================== ГЛАВНАЯ (ИНФО О КОМПАНИИ) ==================== -->
+      <div id="homePage" class="page active">
+        <div class="home-hero">
+          <h1>PRINT SOFT — точная печать без лишних шагов</h1>
+          <p>Загружайте файлы онлайн — напечатаем ровно так, как нужно. Печать от 4 ₽, скидки до 20%, быстро и дёшево.</p>
         </div>
-        <div class="promo-banner promo-banner-2" data-promo="SALE20">
-          <div class="promo-banner-title"><i class="fas fa-gift"></i> <span data-i18n="promo2_title">-20% на всё</span></div>
-          <div class="promo-banner-text" data-i18n="promo2_text">Промокод SALE20</div>
-        </div>
-        <div class="promo-banner promo-banner-3" data-promo="WELCOME">
-          <div class="promo-banner-title"><i class="fas fa-star"></i> <span data-i18n="promo3_title">Welcome</span></div>
-          <div class="promo-banner-text" data-i18n="promo3_text">Промокод WELCOME</div>
-        </div>
-      </div>
 
-      <div class="company-info">
-        <div class="company-info-title"><i class="fas fa-building"></i> <span data-i18n="company_title">PRINT SOFT</span></div>
-        <div class="company-info-text" data-i18n="company_text">Команда профессионалов в области полиграфии.</div>
-        <div class="company-info-stats">
-          <div class="company-stat"><span class="company-stat-value">7+</span><span class="company-stat-label" data-i18n="company_stat1">лет</span></div>
-          <div class="company-stat"><span class="company-stat-value">5000+</span><span class="company-stat-label" data-i18n="company_stat2">клиентов</span></div>
-          <div class="company-stat"><span class="company-stat-value">24/7</span><span class="company-stat-label" data-i18n="company_stat3">заказы</span></div>
-        </div>
-      </div>
-
-      <div class="search-wrap">
-        <i class="fas fa-search search-icon"></i>
-        <input type="text" id="searchInput" class="search-input" placeholder="Поиск услуг..." data-i18n-placeholder="search_placeholder">
-        <button class="search-clear" id="searchClear"><i class="fas fa-times"></i></button>
-      </div>
-      <div class="cat-filters" id="catFilters"></div>
-      <div class="grid" id="servicesGrid"></div>
-    </div>
-
-    <div id="detailPage" class="page">
-      <button class="back-btn" id="backFromDetailBtn"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Назад</span></button>
-      <div class="detail-card" id="detailContent"></div>
-    </div>
-
-    <div id="cartPage" class="page">
-      <h2><i class="fas fa-shopping-bag"></i> <span data-i18n="cart_title">Корзина</span></h2>
-      <div class="subhead" data-i18n="cart_subhead">Ваши услуги</div>
-      <div id="cartItemsContainer" style="flex:1;"></div>
-      <div class="total" id="cartTotal">0 ₽</div>
-
-      <div class="promo-row">
-        <input type="text" id="promoInput" class="promo-input" placeholder="Промокод" maxlength="20">
-        <button class="promo-btn" id="promoApplyBtn" data-i18n="promo_apply">Применить</button>
-      </div>
-      <div class="promo-status" id="promoStatus"></div>
-
-      <div id="clientForm" style="display:none;">
-        <div style="background:var(--card-bg); border-radius:16px; padding:14px; margin-bottom:10px; border:1px solid var(--border-2);">
-          <div style="font-size:13px; color:var(--accent-1); margin-bottom:10px; font-weight:600;">
-            <i class="fas fa-user-circle" style="margin-right:6px;"></i><span data-i18n="contacts">Ваши контакты</span>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-card-icon"><i class="fas fa-ruble-sign"></i></div>
+            <span class="feature-card-value">от 4 ₽</span>
+            <div class="feature-card-label">за страницу</div>
           </div>
-          <div class="client-saved-hint" id="clientSavedHint" style="display:none;">
-            <i class="fas fa-check-circle"></i>
-            <span data-i18n="saved_hint">Данные из прошлого заказа</span>
+          <div class="feature-card">
+            <div class="feature-card-icon"><i class="fas fa-bolt"></i></div>
+            <span class="feature-card-value">1–2 дня</span>
+            <div class="feature-card-label">срок печати</div>
           </div>
-          <input type="text" id="clientName" class="input-field" placeholder="Ваше имя" autocomplete="name">
-          <input type="tel" id="clientPhone" class="input-field" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" maxlength="18">
-          <div class="field-hint" id="phoneHint"></div>
-          <label class="remember-row">
-            <input type="checkbox" id="rememberMe" checked>
-            <span data-i18n="remember_me">Запомнить данные</span>
-          </label>
-          <button type="button" class="clear-client-btn" id="clearSavedClientBtn">
-            <i class="fas fa-user-edit"></i> <span data-i18n="clear_data">Ввести заново</span>
+          <div class="feature-card">
+            <div class="feature-card-icon"><i class="fas fa-percent"></i></div>
+            <span class="feature-card-value">до 20%</span>
+            <div class="feature-card-label">скидки</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon"><i class="fas fa-clock"></i></div>
+            <span class="feature-card-value">24/7</span>
+            <div class="feature-card-label">приём заказов</div>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-block-title"><i class="fas fa-building"></i> О компании</div>
+          <div class="info-block-text">PRINT SOFT — команда профессионалов в области полиграфии. Работаем с 2018 года, обслужили более 5000 клиентов. Мы молодая компания, поэтому особенно внимательно относимся к каждому заказу: хотим, чтобы первый ваш заказ стал не последним.</div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-block-title"><i class="fas fa-list-check"></i> Почему удобно заказывать у нас</div>
+          <div class="info-block-list">
+            <div class="info-block-item"><i class="fas fa-tag"></i> <span><b>Прозрачная цена.</b> Стоимость видна сразу, без скрытых доплат.</span></div>
+            <div class="info-block-item"><i class="fas fa-search"></i> <span><b>Проверка макетов.</b> Смотрим файл до печати и предупредим о рисках.</span></div>
+            <div class="info-block-item"><i class="fas fa-comments"></i> <span><b>Понятные рекомендации.</b> Подскажем формат и бумагу бесплатно.</span></div>
+            <div class="info-block-item"><i class="fas fa-box"></i> <span><b>Аккуратная упаковка.</b> Листы не помнутся при транспортировке.</span></div>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-block-title"><i class="fas fa-box-open"></i> Что можно заказать прямо сейчас</div>
+          <div class="info-block-text" style="margin-bottom:10px;">В каталоге каждый товар сразу идёт с понятным статусом:</div>
+          <div class="info-block-list">
+            <div class="info-block-item"><span class="stock-badge-in">В наличии</span> <span style="margin-left:6px;">Берём в работу сразу.</span></div>
+            <div class="info-block-item"><span class="stock-badge-out" style="background:rgba(232,200,130,0.15);color:var(--warning);border-color:rgba(232,200,130,0.35);">Под заказ</span> <span style="margin-left:6px;">+1–2 рабочих дня к сроку.</span></div>
+            <div class="info-block-item"><span class="stock-badge-out" style="background:rgba(168,216,232,0.15);color:var(--accent-1);border-color:rgba(168,216,232,0.35);">Скоро</span> <span style="margin-left:6px;">Появится в ближайшие недели.</span></div>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-block-title"><i class="fas fa-list-ol"></i> Как оформить заказ за 3 шага</div>
+          <div class="info-block-list">
+            <div class="info-block-item"><i class="fas fa-1"></i> <span><b>Выберите услугу</b> — тип печати, количество, формат, бумагу, цветность.</span></div>
+            <div class="info-block-item"><i class="fas fa-2"></i> <span><b>Загрузите файл</b> — PDF, JPG, PNG. Нет файла — пришлите фото оригинала.</span></div>
+            <div class="info-block-item"><i class="fas fa-3"></i> <span><b>Получите расчёт</b> — стоимость посчитается автоматически, проверим макет.</span></div>
+          </div>
+        </div>
+
+        <div class="info-block" style="background:linear-gradient(135deg,rgba(232,184,216,0.08),rgba(201,184,232,0.08));border-color:rgba(232,184,216,0.3);">
+          <div class="info-block-title"><i class="fas fa-paint-brush" style="color:var(--pink);"></i> Скоро: услуги дизайна</div>
+          <div class="info-block-text" style="margin-bottom:12px;">В ближайшее время запускаем услуги дизайна: поможем подготовить макет, сверстать буклет, обработать фото под печать.</div>
+          <input type="email" id="landingEmail" class="input-field" placeholder="Ваш e-mail — сообщим о запуске">
+          <button class="btn btn-success" id="landingNotifyBtn" style="margin-top:6px;">
+            <i class="fas fa-bell"></i> Сообщить, когда запустим
           </button>
+        </div>
 
-          <div style="font-size:13px; color:var(--accent-1); margin: 14px 0 10px; font-weight:600;">
-            <i class="fas fa-paperclip" style="margin-right:6px;"></i><span data-i18n="files">Файлы для печати</span>
+        <div class="info-block">
+          <div class="info-block-title"><i class="fas fa-question-circle"></i> Частые вопросы</div>
+          <div class="info-block-list">
+            <div class="info-block-item"><i class="fas fa-check"></i> <span><b>Что есть в наличии?</b> В каталоге сразу видно статусы: «В наличии», «Под заказ», «Скоро».</span></div>
+            <div class="info-block-item"><i class="fas fa-check"></i> <span><b>Сколько времени займёт?</b> Обычно 1–2 рабочих дня. Под заказ — +1–2 дня.</span></div>
+            <div class="info-block-item"><i class="fas fa-check"></i> <span><b>Как подготовить файл?</b> Оптимально PDF 300 dpi. Если нет навыков — присылайте как есть.</span></div>
+            <div class="info-block-item"><i class="fas fa-check"></i> <span><b>Можно с телефона?</b> Да, всё адаптировано под мобильные.</span></div>
           </div>
-          <div class="upload-zone" id="uploadZone">
-            <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.txt">
-            <div class="upload-zone-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-            <div class="upload-zone-text" data-i18n="upload_text">Выбрать файлы</div>
-            <div class="upload-zone-hint">PDF, JPG, PNG, DOCX • до 5 МБ</div>
-          </div>
-          <div class="file-list" id="fileList"></div>
+        </div>
 
-          <div class="preorder-block">
-            <label class="preorder-toggle">
-              <input type="checkbox" id="preorderToggle">
-              <span class="preorder-toggle-text" data-i18n="preorder_toggle">Предзаказ — выбрать дату и время</span>
+        <div class="info-block" style="text-align:center;">
+          <div class="info-block-title" style="justify-content:center;"><i class="fas fa-print"></i> PRINT SOFT</div>
+          <div class="info-block-text" style="margin-bottom:10px;">
+            <a href="tel:+70000000000" style="color:var(--text-secondary);text-decoration:none;display:inline-block;margin:4px 8px;"><i class="fas fa-phone"></i> +7 (000) 000-00-00</a><br>
+            <a href="mailto:zelp363@gmail.com" style="color:var(--text-secondary);text-decoration:none;display:inline-block;margin:4px 8px;"><i class="fas fa-envelope"></i> zelp363@gmail.com</a>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);">© 2026 PRINT SOFT. Все права защищены.</div>
+        </div>
+      </div>
+
+      <!-- ==================== КАТАЛОГ ==================== -->
+      <div id="catalogPage" class="page">
+        <h2><i class="fas fa-store"></i> <span data-i18n="home_title">Каталог полиграфии</span></h2>
+        <div class="subhead" data-i18n="home_subhead">Выберите услугу и оформите заказ</div>
+
+        <div class="promo-banners">
+          <div class="promo-banner promo-banner-1" data-promo="PRINT10">
+            <div class="promo-banner-title"><i class="fas fa-fire"></i> <span data-i18n="promo1_title">Скидка 10%</span></div>
+            <div class="promo-banner-text" data-i18n="promo1_text">Промокод PRINT10</div>
+          </div>
+          <div class="promo-banner promo-banner-2" data-promo="SALE20">
+            <div class="promo-banner-title"><i class="fas fa-gift"></i> <span data-i18n="promo2_title">-20% на всё</span></div>
+            <div class="promo-banner-text" data-i18n="promo2_text">Промокод SALE20</div>
+          </div>
+          <div class="promo-banner promo-banner-3" data-promo="WELCOME">
+            <div class="promo-banner-title"><i class="fas fa-star"></i> <span data-i18n="promo3_title">Welcome</span></div>
+            <div class="promo-banner-text" data-i18n="promo3_text">Промокод WELCOME</div>
+          </div>
+        </div>
+
+        <div class="search-wrap">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="searchInput" class="search-input" placeholder="Поиск услуг..." data-i18n-placeholder="search_placeholder">
+          <button class="search-clear" id="searchClear"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cat-filters" id="catFilters"></div>
+        <div class="grid" id="servicesGrid"></div>
+      </div>
+
+      <div id="detailPage" class="page">
+        <button class="back-btn" id="backFromDetailBtn"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Назад</span></button>
+        <div class="detail-card" id="detailContent"></div>
+      </div>
+
+      <div id="cartPage" class="page">
+        <h2><i class="fas fa-shopping-bag"></i> <span data-i18n="cart_title">Корзина</span></h2>
+        <div class="subhead" data-i18n="cart_subhead">Ваши услуги</div>
+        <div id="cartItemsContainer"></div>
+        <div class="total" id="cartTotal">0 ₽</div>
+
+        <div class="promo-row">
+          <input type="text" id="promoInput" class="promo-input" placeholder="Промокод" maxlength="20">
+          <button class="promo-btn" id="promoApplyBtn" data-i18n="promo_apply">Применить</button>
+        </div>
+        <div class="promo-status" id="promoStatus"></div>
+
+        <div id="clientForm" style="display:none;">
+          <div style="background:var(--card-bg); border-radius:16px; padding:14px; margin-bottom:10px; border:1px solid var(--border-2);">
+            <div style="font-size:13px; color:var(--accent-1); margin-bottom:10px; font-weight:600;">
+              <i class="fas fa-user-circle" style="margin-right:6px;"></i><span data-i18n="contacts">Ваши контакты</span>
+            </div>
+            <div class="client-saved-hint" id="clientSavedHint" style="display:none;">
+              <i class="fas fa-check-circle"></i>
+              <span data-i18n="saved_hint">Данные из прошлого заказа</span>
+            </div>
+            <input type="text" id="clientName" class="input-field" placeholder="Ваше имя" autocomplete="name">
+            <input type="tel" id="clientPhone" class="input-field" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" maxlength="18">
+            <div class="field-hint" id="phoneHint"></div>
+            <label class="remember-row">
+              <input type="checkbox" id="rememberMe" checked>
+              <span data-i18n="remember_me">Запомнить данные</span>
             </label>
-            <div class="preorder-fields" id="preorderFields">
-              <input type="date" id="preorderDate" class="preorder-input">
-              <input type="time" id="preorderTime" class="preorder-input">
+            <button type="button" class="clear-client-btn" id="clearSavedClientBtn">
+              <i class="fas fa-user-edit"></i> <span data-i18n="clear_data">Ввести заново</span>
+            </button>
+
+            <div style="font-size:13px; color:var(--accent-1); margin: 14px 0 10px; font-weight:600;">
+              <i class="fas fa-paperclip" style="margin-right:6px;"></i><span data-i18n="files">Файлы для печати</span>
+            </div>
+            <div class="upload-zone" id="uploadZone">
+              <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.txt">
+              <div class="upload-zone-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+              <div class="upload-zone-text" data-i18n="upload_text">Выбрать файлы</div>
+              <div class="upload-zone-hint">PDF, JPG, PNG, DOCX • до 5 МБ</div>
+            </div>
+            <div class="file-list" id="fileList"></div>
+
+            <div class="preorder-block">
+              <label class="preorder-toggle">
+                <input type="checkbox" id="preorderToggle">
+                <span class="preorder-toggle-text" data-i18n="preorder_toggle">Предзаказ — выбрать дату и время</span>
+              </label>
+              <div class="preorder-fields" id="preorderFields">
+                <input type="date" id="preorderDate" class="preorder-input">
+                <input type="time" id="preorderTime" class="preorder-input">
+              </div>
+            </div>
+
+            <textarea id="clientComment" class="input-field" placeholder="Комментарий (необязательно)"></textarea>
+          </div>
+        </div>
+
+        <button class="btn" id="checkoutBtn"><i class="fas fa-check-circle"></i> <span data-i18n="checkout">Оформить заказ</span></button>
+        <button class="btn btn-outline" id="clearCartBtn"><i class="fas fa-trash-alt"></i> <span data-i18n="clear_cart">Очистить корзину</span></button>
+      </div>
+
+      <div id="historyPage" class="page">
+        <h2><i class="fas fa-history"></i> <span data-i18n="history_title">Мои заказы</span></h2>
+        <div class="subhead" data-i18n="history_subhead">Статус заказов</div>
+        <div class="tab-switcher" id="clientTabSwitcher">
+          <button class="tab-switch-btn active" data-tab="active"><i class="fas fa-hourglass-half"></i> <span data-i18n="active">Активные</span> <span class="tab-count" id="activeCount">0</span></button>
+          <button class="tab-switch-btn" data-tab="archive"><i class="fas fa-archive"></i> <span data-i18n="archive">Архив</span> <span class="tab-count" id="archiveCount">0</span></button>
+        </div>
+        <div id="historyContainer"></div>
+        <div class="info-banner" style="margin-top:10px; font-size:11.5px; text-align:center;">
+          <i class="fas fa-info-circle" style="margin-right:6px;"></i>
+          <span data-i18n="archive_note">Архив чистит только админ</span>
+        </div>
+      </div>
+
+      <div id="loginPage" class="page">
+        <div class="login-card">
+          <div class="login-icon"><i class="fas fa-lock"></i></div>
+          <div class="login-title" data-i18n="login_title">Вход в панель</div>
+          <div class="login-desc" data-i18n="login_desc">Секретный код</div>
+          <input type="password" id="adminCodeInput" class="code-input" placeholder="•••••••••" inputmode="numeric" maxlength="20" autocomplete="off">
+          <div class="login-error" id="loginError"></div>
+          <button class="btn" id="loginSubmitBtn"><i class="fas fa-sign-in-alt"></i> <span data-i18n="login_submit">Войти</span></button>
+          <button class="btn btn-outline" id="loginCancelBtn"><i class="fas fa-arrow-left"></i> <span data-i18n="cancel">Отмена</span></button>
+        </div>
+      </div>
+
+      <div id="adminPage" class="page">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <h2 style="margin-bottom:0;"><i class="fas fa-clipboard-list"></i> <span data-i18n="admin_title">Панель</span></h2>
+          <button class="btn btn-outline btn-small" id="refreshOrdersBtn"><i class="fas fa-sync-alt"></i></button>
+        </div>
+        <div class="subhead" data-i18n="admin_subhead">Управление</div>
+
+        <div class="tab-switcher" id="adminSectionSwitcher">
+          <button class="tab-switch-btn active" data-section="orders"><i class="fas fa-shopping-bag"></i> <span data-i18n="admin_orders">Заказы</span></button>
+          <button class="tab-switch-btn" data-section="products"><i class="fas fa-boxes"></i> <span data-i18n="admin_products">Товары</span></button>
+          <button class="tab-switch-btn" data-section="analytics"><i class="fas fa-chart-bar"></i> <span data-i18n="admin_analytics">Аналитика</span></button>
+          <button class="tab-switch-btn" data-section="materials"><i class="fas fa-box"></i> <span data-i18n="admin_materials">Материалы</span></button>
+          <button class="tab-switch-btn" data-section="settings"><i class="fas fa-cog"></i> <span data-i18n="admin_settings">Настройки</span></button>
+        </div>
+
+        <div id="adminOrdersSection">
+          <div class="stats-grid">
+            <div class="stat-card"><span class="stat-value" id="statTotal">0</span><span class="stat-label" data-i18n="stat_total">Всего</span></div>
+            <div class="stat-card"><span class="stat-value" id="statNew">0</span><span class="stat-label" data-i18n="stat_new">Новых</span></div>
+          </div>
+
+          <div class="admin-search-wrap">
+            <i class="fas fa-search admin-search-icon"></i>
+            <input type="text" id="adminSearchInput" class="admin-search-input" placeholder="Поиск по номеру, имени, телефону...">
+            <button class="admin-search-clear" id="adminSearchClear"><i class="fas fa-times"></i></button>
+          </div>
+
+          <div class="calendar-strip" id="calendarStrip"></div>
+
+          <div class="tab-switcher" id="adminTabSwitcher">
+            <button class="tab-switch-btn active" data-tab="active"><i class="fas fa-hourglass-half"></i> <span data-i18n="active">Активные</span> <span class="tab-count" id="adminActiveCount">0</span></button>
+            <button class="tab-switch-btn" data-tab="archive"><i class="fas fa-archive"></i> <span data-i18n="archive">Архив</span> <span class="tab-count" id="adminArchiveCount">0</span></button>
+          </div>
+          <div class="filter-row" id="adminFilters">
+            <button class="filter-btn active" data-filter="all">Все</button>
+            <button class="filter-btn" data-filter="new">Новые</button>
+            <button class="filter-btn" data-filter="progress">В работе</button>
+            <button class="filter-btn" data-filter="cancel">Отменены</button>
+          </div>
+          <div id="adminOrdersContainer"></div>
+          <div style="display:flex; gap:6px; margin-top:10px;">
+            <button class="btn btn-outline btn-small" id="exportCsvBtn" style="flex:1;"><i class="fas fa-file-csv"></i> CSV</button>
+            <button class="btn btn-outline btn-small" id="clearAllOrdersBtn" style="flex:1;"><i class="fas fa-trash-alt"></i> Удалить</button>
+          </div>
+        </div>
+
+        <div id="adminProductsSection" style="display:none;">
+          <div class="info-banner">Управление услугами</div>
+          <button class="btn btn-success" id="addProductBtn" style="margin-bottom:12px;"><i class="fas fa-plus"></i> Добавить</button>
+          <div id="adminProductsContainer"></div>
+        </div>
+
+        <div id="adminAnalyticsSection" style="display:none;">
+          <div class="stats-grid">
+            <div class="stat-card"><span class="stat-value" id="anaRevenue">0 ₽</span><span class="stat-label" data-i18n="ana_revenue">Выручка</span></div>
+            <div class="stat-card"><span class="stat-value" id="anaOrders">0</span><span class="stat-label" data-i18n="ana_orders">Заказов</span></div>
+            <div class="stat-card"><span class="stat-value" id="anaAvg">0 ₽</span><span class="stat-label" data-i18n="ana_avg">Средний чек</span></div>
+            <div class="stat-card"><span class="stat-value" id="anaDone">0%</span><span class="stat-label" data-i18n="ana_done">Выполнено</span></div>
+          </div>
+          <div class="analytics-block">
+            <div class="analytics-title"><span><i class="fas fa-chart-line"></i> <span data-i18n="ana_week">За 7 дней</span></span><span id="anaWeekTotal">0</span></div>
+            <div class="analytics-chart" id="anaChart"></div>
+          </div>
+          <div class="analytics-block">
+            <div class="analytics-title"><span><i class="fas fa-clock"></i> <span data-i18n="ana_hours">По часам</span></span><span id="anaHoursTotal">0</span></div>
+            <div class="hourly-chart" id="anaHoursChart"></div>
+          </div>
+          <div class="analytics-block">
+            <div class="analytics-title"><span><i class="fas fa-fire"></i> <span data-i18n="ana_top">Топ-5 услуг</span></span><span id="anaTopTotal">0</span></div>
+            <div id="anaTopList"></div>
+          </div>
+          <div class="analytics-block">
+            <div class="analytics-title"><span><i class="fas fa-users"></i> <span data-i18n="ana_clients">Топ-5 клиентов</span></span><span id="anaTopClientsTotal">0</span></div>
+            <div id="anaTopClients"></div>
+          </div>
+          <div class="analytics-block">
+            <div class="analytics-title"><span><i class="fas fa-circle"></i> <span data-i18n="ana_statuses">По статусам</span></span></div>
+            <div id="anaStatuses"></div>
+          </div>
+        </div>
+
+        <div id="adminMaterialsSection" style="display:none;">
+          <div id="materialsWarningContainer"></div>
+          <div id="materialsContainer"></div>
+        </div>
+
+        <div id="adminSettingsSection" style="display:none;">
+          <h3 style="font-size:15px; font-weight:700; margin-bottom:12px; color:var(--text-primary);">
+            <i class="fas fa-bell" style="color:var(--accent-1); margin-right:6px;"></i>Уведомления
+          </h3>
+          <div class="notif-toggle-row">
+            <div class="notif-toggle-info">
+              <div class="notif-toggle-title">Звук при новом заказе</div>
+              <div class="notif-toggle-desc">Играть звук</div>
+            </div>
+            <div class="stock-toggle on" id="notifSoundToggle">
+              <div class="toggle-switch"></div>
+            </div>
+          </div>
+          <div class="notif-toggle-row">
+            <div class="notif-toggle-info">
+              <div class="notif-toggle-title">Всплывающее уведомление</div>
+              <div class="notif-toggle-desc">Баннер сверху экрана</div>
+            </div>
+            <div class="stock-toggle on" id="notifBannerToggle">
+              <div class="toggle-switch"></div>
             </div>
           </div>
 
-          <textarea id="clientComment" class="input-field" placeholder="Комментарий (необязательно)"></textarea>
-        </div>
-      </div>
-
-      <button class="btn" id="checkoutBtn"><i class="fas fa-check-circle"></i> <span data-i18n="checkout">Оформить заказ</span></button>
-      <button class="btn btn-outline" id="clearCartBtn"><i class="fas fa-trash-alt"></i> <span data-i18n="clear_cart">Очистить корзину</span></button>
-    </div>
-
-    <div id="historyPage" class="page">
-      <h2><i class="fas fa-history"></i> <span data-i18n="history_title">Мои заказы</span></h2>
-      <div class="subhead" data-i18n="history_subhead">Статус заказов</div>
-      <div class="tab-switcher" id="clientTabSwitcher">
-        <button class="tab-switch-btn active" data-tab="active"><i class="fas fa-hourglass-half"></i> <span data-i18n="active">Активные</span> <span class="tab-count" id="activeCount">0</span></button>
-        <button class="tab-switch-btn" data-tab="archive"><i class="fas fa-archive"></i> <span data-i18n="archive">Архив</span> <span class="tab-count" id="archiveCount">0</span></button>
-      </div>
-      <div id="historyContainer" style="flex:1;"></div>
-      <div class="info-banner" style="margin-top:10px; font-size:11.5px; text-align:center;">
-        <i class="fas fa-info-circle" style="margin-right:6px;"></i>
-        <span data-i18n="archive_note">Архив чистит только админ</span>
-      </div>
-    </div>
-
-    <div id="servicesPage" class="page">
-      <h2><i class="fas fa-th-large"></i> <span data-i18n="services_title">Все услуги</span></h2>
-      <div class="subhead" data-i18n="services_subhead">Каталог</div>
-      <div class="cat-filters" id="servicesPageCategories"></div>
-      <div id="servicesPageContainer" style="flex:1;"></div>
-    </div>
-
-    <div id="loginPage" class="page">
-      <div class="login-card">
-        <div class="login-icon"><i class="fas fa-lock"></i></div>
-        <div class="login-title" data-i18n="login_title">Вход в панель</div>
-        <div class="login-desc" data-i18n="login_desc">Секретный код</div>
-        <input type="password" id="adminCodeInput" class="code-input" placeholder="•••••••••" inputmode="numeric" maxlength="20" autocomplete="off">
-        <div class="login-error" id="loginError"></div>
-        <button class="btn" id="loginSubmitBtn"><i class="fas fa-sign-in-alt"></i> <span data-i18n="login_submit">Войти</span></button>
-        <button class="btn btn-outline" id="loginCancelBtn"><i class="fas fa-arrow-left"></i> <span data-i18n="cancel">Отмена</span></button>
-      </div>
-    </div>
-
-    <div id="adminPage" class="page">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <h2 style="margin-bottom:0;"><i class="fas fa-clipboard-list"></i> <span data-i18n="admin_title">Панель</span></h2>
-        <button class="btn btn-outline btn-small" id="refreshOrdersBtn"><i class="fas fa-sync-alt"></i></button>
-      </div>
-      <div class="subhead" data-i18n="admin_subhead">Управление</div>
-
-      <div class="tab-switcher" id="adminSectionSwitcher">
-        <button class="tab-switch-btn active" data-section="orders"><i class="fas fa-shopping-bag"></i> <span data-i18n="admin_orders">Заказы</span></button>
-        <button class="tab-switch-btn" data-section="products"><i class="fas fa-boxes"></i> <span data-i18n="admin_products">Товары</span></button>
-        <button class="tab-switch-btn" data-section="analytics"><i class="fas fa-chart-bar"></i> <span data-i18n="admin_analytics">Аналитика</span></button>
-        <button class="tab-switch-btn" data-section="materials"><i class="fas fa-box"></i> <span data-i18n="admin_materials">Материалы</span></button>
-        <button class="tab-switch-btn" data-section="settings"><i class="fas fa-cog"></i> <span data-i18n="admin_settings">Настройки</span></button>
-      </div>
-
-      <div id="adminOrdersSection">
-        <div class="stats-grid">
-          <div class="stat-card"><span class="stat-value" id="statTotal">0</span><span class="stat-label" data-i18n="stat_total">Всего</span></div>
-          <div class="stat-card"><span class="stat-value" id="statNew">0</span><span class="stat-label" data-i18n="stat_new">Новых</span></div>
-        </div>
-
-        <div class="admin-search-wrap">
-          <i class="fas fa-search admin-search-icon"></i>
-          <input type="text" id="adminSearchInput" class="admin-search-input" placeholder="Поиск по номеру, имени, телефону...">
-          <button class="admin-search-clear" id="adminSearchClear"><i class="fas fa-times"></i></button>
-        </div>
-
-        <div class="calendar-strip" id="calendarStrip"></div>
-
-        <div class="tab-switcher" id="adminTabSwitcher">
-          <button class="tab-switch-btn active" data-tab="active"><i class="fas fa-hourglass-half"></i> <span data-i18n="active">Активные</span> <span class="tab-count" id="adminActiveCount">0</span></button>
-          <button class="tab-switch-btn" data-tab="archive"><i class="fas fa-archive"></i> <span data-i18n="archive">Архив</span> <span class="tab-count" id="adminArchiveCount">0</span></button>
-        </div>
-        <div class="filter-row" id="adminFilters">
-          <button class="filter-btn active" data-filter="all">Все</button>
-          <button class="filter-btn" data-filter="new">Новые</button>
-          <button class="filter-btn" data-filter="progress">В работе</button>
-          <button class="filter-btn" data-filter="cancel">Отменены</button>
-        </div>
-        <div id="adminOrdersContainer" style="flex:1;"></div>
-        <div style="display:flex; gap:6px; margin-top:10px;">
-          <button class="btn btn-outline btn-small" id="exportCsvBtn" style="flex:1;"><i class="fas fa-file-csv"></i> CSV</button>
-          <button class="btn btn-outline btn-small" id="clearAllOrdersBtn" style="flex:1;"><i class="fas fa-trash-alt"></i> Удалить</button>
-        </div>
-      </div>
-
-      <div id="adminProductsSection" style="display:none;">
-        <div class="info-banner">Управление услугами</div>
-        <button class="btn btn-success" id="addProductBtn" style="margin-bottom:12px;"><i class="fas fa-plus"></i> Добавить</button>
-        <div id="adminProductsContainer"></div>
-      </div>
-
-      <div id="adminAnalyticsSection" style="display:none;">
-        <div class="stats-grid">
-          <div class="stat-card"><span class="stat-value" id="anaRevenue">0 ₽</span><span class="stat-label" data-i18n="ana_revenue">Выручка</span></div>
-          <div class="stat-card"><span class="stat-value" id="anaOrders">0</span><span class="stat-label" data-i18n="ana_orders">Заказов</span></div>
-          <div class="stat-card"><span class="stat-value" id="anaAvg">0 ₽</span><span class="stat-label" data-i18n="ana_avg">Средний чек</span></div>
-          <div class="stat-card"><span class="stat-value" id="anaDone">0%</span><span class="stat-label" data-i18n="ana_done">Выполнено</span></div>
-        </div>
-        <div class="analytics-block">
-          <div class="analytics-title"><span><i class="fas fa-chart-line"></i> <span data-i18n="ana_week">За 7 дней</span></span><span id="anaWeekTotal">0</span></div>
-          <div class="analytics-chart" id="anaChart"></div>
-        </div>
-        <div class="analytics-block">
-          <div class="analytics-title"><span><i class="fas fa-clock"></i> <span data-i18n="ana_hours">По часам</span></span><span id="anaHoursTotal">0</span></div>
-          <div class="hourly-chart" id="anaHoursChart"></div>
-        </div>
-        <div class="analytics-block">
-          <div class="analytics-title"><span><i class="fas fa-fire"></i> <span data-i18n="ana_top">Топ-5 услуг</span></span><span id="anaTopTotal">0</span></div>
-          <div id="anaTopList"></div>
-        </div>
-        <div class="analytics-block">
-          <div class="analytics-title"><span><i class="fas fa-users"></i> <span data-i18n="ana_clients">Топ-5 клиентов</span></span><span id="anaTopClientsTotal">0</span></div>
-          <div id="anaTopClients"></div>
-        </div>
-        <div class="analytics-block">
-          <div class="analytics-title"><span><i class="fas fa-circle"></i> <span data-i18n="ana_statuses">По статусам</span></span></div>
-          <div id="anaStatuses"></div>
-        </div>
-      </div>
-
-      <div id="adminMaterialsSection" style="display:none;">
-        <div id="materialsWarningContainer"></div>
-        <div id="materialsContainer"></div>
-      </div>
-
-      <div id="adminSettingsSection" style="display:none;">
-        <h3 style="font-size:15px; font-weight:700; margin-bottom:12px; color:var(--text-primary);">
-          <i class="fas fa-bell" style="color:var(--accent-1); margin-right:6px;"></i>Уведомления
-        </h3>
-        <div class="notif-toggle-row">
-          <div class="notif-toggle-info">
-            <div class="notif-toggle-title">Звук при новом заказе</div>
-            <div class="notif-toggle-desc">Играть звук</div>
+          <h3 style="font-size:15px; font-weight:700; margin: 20px 0 12px; color:var(--text-primary);">
+            <i class="fas fa-lock" style="color:var(--pink); margin-right:6px;"></i>Пароль админа
+          </h3>
+          <div class="info-banner" style="font-size:11.5px;">
+            <i class="fas fa-shield-alt" style="margin-right:6px;"></i>
+            Хранится как SHA-256. Заводской: 444555666
           </div>
-          <div class="stock-toggle on" id="notifSoundToggle">
-            <div class="toggle-switch"></div>
-          </div>
+          <input type="password" id="newAdminPasswordInput" class="input-field" placeholder="Новый пароль (мин. 6 цифр)" maxlength="20" inputmode="numeric">
+          <input type="password" id="newAdminPasswordConfirm" class="input-field" placeholder="Повторите пароль" maxlength="20" inputmode="numeric">
+          <div class="field-hint" id="passwordHint"></div>
+          <button class="btn btn-success" id="savePasswordBtn" style="margin-top:6px;">
+            <i class="fas fa-key"></i> Сохранить пароль
+          </button>
+          <button class="btn btn-outline" id="resetPasswordBtn">
+            <i class="fas fa-undo"></i> Сбросить (444555666)
+          </button>
         </div>
-        <div class="notif-toggle-row">
-          <div class="notif-toggle-info">
-            <div class="notif-toggle-title">Всплывающее уведомление</div>
-            <div class="notif-toggle-desc">Баннер сверху экрана</div>
-          </div>
-          <div class="stock-toggle on" id="notifBannerToggle">
-            <div class="toggle-switch"></div>
-          </div>
-        </div>
-
-        <h3 style="font-size:15px; font-weight:700; margin: 20px 0 12px; color:var(--text-primary);">
-          <i class="fas fa-lock" style="color:var(--pink); margin-right:6px;"></i>Пароль админа
-        </h3>
-        <div class="info-banner" style="font-size:11.5px;">
-          <i class="fas fa-shield-alt" style="margin-right:6px;"></i>
-          Хранится как SHA-256. Заводской: 444555666
-        </div>
-        <input type="password" id="newAdminPasswordInput" class="input-field" placeholder="Новый пароль (мин. 6 цифр)" maxlength="20" inputmode="numeric">
-        <input type="password" id="newAdminPasswordConfirm" class="input-field" placeholder="Повторите пароль" maxlength="20" inputmode="numeric">
-        <div class="field-hint" id="passwordHint"></div>
-        <button class="btn btn-success" id="savePasswordBtn" style="margin-top:6px;">
-          <i class="fas fa-key"></i> Сохранить пароль
-        </button>
-        <button class="btn btn-outline" id="resetPasswordBtn">
-          <i class="fas fa-undo"></i> Сбросить (444555666)
-        </button>
       </div>
+
+      <div id="scanPage" class="page">
+        <button class="back-btn" id="scanBackBtn"><i class="fas fa-arrow-left"></i> Назад</button>
+        <h2><i class="fas fa-qrcode"></i> Сканер заказов</h2>
+        <div class="subhead">Наведите камеру на QR-код клиента</div>
+
+        <div id="qrReader" style="width:100%; border-radius:20px; overflow:hidden; background:#000; min-height:280px; margin-bottom:12px;"></div>
+
+        <button class="btn" id="scanStartBtn"><i class="fas fa-camera"></i> Запустить камеру</button>
+        <button class="btn btn-outline" id="scanStopBtn" style="display:none;"><i class="fas fa-stop"></i> Остановить</button>
+
+        <div id="scanResult" style="display:none; margin-top:8px;"></div>
+      </div>
+
     </div>
+    <!-- /content-scroll -->
 
-    <div id="scanPage" class="page">
-      <button class="back-btn" id="scanBackBtn"><i class="fas fa-arrow-left"></i> Назад</button>
-      <h2><i class="fas fa-qrcode"></i> Сканер заказов</h2>
-      <div class="subhead">Наведите камеру на QR-код клиента</div>
+    <!-- НИЖНЯЯ НАВИГАЦИЯ -->
+    <div class="bottom-nav" id="bottomNav"></div>
 
-      <div id="qrReader" style="width:100%; border-radius:20px; overflow:hidden; background:#000; min-height:280px; margin-bottom:12px;"></div>
-
-      <button class="btn" id="scanStartBtn"><i class="fas fa-camera"></i> Запустить камеру</button>
-      <button class="btn btn-outline" id="scanStopBtn" style="display:none;"><i class="fas fa-stop"></i> Остановить</button>
-
-      <div id="scanResult" style="display:none; margin-top:8px;"></div>
-    </div>
-
+    <!-- МОДАЛКИ -->
     <div class="modal-backdrop" id="productModal">
       <div class="modal">
         <div class="modal-title">
@@ -743,6 +1127,7 @@
           <option value="copy">Копирование</option>
           <option value="scan">Сканирование</option>
           <option value="finish">Отделка</option>
+          <option value="photo">Фото</option>
         </select>
         <label class="form-label">Цена (₽)</label>
         <input type="number" id="modalPriceInput" class="input-field" placeholder="0" min="0">
@@ -775,7 +1160,6 @@
       </div>
     </div>
 
-    <div class="bottom-nav" id="bottomNav"></div>
   </div>
   
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -813,7 +1197,7 @@
     // ==================== ПЕРЕВОДЫ ====================
     const TRANSLATIONS = {
       ru: {
-        splash_subtitle: 'Полиграфия', home_title: 'Маркетплейс полиграфии', home_subhead: 'Печать А4 • быстро и дёшево',
+        splash_subtitle: 'Полиграфия', home_title: 'Каталог полиграфии', home_subhead: 'Выберите услугу и оформите заказ',
         promo1_title: 'Скидка 10%', promo1_text: 'Промокод PRINT10', promo2_title: '-20% на всё', promo2_text: 'Промокод SALE20',
         promo3_title: 'Добро пожаловать', promo3_text: 'Промокод WELCOME',
         company_title: 'PRINT SOFT', company_text: 'Команда профессионалов в области полиграфии.',
@@ -824,7 +1208,7 @@
         upload_text: 'Выбрать файлы', preorder_toggle: 'Предзаказ — выбрать дату и время',
         checkout: 'Оформить заказ', clear_cart: 'Очистить корзину',
         history_title: 'Мои заказы', history_subhead: 'Статус заказов', active: 'Активные', archive: 'Архив',
-        archive_note: 'Архив чистит только админ', services_title: 'Все услуги', services_subhead: 'Каталог',
+        archive_note: 'Архив чистит только админ',
         login_title: 'Вход в панель', login_desc: 'Секретный код', login_submit: 'Войти', cancel: 'Отмена',
         admin_title: 'Панель', admin_subhead: 'Управление', admin_orders: 'Заказы', admin_products: 'Товары',
         admin_analytics: 'Аналитика', admin_materials: 'Материалы', admin_settings: 'Настройки',
@@ -837,7 +1221,7 @@
         delete: 'Удалить', add_product: 'Добавить услугу',
       },
       en: {
-        splash_subtitle: 'Printing', home_title: 'Printing marketplace', home_subhead: 'A4 printing • fast and cheap',
+        splash_subtitle: 'Printing', home_title: 'Printing catalog', home_subhead: 'Choose a service and place an order',
         promo1_title: 'Discount 10%', promo1_text: 'Promo code PRINT10', promo2_title: '-20% on everything', promo2_text: 'Promo code SALE20',
         promo3_title: 'Welcome', promo3_text: 'Promo code WELCOME',
         company_title: 'PRINT SOFT', company_text: 'Team of printing professionals.',
@@ -848,7 +1232,7 @@
         upload_text: 'Select files', preorder_toggle: 'Pre-order — choose date and time',
         checkout: 'Place order', clear_cart: 'Clear cart',
         history_title: 'My orders', history_subhead: 'Order status', active: 'Active', archive: 'Archive',
-        archive_note: 'Only admin can clear archive', services_title: 'All services', services_subhead: 'Catalog',
+        archive_note: 'Only admin can clear archive',
         login_title: 'Admin login', login_desc: 'Secret code', login_submit: 'Login', cancel: 'Cancel',
         admin_title: 'Panel', admin_subhead: 'Management', admin_orders: 'Orders', admin_products: 'Products',
         admin_analytics: 'Analytics', admin_materials: 'Materials', admin_settings: 'Settings',
@@ -861,7 +1245,7 @@
         delete: 'Delete', add_product: 'Add service',
       },
       sah: {
-        splash_subtitle: 'Полиграфия', home_title: 'Полиграфия маркетплейса', home_subhead: 'А4 бэчээт • түргэн уонна чэпчэки',
+        splash_subtitle: 'Полиграфия', home_title: 'Полиграфия каталога', home_subhead: 'Өҥөнү тал уонна заказ оҥор',
         promo1_title: '10% скидка', promo1_text: 'PRINT10 промокод', promo2_title: 'Барыга -20%', promo2_text: 'SALE20 промокод',
         promo3_title: 'Нөрүйэбит', promo3_text: 'WELCOME промокод',
         company_title: 'PRINT SOFT', company_text: 'Полиграфия эйгэтин специалистара.',
@@ -872,7 +1256,7 @@
         upload_text: 'Файллары тал', preorder_toggle: 'Инники заказ — күн тал',
         checkout: 'Закаһы оҥор', clear_cart: 'Ыраастаа',
         history_title: 'Мин заказтарым', history_subhead: 'Статус', active: 'Көхтөөхтөр', archive: 'Архив',
-        archive_note: 'Архивы админ эрэ ыраастыыр', services_title: 'Бары өҥөлөр', services_subhead: 'Каталог',
+        archive_note: 'Архивы админ эрэ ыраастыыр',
         login_title: 'Панелга киирии', login_desc: 'Сэкриэт код', login_submit: 'Киир', cancel: 'Төннүү',
         admin_title: 'Панель', admin_subhead: 'Салайыы', admin_orders: 'Заказтар', admin_products: 'Табаардар',
         admin_analytics: 'Аналитика', admin_materials: 'Материаллар', admin_settings: 'Туруоруулар',
@@ -908,9 +1292,7 @@
       try { localStorage.setItem('printsoft_lang', lang); } catch (e) {}
       applyTranslations();
       renderServices();
-      renderServicesPage();
       renderCategories();
-      renderServicesPageCategories();
       renderHistory();
       if (state.isAdminMode) {
         renderAdminOrders();
@@ -985,7 +1367,7 @@
     }
 
     const SESSION_KEY = 'printsoft_admin_session';
-    const SPLASH_DURATION = 2500;
+    const SPLASH_DURATION = 3000;
     const MAX_FILE_SIZE = 5 * 1024 * 1024;
     const MAX_FILES = 10;
 
@@ -1002,17 +1384,20 @@
       { id: 'copy', name: 'Копии', icon: 'fa-clone' },
       { id: 'scan', name: 'Скан', icon: 'fa-scanner' },
       { id: 'finish', name: 'Отделка', icon: 'fa-book' },
+      { id: 'photo', name: 'Фото', icon: 'fa-camera' },
     ];
 
     const DEFAULT_SERVICES = [
-      { id: 1, title: 'Печать А4 ч/б', desc: '1 страница • бумага 80 г/м²', price: 5, icon: 'fa-file-alt', details: 'Классическая чёрно-белая печать.', unit: '₽ / стр.', category: 'print', available: true },
+      { id: 1, title: 'Печать А4 ч/б', desc: '1 страница • бумага 80 г/м²', price: 4, icon: 'fa-file-alt', details: 'Классическая чёрно-белая печать.', unit: '₽ / стр.', category: 'print', available: true },
       { id: 2, title: 'Печать А4 (2 стороны)', desc: '2 страницы на листе', price: 8, icon: 'fa-copy', details: 'Двусторонняя печать.', unit: '₽ / лист', category: 'print', available: true },
       { id: 3, title: 'Копия А4 ч/б', desc: 'Ксерокопия', price: 7, icon: 'fa-clone', details: 'Копирование.', unit: '₽ / копия', category: 'copy', available: true },
       { id: 4, title: 'Сканирование А4', desc: 'PDF / JPG', price: 15, icon: 'fa-scanner', details: 'Сканирование до 600 dpi.', unit: '₽ / стр.', category: 'scan', available: true },
       { id: 5, title: 'Ламинирование А4', desc: 'Плёнка 75 мкм', price: 60, icon: 'fa-shield-alt', details: 'Матовое или глянцевое.', unit: '₽ / лист', category: 'finish', available: true },
       { id: 6, title: 'Брошюровка', desc: 'До 100 листов', price: 150, icon: 'fa-book', details: 'На пружину.', unit: '₽ / шт.', category: 'finish', available: true },
       { id: 7, title: 'Печать А3 ч/б', desc: 'Формат А3', price: 12, icon: 'fa-file', details: 'Чертежи, схемы.', unit: '₽ / стр.', category: 'print', available: true },
-      { id: 8, title: 'Печать А4 (пакет 100)', desc: 'Экономия 20%', price: 400, icon: 'fa-layer-group', details: 'Пакет 100 страниц.', unit: '₽ / 100 стр.', category: 'print', available: true },
+      { id: 8, title: 'Печать А4 (пакет 100)', desc: 'Экономия 20%', price: 320, icon: 'fa-layer-group', details: 'Пакет 100 страниц.', unit: '₽ / 100 стр.', category: 'print', available: true },
+      { id: 9, title: 'Фотопечать 10×15', desc: 'Глянец или мат', price: 25, icon: 'fa-camera', details: 'Яркая фотопечать на плотной бумаге 230 г/м².', unit: '₽ / фото', category: 'photo', available: true },
+      { id: 10, title: 'Фотопечать A4', desc: 'Большие фото', price: 90, icon: 'fa-image', details: 'Фотопечать А4 на глянцевой или матовой бумаге.', unit: '₽ / лист', category: 'photo', available: true },
     ];
 
     const state = {
@@ -1022,7 +1407,7 @@
       isTransitioning: false, transitionTimer: null, isAdminMode: false,
       adminFilter: 'all', adminSearchQuery: '', adminSelectedDate: null,
       clientTab: 'active', adminTab: 'active', adminSection: 'orders',
-      newStatusCount: 0, currentCategory: 'all', servicesPageCategory: 'all',
+      newStatusCount: 0, currentCategory: 'all',
       searchQuery: '', appliedPromo: null, editingProductId: null,
       editingMaterialId: null, notifSound: true, notifBanner: true,
     };
@@ -1162,27 +1547,25 @@
     // ==================== DOM ====================
     const pages = {
       home: document.getElementById('homePage'),
+      catalog: document.getElementById('catalogPage'),
       detail: document.getElementById('detailPage'),
       cart: document.getElementById('cartPage'),
       history: document.getElementById('historyPage'),
-      services: document.getElementById('servicesPage'),
       login: document.getElementById('loginPage'),
       admin: document.getElementById('adminPage'),
       scan: document.getElementById('scanPage'),
     };
+    const contentScroll = document.getElementById('contentScroll');
     const servicesGrid = document.getElementById('servicesGrid');
     const detailContent = document.getElementById('detailContent');
     const cartItemsContainer = document.getElementById('cartItemsContainer');
     const cartTotalEl = document.getElementById('cartTotal');
     const historyContainer = document.getElementById('historyContainer');
-    const servicesPageContainer = document.getElementById('servicesPageContainer');
-    const servicesPageCategories = document.getElementById('servicesPageCategories');
     const adminOrdersContainer = document.getElementById('adminOrdersContainer');
     const adminSearchInput = document.getElementById('adminSearchInput');
     const adminSearchClear = document.getElementById('adminSearchClear');
     const calendarStrip = document.getElementById('calendarStrip');
     const backFromDetailBtn = document.getElementById('backFromDetailBtn');
-    const cartIconBtn = document.getElementById('cartIconBtn');
     const adminToggleBtn = document.getElementById('adminToggleBtn');
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     const langToggleBtn = document.getElementById('langToggleBtn');
@@ -1274,13 +1657,18 @@
       const nextEl = pages[pageId];
       if (!nextEl) return;
       state.isTransitioning = true;
-      if (currentEl) currentEl.classList.remove('active');
+      if (currentEl) {
+        currentEl.classList.remove('active');
+        currentEl.classList.add('leaving');
+        setTimeout(() => currentEl.classList.remove('leaving'), 250);
+      }
       nextEl.classList.add('active');
       state.currentPage = pageId;
       if (pageId === 'history') { renderHistory(); state.newStatusCount = 0; }
-      if (pageId === 'services') renderServicesPage();
-      if (pageId === 'home') renderServices();
+      if (pageId === 'catalog') renderServices();
       renderBottomNav();
+      // Скролл вверх при смене страницы
+      if (contentScroll) contentScroll.scrollTop = 0;
       clearTimeout(state.transitionTimer);
       state.transitionTimer = setTimeout(() => { state.isTransitioning = false; }, 260);
     }
@@ -1314,10 +1702,10 @@
         const unseen = state.newStatusCount;
         const historyBadge = unseen > 0 ? `<span class="nav-badge">${unseen}</span>` : '';
         bottomNav.innerHTML = `
-          <button class="nav-item ${state.currentPage === 'home' || state.currentPage === 'detail' ? 'active' : ''}" data-page="home"><i class="fas fa-home"></i> ${t('home_title').split(' ')[0]}</button>
-          <button class="nav-item ${state.currentPage === 'services' ? 'active' : ''}" data-page="services"><i class="fas fa-th-large"></i> ${t('services_title').split(' ')[0]}</button>
+          <button class="nav-item ${state.currentPage === 'home' ? 'active' : ''}" data-page="home"><i class="fas fa-home"></i> Главная</button>
+          <button class="nav-item ${state.currentPage === 'catalog' || state.currentPage === 'detail' ? 'active' : ''}" data-page="catalog"><i class="fas fa-store"></i> Каталог</button>
           <button class="nav-item ${state.currentPage === 'cart' ? 'active' : ''}" data-page="cart"><i class="fas fa-shopping-cart"></i> ${t('cart_title')}</button>
-          <button class="nav-item ${state.currentPage === 'history' ? 'active' : ''}" data-page="history"><i class="fas fa-history"></i> ${t('history_title').split(' ')[0]}${historyBadge}</button>
+          <button class="nav-item ${state.currentPage === 'history' ? 'active' : ''}" data-page="history"><i class="fas fa-history"></i> Заказы${historyBadge}</button>
         `;
         bottomNav.querySelectorAll('.nav-item').forEach(btn => btn.addEventListener('click', () => showPage(btn.dataset.page)));
       }
@@ -1359,6 +1747,35 @@
       });
     });
 
+    // ==================== ЛЕНДИНГ (форма подписки на дизайн) ====================
+    const landingNotifyBtn = document.getElementById('landingNotifyBtn');
+    const landingEmail = document.getElementById('landingEmail');
+
+    if (landingNotifyBtn) {
+      landingNotifyBtn.addEventListener('click', async () => {
+        const email = (landingEmail.value || '').trim();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showToast('Введите корректный e-mail');
+          landingEmail.focus();
+          return;
+        }
+        try {
+          await addDoc(collection(db, 'design_subscribers'), {
+            email, createdAt: serverTimestamp(),
+            date: new Date().toLocaleString('ru-RU')
+          });
+        } catch (e) {
+          try {
+            const list = JSON.parse(localStorage.getItem('printsoft_design_subs') || '[]');
+            list.push({ email, date: new Date().toISOString() });
+            localStorage.setItem('printsoft_design_subs', JSON.stringify(list));
+          } catch (err) {}
+        }
+        showToast('✓ Спасибо! Сообщим о запуске');
+        landingEmail.value = '';
+      });
+    }
+
     // ==================== КАТЕГОРИИ ====================
     function renderCategories() {
       if (!catFilters) return;
@@ -1375,24 +1792,6 @@
         state.currentCategory = btn.dataset.cat;
         renderCategories();
         renderServices();
-      });
-    }
-
-    function renderServicesPageCategories() {
-      if (!servicesPageCategories) return;
-      servicesPageCategories.innerHTML = CATEGORIES.map(c => `
-        <button class="cat-btn ${state.servicesPageCategory === c.id ? 'active' : ''}" data-cat="${c.id}">
-          <i class="fas ${c.icon}"></i> ${c.name}
-        </button>
-      `).join('');
-    }
-    if (servicesPageCategories) {
-      servicesPageCategories.addEventListener('click', (e) => {
-        const btn = e.target.closest('.cat-btn');
-        if (!btn) return;
-        state.servicesPageCategory = btn.dataset.cat;
-        renderServicesPageCategories();
-        renderServicesPage();
       });
     }
 
@@ -1416,9 +1815,6 @@
         return matchCat && matchSearch;
       });
     }
-    function getServicesPageList() {
-      return state.services.filter(s => state.servicesPageCategory === 'all' || s.category === state.servicesPageCategory);
-    }
 
     function renderServices() {
       if (!servicesGrid) return;
@@ -1428,11 +1824,12 @@
         return;
       }
       const frag = document.createDocumentFragment();
-      list.forEach(s => {
+      list.forEach((s, i) => {
         const available = s.available !== false;
         const card = document.createElement('div');
         card.className = 'card' + (available ? '' : ' out-of-stock');
         card.dataset.id = s.id;
+        card.style.animationDelay = (i * 0.03) + 's';
         const stockLine = available ? `<span class="stock-badge-in">✓</span>` : `<span class="stock-badge-out">✗</span>`;
         card.innerHTML = `
           <div class="card-info">
@@ -1447,45 +1844,8 @@
       servicesGrid.appendChild(frag);
     }
 
-    function renderServicesPage() {
-      if (!servicesPageContainer) return;
-      const list = getServicesPageList();
-      if (list.length === 0) {
-        servicesPageContainer.innerHTML = `<div class="empty-message"><i class="fas fa-box-open"></i> ${t('empty_services')}</div>`;
-        return;
-      }
-      const frag = document.createDocumentFragment();
-      list.forEach(s => {
-        const available = s.available !== false;
-        const card = document.createElement('div');
-        card.className = 'card' + (available ? '' : ' out-of-stock');
-        card.dataset.id = s.id;
-        const stockLine = available ? `<span class="stock-badge-in">✓</span>` : `<span class="stock-badge-out">✗</span>`;
-        card.innerHTML = `
-          <div class="card-info">
-            <div class="card-title"><i class="fas ${s.icon}"></i> ${s.title} ${stockLine}</div>
-            <div class="card-desc">${s.desc || ''}</div>
-          </div>
-          <div class="price-tag">${s.price.toLocaleString()} ₽</div>
-        `;
-        frag.appendChild(card);
-      });
-      servicesPageContainer.innerHTML = '';
-      servicesPageContainer.appendChild(frag);
-    }
-
     if (servicesGrid) {
       servicesGrid.addEventListener('click', (e) => {
-        const card = e.target.closest('.card');
-        if (!card) return;
-        const id = parseInt(card.dataset.id, 10);
-        const s = state.services.find(x => x.id === id);
-        if (!s || s.available === false) { showToast('✗'); return; }
-        openDetail(id);
-      });
-    }
-    if (servicesPageContainer) {
-      servicesPageContainer.addEventListener('click', (e) => {
         const card = e.target.closest('.card');
         if (!card) return;
         const id = parseInt(card.dataset.id, 10);
@@ -1584,10 +1944,6 @@
 
     function updateCartUI() {
       renderCartItems();
-      const totalItems = state.cart.reduce((sum, item) => sum + item.quantity, 0);
-      if (cartIconBtn) {
-        cartIconBtn.innerHTML = totalItems > 0 ? `<i class="fas fa-shopping-cart"></i><span class="cart-badge">${totalItems}</span>` : `<i class="fas fa-shopping-cart"></i>`;
-      }
     }
 
     function renderCartItems() {
@@ -1881,7 +2237,7 @@
 
     if (checkoutBtn) checkoutBtn.addEventListener('click', checkout);
     if (clearCartBtn) clearCartBtn.addEventListener('click', clearCart);
-    if (backFromDetailBtn) backFromDetailBtn.addEventListener('click', () => showPage('home'));
+    if (backFromDetailBtn) backFromDetailBtn.addEventListener('click', () => showPage('catalog'));
 
     // ==================== ИСТОРИЯ ====================
     function renderHistory() {
@@ -1945,43 +2301,32 @@
       });
     }
 
-    // ==================== QR КЛИЕНТА (ИСПРАВЛЕНО) ====================
+    // ==================== QR КЛИЕНТА ====================
     async function ensureQRCodeLib() {
-      // Если уже загружена — ок
       if (window.QRCode && typeof window.QRCode.toCanvas === 'function') return true;
-
-      // Ждём до 5 секунд (вдруг ещё грузится)
       const start = Date.now();
       while (!window.QRCode && Date.now() - start < 5000) {
         await new Promise(r => setTimeout(r, 100));
       }
       if (window.QRCode && typeof window.QRCode.toCanvas === 'function') return true;
-
-      // Пробуем подгрузить резервный CDN №1
       try {
         await new Promise((resolve, reject) => {
           const s = document.createElement('script');
           s.src = 'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js';
-          s.onload = resolve;
-          s.onerror = reject;
+          s.onload = resolve; s.onerror = reject;
           document.head.appendChild(s);
         });
         if (window.QRCode && typeof window.QRCode.toCanvas === 'function') return true;
       } catch (e) {}
-
-      // Резервный CDN №2
       try {
         await new Promise((resolve, reject) => {
           const s = document.createElement('script');
           s.src = 'https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js';
-          s.onload = resolve;
-          s.onerror = reject;
+          s.onload = resolve; s.onerror = reject;
           document.head.appendChild(s);
         });
         return !!(window.QRCode && typeof window.QRCode.toCanvas === 'function');
-      } catch (e) {
-        return false;
-      }
+      } catch (e) { return false; }
     }
 
     async function showQRModal(orderId) {
@@ -2009,24 +2354,18 @@
       backdrop.addEventListener('click', (e) => { if (e.target === backdrop) backdrop.remove(); });
 
       const holder = document.getElementById('qrCanvasHolder');
-
       const libOk = await ensureQRCodeLib();
       if (!libOk) {
         holder.innerHTML = `<div style="color:#c84a4a;font-size:13px;padding:20px;text-align:center;">Не удалось загрузить библиотеку QR.<br>Проверьте интернет и попробуйте снова.</div>`;
         return;
       }
-
-      // Создаём canvas
       const canvas = document.createElement('canvas');
       canvas.style.display = 'block';
       holder.innerHTML = '';
       holder.appendChild(canvas);
-
       try {
         await window.QRCode.toCanvas(canvas, String(orderId), {
-          width: 240,
-          margin: 1,
-          errorCorrectionLevel: 'M',
+          width: 240, margin: 1, errorCorrectionLevel: 'M',
           color: { dark: '#14162a', light: '#ffffff' }
         });
       } catch (err) {
@@ -2043,10 +2382,7 @@
       });
     }
     if (scanBackBtn) {
-      scanBackBtn.addEventListener('click', () => {
-        stopScanning();
-        showPage('admin');
-      });
+      scanBackBtn.addEventListener('click', () => { stopScanning(); showPage('admin'); });
     }
     if (scanStartBtn) scanStartBtn.addEventListener('click', startScanning);
     if (scanStopBtn) scanStopBtn.addEventListener('click', stopScanning);
@@ -2062,10 +2398,7 @@
         await html5QrCode.start(
           { facingMode: "environment" },
           { fps: 10, qrbox: { width: 250, height: 250 } },
-          (decodedText) => {
-            stopScanning();
-            handleScannedOrder(decodedText);
-          },
+          (decodedText) => { stopScanning(); handleScannedOrder(decodedText); },
           (errorMessage) => {}
         );
       } catch (err) {
@@ -2078,10 +2411,7 @@
 
     async function stopScanning() {
       if (!html5QrCode || !isScanning) return;
-      try {
-        await html5QrCode.stop();
-        html5QrCode.clear();
-      } catch (e) {}
+      try { await html5QrCode.stop(); html5QrCode.clear(); } catch (e) {}
       isScanning = false;
       if (scanStartBtn) scanStartBtn.style.display = 'flex';
       if (scanStopBtn) scanStopBtn.style.display = 'none';
@@ -2161,9 +2491,7 @@
                 startScanning();
               });
             }
-          } catch (err) {
-            showToast('✗ Ошибка');
-          }
+          } catch (err) { showToast('✗ Ошибка'); }
         });
       }
     }
@@ -2856,14 +3184,10 @@
         }
         renderServices();
         renderCategories();
-        renderServicesPage();
-        renderServicesPageCategories();
       } catch (err) {
         state.services = [...DEFAULT_SERVICES];
         renderServices();
         renderCategories();
-        renderServicesPage();
-        renderServicesPageCategories();
       }
     }
 
@@ -2875,8 +3199,6 @@
         state.services = arr;
         renderServices();
         renderCategories();
-        renderServicesPage();
-        renderServicesPageCategories();
         if (state.isAdminMode) renderAdminProducts();
         if (state.currentPage === 'detail' && state.currentDetailId) openDetail(state.currentDetailId);
       }, (err) => {});
@@ -2948,9 +3270,7 @@
     loadMaterials();
     applyTranslations();
     renderCategories();
-    renderServicesPageCategories();
     renderServices();
-    renderServicesPage();
     renderBottomNav();
     renderHistory();
     renderNotifToggles();
@@ -2961,7 +3281,7 @@
       subscribeOrders();
     });
 
-    // Заставка
+    // Заставка (плавная)
     let progress = 0;
     const startTime = Date.now();
     const step = () => {
@@ -2970,9 +3290,6 @@
       progress = raw < 90 ? raw : 90 + (raw - 90) * 0.8;
       if (splashProgressFill) splashProgressFill.style.width = progress + '%';
       if (splashPercent) splashPercent.textContent = Math.floor(progress) + '%';
-      if (splashGreeting && progress >= 60 && splashGreeting.textContent === '...') {
-        splashGreeting.textContent = 'OK';
-      }
       if (elapsed < SPLASH_DURATION) {
         requestAnimationFrame(step);
       } else {
