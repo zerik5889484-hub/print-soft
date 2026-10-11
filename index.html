@@ -44,7 +44,6 @@
       padding-top: env(safe-area-inset-top);
     }
 
-    /* ===== ЗАСТАВКА ===== */
     .splash { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10000; background: linear-gradient(160deg, #14152b 0%, #0f1020 60%, #101a2a 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; overflow: hidden; transition: opacity 0.7s ease, transform 0.7s ease, visibility 0.7s ease; }
     .splash.hidden { opacity: 0; transform: scale(1.08); visibility: hidden; pointer-events: none; }
     .splash-orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.35; animation: orbFloat 6s ease-in-out infinite; pointer-events: none; }
@@ -66,8 +65,7 @@
     @keyframes titleShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
     .splash-title .accent { background: linear-gradient(135deg, #c9b8e8 0%, #e8b8d8 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .splash-subtitle { font-size: 13px; color: #8a8aa8; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 600; margin-top: -6px; }
-    .splash-progress-wrap { position: relative; z-index: 2; margin-top: 42px; width: 240px; max-width: 75vw; animation: fadeInUp 0.7s ease 0.4s both; }
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .splash-progress-wrap { position: relative; z-index: 2; margin-top: 42px; width: 240px; max-width: 75vw; }
     .splash-progress-bar { height: 4px; background: rgba(168, 216, 232, 0.1); border-radius: 10px; overflow: hidden; }
     .splash-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #a8d8e8, #c9b8e8, #e8b8d8); border-radius: 10px; transition: width 0.15s linear; box-shadow: 0 0 12px rgba(168, 216, 232, 0.6); }
     .splash-percent { font-size: 12px; color: #8a8aa8; text-align: center; margin-top: 12px; letter-spacing: 1.5px; font-weight: 600; }
@@ -76,65 +74,47 @@
     .splash-dot:nth-child(2) { animation-delay: 0.2s; background: #c9b8e8; }
     .splash-dot:nth-child(3) { animation-delay: 0.4s; background: #e8b8d8; }
     @keyframes dotPulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.15); } }
-    .splash-greeting { position: relative; z-index: 2; margin-top: 24px; font-size: 12.5px; color: #8a8aa8; letter-spacing: 0.5px; text-align: center; max-width: 280px; line-height: 1.5; }
+    .splash-greeting { position: relative; z-index: 2; margin-top: 24px; font-size: 12.5px; color: #8a8aa8; text-align: center; }
 
-    /* ===== ПРИЛОЖЕНИЕ ===== */
-  .app {
-  width: 100%;
-  max-width: 600px;
-  background: var(--app-bg);
-  border: 1px solid var(--border-1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-  display: flex;
-  flex-direction: column;
-  height: 100dvh;
-  max-height: 100dvh;
-  position: relative;
-  overflow: hidden;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
+    .app {
+      width: 100%; max-width: 600px;
+      background: var(--app-bg);
+      border: 1px solid var(--border-1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+      display: flex; flex-direction: column;
+      height: 100dvh; max-height: 100dvh;
+      position: relative; overflow: hidden;
+      opacity: 0; transition: opacity 0.5s ease;
+    }
     .app.app-entering { animation: appEnter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
     @keyframes appEnter { from { opacity: 0; transform: translateY(20px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
-    /* ===== ВЕРХНЯЯ ПАНЕЛЬ (фиксирована) ===== */
     .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
       padding: 8px 10px;
+      padding-top: calc(8px + env(safe-area-inset-top));
       border-bottom: 1px solid var(--border-2);
       background: var(--app-bg);
-      flex-shrink: 0;
-      flex-grow: 0;
-      min-height: 48px;
-      z-index: 100;
-      position: relative;
+      flex-shrink: 0; flex-grow: 0;
+      min-height: 48px; z-index: 100; position: relative;
     }
 
-    /* ===== НИЖНЯЯ ПАНЕЛЬ (фиксирована) ===== */
     .bottom-nav {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
+      display: flex; justify-content: space-around; align-items: center;
       padding: 8px 4px;
       padding-bottom: calc(8px + env(safe-area-inset-bottom));
       border-top: 1px solid var(--border-2);
       background: var(--app-bg);
       gap: 2px;
-      flex-shrink: 0;
-      flex-grow: 0;
-      min-height: 56px;
-      z-index: 100;
-      position: relative;
+      flex-shrink: 0; flex-grow: 0;
+      min-height: 56px; z-index: 100; position: relative;
+      visibility: visible; opacity: 1;
     }
 
-    /* ===== СКРОЛЛЯЩИЙСЯ КОНТЕНТ ===== */
     .content-scroll {
       flex: 1 1 auto;
       min-height: 0;
-      overflow-y: auto;
-      overflow-x: hidden;
+      overflow-y: auto; overflow-x: hidden;
       padding: 12px;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: thin;
@@ -225,7 +205,7 @@
     .calc-total .label { color: var(--text-secondary); font-size: 13px; }
     .calc-total .value { font-size: 22px; font-weight: 800; color: var(--accent-1); }
 
-    .cart-item { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); border-radius: 16px; padding: 12px 14px; margin-bottom: 8px; border: 1px solid var(--border-2); gap: 10px; animation: cardEnter 0.3s ease both; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); border-radius: 16px; padding: 12px 14px; margin-bottom: 8px; border: 1px solid var(--border-2); gap: 10px; }
     .cart-item-info { flex: 1; min-width: 0; }
     .cart-item-title { font-weight: 600; color: var(--text-primary); font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .cart-item-sub { font-size: 11.5px; color: var(--text-secondary); margin-top: 2px; }
@@ -456,17 +436,12 @@
 
     #qrReader video { border-radius: 16px; }
 
-    /* ============ БЛОКИ ИНФОРМАЦИИ О КОМПАНИИ (главная) ============ */
     .home-hero { text-align: center; padding: 12px 0 16px; }
     .home-hero h1 { font-size: 22px; font-weight: 800; line-height: 1.25; margin-bottom: 10px; background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--pink)); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: titleShift 5s ease-in-out infinite; }
     .home-hero p { font-size: 13.5px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 16px; }
 
     .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
     .feature-card { background: var(--card-bg); border: 1px solid var(--border-2); border-radius: 16px; padding: 14px 12px; text-align: center; animation: cardEnter 0.4s ease both; }
-    .feature-card:nth-child(1) { animation-delay: 0.05s; }
-    .feature-card:nth-child(2) { animation-delay: 0.1s; }
-    .feature-card:nth-child(3) { animation-delay: 0.15s; }
-    .feature-card:nth-child(4) { animation-delay: 0.2s; }
     .feature-card-icon { font-size: 22px; color: var(--accent-1); margin-bottom: 8px; }
     .feature-card-value { font-size: 18px; font-weight: 800; color: var(--text-primary); display: block; }
     .feature-card-label { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
@@ -479,6 +454,33 @@
     .info-block-item { font-size: 12.5px; line-height: 1.55; color: var(--text-secondary); display: flex; gap: 10px; align-items: flex-start; }
     .info-block-item i { color: var(--accent-1); margin-top: 3px; flex-shrink: 0; }
     .info-block-item b { color: var(--text-primary); }
+
+    .auth-card { background: var(--card-bg); border-radius: 24px; border: 1px solid rgba(168, 216, 232, 0.25); padding: 28px 22px; margin: 20px 0; text-align: center; }
+    .auth-icon { width: 64px; height: 64px; border-radius: 32px; background: rgba(168, 216, 232, 0.1); border: 1px solid rgba(168, 216, 232, 0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: var(--accent-1); font-size: 26px; }
+    .auth-title { font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+    .auth-desc { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 20px; }
+    .auth-tabs { display: flex; gap: 4px; background: var(--app-bg); padding: 4px; border-radius: 30px; margin-bottom: 20px; border: 1px solid var(--border-2); }
+    .auth-tab { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 10px; border-radius: 24px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.25s ease; }
+    .auth-tab.active { background: rgba(168, 216, 232, 0.15); color: var(--accent-1); }
+
+    .profile-header { background: linear-gradient(135deg, rgba(168, 216, 232, 0.15), rgba(201, 184, 232, 0.15)); border: 1px solid var(--border-2); border-radius: 24px; padding: 24px 20px; text-align: center; margin-bottom: 14px; }
+    .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 800; color: #0f1020; margin: 0 auto 14px; box-shadow: 0 0 30px rgba(168, 216, 232, 0.4); }
+    .profile-name { font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .profile-phone { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+    .profile-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; padding: 5px 12px; border-radius: 12px; background: rgba(232, 200, 130, 0.15); color: var(--warning); border: 1px solid rgba(232, 200, 130, 0.4); }
+    .profile-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+    .profile-stat { background: var(--card-bg); border: 1px solid var(--border-2); border-radius: 16px; padding: 14px 8px; text-align: center; }
+    .profile-stat-value { font-size: 20px; font-weight: 800; color: var(--accent-1); display: block; }
+    .profile-stat-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+    .profile-menu { background: var(--card-bg); border: 1px solid var(--border-2); border-radius: 18px; overflow: hidden; margin-bottom: 12px; }
+    .profile-menu-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border-2); cursor: pointer; background: transparent; border-left: none; border-right: none; border-top: none; width: 100%; text-align: left; font-family: inherit; font-size: 13.5px; color: var(--text-primary); transition: background-color 0.15s ease; }
+    .profile-menu-item:last-child { border-bottom: none; }
+    .profile-menu-item:active { background: rgba(168, 216, 232, 0.08); }
+    .profile-menu-item i:first-child { color: var(--accent-1); font-size: 16px; width: 22px; text-align: center; flex-shrink: 0; }
+    .profile-menu-item span { flex: 1; }
+    .profile-menu-item .chevron { color: var(--text-muted); font-size: 12px; flex-shrink: 0; }
+    .profile-menu-item.danger { color: var(--danger); }
+    .profile-menu-item.danger i:first-child { color: var(--danger); }
 
     @media (min-width: 901px) {
       .app { max-width: 900px; }
@@ -493,7 +495,6 @@
     <span id="connectionText">...</span>
   </div>
 
-  <!-- ЗАСТАВКА -->
   <div class="splash" id="splash">
     <div class="splash-orb orb-1"></div>
     <div class="splash-orb orb-2"></div>
@@ -522,7 +523,6 @@
   </div>
 
   <div class="app" id="app">
-    <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
     <div class="header">
       <div class="logo" id="logoText"><i class="fas fa-print"></i> <span>PRINT</span><span style="color:var(--accent-2);">SOFT</span></div>
       <div class="header-actions">
@@ -533,107 +533,69 @@
       </div>
     </div>
 
-    <!-- СКРОЛЛЯЩИЙСЯ КОНТЕНТ -->
     <div class="content-scroll" id="contentScroll">
 
-      <!-- ГЛАВНАЯ -->
       <div id="homePage" class="page active">
         <div class="home-hero">
           <h1>PRINT SOFT — точная печать без лишних шагов</h1>
           <p>Загружайте файлы онлайн — напечатаем ровно так, как нужно. Печать от 4 ₽, скидки до 20%, быстро и дёшево.</p>
         </div>
-
         <div class="feature-grid">
-          <div class="feature-card">
-            <div class="feature-card-icon"><i class="fas fa-ruble-sign"></i></div>
-            <span class="feature-card-value">от 4 ₽</span>
-            <div class="feature-card-label">за страницу</div>
-          </div>
-          <div class="feature-card">
-            <div class="feature-card-icon"><i class="fas fa-bolt"></i></div>
-            <span class="feature-card-value">1–2 дня</span>
-            <div class="feature-card-label">срок печати</div>
-          </div>
-          <div class="feature-card">
-            <div class="feature-card-icon"><i class="fas fa-percent"></i></div>
-            <span class="feature-card-value">до 20%</span>
-            <div class="feature-card-label">скидки</div>
-          </div>
-          <div class="feature-card">
-            <div class="feature-card-icon"><i class="fas fa-clock"></i></div>
-            <span class="feature-card-value">24/7</span>
-            <div class="feature-card-label">приём заказов</div>
-          </div>
+          <div class="feature-card"><div class="feature-card-icon"><i class="fas fa-ruble-sign"></i></div><span class="feature-card-value">от 4 ₽</span><div class="feature-card-label">за страницу</div></div>
+          <div class="feature-card"><div class="feature-card-icon"><i class="fas fa-bolt"></i></div><span class="feature-card-value">1–2 дня</span><div class="feature-card-label">срок печати</div></div>
+          <div class="feature-card"><div class="feature-card-icon"><i class="fas fa-percent"></i></div><span class="feature-card-value">до 20%</span><div class="feature-card-label">скидки</div></div>
+          <div class="feature-card"><div class="feature-card-icon"><i class="fas fa-clock"></i></div><span class="feature-card-value">24/7</span><div class="feature-card-label">приём заказов</div></div>
         </div>
-
         <div class="info-block">
           <div class="info-block-title"><i class="fas fa-building"></i> О компании</div>
-          <div class="info-block-text">PRINT SOFT — команда профессионалов в области полиграфии. Работаем с 2018 года, обслужили более 5000 клиентов. Мы молодая компания, поэтому особенно внимательно относимся к каждому заказу: хотим, чтобы первый ваш заказ стал не последним.</div>
+          <div class="info-block-text">PRINT SOFT — команда профессионалов в области полиграфии. Работаем с 2018 года, обслужили более 5000 клиентов.</div>
         </div>
-
         <div class="info-block">
           <div class="info-block-title"><i class="fas fa-list-check"></i> Почему удобно заказывать у нас</div>
           <div class="info-block-list">
-            <div class="info-block-item"><i class="fas fa-tag"></i> <span><b>Прозрачная цена.</b> Стоимость видна сразу, без скрытых доплат.</span></div>
-            <div class="info-block-item"><i class="fas fa-search"></i> <span><b>Проверка макетов.</b> Смотрим файл до печати и предупредим о рисках.</span></div>
-            <div class="info-block-item"><i class="fas fa-comments"></i> <span><b>Понятные рекомендации.</b> Подскажем формат и бумагу бесплатно.</span></div>
-            <div class="info-block-item"><i class="fas fa-box"></i> <span><b>Аккуратная упаковка.</b> Листы не помнутся при транспортировке.</span></div>
+            <div class="info-block-item"><i class="fas fa-tag"></i> <span><b>Прозрачная цена.</b> Стоимость видна сразу.</span></div>
+            <div class="info-block-item"><i class="fas fa-search"></i> <span><b>Проверка макетов.</b> Смотрим файл до печати.</span></div>
+            <div class="info-block-item"><i class="fas fa-comments"></i> <span><b>Понятные рекомендации.</b> Подскажем формат и бумагу.</span></div>
+            <div class="info-block-item"><i class="fas fa-box"></i> <span><b>Аккуратная упаковка.</b> Листы не помнутся.</span></div>
           </div>
         </div>
-
         <div class="info-block">
-          <div class="info-block-title"><i class="fas fa-box-open"></i> Что можно заказать прямо сейчас</div>
-          <div class="info-block-text" style="margin-bottom:10px;">В каталоге каждый товар сразу идёт с понятным статусом:</div>
+          <div class="info-block-title"><i class="fas fa-box-open"></i> Что можно заказать</div>
           <div class="info-block-list">
             <div class="info-block-item"><span class="stock-badge-in">В наличии</span> <span style="margin-left:6px;">Берём в работу сразу.</span></div>
-            <div class="info-block-item"><span class="stock-badge-out" style="background:rgba(232,200,130,0.15);color:var(--warning);border-color:rgba(232,200,130,0.35);">Под заказ</span> <span style="margin-left:6px;">+1–2 рабочих дня к сроку.</span></div>
+            <div class="info-block-item"><span class="stock-badge-out" style="background:rgba(232,200,130,0.15);color:var(--warning);border-color:rgba(232,200,130,0.35);">Под заказ</span> <span style="margin-left:6px;">+1–2 рабочих дня.</span></div>
             <div class="info-block-item"><span class="stock-badge-out" style="background:rgba(168,216,232,0.15);color:var(--accent-1);border-color:rgba(168,216,232,0.35);">Скоро</span> <span style="margin-left:6px;">Появится в ближайшие недели.</span></div>
           </div>
         </div>
-
         <div class="info-block">
-          <div class="info-block-title"><i class="fas fa-list-ol"></i> Как оформить заказ за 3 шага</div>
+          <div class="info-block-title"><i class="fas fa-list-ol"></i> Как оформить заказ</div>
           <div class="info-block-list">
-            <div class="info-block-item"><i class="fas fa-1"></i> <span><b>Выберите услугу</b> — тип печати, количество, формат, бумагу, цветность.</span></div>
-            <div class="info-block-item"><i class="fas fa-2"></i> <span><b>Загрузите файл</b> — PDF, JPG, PNG. Нет файла — пришлите фото оригинала.</span></div>
-            <div class="info-block-item"><i class="fas fa-3"></i> <span><b>Получите расчёт</b> — стоимость посчитается автоматически, проверим макет.</span></div>
+            <div class="info-block-item"><i class="fas fa-1"></i> <span><b>Выберите услугу</b></span></div>
+            <div class="info-block-item"><i class="fas fa-2"></i> <span><b>Загрузите файл</b></span></div>
+            <div class="info-block-item"><i class="fas fa-3"></i> <span><b>Получите расчёт</b></span></div>
           </div>
         </div>
-
         <div class="info-block" style="background:linear-gradient(135deg,rgba(232,184,216,0.08),rgba(201,184,232,0.08));border-color:rgba(232,184,216,0.3);">
           <div class="info-block-title"><i class="fas fa-paint-brush" style="color:var(--pink);"></i> Скоро: услуги дизайна</div>
-          <div class="info-block-text" style="margin-bottom:12px;">В ближайшее время запускаем услуги дизайна: поможем подготовить макет, сверстать буклет, обработать фото под печать.</div>
-          <input type="email" id="landingEmail" class="input-field" placeholder="Ваш e-mail — сообщим о запуске">
+          <div class="info-block-text" style="margin-bottom:12px;">Поможем подготовить макет, сверстать буклет, обработать фото.</div>
+          <input type="email" id="landingEmail" class="input-field" placeholder="Ваш e-mail">
           <button class="btn btn-success" id="landingNotifyBtn" style="margin-top:6px;">
             <i class="fas fa-bell"></i> Сообщить, когда запустим
           </button>
         </div>
-
-        <div class="info-block">
-          <div class="info-block-title"><i class="fas fa-question-circle"></i> Частые вопросы</div>
-          <div class="info-block-list">
-            <div class="info-block-item"><i class="fas fa-check"></i> <span><b>Что есть в наличии?</b> В каталоге сразу видно статусы: «В наличии», «Под заказ», «Скоро».</span></div>
-            <div class="info-block-item"><i class="fas fa-check"></i> <span><b>Сколько времени займёт?</b> Обычно 1–2 рабочих дня. Под заказ — +1–2 дня.</span></div>
-            <div class="info-block-item"><i class="fas fa-check"></i> <span><b>Как подготовить файл?</b> Оптимально PDF 300 dpi. Если нет навыков — присылайте как есть.</span></div>
-            <div class="info-block-item"><i class="fas fa-check"></i> <span><b>Можно с телефона?</b> Да, всё адаптировано под мобильные.</span></div>
-          </div>
-        </div>
-
         <div class="info-block" style="text-align:center;">
           <div class="info-block-title" style="justify-content:center;"><i class="fas fa-print"></i> PRINT SOFT</div>
           <div class="info-block-text" style="margin-bottom:10px;">
             <a href="tel:+70000000000" style="color:var(--text-secondary);text-decoration:none;display:inline-block;margin:4px 8px;"><i class="fas fa-phone"></i> +7 (000) 000-00-00</a><br>
             <a href="mailto:zelp363@gmail.com" style="color:var(--text-secondary);text-decoration:none;display:inline-block;margin:4px 8px;"><i class="fas fa-envelope"></i> zelp363@gmail.com</a>
           </div>
-          <div style="font-size:11px;color:var(--text-muted);">© 2026 PRINT SOFT. Все права защищены.</div>
+          <div style="font-size:11px;color:var(--text-muted);">© 2026 PRINT SOFT</div>
         </div>
       </div>
 
-      <!-- КАТАЛОГ -->
       <div id="catalogPage" class="page">
         <h2><i class="fas fa-store"></i> <span data-i18n="home_title">Каталог полиграфии</span></h2>
         <div class="subhead" data-i18n="home_subhead">Выберите услугу и оформите заказ</div>
-
         <div class="promo-banners">
           <div class="promo-banner promo-banner-1" data-promo="PRINT10">
             <div class="promo-banner-title"><i class="fas fa-fire"></i> <span data-i18n="promo1_title">Скидка 10%</span></div>
@@ -648,7 +610,6 @@
             <div class="promo-banner-text" data-i18n="promo3_text">Промокод WELCOME</div>
           </div>
         </div>
-
         <div class="search-wrap">
           <i class="fas fa-search search-icon"></i>
           <input type="text" id="searchInput" class="search-input" placeholder="Поиск услуг..." data-i18n-placeholder="search_placeholder">
@@ -668,21 +629,18 @@
         <div class="subhead" data-i18n="cart_subhead">Ваши услуги</div>
         <div id="cartItemsContainer"></div>
         <div class="total" id="cartTotal">0 ₽</div>
-
         <div class="promo-row">
           <input type="text" id="promoInput" class="promo-input" placeholder="Промокод" maxlength="20">
           <button class="promo-btn" id="promoApplyBtn" data-i18n="promo_apply">Применить</button>
         </div>
         <div class="promo-status" id="promoStatus"></div>
-
         <div id="clientForm" style="display:none;">
           <div style="background:var(--card-bg); border-radius:16px; padding:14px; margin-bottom:10px; border:1px solid var(--border-2);">
             <div style="font-size:13px; color:var(--accent-1); margin-bottom:10px; font-weight:600;">
               <i class="fas fa-user-circle" style="margin-right:6px;"></i><span data-i18n="contacts">Ваши контакты</span>
             </div>
             <div class="client-saved-hint" id="clientSavedHint" style="display:none;">
-              <i class="fas fa-check-circle"></i>
-              <span data-i18n="saved_hint">Данные из прошлого заказа</span>
+              <i class="fas fa-check-circle"></i> <span data-i18n="saved_hint">Данные из прошлого заказа</span>
             </div>
             <input type="text" id="clientName" class="input-field" placeholder="Ваше имя" autocomplete="name">
             <input type="tel" id="clientPhone" class="input-field" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" maxlength="18">
@@ -694,7 +652,6 @@
             <button type="button" class="clear-client-btn" id="clearSavedClientBtn">
               <i class="fas fa-user-edit"></i> <span data-i18n="clear_data">Ввести заново</span>
             </button>
-
             <div style="font-size:13px; color:var(--accent-1); margin: 14px 0 10px; font-weight:600;">
               <i class="fas fa-paperclip" style="margin-right:6px;"></i><span data-i18n="files">Файлы для печати</span>
             </div>
@@ -705,7 +662,6 @@
               <div class="upload-zone-hint">PDF, JPG, PNG, DOCX • до 5 МБ</div>
             </div>
             <div class="file-list" id="fileList"></div>
-
             <div class="preorder-block">
               <label class="preorder-toggle">
                 <input type="checkbox" id="preorderToggle">
@@ -716,11 +672,9 @@
                 <input type="time" id="preorderTime" class="preorder-input">
               </div>
             </div>
-
             <textarea id="clientComment" class="input-field" placeholder="Комментарий (необязательно)"></textarea>
           </div>
         </div>
-
         <button class="btn" id="checkoutBtn"><i class="fas fa-check-circle"></i> <span data-i18n="checkout">Оформить заказ</span></button>
         <button class="btn btn-outline" id="clearCartBtn"><i class="fas fa-trash-alt"></i> <span data-i18n="clear_cart">Очистить корзину</span></button>
       </div>
@@ -734,8 +688,73 @@
         </div>
         <div id="historyContainer"></div>
         <div class="info-banner" style="margin-top:10px; font-size:11.5px; text-align:center;">
-          <i class="fas fa-info-circle" style="margin-right:6px;"></i>
-          <span data-i18n="archive_note">Архив чистит только админ</span>
+          <i class="fas fa-info-circle" style="margin-right:6px;"></i> <span data-i18n="archive_note">Архив чистит только админ</span>
+        </div>
+      </div>
+
+      <div id="authPage" class="page">
+        <div class="auth-card">
+          <div class="auth-icon"><i class="fas fa-user-circle"></i></div>
+          <div class="auth-title" id="authTitle">Регистрация</div>
+          <div class="auth-desc" id="authDesc">Создайте аккаунт, чтобы отслеживать заказы</div>
+          <div class="auth-tabs">
+            <button class="auth-tab active" data-auth-tab="register">Регистрация</button>
+            <button class="auth-tab" data-auth-tab="login">Вход</button>
+          </div>
+          <div id="authRegisterFields">
+            <input type="text" id="authName" class="input-field" placeholder="Ваше имя" autocomplete="name">
+            <input type="tel" id="authPhone" class="input-field" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" maxlength="18">
+            <div class="field-hint" id="authPhoneHint"></div>
+            <input type="password" id="authPassword" class="input-field" placeholder="Пароль (мин. 6 символов)" autocomplete="new-password">
+            <input type="password" id="authPasswordConfirm" class="input-field" placeholder="Повторите пароль" autocomplete="new-password">
+            <div class="field-hint" id="authRegisterHint"></div>
+          </div>
+          <div id="authLoginFields" style="display:none;">
+            <input type="tel" id="authLoginPhone" class="input-field" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" maxlength="18">
+            <div class="field-hint" id="authLoginPhoneHint"></div>
+            <input type="password" id="authLoginPassword" class="input-field" placeholder="Пароль" autocomplete="current-password">
+            <div class="field-hint" id="authLoginHint"></div>
+          </div>
+          <button class="btn" id="authSubmitBtn" style="margin-top:10px;">
+            <i class="fas fa-sign-in-alt"></i> <span id="authSubmitText">Зарегистрироваться</span>
+          </button>
+          <button class="btn btn-outline" id="authSkipBtn">
+            <i class="fas fa-arrow-right"></i> Продолжить без регистрации
+          </button>
+        </div>
+      </div>
+
+      <div id="profilePage" class="page">
+        <h2><i class="fas fa-user-circle"></i> Профиль</h2>
+        <div class="subhead">Ваши данные и статистика</div>
+        <div class="profile-header">
+          <div class="profile-avatar" id="profileAvatar">?</div>
+          <div class="profile-name" id="profileName">Гость</div>
+          <div class="profile-phone" id="profilePhone">Не авторизован</div>
+          <div id="profileLevelBadge">
+            <span class="profile-badge"><i class="fas fa-star"></i> <span id="profileLevelText">Новичок</span></span>
+          </div>
+        </div>
+        <div class="profile-stats">
+          <div class="profile-stat"><span class="profile-stat-value" id="profileOrdersCount">0</span><div class="profile-stat-label">Заказов</div></div>
+          <div class="profile-stat"><span class="profile-stat-value" id="profileTotalSum">0 ₽</span><div class="profile-stat-label">Сумма</div></div>
+          <div class="profile-stat"><span class="profile-stat-value" id="profileBonuses">0</span><div class="profile-stat-label">Баллов</div></div>
+        </div>
+        <div class="profile-menu">
+          <button class="profile-menu-item" id="profileMyOrdersBtn"><i class="fas fa-history"></i><span>Мои заказы</span><i class="fas fa-chevron-right chevron"></i></button>
+          <button class="profile-menu-item" id="profileEditBtn" style="display:none;"><i class="fas fa-user-edit"></i><span>Редактировать профиль</span><i class="fas fa-chevron-right chevron"></i></button>
+          <button class="profile-menu-item" id="profileLangBtn"><i class="fas fa-globe"></i><span>Язык: <span id="profileLangValue">Русский</span></span><i class="fas fa-chevron-right chevron"></i></button>
+          <button class="profile-menu-item" id="profileThemeBtn"><i class="fas fa-moon"></i><span>Тема: <span id="profileThemeValue">Тёмная</span></span><i class="fas fa-chevron-right chevron"></i></button>
+        </div>
+        <div id="profileAuthButtons">
+          <button class="btn" id="profileLoginBtn"><i class="fas fa-sign-in-alt"></i> Войти</button>
+          <button class="btn btn-outline" id="profileRegisterBtn"><i class="fas fa-user-plus"></i> Зарегистрироваться</button>
+        </div>
+        <div id="profileLogoutBlock" style="display:none;">
+          <button class="btn btn-outline" id="profileLogoutBtn" style="color:var(--danger);border-color:rgba(232,140,140,0.4);"><i class="fas fa-sign-out-alt"></i> Выйти из аккаунта</button>
+        </div>
+        <div class="info-banner" style="margin-top:14px;font-size:11.5px;text-align:center;">
+          <i class="fas fa-shield-alt" style="margin-right:6px;"></i> Данные хранятся на сервере Firebase
         </div>
       </div>
 
@@ -757,7 +776,6 @@
           <button class="btn btn-outline btn-small" id="refreshOrdersBtn"><i class="fas fa-sync-alt"></i></button>
         </div>
         <div class="subhead" data-i18n="admin_subhead">Управление</div>
-
         <div class="tab-switcher" id="adminSectionSwitcher">
           <button class="tab-switch-btn active" data-section="orders"><i class="fas fa-shopping-bag"></i> <span data-i18n="admin_orders">Заказы</span></button>
           <button class="tab-switch-btn" data-section="products"><i class="fas fa-boxes"></i> <span data-i18n="admin_products">Товары</span></button>
@@ -765,21 +783,17 @@
           <button class="tab-switch-btn" data-section="materials"><i class="fas fa-box"></i> <span data-i18n="admin_materials">Материалы</span></button>
           <button class="tab-switch-btn" data-section="settings"><i class="fas fa-cog"></i> <span data-i18n="admin_settings">Настройки</span></button>
         </div>
-
         <div id="adminOrdersSection">
           <div class="stats-grid">
             <div class="stat-card"><span class="stat-value" id="statTotal">0</span><span class="stat-label" data-i18n="stat_total">Всего</span></div>
             <div class="stat-card"><span class="stat-value" id="statNew">0</span><span class="stat-label" data-i18n="stat_new">Новых</span></div>
           </div>
-
           <div class="admin-search-wrap">
             <i class="fas fa-search admin-search-icon"></i>
-            <input type="text" id="adminSearchInput" class="admin-search-input" placeholder="Поиск по номеру, имени, телефону...">
+            <input type="text" id="adminSearchInput" class="admin-search-input" placeholder="Поиск...">
             <button class="admin-search-clear" id="adminSearchClear"><i class="fas fa-times"></i></button>
           </div>
-
           <div class="calendar-strip" id="calendarStrip"></div>
-
           <div class="tab-switcher" id="adminTabSwitcher">
             <button class="tab-switch-btn active" data-tab="active"><i class="fas fa-hourglass-half"></i> <span data-i18n="active">Активные</span> <span class="tab-count" id="adminActiveCount">0</span></button>
             <button class="tab-switch-btn" data-tab="archive"><i class="fas fa-archive"></i> <span data-i18n="archive">Архив</span> <span class="tab-count" id="adminArchiveCount">0</span></button>
@@ -796,13 +810,11 @@
             <button class="btn btn-outline btn-small" id="clearAllOrdersBtn" style="flex:1;"><i class="fas fa-trash-alt"></i> Удалить</button>
           </div>
         </div>
-
         <div id="adminProductsSection" style="display:none;">
           <div class="info-banner">Управление услугами</div>
           <button class="btn btn-success" id="addProductBtn" style="margin-bottom:12px;"><i class="fas fa-plus"></i> Добавить</button>
           <div id="adminProductsContainer"></div>
         </div>
-
         <div id="adminAnalyticsSection" style="display:none;">
           <div class="stats-grid">
             <div class="stat-card"><span class="stat-value" id="anaRevenue">0 ₽</span><span class="stat-label" data-i18n="ana_revenue">Выручка</span></div>
@@ -826,56 +838,35 @@
             <div class="analytics-title"><span><i class="fas fa-users"></i> <span data-i18n="ana_clients">Топ-5 клиентов</span></span><span id="anaTopClientsTotal">0</span></div>
             <div id="anaTopClients"></div>
           </div>
-          <div class="analytics-block">
-            <div class="analytics-title"><span><i class="fas fa-circle"></i> <span data-i18n="ana_statuses">По статусам</span></span></div>
-            <div id="anaStatuses"></div>
-          </div>
         </div>
-
         <div id="adminMaterialsSection" style="display:none;">
           <div id="materialsWarningContainer"></div>
           <div id="materialsContainer"></div>
         </div>
-
         <div id="adminSettingsSection" style="display:none;">
-          <h3 style="font-size:15px; font-weight:700; margin-bottom:12px; color:var(--text-primary);">
-            <i class="fas fa-bell" style="color:var(--accent-1); margin-right:6px;"></i>Уведомления
-          </h3>
           <div class="notif-toggle-row">
             <div class="notif-toggle-info">
               <div class="notif-toggle-title">Звук при новом заказе</div>
               <div class="notif-toggle-desc">Играть звук</div>
             </div>
-            <div class="stock-toggle on" id="notifSoundToggle">
-              <div class="toggle-switch"></div>
-            </div>
+            <div class="stock-toggle on" id="notifSoundToggle"><div class="toggle-switch"></div></div>
           </div>
           <div class="notif-toggle-row">
             <div class="notif-toggle-info">
               <div class="notif-toggle-title">Всплывающее уведомление</div>
-              <div class="notif-toggle-desc">Баннер сверху экрана</div>
+              <div class="notif-toggle-desc">Баннер сверху</div>
             </div>
-            <div class="stock-toggle on" id="notifBannerToggle">
-              <div class="toggle-switch"></div>
-            </div>
+            <div class="stock-toggle on" id="notifBannerToggle"><div class="toggle-switch"></div></div>
           </div>
-
-          <h3 style="font-size:15px; font-weight:700; margin: 20px 0 12px; color:var(--text-primary);">
-            <i class="fas fa-lock" style="color:var(--pink); margin-right:6px;"></i>Пароль админа
-          </h3>
+          <h3 style="font-size:15px; font-weight:700; margin: 20px 0 12px;">Пароль админа</h3>
           <div class="info-banner" style="font-size:11.5px;">
-            <i class="fas fa-shield-alt" style="margin-right:6px;"></i>
-            Хранится как SHA-256. Заводской: 444555666
+            <i class="fas fa-shield-alt" style="margin-right:6px;"></i> SHA-256. Заводской: 444555666
           </div>
-          <input type="password" id="newAdminPasswordInput" class="input-field" placeholder="Новый пароль (мин. 6 цифр)" maxlength="20" inputmode="numeric">
+          <input type="password" id="newAdminPasswordInput" class="input-field" placeholder="Новый пароль" maxlength="20" inputmode="numeric">
           <input type="password" id="newAdminPasswordConfirm" class="input-field" placeholder="Повторите пароль" maxlength="20" inputmode="numeric">
           <div class="field-hint" id="passwordHint"></div>
-          <button class="btn btn-success" id="savePasswordBtn" style="margin-top:6px;">
-            <i class="fas fa-key"></i> Сохранить пароль
-          </button>
-          <button class="btn btn-outline" id="resetPasswordBtn">
-            <i class="fas fa-undo"></i> Сбросить (444555666)
-          </button>
+          <button class="btn btn-success" id="savePasswordBtn" style="margin-top:6px;"><i class="fas fa-key"></i> Сохранить пароль</button>
+          <button class="btn btn-outline" id="resetPasswordBtn"><i class="fas fa-undo"></i> Сбросить</button>
         </div>
       </div>
 
@@ -883,33 +874,24 @@
         <button class="back-btn" id="scanBackBtn"><i class="fas fa-arrow-left"></i> Назад</button>
         <h2><i class="fas fa-qrcode"></i> Сканер заказов</h2>
         <div class="subhead">Наведите камеру на QR-код клиента</div>
-
         <div id="qrReader" style="width:100%; border-radius:20px; overflow:hidden; background:#000; min-height:280px; margin-bottom:12px;"></div>
-
         <button class="btn" id="scanStartBtn"><i class="fas fa-camera"></i> Запустить камеру</button>
         <button class="btn btn-outline" id="scanStopBtn" style="display:none;"><i class="fas fa-stop"></i> Остановить</button>
-
         <div id="scanResult" style="display:none; margin-top:8px;"></div>
       </div>
 
     </div>
-    <!-- /content-scroll -->
 
-    <!-- НИЖНЯЯ ПАНЕЛЬ -->
     <div class="bottom-nav" id="bottomNav"></div>
 
-    <!-- МОДАЛКИ -->
     <div class="modal-backdrop" id="productModal">
       <div class="modal">
-        <div class="modal-title">
-          <span id="modalTitle">Редактировать</span>
-          <button class="modal-close" id="modalCloseBtn"><i class="fas fa-times"></i></button>
-        </div>
+        <div class="modal-title"><span id="modalTitle">Редактировать</span><button class="modal-close" id="modalCloseBtn"><i class="fas fa-times"></i></button></div>
         <label class="form-label">Название</label>
         <input type="text" id="modalTitleInput" class="input-field" placeholder="Название">
         <label class="form-label">Краткое описание</label>
         <input type="text" id="modalDescInput" class="input-field" placeholder="Описание">
-        <label class="form-label">Иконка (Font Awesome)</label>
+        <label class="form-label">Иконка</label>
         <input type="text" id="modalIconInput" class="input-field" placeholder="fa-file-alt">
         <label class="form-label">Категория</label>
         <select id="modalCatInput" class="input-field" style="appearance:none;">
@@ -934,10 +916,7 @@
 
     <div class="modal-backdrop" id="materialModal">
       <div class="modal">
-        <div class="modal-title">
-          <span>Материал</span>
-          <button class="modal-close" id="materialModalClose"><i class="fas fa-times"></i></button>
-        </div>
+        <div class="modal-title"><span>Материал</span><button class="modal-close" id="materialModalClose"><i class="fas fa-times"></i></button></div>
         <div class="form-label" id="materialNameLabel">Материал</div>
         <label class="form-label">Остаток</label>
         <input type="number" id="materialValueInput" class="input-field" placeholder="0" min="0">
@@ -950,14 +929,148 @@
       </div>
     </div>
 
+    <div class="modal-backdrop" id="editProfileModal">
+      <div class="modal">
+        <div class="modal-title"><span>Редактировать профиль</span><button class="modal-close" id="editProfileClose"><i class="fas fa-times"></i></button></div>
+        <label class="form-label">Имя</label>
+        <input type="text" id="editNameInput" class="input-field" placeholder="Ваше имя">
+        <label class="form-label">Телефон</label>
+        <input type="tel" id="editPhoneInput" class="input-field" placeholder="+7 (___) ___-__-__" maxlength="18">
+        <label class="form-label">Новый пароль (пусто — не менять)</label>
+        <input type="password" id="editPasswordInput" class="input-field" placeholder="Новый пароль">
+        <div class="field-hint" id="editProfileHint"></div>
+        <div style="display:flex; gap:8px; margin-top:10px;">
+          <button class="btn btn-success" id="editProfileSave" style="flex:1; margin-bottom:0;"><i class="fas fa-save"></i> Сохранить</button>
+          <button class="btn btn-outline" id="editProfileCancel" style="flex:1; margin-bottom:0;">Отмена</button>
+        </div>
+      </div>
+    </div>
+
   </div>
   
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, serverTimestamp, getDocs, setDoc, writeBatch }
+    import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, serverTimestamp, getDocs, setDoc, writeBatch, query, where }
       from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    // ==================== ПЕРЕВОДЫ ====================
+    const TRANSLATIONS = {
+      ru: {
+        splash_subtitle: 'Полиграфия', home_title: 'Каталог полиграфии', home_subhead: 'Выберите услугу и оформите заказ',
+        promo1_title: 'Скидка 10%', promo1_text: 'Промокод PRINT10', promo2_title: '-20% на всё', promo2_text: 'Промокод SALE20',
+        promo3_title: 'Добро пожаловать', promo3_text: 'Промокод WELCOME',
+        search_placeholder: 'Поиск услуг...', back: 'Назад', cart_title: 'Корзина', cart_subhead: 'Ваши услуги',
+        promo_apply: 'Применить', contacts: 'Ваши контакты', saved_hint: 'Данные из прошлого заказа',
+        remember_me: 'Запомнить данные', clear_data: 'Ввести заново', files: 'Файлы для печати',
+        upload_text: 'Выбрать файлы', preorder_toggle: 'Предзаказ — выбрать дату и время',
+        checkout: 'Оформить заказ', clear_cart: 'Очистить корзину',
+        history_title: 'Мои заказы', history_subhead: 'Статус заказов', active: 'Активные', archive: 'Архив',
+        archive_note: 'Архив чистит только админ',
+        login_title: 'Вход в панель', login_desc: 'Секретный код', login_submit: 'Войти', cancel: 'Отмена',
+        admin_title: 'Панель', admin_subhead: 'Управление', admin_orders: 'Заказы', admin_products: 'Товары',
+        admin_analytics: 'Аналитика', admin_materials: 'Материалы', admin_settings: 'Настройки',
+        stat_total: 'Всего', stat_new: 'Новых',
+        ana_revenue: 'Выручка', ana_orders: 'Заказов', ana_avg: 'Средний чек', ana_done: 'Выполнено',
+        ana_week: 'За 7 дней', ana_hours: 'По часам', ana_top: 'Топ-5 услуг', ana_clients: 'Топ-5 клиентов',
+        order: 'Заказ', status_new: 'Новый', status_progress: 'В работе', status_done: 'Выполнен', status_cancel: 'Отменён',
+        receipt: 'Чек', repeat: 'Повторить', cancel_order: 'Отменить заказ',
+        empty_cart: 'Корзина пуста', empty_services: 'Услуг пока нет', not_found: 'Ничего не найдено',
+        delete: 'Удалить', add_product: 'Добавить услугу', services_title: 'Все услуги', services_subhead: 'Каталог'
+      },
+      en: {
+        splash_subtitle: 'Printing', home_title: 'Printing catalog', home_subhead: 'Choose a service and place an order',
+        promo1_title: 'Discount 10%', promo1_text: 'Promo code PRINT10', promo2_title: '-20% on everything', promo2_text: 'Promo code SALE20',
+        promo3_title: 'Welcome', promo3_text: 'Promo code WELCOME',
+        search_placeholder: 'Search services...', back: 'Back', cart_title: 'Cart', cart_subhead: 'Your services',
+        promo_apply: 'Apply', contacts: 'Your contacts', saved_hint: 'Data from previous order',
+        remember_me: 'Remember data', clear_data: 'Enter again', files: 'Files for printing',
+        upload_text: 'Select files', preorder_toggle: 'Pre-order — choose date and time',
+        checkout: 'Place order', clear_cart: 'Clear cart',
+        history_title: 'My orders', history_subhead: 'Order status', active: 'Active', archive: 'Archive',
+        archive_note: 'Only admin can clear archive',
+        login_title: 'Admin login', login_desc: 'Secret code', login_submit: 'Login', cancel: 'Cancel',
+        admin_title: 'Panel', admin_subhead: 'Management', admin_orders: 'Orders', admin_products: 'Products',
+        admin_analytics: 'Analytics', admin_materials: 'Materials', admin_settings: 'Settings',
+        stat_total: 'Total', stat_new: 'New',
+        ana_revenue: 'Revenue', ana_orders: 'Orders', ana_avg: 'Average', ana_done: 'Completed',
+        ana_week: '7 days', ana_hours: 'By hour', ana_top: 'Top 5 services', ana_clients: 'Top 5 clients',
+        order: 'Order', status_new: 'New', status_progress: 'In progress', status_done: 'Completed', status_cancel: 'Cancelled',
+        receipt: 'Receipt', repeat: 'Repeat', cancel_order: 'Cancel order',
+        empty_cart: 'Cart is empty', empty_services: 'No services yet', not_found: 'Nothing found',
+        delete: 'Delete', add_product: 'Add service', services_title: 'All services', services_subhead: 'Catalog'
+      },
+      sah: {
+        splash_subtitle: 'Полиграфия', home_title: 'Полиграфия каталога', home_subhead: 'Өҥөнү тал уонна заказ оҥор',
+        promo1_title: '10% скидка', promo1_text: 'PRINT10 промокод', promo2_title: 'Барыга -20%', promo2_text: 'SALE20 промокод',
+        promo3_title: 'Нөрүйэбит', promo3_text: 'WELCOME промокод',
+        search_placeholder: 'Өҥөнү көрдөө...', back: 'Төннүү', cart_title: 'Корзина', cart_subhead: 'Эн өҥөлөрүҥ',
+        promo_apply: 'Туhан', contacts: 'Эн контактарыҥ', saved_hint: 'Инники заказтан',
+        remember_me: 'Дааннайдары өйдөө', clear_data: 'Саҥаттан', files: 'Файллар',
+        upload_text: 'Файллары тал', preorder_toggle: 'Инники заказ — күн тал',
+        checkout: 'Закаһы оҥор', clear_cart: 'Ыраастаа',
+        history_title: 'Мин заказтарым', history_subhead: 'Статус', active: 'Көхтөөхтөр', archive: 'Архив',
+        archive_note: 'Архивы админ эрэ ыраастыыр',
+        login_title: 'Панелга киирии', login_desc: 'Сэкриэт код', login_submit: 'Киир', cancel: 'Төннүү',
+        admin_title: 'Панель', admin_subhead: 'Салайыы', admin_orders: 'Заказтар', admin_products: 'Табаардар',
+        admin_analytics: 'Аналитика', admin_materials: 'Материаллар', admin_settings: 'Туруоруулар',
+        stat_total: 'Барыта', stat_new: 'Саҥалар',
+        ana_revenue: 'Киирбит', ana_orders: 'Заказтар', ana_avg: 'Орто', ana_done: 'Толоруллубут',
+        ana_week: '7 күн', ana_hours: 'Чааhынан', ana_top: 'Топ-5 өҥө', ana_clients: 'Топ-5 клиен',
+        order: 'Заказ', status_new: 'Саҥа', status_progress: 'Үлэлэhэр', status_done: 'Толоруллубут', status_cancel: 'Киллэммит',
+        receipt: 'Чек', repeat: 'Хатылаа', cancel_order: 'Киллэр',
+        empty_cart: 'Кураанах', empty_services: 'Өҥөлөр суохтар', not_found: 'Көстүбэтэ',
+        delete: 'Сот', add_product: 'Өҥө эп', services_title: 'Бары өҥө', services_subhead: 'Каталог'
+      }
+    };
+
+    let currentLang = 'ru';
+    function t(key) {
+      return (TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) || TRANSLATIONS.ru[key] || key;
+    }
+
+    function applyTranslations() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = t(key);
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        el.placeholder = t(key);
+      });
+      document.documentElement.lang = currentLang;
+      const langBtn = document.getElementById('langToggleBtn');
+      if (langBtn) langBtn.textContent = currentLang.toUpperCase();
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      try { localStorage.setItem('printsoft_lang', lang); } catch (e) {}
+      applyTranslations();
+      renderServices();
+      renderCategories();
+      renderHistory();
+      if (state.isAdminMode) {
+        renderAdminOrders();
+        renderAdminProducts();
+        renderAnalytics();
+        renderMaterials();
+      }
+      if (state.currentPage === 'profile') renderProfile();
+    }
+
+    function loadLanguage() {
+      try {
+        const saved = localStorage.getItem('printsoft_lang');
+        if (saved && TRANSLATIONS[saved]) currentLang = saved;
+        else {
+          const browserLang = (navigator.language || 'ru').slice(0, 2).toLowerCase();
+          if (browserLang === 'en') currentLang = 'en';
+          else currentLang = 'ru';
+        }
+      } catch (e) {}
+    }
 
     // ==================== ХЕШИРОВАНИЕ ====================
     async function sha256(text) {
@@ -982,126 +1095,6 @@
       const inputHash = await sha256(input);
       const storedHash = await getPasswordHash();
       return inputHash === storedHash;
-    }
-
-    // ==================== ПЕРЕВОДЫ ====================
-    const TRANSLATIONS = {
-      ru: {
-        splash_subtitle: 'Полиграфия', home_title: 'Каталог полиграфии', home_subhead: 'Выберите услугу и оформите заказ',
-        promo1_title: 'Скидка 10%', promo1_text: 'Промокод PRINT10', promo2_title: '-20% на всё', promo2_text: 'Промокод SALE20',
-        promo3_title: 'Добро пожаловать', promo3_text: 'Промокод WELCOME',
-        company_title: 'PRINT SOFT', company_text: 'Команда профессионалов в области полиграфии.',
-        company_stat1: 'лет', company_stat2: 'клиентов', company_stat3: 'заказы',
-        search_placeholder: 'Поиск услуг...', back: 'Назад', cart_title: 'Корзина', cart_subhead: 'Ваши услуги',
-        promo_apply: 'Применить', contacts: 'Ваши контакты', saved_hint: 'Данные из прошлого заказа',
-        remember_me: 'Запомнить данные', clear_data: 'Ввести заново', files: 'Файлы для печати',
-        upload_text: 'Выбрать файлы', preorder_toggle: 'Предзаказ — выбрать дату и время',
-        checkout: 'Оформить заказ', clear_cart: 'Очистить корзину',
-        history_title: 'Мои заказы', history_subhead: 'Статус заказов', active: 'Активные', archive: 'Архив',
-        archive_note: 'Архив чистит только админ',
-        login_title: 'Вход в панель', login_desc: 'Секретный код', login_submit: 'Войти', cancel: 'Отмена',
-        admin_title: 'Панель', admin_subhead: 'Управление', admin_orders: 'Заказы', admin_products: 'Товары',
-        admin_analytics: 'Аналитика', admin_materials: 'Материалы', admin_settings: 'Настройки',
-        stat_total: 'Всего', stat_new: 'Новых',
-        ana_revenue: 'Выручка', ana_orders: 'Заказов', ana_avg: 'Средний чек', ana_done: 'Выполнено',
-        ana_week: 'За 7 дней', ana_hours: 'По часам', ana_top: 'Топ-5 услуг', ana_clients: 'Топ-5 клиентов', ana_statuses: 'По статусам',
-        order: 'Заказ', status_new: 'Новый', status_progress: 'В работе', status_done: 'Выполнен', status_cancel: 'Отменён',
-        receipt: 'Чек', repeat: 'Повторить', cancel_order: 'Отменить заказ',
-        empty_cart: 'Корзина пуста', empty_services: 'Услуг пока нет', not_found: 'Ничего не найдено',
-        delete: 'Удалить', add_product: 'Добавить услугу',
-      },
-      en: {
-        splash_subtitle: 'Printing', home_title: 'Printing catalog', home_subhead: 'Choose a service and place an order',
-        promo1_title: 'Discount 10%', promo1_text: 'Promo code PRINT10', promo2_title: '-20% on everything', promo2_text: 'Promo code SALE20',
-        promo3_title: 'Welcome', promo3_text: 'Promo code WELCOME',
-        company_title: 'PRINT SOFT', company_text: 'Team of printing professionals.',
-        company_stat1: 'years', company_stat2: 'clients', company_stat3: 'orders',
-        search_placeholder: 'Search services...', back: 'Back', cart_title: 'Cart', cart_subhead: 'Your services',
-        promo_apply: 'Apply', contacts: 'Your contacts', saved_hint: 'Data from previous order',
-        remember_me: 'Remember data', clear_data: 'Enter again', files: 'Files for printing',
-        upload_text: 'Select files', preorder_toggle: 'Pre-order — choose date and time',
-        checkout: 'Place order', clear_cart: 'Clear cart',
-        history_title: 'My orders', history_subhead: 'Order status', active: 'Active', archive: 'Archive',
-        archive_note: 'Only admin can clear archive',
-        login_title: 'Admin login', login_desc: 'Secret code', login_submit: 'Login', cancel: 'Cancel',
-        admin_title: 'Panel', admin_subhead: 'Management', admin_orders: 'Orders', admin_products: 'Products',
-        admin_analytics: 'Analytics', admin_materials: 'Materials', admin_settings: 'Settings',
-        stat_total: 'Total', stat_new: 'New',
-        ana_revenue: 'Revenue', ana_orders: 'Orders', ana_avg: 'Average', ana_done: 'Completed',
-        ana_week: '7 days', ana_hours: 'By hour', ana_top: 'Top 5 services', ana_clients: 'Top 5 clients', ana_statuses: 'By status',
-        order: 'Order', status_new: 'New', status_progress: 'In progress', status_done: 'Completed', status_cancel: 'Cancelled',
-        receipt: 'Receipt', repeat: 'Repeat', cancel_order: 'Cancel order',
-        empty_cart: 'Cart is empty', empty_services: 'No services yet', not_found: 'Nothing found',
-        delete: 'Delete', add_product: 'Add service',
-      },
-      sah: {
-        splash_subtitle: 'Полиграфия', home_title: 'Полиграфия каталога', home_subhead: 'Өҥөнү тал уонна заказ оҥор',
-        promo1_title: '10% скидка', promo1_text: 'PRINT10 промокод', promo2_title: 'Барыга -20%', promo2_text: 'SALE20 промокод',
-        promo3_title: 'Нөрүйэбит', promo3_text: 'WELCOME промокод',
-        company_title: 'PRINT SOFT', company_text: 'Полиграфия эйгэтин специалистара.',
-        company_stat1: 'сыл', company_stat2: 'клиеннэр', company_stat3: 'заказтар',
-        search_placeholder: 'Өҥөнү көрдөө...', back: 'Төннүү', cart_title: 'Корзина', cart_subhead: 'Эн өҥөлөрүҥ',
-        promo_apply: 'Туhан', contacts: 'Эн контактарыҥ', saved_hint: 'Инники заказтан',
-        remember_me: 'Дааннайдары өйдөө', clear_data: 'Саҥаттан', files: 'Файллар',
-        upload_text: 'Файллары тал', preorder_toggle: 'Инники заказ — күн тал',
-        checkout: 'Закаһы оҥор', clear_cart: 'Ыраастаа',
-        history_title: 'Мин заказтарым', history_subhead: 'Статус', active: 'Көхтөөхтөр', archive: 'Архив',
-        archive_note: 'Архивы админ эрэ ыраастыыр',
-        login_title: 'Панелга киирии', login_desc: 'Сэкриэт код', login_submit: 'Киир', cancel: 'Төннүү',
-        admin_title: 'Панель', admin_subhead: 'Салайыы', admin_orders: 'Заказтар', admin_products: 'Табаардар',
-        admin_analytics: 'Аналитика', admin_materials: 'Материаллар', admin_settings: 'Туруоруулар',
-        stat_total: 'Барыта', stat_new: 'Саҥалар',
-        ana_revenue: 'Киирбит', ana_orders: 'Заказтар', ana_avg: 'Орто', ana_done: 'Толоруллубут',
-        ana_week: '7 күн', ana_hours: 'Чааhынан', ana_top: 'Топ-5 өҥө', ana_clients: 'Топ-5 клиен', ana_statuses: 'Статустарынан',
-        order: 'Заказ', status_new: 'Саҥа', status_progress: 'Үлэлэhэр', status_done: 'Толоруллубут', status_cancel: 'Киллэммит',
-        receipt: 'Чек', repeat: 'Хатылаа', cancel_order: 'Киллэр',
-        empty_cart: 'Кураанах', empty_services: 'Өҥөлөр суохтар', not_found: 'Көстүбэтэ',
-        delete: 'Сот', add_product: 'Өҥө эп',
-      }
-    };
-
-    let currentLang = 'ru';
-    function t(key) {
-      return (TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) || TRANSLATIONS.ru[key] || key;
-    }
-
-    function applyTranslations() {
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        el.textContent = t(el.getAttribute('data-i18n'));
-      });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
-      });
-      document.documentElement.lang = currentLang;
-      const langBtn = document.getElementById('langToggleBtn');
-      if (langBtn) langBtn.textContent = currentLang.toUpperCase();
-    }
-
-    function setLanguage(lang) {
-      currentLang = lang;
-      try { localStorage.setItem('printsoft_lang', lang); } catch (e) {}
-      applyTranslations();
-      renderServices();
-      renderCategories();
-      renderHistory();
-      if (state.isAdminMode) {
-        renderAdminOrders();
-        renderAdminProducts();
-        renderAnalytics();
-        renderMaterials();
-      }
-    }
-
-    function loadLanguage() {
-      try {
-        const saved = localStorage.getItem('printsoft_lang');
-        if (saved && TRANSLATIONS[saved]) currentLang = saved;
-        else {
-          const browserLang = (navigator.language || 'ru').slice(0, 2).toLowerCase();
-          if (browserLang === 'en') currentLang = 'en';
-          else currentLang = 'ru';
-        }
-      } catch (e) {}
     }
 
     // ==================== МАТЕРИАЛЫ ====================
@@ -1200,15 +1193,30 @@
       newStatusCount: 0, currentCategory: 'all',
       searchQuery: '', appliedPromo: null, editingProductId: null,
       editingMaterialId: null, notifSound: true, notifBanner: true,
+      currentUser: null, authMode: 'register'
     };
 
-    const S = { HISTORY: 'printsoft_history', THEME: 'printsoft_theme', CLIENT: 'printsoft_client', NOTIF: 'printsoft_notif' };
+    const S = { HISTORY: 'printsoft_history', THEME: 'printsoft_theme', CLIENT: 'printsoft_client', NOTIF: 'printsoft_notif', USER: 'printsoft_current_user' };
 
     function getSavedClient() { try { const c = localStorage.getItem(S.CLIENT); return c ? JSON.parse(c) : null; } catch (e) { return null; } }
     function saveClient(name, phone) { try { localStorage.setItem(S.CLIENT, JSON.stringify({ name, phone, savedAt: Date.now() })); } catch (e) {} }
     function clearSavedClient() { try { localStorage.removeItem(S.CLIENT); } catch (e) {} }
     function loadLocalHistory() { try { const h = localStorage.getItem(S.HISTORY); if (h) state.myOrders = JSON.parse(h); } catch (e) {} }
     function saveLocalHistory() { try { localStorage.setItem(S.HISTORY, JSON.stringify(state.myOrders)); } catch (e) {} }
+
+    function loadCurrentUser() {
+      try {
+        const u = localStorage.getItem(S.USER);
+        if (u) state.currentUser = JSON.parse(u);
+      } catch (e) { state.currentUser = null; }
+    }
+    function saveCurrentUser(user) {
+      try {
+        if (user) localStorage.setItem(S.USER, JSON.stringify(user));
+        else localStorage.removeItem(S.USER);
+      } catch (e) {}
+      state.currentUser = user;
+    }
 
     function loadNotifSettings() {
       try {
@@ -1341,6 +1349,8 @@
       detail: document.getElementById('detailPage'),
       cart: document.getElementById('cartPage'),
       history: document.getElementById('historyPage'),
+      auth: document.getElementById('authPage'),
+      profile: document.getElementById('profilePage'),
       login: document.getElementById('loginPage'),
       admin: document.getElementById('adminPage'),
       scan: document.getElementById('scanPage'),
@@ -1429,7 +1439,43 @@
     const savePasswordBtn = document.getElementById('savePasswordBtn');
     const resetPasswordBtn = document.getElementById('resetPasswordBtn');
 
-    // === QR / СКАНЕР ===
+    const authPageEl = document.getElementById('authPage');
+    const authTitle = document.getElementById('authTitle');
+    const authDesc = document.getElementById('authDesc');
+    const authRegisterFields = document.getElementById('authRegisterFields');
+    const authLoginFields = document.getElementById('authLoginFields');
+    const authName = document.getElementById('authName');
+    const authPhone = document.getElementById('authPhone');
+    const authPhoneHint = document.getElementById('authPhoneHint');
+    const authPassword = document.getElementById('authPassword');
+    const authPasswordConfirm = document.getElementById('authPasswordConfirm');
+    const authRegisterHint = document.getElementById('authRegisterHint');
+    const authLoginPhone = document.getElementById('authLoginPhone');
+    const authLoginPhoneHint = document.getElementById('authLoginPhoneHint');
+    const authLoginPassword = document.getElementById('authLoginPassword');
+    const authLoginHint = document.getElementById('authLoginHint');
+    const authSubmitBtn = document.getElementById('authSubmitBtn');
+    const authSubmitText = document.getElementById('authSubmitText');
+    const authSkipBtn = document.getElementById('authSkipBtn');
+
+    const profileAvatar = document.getElementById('profileAvatar');
+    const profileName = document.getElementById('profileName');
+    const profilePhone = document.getElementById('profilePhone');
+    const profileLevelText = document.getElementById('profileLevelText');
+    const profileOrdersCount = document.getElementById('profileOrdersCount');
+    const profileTotalSum = document.getElementById('profileTotalSum');
+    const profileBonuses = document.getElementById('profileBonuses');
+    const profileAuthButtons = document.getElementById('profileAuthButtons');
+    const profileLogoutBlock = document.getElementById('profileLogoutBlock');
+    const profileLangValue = document.getElementById('profileLangValue');
+    const profileThemeValue = document.getElementById('profileThemeValue');
+
+    const editProfileModal = document.getElementById('editProfileModal');
+    const editNameInput = document.getElementById('editNameInput');
+    const editPhoneInput = document.getElementById('editPhoneInput');
+    const editPasswordInput = document.getElementById('editPasswordInput');
+    const editProfileHint = document.getElementById('editProfileHint');
+
     const scanBtn = document.getElementById('scanBtn');
     const scanBackBtn = document.getElementById('scanBackBtn');
     const qrReaderEl = document.getElementById('qrReader');
@@ -1452,6 +1498,7 @@
       state.currentPage = pageId;
       if (pageId === 'history') { renderHistory(); state.newStatusCount = 0; }
       if (pageId === 'catalog') renderServices();
+      if (pageId === 'profile') renderProfile();
       renderBottomNav();
       if (contentScroll) contentScroll.scrollTop = 0;
       clearTimeout(state.transitionTimer);
@@ -1460,7 +1507,7 @@
 
     function renderBottomNav() {
       if (!bottomNav) return;
-      if (state.currentPage === 'login') { bottomNav.innerHTML = ''; return; }
+      if (state.currentPage === 'login' || state.currentPage === 'auth') { bottomNav.innerHTML = ''; return; }
       if (state.isAdminMode) {
         bottomNav.innerHTML = `
           <button class="nav-item ${state.currentPage === 'admin' ? 'active' : ''}" data-page="admin"><i class="fas fa-clipboard-list"></i> ${t('admin_title')}</button>
@@ -1491,6 +1538,7 @@
           <button class="nav-item ${state.currentPage === 'catalog' || state.currentPage === 'detail' ? 'active' : ''}" data-page="catalog"><i class="fas fa-store"></i> Каталог</button>
           <button class="nav-item ${state.currentPage === 'cart' ? 'active' : ''}" data-page="cart"><i class="fas fa-shopping-cart"></i> ${t('cart_title')}</button>
           <button class="nav-item ${state.currentPage === 'history' ? 'active' : ''}" data-page="history"><i class="fas fa-history"></i> Заказы${historyBadge}</button>
+          <button class="nav-item ${state.currentPage === 'profile' ? 'active' : ''}" data-page="profile"><i class="fas fa-user-circle"></i> Профиль</button>
         `;
         bottomNav.querySelectorAll('.nav-item').forEach(btn => btn.addEventListener('click', () => showPage(btn.dataset.page)));
       }
@@ -1532,10 +1580,9 @@
       });
     });
 
-    // ==================== ФОРМА ПОДПИСКИ НА ДИЗАЙН ====================
+    // ==================== ПОДПИСКА НА ДИЗАЙН ====================
     const landingNotifyBtn = document.getElementById('landingNotifyBtn');
     const landingEmail = document.getElementById('landingEmail');
-
     if (landingNotifyBtn) {
       landingNotifyBtn.addEventListener('click', async () => {
         const email = (landingEmail.value || '').trim();
@@ -1545,10 +1592,7 @@
           return;
         }
         try {
-          await addDoc(collection(db, 'design_subscribers'), {
-            email, createdAt: serverTimestamp(),
-            date: new Date().toLocaleString('ru-RU')
-          });
+          await addDoc(collection(db, 'design_subscribers'), { email, createdAt: serverTimestamp(), date: new Date().toLocaleString('ru-RU') });
         } catch (e) {
           try {
             const list = JSON.parse(localStorage.getItem('printsoft_design_subs') || '[]');
@@ -1556,7 +1600,7 @@
             localStorage.setItem('printsoft_design_subs', JSON.stringify(list));
           } catch (err) {}
         }
-        showToast('✓ Спасибо! Сообщим о запуске');
+        showToast('✓ Спасибо!');
         landingEmail.value = '';
       });
     }
@@ -1764,6 +1808,18 @@
 
     function prefillClientForm() {
       if (!clientName || !clientPhone) return;
+      if (state.currentUser) {
+        if (!clientName.value.trim()) clientName.value = state.currentUser.name || '';
+        if (!clientPhone.value && state.currentUser.phone) {
+          clientPhone.value = formatPhone(state.currentUser.phone);
+          if (isValidPhone(clientPhone.value)) {
+            clientPhone.classList.add('valid');
+            const hint = document.getElementById('phoneHint');
+            if (hint) { hint.textContent = '✓'; hint.className = 'field-hint valid'; }
+          }
+        }
+        return;
+      }
       if (clientName.value.trim() && clientPhone.value && isValidPhone(clientPhone.value)) return;
       const saved = getSavedClient();
       if (!saved) { if (clientSavedHint) clientSavedHint.style.display = 'none'; return; }
@@ -1803,7 +1859,6 @@
       });
     }
 
-    // ==================== ПРЕДЗАКАЗ ====================
     if (preorderToggle) {
       preorderToggle.addEventListener('change', (e) => {
         if (e.target.checked) {
@@ -1818,22 +1873,14 @@
       });
     }
 
-    // ==================== ФАЙЛЫ ====================
     if (uploadZone) {
       uploadZone.addEventListener('click', () => fileInput.click());
       uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
       uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
-      uploadZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        uploadZone.classList.remove('dragover');
-        handleFiles(e.dataTransfer.files);
-      });
+      uploadZone.addEventListener('drop', (e) => { e.preventDefault(); uploadZone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
     }
     if (fileInput) {
-      fileInput.addEventListener('change', (e) => {
-        handleFiles(e.target.files);
-        fileInput.value = '';
-      });
+      fileInput.addEventListener('change', (e) => { handleFiles(e.target.files); fileInput.value = ''; });
     }
 
     function handleFiles(files) {
@@ -1852,16 +1899,7 @@
       fileList.innerHTML = state.pendingFiles.map((f, i) => {
         const iconClass = fileIconClass(f.file.name);
         const iconFA = fileIconFA(f.file.name);
-        return `
-          <div class="file-item">
-            <div class="file-icon ${iconClass}"><i class="fas ${iconFA}"></i></div>
-            <div class="file-info">
-              <div class="file-name">${f.file.name}</div>
-              <div class="file-size">${formatBytes(f.file.size)}</div>
-            </div>
-            <button class="file-remove" data-remove="${i}"><i class="fas fa-times"></i></button>
-          </div>
-        `;
+        return `<div class="file-item"><div class="file-icon ${iconClass}"><i class="fas ${iconFA}"></i></div><div class="file-info"><div class="file-name">${f.file.name}</div><div class="file-size">${formatBytes(f.file.size)}</div></div><button class="file-remove" data-remove="${i}"><i class="fas fa-times"></i></button></div>`;
       }).join('');
     }
 
@@ -1899,26 +1937,12 @@
         files_count: state.pendingFiles.length,
         to_email: ADMIN_EMAIL,
       };
-      try {
-        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
-        return { ok: true };
-      } catch (err) { return { ok: false }; }
+      try { await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams); return { ok: true }; }
+      catch (err) { return { ok: false }; }
     }
 
-    // ==================== ЧЕК ====================
     function generateReceipt(order) {
-      const itemsHtml = order.items.map(i => `
-        <tr>
-          <td style="padding:6px 0;border-bottom:1px dashed #ccc;">${i.title}</td>
-          <td style="padding:6px 0;border-bottom:1px dashed #ccc;text-align:center;">${i.qty}</td>
-          <td style="padding:6px 0;border-bottom:1px dashed #ccc;text-align:right;">${i.price.toLocaleString()} ₽</td>
-          <td style="padding:6px 0;border-bottom:1px dashed #ccc;text-align:right;">${(i.qty * i.price).toLocaleString()} ₽</td>
-        </tr>
-      `).join('');
-      const filesHtml = order.files && order.files.length > 0
-        ? `<div style="margin-top:16px;"><strong>Файлы:</strong><br>${order.files.map(f => `• ${f.name}`).join('<br>')}</div>` : '';
-      const preorderHtml = order.preorder && order.preorder.date
-        ? `<div style="margin-top:12px;padding:10px;background:#f5f5f5;border-radius:8px;"><strong>⏰ Предзаказ:</strong><br>${order.preorder.date} в ${order.preorder.time}</div>` : '';
+      const itemsHtml = order.items.map(i => `<tr><td style="padding:6px 0;border-bottom:1px dashed #ccc;">${i.title}</td><td style="padding:6px 0;border-bottom:1px dashed #ccc;text-align:center;">${i.qty}</td><td style="padding:6px 0;border-bottom:1px dashed #ccc;text-align:right;">${i.price.toLocaleString()} ₽</td><td style="padding:6px 0;border-bottom:1px dashed #ccc;text-align:right;">${(i.qty * i.price).toLocaleString()} ₽</td></tr>`).join('');
       const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${order.orderId}</title>
         <style>body{font-family:'Courier New',monospace;max-width:500px;margin:20px auto;padding:20px;color:#000;}
         .header{text-align:center;border-bottom:2px solid #000;padding-bottom:12px;margin-bottom:16px;}
@@ -1931,13 +1955,10 @@
         <div class="header"><h1>PRINT SOFT</h1><p>Чек ${order.orderId}</p></div>
         <div class="info"><div><span>Дата:</span><span>${order.date}</span></div>
         <div><span>Клиент:</span><span>${order.client.name}</span></div>
-        <div><span>Телефон:</span><span>${displayPhone(order.client.phone)}</span></div>
-        ${order.client.comment ? `<div><span>Комментарий:</span><span>${order.client.comment}</span></div>` : ''}</div>
+        <div><span>Телефон:</span><span>${displayPhone(order.client.phone)}</span></div></div>
         <table><thead><tr><th>Услуга</th><th style="text-align:center;">Кол</th><th style="text-align:right;">Цена</th><th style="text-align:right;">Сумма</th></tr></thead>
         <tbody>${itemsHtml}</tbody></table>
-        ${order.promo ? `<div style="font-size:12px;margin-top:8px;">Промокод: ${order.promo}</div>` : ''}
         <div class="total"><span>ИТОГО:</span><span>${order.total.toLocaleString()} ₽</span></div>
-        ${preorderHtml}${filesHtml}
         <div class="footer">Спасибо! PRINT SOFT</div>
         <script>window.print();<\/script></body></html>`;
       const win = window.open('', '_blank', 'width=600,height=800');
@@ -1981,6 +2002,7 @@
         status: 'new',
         createdAt: serverTimestamp(),
         clientUid: getClientUid(),
+        userPhone: state.currentUser ? state.currentUser.phone : phone
       };
 
       await sendEmailNotification(orderData);
@@ -1991,7 +2013,6 @@
         state.myOrders.unshift(localOrder);
         saveLocalHistory();
         if (rememberMe && rememberMe.checked) saveClient(name, phone);
-        else clearSavedClient();
 
         state.cart = []; state.appliedPromo = null;
         state.pendingFiles = [];
@@ -2042,26 +2063,24 @@
         const canCancel = status === 'new';
         const preorderBadge = order.preorder && order.preorder.date
           ? `<div style="font-size:11.5px;color:var(--warning);margin-bottom:6px;"><i class="fas fa-clock"></i> ${order.preorder.date} ${order.preorder.time}</div>` : '';
-        return `
-          <div class="order-card status-${status}">
-            <div class="order-header"><span class="order-id">${order.orderId}</span><span class="order-date">${order.date}</span></div>
-            <div class="order-items">${order.items.map(i => `• ${i.title} — ${i.qty} × ${i.price.toLocaleString()} ₽`).join('<br>')}</div>
-            ${preorderBadge}
-            ${order.promo ? `<div style="font-size:11.5px;color:var(--success);margin-bottom:6px;"><i class="fas fa-tag"></i> ${order.promo}</div>` : ''}
-            ${order.files && order.files.length > 0 ? `<div class="order-files">${order.files.map(f => `<span class="order-file-chip"><i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span></span>`).join('')}</div>` : ''}
-            <div class="order-progress">${stepActive.map(cls => `<div class="progress-step ${cls}"></div>`).join('')}</div>
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-top:8px;">
-              <span class="order-status ${status}"><i class="fas ${statusIcon(status)}"></i> ${statusLabel(status)}</span>
-              <span class="order-total">${order.total.toLocaleString()} ₽</span>
-            </div>
-            <div class="order-actions-row">
-              <button class="btn btn-outline btn-small" data-qr="${order.orderId}"><i class="fas fa-qrcode"></i> QR</button>
-              <button class="btn btn-outline btn-small" data-receipt="${order.orderId}"><i class="fas fa-receipt"></i> ${t('receipt')}</button>
-              <button class="btn btn-outline btn-small" data-repeat="${order.orderId}"><i class="fas fa-redo"></i> ${t('repeat')}</button>
-              ${canCancel ? `<button class="btn btn-outline btn-small btn-danger" data-cancel-order="${order.id}"><i class="fas fa-times"></i></button>` : ''}
-            </div>
+        return `<div class="order-card status-${status}">
+          <div class="order-header"><span class="order-id">${order.orderId}</span><span class="order-date">${order.date}</span></div>
+          <div class="order-items">${order.items.map(i => `• ${i.title} — ${i.qty} × ${i.price.toLocaleString()} ₽`).join('<br>')}</div>
+          ${preorderBadge}
+          ${order.promo ? `<div style="font-size:11.5px;color:var(--success);margin-bottom:6px;"><i class="fas fa-tag"></i> ${order.promo}</div>` : ''}
+          ${order.files && order.files.length > 0 ? `<div class="order-files">${order.files.map(f => `<span class="order-file-chip"><i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span></span>`).join('')}</div>` : ''}
+          <div class="order-progress">${stepActive.map(cls => `<div class="progress-step ${cls}"></div>`).join('')}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-top:8px;">
+            <span class="order-status ${status}"><i class="fas ${statusIcon(status)}"></i> ${statusLabel(status)}</span>
+            <span class="order-total">${order.total.toLocaleString()} ₽</span>
           </div>
-        `;
+          <div class="order-actions-row">
+            <button class="btn btn-outline btn-small" data-qr="${order.orderId}"><i class="fas fa-qrcode"></i> QR</button>
+            <button class="btn btn-outline btn-small" data-receipt="${order.orderId}"><i class="fas fa-receipt"></i> ${t('receipt')}</button>
+            <button class="btn btn-outline btn-small" data-repeat="${order.orderId}"><i class="fas fa-redo"></i> ${t('repeat')}</button>
+            ${canCancel ? `<button class="btn btn-outline btn-small btn-danger" data-cancel-order="${order.id}"><i class="fas fa-times"></i></button>` : ''}
+          </div>
+        </div>`;
       }).join('');
     }
 
@@ -2077,98 +2096,52 @@
         if (cancelBtn) {
           e.stopPropagation();
           if (confirm(t('cancel_order') + '?')) {
-            try {
-              await updateDoc(doc(db, 'orders', cancelBtn.dataset.cancelOrder), { status: 'cancel' });
-              showToast('OK');
-            } catch (err) { showToast('✗'); }
+            try { await updateDoc(doc(db, 'orders', cancelBtn.dataset.cancelOrder), { status: 'cancel' }); showToast('OK'); }
+            catch (err) { showToast('✗'); }
           }
         }
       });
     }
 
-    // ==================== QR КЛИЕНТА ====================
+    // ==================== QR ====================
     async function ensureQRCodeLib() {
       if (window.QRCode && typeof window.QRCode.toCanvas === 'function') return true;
       const start = Date.now();
-      while (!window.QRCode && Date.now() - start < 5000) {
-        await new Promise(r => setTimeout(r, 100));
-      }
-      if (window.QRCode && typeof window.QRCode.toCanvas === 'function') return true;
-      try {
-        await new Promise((resolve, reject) => {
-          const s = document.createElement('script');
-          s.src = 'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js';
-          s.onload = resolve; s.onerror = reject;
-          document.head.appendChild(s);
-        });
-        if (window.QRCode && typeof window.QRCode.toCanvas === 'function') return true;
-      } catch (e) {}
-      try {
-        await new Promise((resolve, reject) => {
-          const s = document.createElement('script');
-          s.src = 'https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js';
-          s.onload = resolve; s.onerror = reject;
-          document.head.appendChild(s);
-        });
-        return !!(window.QRCode && typeof window.QRCode.toCanvas === 'function');
-      } catch (e) { return false; }
+      while (!window.QRCode && Date.now() - start < 5000) { await new Promise(r => setTimeout(r, 100)); }
+      return !!(window.QRCode && typeof window.QRCode.toCanvas === 'function');
     }
 
     async function showQRModal(orderId) {
       const old = document.getElementById('qrModalBackdrop');
       if (old) old.remove();
-
-      const modalHtml = `
-        <div class="files-modal" id="qrModalBackdrop">
-          <div class="files-modal-content" style="text-align:center;">
-            <div style="font-size:17px;font-weight:700;color:var(--text-primary);margin-bottom:6px;">Ваш QR-код</div>
-            <div style="font-size:12px;color:var(--text-secondary);margin-bottom:16px;">Покажите этот код администратору при получении заказа</div>
-            <div id="qrCanvasHolder" style="display:flex;justify-content:center;align-items:center;margin-bottom:16px;background:#fff;padding:16px;border-radius:16px;min-height:272px;">
-              <div id="qrLoading" style="color:#14162a;font-size:13px;">Генерация...</div>
-            </div>
-            <div style="font-size:15px;font-weight:800;color:var(--accent-1);margin-bottom:16px;letter-spacing:1px;">${orderId}</div>
-            <button class="btn" id="qrModalCloseBtn" style="margin-bottom:0;"><i class="fas fa-check"></i> Закрыть</button>
-          </div>
+      const modalHtml = `<div class="files-modal" id="qrModalBackdrop"><div class="files-modal-content" style="text-align:center;">
+        <div style="font-size:17px;font-weight:700;color:var(--text-primary);margin-bottom:6px;">Ваш QR-код</div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:16px;">Покажите этот код администратору</div>
+        <div id="qrCanvasHolder" style="display:flex;justify-content:center;align-items:center;margin-bottom:16px;background:#fff;padding:16px;border-radius:16px;min-height:272px;">
+          <div style="color:#14162a;font-size:13px;">Генерация...</div>
         </div>
-      `;
+        <div style="font-size:15px;font-weight:800;color:var(--accent-1);margin-bottom:16px;">${orderId}</div>
+        <button class="btn" id="qrModalCloseBtn" style="margin-bottom:0;"><i class="fas fa-check"></i> Закрыть</button>
+      </div></div>`;
       document.body.insertAdjacentHTML('beforeend', modalHtml);
-
       const backdrop = document.getElementById('qrModalBackdrop');
       const closeBtn = document.getElementById('qrModalCloseBtn');
       closeBtn.addEventListener('click', () => backdrop.remove());
       backdrop.addEventListener('click', (e) => { if (e.target === backdrop) backdrop.remove(); });
-
       const holder = document.getElementById('qrCanvasHolder');
       const libOk = await ensureQRCodeLib();
-      if (!libOk) {
-        holder.innerHTML = `<div style="color:#c84a4a;font-size:13px;padding:20px;text-align:center;">Не удалось загрузить библиотеку QR.<br>Проверьте интернет и попробуйте снова.</div>`;
-        return;
-      }
+      if (!libOk) { holder.innerHTML = `<div style="color:#c84a4a;font-size:13px;padding:20px;">Ошибка QR</div>`; return; }
       const canvas = document.createElement('canvas');
-      canvas.style.display = 'block';
       holder.innerHTML = '';
       holder.appendChild(canvas);
       try {
-        await window.QRCode.toCanvas(canvas, String(orderId), {
-          width: 240, margin: 1, errorCorrectionLevel: 'M',
-          color: { dark: '#14162a', light: '#ffffff' }
-        });
-      } catch (err) {
-        console.error('QR error:', err);
-        holder.innerHTML = `<div style="color:#c84a4a;font-size:13px;padding:20px;text-align:center;">Ошибка QR: ${err.message || 'неизвестно'}</div>`;
-      }
+        await window.QRCode.toCanvas(canvas, String(orderId), { width: 240, margin: 1, color: { dark: '#14162a', light: '#ffffff' } });
+      } catch (err) { holder.innerHTML = `<div style="color:#c84a4a;font-size:13px;">Ошибка QR</div>`; }
     }
 
-    // ==================== СКАНЕР АДМИНА ====================
-    if (scanBtn) {
-      scanBtn.addEventListener('click', () => {
-        showPage('scan');
-        if (scanResultEl) scanResultEl.style.display = 'none';
-      });
-    }
-    if (scanBackBtn) {
-      scanBackBtn.addEventListener('click', () => { stopScanning(); showPage('admin'); });
-    }
+    // ==================== СКАНЕР ====================
+    if (scanBtn) scanBtn.addEventListener('click', () => { showPage('scan'); if (scanResultEl) scanResultEl.style.display = 'none'; });
+    if (scanBackBtn) scanBackBtn.addEventListener('click', () => { stopScanning(); showPage('admin'); });
     if (scanStartBtn) scanStartBtn.addEventListener('click', startScanning);
     if (scanStopBtn) scanStopBtn.addEventListener('click', stopScanning);
 
@@ -2205,56 +2178,30 @@
     function handleScannedOrder(orderId) {
       const order = state.allOrders.find(o => (o.orderId || o.id) === orderId);
       if (!order) {
-        if (scanResultEl) {
-          scanResultEl.style.display = 'block';
-          scanResultEl.innerHTML = `
-            <div class="order-card" style="border-color:var(--danger);">
-              <div style="text-align:center;padding:14px;">
-                <i class="fas fa-times-circle" style="font-size:36px;color:var(--danger);margin-bottom:8px;"></i>
-                <div style="font-size:15px;font-weight:700;color:var(--danger);">Заказ не найден</div>
-                <div style="font-size:12.5px;color:var(--text-secondary);margin-top:6px;">Код: ${orderId}</div>
-              </div>
-            </div>
-          `;
-        }
+        if (scanResultEl) { scanResultEl.style.display = 'block'; scanResultEl.innerHTML = `<div class="order-card" style="border-color:var(--danger);"><div style="text-align:center;padding:14px;"><i class="fas fa-times-circle" style="font-size:36px;color:var(--danger);margin-bottom:8px;"></i><div style="font-size:15px;font-weight:700;color:var(--danger);">Заказ не найден</div><div style="font-size:12.5px;color:var(--text-secondary);margin-top:6px;">Код: ${orderId}</div></div></div>`; }
         showToast('✗ Заказ не найден');
         playSound('status');
         return;
       }
-
       const status = order.status || 'new';
       const isDone = status === 'done';
       const stepActive = getProgressSteps(status);
-
       if (scanResultEl) {
         scanResultEl.style.display = 'block';
-        scanResultEl.innerHTML = `
-          <div class="order-card status-${status}" style="border-color:var(--accent-1);box-shadow:0 0 30px rgba(168,216,232,0.3);">
-            <div style="text-align:center;margin-bottom:10px;">
-              <i class="fas fa-check-circle" style="font-size:34px;color:var(--accent-1);"></i>
-              <div style="font-size:13px;color:var(--accent-1);margin-top:6px;font-weight:700;">ЗАКАЗ НАЙДЕН</div>
-            </div>
-            <div class="order-header"><span class="order-id">${order.orderId || order.id}</span><span class="order-date">${order.date}</span></div>
-            <div class="order-client"><i class="fas fa-user"></i> ${order.client ? order.client.name : '—'}&nbsp;<i class="fas fa-phone"></i> ${order.client ? displayPhone(order.client.phone) : '—'}</div>
-            ${order.client && order.client.comment ? `<div style="font-size:12px;color:var(--accent-1);background:rgba(168,216,232,0.06);padding:6px 10px;border-radius:10px;margin-bottom:8px;"><i class="fas fa-comment" style="margin-right:4px;"></i>${order.client.comment}</div>` : ''}
-            <div class="order-items">${order.items.map(i => `• ${i.title} — ${i.qty} × ${i.price.toLocaleString()} ₽`).join('<br>')}</div>
-            ${order.preorder && order.preorder.date ? `<div style="font-size:11.5px;color:var(--warning);margin-bottom:6px;"><i class="fas fa-clock"></i> ${order.preorder.date} ${order.preorder.time}</div>` : ''}
-            ${order.files && order.files.length > 0 ? `<div class="order-files">${order.files.map(f => `<span class="order-file-chip"><i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span></span>`).join('')}</div>` : ''}
-            <div class="order-progress">${stepActive.map(cls => `<div class="progress-step ${cls}"></div>`).join('')}</div>
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-top:8px;">
-              <span class="order-status ${status}"><i class="fas ${statusIcon(status)}"></i> ${statusLabel(status)}</span>
-              <span class="order-total">${order.total.toLocaleString()} ₽</span>
-            </div>
-            ${isDone
-              ? `<div style="margin-top:12px;padding:12px;border-radius:12px;background:rgba(140,220,160,0.1);border:1px solid rgba(140,220,160,0.3);text-align:center;color:var(--success);font-weight:700;"><i class="fas fa-check-circle"></i> Заказ уже выдан</div>`
-              : `<button class="btn btn-success" id="giveOrderBtn" style="margin-top:14px;margin-bottom:0;"><i class="fas fa-hand-holding-heart"></i> Выдать заказ клиенту</button>`
-            }
+        scanResultEl.innerHTML = `<div class="order-card status-${status}" style="border-color:var(--accent-1);box-shadow:0 0 30px rgba(168,216,232,0.3);">
+          <div style="text-align:center;margin-bottom:10px;"><i class="fas fa-check-circle" style="font-size:34px;color:var(--accent-1);"></i><div style="font-size:13px;color:var(--accent-1);margin-top:6px;font-weight:700;">ЗАКАЗ НАЙДЕН</div></div>
+          <div class="order-header"><span class="order-id">${order.orderId || order.id}</span><span class="order-date">${order.date}</span></div>
+          <div class="order-client"><i class="fas fa-user"></i> ${order.client ? order.client.name : '—'}&nbsp;<i class="fas fa-phone"></i> ${order.client ? displayPhone(order.client.phone) : '—'}</div>
+          <div class="order-items">${order.items.map(i => `• ${i.title} — ${i.qty} × ${i.price.toLocaleString()} ₽`).join('<br>')}</div>
+          <div class="order-progress">${stepActive.map(cls => `<div class="progress-step ${cls}"></div>`).join('')}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-top:8px;">
+            <span class="order-status ${status}"><i class="fas ${statusIcon(status)}"></i> ${statusLabel(status)}</span>
+            <span class="order-total">${order.total.toLocaleString()} ₽</span>
           </div>
-        `;
+          ${isDone ? `<div style="margin-top:12px;padding:12px;border-radius:12px;background:rgba(140,220,160,0.1);border:1px solid rgba(140,220,160,0.3);text-align:center;color:var(--success);font-weight:700;"><i class="fas fa-check-circle"></i> Заказ уже выдан</div>` : `<button class="btn btn-success" id="giveOrderBtn" style="margin-top:14px;margin-bottom:0;"><i class="fas fa-hand-holding-heart"></i> Выдать заказ</button>`}
+        </div>`;
       }
-
       playSound('new');
-
       const giveBtn = document.getElementById('giveOrderBtn');
       if (giveBtn) {
         giveBtn.addEventListener('click', async () => {
@@ -2263,18 +2210,8 @@
             showToast('✓ Заказ выдан');
             playSound('new');
             if (scanResultEl) {
-              scanResultEl.innerHTML = `
-                <div class="order-card status-done" style="text-align:center;padding:24px;border-color:var(--success);">
-                  <i class="fas fa-check-circle" style="font-size:52px;color:var(--success);margin-bottom:12px;"></i>
-                  <div style="font-size:18px;font-weight:800;color:var(--success);">Заказ выдан!</div>
-                  <div style="font-size:13px;color:var(--text-secondary);margin-top:8px;">${order.orderId || order.id}</div>
-                  <button class="btn btn-outline" id="scanAgainBtn" style="margin-top:16px;margin-bottom:0;"><i class="fas fa-qrcode"></i> Сканировать ещё</button>
-                </div>
-              `;
-              document.getElementById('scanAgainBtn').addEventListener('click', () => {
-                scanResultEl.style.display = 'none';
-                startScanning();
-              });
+              scanResultEl.innerHTML = `<div class="order-card status-done" style="text-align:center;padding:24px;border-color:var(--success);"><i class="fas fa-check-circle" style="font-size:52px;color:var(--success);margin-bottom:12px;"></i><div style="font-size:18px;font-weight:800;color:var(--success);">Заказ выдан!</div><div style="font-size:13px;color:var(--text-secondary);margin-top:8px;">${order.orderId || order.id}</div><button class="btn btn-outline" id="scanAgainBtn" style="margin-top:16px;margin-bottom:0;"><i class="fas fa-qrcode"></i> Сканировать ещё</button></div>`;
+              document.getElementById('scanAgainBtn').addEventListener('click', () => { scanResultEl.style.display = 'none'; startScanning(); });
             }
           } catch (err) { showToast('✗ Ошибка'); }
         });
@@ -2302,11 +2239,9 @@
     function updateAdminBadge() {
       if (!adminToggleBtn) return;
       const newCount = state.allOrders.filter(o => (o.status || 'new') === 'new').length;
-      if (newCount > 0 && !state.isAdminMode) {
-        adminToggleBtn.innerHTML = `<i class="fas fa-clipboard-list"></i><span class="admin-badge">${newCount}</span>`;
-      } else if (state.allOrders.length > 0 && !state.isAdminMode) {
-        adminToggleBtn.innerHTML = `<i class="fas fa-clipboard-list"></i><span class="admin-badge" style="background:var(--accent-1);">${state.allOrders.length}</span>`;
-      } else adminToggleBtn.innerHTML = `<i class="fas fa-clipboard-list"></i>`;
+      if (newCount > 0 && !state.isAdminMode) adminToggleBtn.innerHTML = `<i class="fas fa-clipboard-list"></i><span class="admin-badge">${newCount}</span>`;
+      else if (state.allOrders.length > 0 && !state.isAdminMode) adminToggleBtn.innerHTML = `<i class="fas fa-clipboard-list"></i><span class="admin-badge" style="background:var(--accent-1);">${state.allOrders.length}</span>`;
+      else adminToggleBtn.innerHTML = `<i class="fas fa-clipboard-list"></i>`;
     }
 
     function renderAdminStats() {
@@ -2339,15 +2274,9 @@
         const dateShort = d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' });
         const weekday = d.toLocaleDateString('ru-RU', { weekday: 'short' }).slice(0, 2);
         const count = state.allOrders.filter(o => (o.date || '').split(',')[0].trim().startsWith(dateShort)).length;
-        days.push({ key, dateShort, weekday, count, isToday: i === 0 });
+        days.push({ key, dateShort, weekday, count });
       }
-      calendarStrip.innerHTML = days.map(d => `
-        <div class="calendar-day ${state.adminSelectedDate === d.key ? 'active' : ''}" data-date="${d.key}">
-          <div class="calendar-day-weekday">${d.weekday}</div>
-          <div class="calendar-day-date">${d.dateShort}</div>
-          <div class="calendar-day-count">${d.count > 0 ? d.count : '—'}</div>
-        </div>
-      `).join('');
+      calendarStrip.innerHTML = days.map(d => `<div class="calendar-day ${state.adminSelectedDate === d.key ? 'active' : ''}" data-date="${d.key}"><div class="calendar-day-weekday">${d.weekday}</div><div class="calendar-day-date">${d.dateShort}</div><div class="calendar-day-count">${d.count > 0 ? d.count : '—'}</div></div>`).join('');
       calendarStrip.querySelectorAll('.calendar-day').forEach(day => {
         day.addEventListener('click', () => {
           const dateKey = day.dataset.date;
@@ -2382,37 +2311,28 @@
           return id.includes(q) || name.includes(q) || phone.includes(q) || phoneDisplay.includes(q);
         });
       }
-      if (list.length === 0) {
-        adminOrdersContainer.innerHTML = `<div class="empty-message"><i class="fas fa-inbox"></i> —</div>`;
-        return;
-      }
+      if (list.length === 0) { adminOrdersContainer.innerHTML = `<div class="empty-message"><i class="fas fa-inbox"></i> —</div>`; return; }
       adminOrdersContainer.innerHTML = list.map(order => {
         const status = order.status || 'new';
         const oid = order.orderId || order.id;
-        const preorderBadge = order.preorder && order.preorder.date
-          ? `<div style="font-size:11.5px;color:var(--warning);margin-bottom:6px;"><i class="fas fa-clock"></i> ${order.preorder.date} ${order.preorder.time}</div>` : '';
-        return `
-          <div class="order-card status-${status}">
-            <div class="order-header"><span class="order-id">${oid}</span><span class="order-date">${order.date}</span></div>
-            <div class="order-client"><i class="fas fa-user"></i> ${order.client ? order.client.name : '—'}&nbsp;<i class="fas fa-phone"></i> ${order.client ? displayPhone(order.client.phone) : '—'}</div>
-            ${order.client && order.client.comment ? `<div style="font-size:12px;color:var(--accent-1);background:rgba(168,216,232,0.06);padding:6px 10px;border-radius:10px;margin-bottom:8px;"><i class="fas fa-comment" style="margin-right:4px;"></i>${order.client.comment}</div>` : ''}
-            <div class="order-items">${order.items.map(i => `• ${i.title} — ${i.qty} × ${i.price.toLocaleString()} ₽`).join('<br>')}</div>
-            ${preorderBadge}
-            ${order.files && order.files.length > 0 ? `<div class="order-files">${order.files.map(f => `<span class="order-file-chip"><i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span></span>`).join('')}</div>` : ''}
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-              <span class="order-status ${status}"><i class="fas ${statusIcon(status)}"></i> ${statusLabel(status)}</span>
-              <span class="order-total">${order.total.toLocaleString()} ₽</span>
-            </div>
-            <div class="order-actions">
-              <button class="btn btn-outline btn-small" data-action="new" data-id="${order.id}"><i class="fas fa-circle" style="color:var(--accent-1);"></i></button>
-              <button class="btn btn-outline btn-small" data-action="progress" data-id="${order.id}"><i class="fas fa-hourglass-half" style="color:var(--warning);"></i></button>
-              <button class="btn btn-outline btn-small" data-action="done" data-id="${order.id}"><i class="fas fa-check-circle" style="color:var(--success);"></i></button>
-              <button class="btn btn-outline btn-small" data-action="cancel" data-id="${order.id}"><i class="fas fa-times-circle" style="color:var(--danger);"></i></button>
-              <button class="btn btn-outline btn-small" data-admin-receipt="${oid}"><i class="fas fa-receipt"></i></button>
-              <button class="btn btn-outline btn-small btn-danger" data-delete-order="${order.id}"><i class="fas fa-trash"></i></button>
-            </div>
+        return `<div class="order-card status-${status}">
+          <div class="order-header"><span class="order-id">${oid}</span><span class="order-date">${order.date}</span></div>
+          <div class="order-client"><i class="fas fa-user"></i> ${order.client ? order.client.name : '—'}&nbsp;<i class="fas fa-phone"></i> ${order.client ? displayPhone(order.client.phone) : '—'}</div>
+          ${order.client && order.client.comment ? `<div style="font-size:12px;color:var(--accent-1);background:rgba(168,216,232,0.06);padding:6px 10px;border-radius:10px;margin-bottom:8px;"><i class="fas fa-comment" style="margin-right:4px;"></i>${order.client.comment}</div>` : ''}
+          <div class="order-items">${order.items.map(i => `• ${i.title} — ${i.qty} × ${i.price.toLocaleString()} ₽`).join('<br>')}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+            <span class="order-status ${status}"><i class="fas ${statusIcon(status)}"></i> ${statusLabel(status)}</span>
+            <span class="order-total">${order.total.toLocaleString()} ₽</span>
           </div>
-        `;
+          <div class="order-actions">
+            <button class="btn btn-outline btn-small" data-action="new" data-id="${order.id}"><i class="fas fa-circle" style="color:var(--accent-1);"></i></button>
+            <button class="btn btn-outline btn-small" data-action="progress" data-id="${order.id}"><i class="fas fa-hourglass-half" style="color:var(--warning);"></i></button>
+            <button class="btn btn-outline btn-small" data-action="done" data-id="${order.id}"><i class="fas fa-check-circle" style="color:var(--success);"></i></button>
+            <button class="btn btn-outline btn-small" data-action="cancel" data-id="${order.id}"><i class="fas fa-times-circle" style="color:var(--danger);"></i></button>
+            <button class="btn btn-outline btn-small" data-admin-receipt="${oid}"><i class="fas fa-receipt"></i></button>
+            <button class="btn btn-outline btn-small btn-danger" data-delete-order="${order.id}"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>`;
       }).join('');
     }
 
@@ -2428,18 +2348,12 @@
           return;
         }
         const receiptBtn = e.target.closest('[data-admin-receipt]');
-        if (receiptBtn) {
-          e.stopPropagation();
-          const order = state.allOrders.find(o => (o.orderId || o.id) === receiptBtn.dataset.adminReceipt);
-          if (order) generateReceipt(order);
-          return;
-        }
+        if (receiptBtn) { e.stopPropagation(); const order = state.allOrders.find(o => (o.orderId || o.id) === receiptBtn.dataset.adminReceipt); if (order) generateReceipt(order); return; }
         const deleteBtn = e.target.closest('[data-delete-order]');
         if (deleteBtn) {
           e.stopPropagation();
           if (confirm(t('delete') + '?')) {
-            try { await deleteDoc(doc(db, 'orders', deleteBtn.dataset.deleteOrder)); showToast('✓'); }
-            catch (err) { showToast('✗'); }
+            try { await deleteDoc(doc(db, 'orders', deleteBtn.dataset.deleteOrder)); showToast('✓'); } catch (err) { showToast('✗'); }
           }
         }
       });
@@ -2487,7 +2401,6 @@
       document.getElementById('anaOrders').textContent = all.length;
       document.getElementById('anaAvg').textContent = avg.toLocaleString() + ' ₽';
       document.getElementById('anaDone').textContent = donePercent + '%';
-
       const days = [];
       for (let i = 6; i >= 0; i--) {
         const d = new Date();
@@ -2498,77 +2411,27 @@
       }
       const maxCount = Math.max(1, ...days.map(d => d.count));
       document.getElementById('anaWeekTotal').textContent = days.reduce((s, d) => s + d.count, 0);
-      document.getElementById('anaChart').innerHTML = days.map(d => `
-        <div class="analytics-bar-wrap">
-          <div class="analytics-bar-value">${d.count > 0 ? d.count : ''}</div>
-          <div class="analytics-bar" style="height:${(d.count / maxCount) * 100}%;"></div>
-          <div class="analytics-bar-label">${d.label}</div>
-        </div>
-      `).join('');
-
+      document.getElementById('anaChart').innerHTML = days.map(d => `<div class="analytics-bar-wrap"><div class="analytics-bar-value">${d.count > 0 ? d.count : ''}</div><div class="analytics-bar" style="height:${(d.count / maxCount) * 100}%;"></div><div class="analytics-bar-label">${d.label}</div></div>`).join('');
       const hours = {};
       for (let h = 0; h < 24; h++) hours[h] = 0;
-      all.forEach(o => {
-        const match = (o.date || '').match(/(\d{2}):(\d{2})/);
-        if (match) hours[parseInt(match[1], 10)]++;
-      });
+      all.forEach(o => { const match = (o.date || '').match(/(\d{2}):(\d{2})/); if (match) hours[parseInt(match[1], 10)]++; });
       const maxHour = Math.max(1, ...Object.values(hours));
       document.getElementById('anaHoursTotal').textContent = Object.values(hours).reduce((s, v) => s + v, 0);
       const hoursChart = document.getElementById('anaHoursChart');
       if (hoursChart) {
         const displayHours = [8,9,10,11,12,13,14,15,16,17,18,19,20,21,22];
-        hoursChart.innerHTML = displayHours.map(h => `
-          <div class="hourly-bar-wrap">
-            <div class="hourly-bar" style="height:${(hours[h] / maxHour) * 100}%;"></div>
-            <div class="hourly-bar-label">${h}</div>
-          </div>
-        `).join('');
+        hoursChart.innerHTML = displayHours.map(h => `<div class="hourly-bar-wrap"><div class="hourly-bar" style="height:${(hours[h] / maxHour) * 100}%;"></div><div class="hourly-bar-label">${h}</div></div>`).join('');
       }
-
       const itemCount = {}, itemRevenue = {};
-      all.forEach(o => o.items.forEach(i => {
-        itemCount[i.title] = (itemCount[i.title] || 0) + i.qty;
-        itemRevenue[i.title] = (itemRevenue[i.title] || 0) + (i.price * i.qty);
-      }));
+      all.forEach(o => o.items.forEach(i => { itemCount[i.title] = (itemCount[i.title] || 0) + i.qty; itemRevenue[i.title] = (itemRevenue[i.title] || 0) + (i.price * i.qty); }));
       const topItems = Object.entries(itemCount).sort((a, b) => b[1] - a[1]).slice(0, 5);
       document.getElementById('anaTopTotal').textContent = Object.keys(itemCount).length;
-      document.getElementById('anaTopList').innerHTML = topItems.length === 0
-        ? `<div style="text-align:center;padding:16px;color:var(--text-muted);font-size:12px;">—</div>`
-        : topItems.map(([name, count], i) => {
-            const rankClass = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : '';
-            const maxTop = topItems[0][1];
-            return `<div class="analytics-list-item"><div class="analytics-rank ${rankClass}">${i + 1}</div><div class="analytics-list-info"><div class="analytics-list-name">${name}</div><div class="analytics-list-bar"><div class="analytics-list-fill" style="width:${(count / maxTop) * 100}%"></div></div></div><div><div class="analytics-list-value">${count}</div><div class="analytics-list-sub">${(itemRevenue[name] || 0).toLocaleString()} ₽</div></div></div>`;
-          }).join('');
-
+      document.getElementById('anaTopList').innerHTML = topItems.length === 0 ? `<div style="text-align:center;padding:16px;color:var(--text-muted);font-size:12px;">—</div>` : topItems.map(([name, count], i) => { const rankClass = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : ''; const maxTop = topItems[0][1]; return `<div class="analytics-list-item"><div class="analytics-rank ${rankClass}">${i + 1}</div><div class="analytics-list-info"><div class="analytics-list-name">${name}</div><div class="analytics-list-bar"><div class="analytics-list-fill" style="width:${(count / maxTop) * 100}%"></div></div></div><div><div class="analytics-list-value">${count}</div><div class="analytics-list-sub">${(itemRevenue[name] || 0).toLocaleString()} ₽</div></div></div>`; }).join('');
       const clientStats = {};
-      all.forEach(o => {
-        const key = o.client?.phone || o.client?.name || '?';
-        if (!clientStats[key]) clientStats[key] = { name: o.client?.name || '?', orders: 0, total: 0 };
-        clientStats[key].orders++;
-        clientStats[key].total += o.total || 0;
-      });
+      all.forEach(o => { const key = o.client?.phone || o.client?.name || '?'; if (!clientStats[key]) clientStats[key] = { name: o.client?.name || '?', orders: 0, total: 0 }; clientStats[key].orders++; clientStats[key].total += o.total || 0; });
       const topClients = Object.entries(clientStats).sort((a, b) => b[1].total - a[1].total).slice(0, 5);
       document.getElementById('anaTopClientsTotal').textContent = Object.keys(clientStats).length;
-      document.getElementById('anaTopClients').innerHTML = topClients.length === 0
-        ? `<div style="text-align:center;padding:16px;color:var(--text-muted);font-size:12px;">—</div>`
-        : topClients.map(([key, c], i) => {
-            const rankClass = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : '';
-            const maxClient = topClients[0][1].total;
-            return `<div class="analytics-list-item"><div class="analytics-rank ${rankClass}">${i + 1}</div><div class="analytics-list-info"><div class="analytics-list-name">${c.name}</div><div class="analytics-list-bar"><div class="analytics-list-fill" style="width:${(c.total / maxClient) * 100}%"></div></div></div><div><div class="analytics-list-value">${c.total.toLocaleString()} ₽</div><div class="analytics-list-sub">${c.orders}</div></div></div>`;
-          }).join('');
-
-      const statuses = [
-        { id: 'new', color: 'var(--accent-1)' },
-        { id: 'progress', color: 'var(--warning)' },
-        { id: 'done', color: 'var(--success)' },
-        { id: 'cancel', color: 'var(--danger)' },
-      ];
-      const totalAll = all.length || 1;
-      document.getElementById('anaStatuses').innerHTML = statuses.map(st => {
-        const count = all.filter(o => (o.status || 'new') === st.id).length;
-        const pct = Math.round((count / totalAll) * 100);
-        return `<div class="analytics-list-item" style="padding:8px 0;"><div style="width:10px;height:10px;border-radius:50%;background:${st.color};flex-shrink:0;"></div><div class="analytics-list-info"><div class="analytics-list-name">${statusLabel(st.id)}</div><div class="analytics-list-bar"><div class="analytics-list-fill" style="width:${pct}%;background:${st.color};"></div></div></div><div><div class="analytics-list-value" style="color:${st.color};">${count}</div><div class="analytics-list-sub">${pct}%</div></div></div>`;
-      }).join('');
+      document.getElementById('anaTopClients').innerHTML = topClients.length === 0 ? `<div style="text-align:center;padding:16px;color:var(--text-muted);font-size:12px;">—</div>` : topClients.map(([key, c], i) => { const rankClass = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : ''; const maxClient = topClients[0][1].total; return `<div class="analytics-list-item"><div class="analytics-rank ${rankClass}">${i + 1}</div><div class="analytics-list-info"><div class="analytics-list-name">${c.name}</div><div class="analytics-list-bar"><div class="analytics-list-fill" style="width:${(c.total / maxClient) * 100}%"></div></div></div><div><div class="analytics-list-value">${c.total.toLocaleString()} ₽</div><div class="analytics-list-sub">${c.orders}</div></div></div>`; }).join('');
     }
 
     // ==================== МАТЕРИАЛЫ ====================
@@ -2580,7 +2443,6 @@
       if (critical.length > 0) warningHtml += `<div class="material-warning critical"><i class="fas fa-exclamation-triangle"></i> Критически мало: ${critical.map(m => m.name).join(', ')}</div>`;
       if (low.length > 0) warningHtml += `<div class="material-warning low"><i class="fas fa-info-circle"></i> Заканчивается: ${low.map(m => m.name).join(', ')}</div>`;
       if (materialsWarningContainer) materialsWarningContainer.innerHTML = warningHtml;
-
       materialsContainer.innerHTML = materials.map(m => {
         const pct = Math.min(100, Math.round((m.value / m.max) * 100));
         let barClass = 'ok';
@@ -2588,12 +2450,8 @@
         else if (m.value <= m.min * 1.5) barClass = 'low';
         return `<div class="material-item"><div class="material-info"><div class="material-name">${m.name}</div><div class="material-stock">${m.value} ${m.unit} • мин. ${m.min}</div><div class="material-bar-wrap"><div class="material-bar ${barClass}" style="width:${pct}%;"></div></div></div><div class="material-value">${pct}%</div><button class="material-edit-btn" data-edit-material="${m.id}"><i class="fas fa-pen"></i></button></div>`;
       }).join('');
-
       materialsContainer.querySelectorAll('[data-edit-material]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const m = materials.find(x => x.id === btn.dataset.editMaterial);
-          if (m) openMaterialModal(m);
-        });
+        btn.addEventListener('click', () => { const m = materials.find(x => x.id === btn.dataset.editMaterial); if (m) openMaterialModal(m); });
       });
     }
 
@@ -2639,8 +2497,7 @@
         if (delBtn) {
           if (confirm('?')) {
             const id = parseInt(delBtn.dataset.del, 10);
-            try { await deleteDoc(doc(db, 'services', String(id))); showToast('✓'); }
-            catch (err) { showToast('✗'); }
+            try { await deleteDoc(doc(db, 'services', String(id))); showToast('✓'); } catch (err) { showToast('✗'); }
           }
           return;
         }
@@ -2650,10 +2507,8 @@
           const s = state.services.find(x => x.id === id);
           if (!s) return;
           const newAvail = s.available === false;
-          try {
-            await updateDoc(doc(db, 'services', String(id)), { available: newAvail });
-            showToast(newAvail ? '✓' : '✗');
-          } catch (err) { showToast('✗'); }
+          try { await updateDoc(doc(db, 'services', String(id)), { available: newAvail }); showToast(newAvail ? '✓' : '✗'); }
+          catch (err) { showToast('✗'); }
         }
       });
     }
@@ -2710,7 +2565,224 @@
     if (modalCloseBtn) modalCloseBtn.addEventListener('click', () => productModal.classList.remove('visible'));
     if (addProductBtn) addProductBtn.addEventListener('click', () => openProductModal(null));
 
-    // ==================== ПАРОЛЬ ====================
+    // ==================== АВТОРИЗАЦИЯ ====================
+    function switchAuthTab(mode) {
+      state.authMode = mode;
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.toggle('active', t.dataset.authTab === mode));
+      if (mode === 'register') {
+        authTitle.textContent = 'Регистрация';
+        authDesc.textContent = 'Создайте аккаунт, чтобы отслеживать заказы';
+        authRegisterFields.style.display = 'block';
+        authLoginFields.style.display = 'none';
+        authSubmitText.textContent = 'Зарегистрироваться';
+      } else {
+        authTitle.textContent = 'Вход';
+        authDesc.textContent = 'Войдите, чтобы отслеживать заказы';
+        authRegisterFields.style.display = 'none';
+        authLoginFields.style.display = 'block';
+        authSubmitText.textContent = 'Войти';
+      }
+    }
+
+    document.querySelectorAll('.auth-tab').forEach(tab => {
+      tab.addEventListener('click', () => switchAuthTab(tab.dataset.authTab));
+    });
+
+    if (authPhone) {
+      authPhone.addEventListener('input', (e) => {
+        e.target.value = formatPhone(e.target.value);
+        const digits = extractDigits(e.target.value);
+        if (digits.length === 11) {
+          if (isValidPhone(e.target.value)) { e.target.classList.remove('error'); e.target.classList.add('valid'); authPhoneHint.textContent = '✓'; authPhoneHint.className = 'field-hint valid'; }
+          else { e.target.classList.remove('valid'); e.target.classList.add('error'); authPhoneHint.textContent = '✗'; authPhoneHint.className = 'field-hint error'; }
+        } else { e.target.classList.remove('error', 'valid'); authPhoneHint.textContent = ''; authPhoneHint.className = 'field-hint'; }
+      });
+      authPhone.addEventListener('focus', () => { if (!authPhone.value) authPhone.value = '+7 '; });
+    }
+
+    if (authLoginPhone) {
+      authLoginPhone.addEventListener('input', (e) => { e.target.value = formatPhone(e.target.value); });
+      authLoginPhone.addEventListener('focus', () => { if (!authLoginPhone.value) authLoginPhone.value = '+7 '; });
+    }
+
+    async function registerUser() {
+      const name = authName.value.trim();
+      const phone = normalizePhone(authPhone.value);
+      const password = authPassword.value;
+      const passwordConfirm = authPasswordConfirm.value;
+      if (!name) { showToast('Введите имя'); return; }
+      if (!isValidPhone(phone)) { showToast('Введите корректный номер'); return; }
+      if (password.length < 6) { authRegisterHint.textContent = '✗ мин. 6'; authRegisterHint.className = 'field-hint error'; return; }
+      if (password !== passwordConfirm) { authRegisterHint.textContent = '✗ не совпадают'; authRegisterHint.className = 'field-hint error'; return; }
+      authSubmitBtn.disabled = true;
+      authSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+      try {
+        const usersRef = collection(db, 'users');
+        const q = query(usersRef, where('phone', '==', phone));
+        const snap = await getDocs(q);
+        if (!snap.empty) {
+          showToast('Номер уже зарегистрирован');
+          authRegisterHint.textContent = '✗ Номер уже занят';
+          authRegisterHint.className = 'field-hint error';
+          return;
+        }
+        const passwordHash = await sha256(password);
+        const docRef = await addDoc(usersRef, { name, phone, passwordHash, createdAt: serverTimestamp(), date: new Date().toLocaleString('ru-RU') });
+        const user = { id: docRef.id, name, phone, passwordHash };
+        saveCurrentUser(user);
+        saveClient(name, phone);
+        showToast('✓ Регистрация успешна');
+        showPage('profile');
+      } catch (err) { showToast('✗ Ошибка'); }
+      finally {
+        authSubmitBtn.disabled = false;
+        authSubmitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> <span>' + (state.authMode === 'register' ? 'Зарегистрироваться' : 'Войти') + '</span>';
+      }
+    }
+
+    async function loginUser() {
+      const phone = normalizePhone(authLoginPhone.value);
+      const password = authLoginPassword.value;
+      if (!isValidPhone(phone)) { showToast('Введите корректный номер'); return; }
+      if (!password) { showToast('Введите пароль'); return; }
+      authSubmitBtn.disabled = true;
+      authSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+      try {
+        const usersRef = collection(db, 'users');
+        const q = query(usersRef, where('phone', '==', phone));
+        const snap = await getDocs(q);
+        if (snap.empty) { authLoginHint.textContent = '✗ Не найден'; authLoginHint.className = 'field-hint error'; return; }
+        const docData = snap.docs[0].data();
+        const passwordHash = await sha256(password);
+        if (docData.passwordHash !== passwordHash) { authLoginHint.textContent = '✗ Неверный пароль'; authLoginHint.className = 'field-hint error'; return; }
+        const user = { id: snap.docs[0].id, name: docData.name, phone: docData.phone, passwordHash: docData.passwordHash };
+        saveCurrentUser(user);
+        saveClient(user.name, user.phone);
+        showToast('✓ Добро пожаловать!');
+        showPage('profile');
+      } catch (err) { showToast('✗ Ошибка'); }
+      finally {
+        authSubmitBtn.disabled = false;
+        authSubmitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> <span>' + (state.authMode === 'register' ? 'Зарегистрироваться' : 'Войти') + '</span>';
+      }
+    }
+
+    if (authSubmitBtn) {
+      authSubmitBtn.addEventListener('click', () => { if (state.authMode === 'register') registerUser(); else loginUser(); });
+    }
+    if (authSkipBtn) authSkipBtn.addEventListener('click', () => showPage('home'));
+
+    // ==================== ПРОФИЛЬ ====================
+    function getUserLevel(orders) {
+      const total = orders.reduce((s, o) => s + (o.total || 0), 0);
+      if (total >= 20000) return { name: 'Золото', color: 'var(--warning)' };
+      if (total >= 5000) return { name: 'Серебро', color: '#c8c8e0' };
+      if (total >= 1000) return { name: 'Бронза', color: '#cd7f32' };
+      return { name: 'Новичок', color: 'var(--success)' };
+    }
+
+    function renderProfile() {
+      if (!profileName) return;
+      if (profileLangValue) profileLangValue.textContent = currentLang === 'ru' ? 'Русский' : currentLang === 'en' ? 'English' : 'YKT';
+      if (profileThemeValue) profileThemeValue.textContent = document.body.classList.contains('light-theme') ? 'Светлая' : 'Тёмная';
+      if (!state.currentUser) {
+        profileAvatar.textContent = '?';
+        profileName.textContent = 'Гость';
+        profilePhone.textContent = 'Не авторизован';
+        profileLevelText.textContent = 'Новичок';
+        profileOrdersCount.textContent = '0';
+        profileTotalSum.textContent = '0 ₽';
+        profileBonuses.textContent = '0';
+        profileAuthButtons.style.display = 'block';
+        profileLogoutBlock.style.display = 'none';
+        const eb = document.getElementById('profileEditBtn');
+        if (eb) eb.style.display = 'none';
+        return;
+      }
+      const user = state.currentUser;
+      const initials = (user.name || '?').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+      profileAvatar.textContent = initials || '?';
+      profileName.textContent = user.name || 'Без имени';
+      profilePhone.textContent = displayPhone(user.phone);
+      const userOrders = state.myOrders.filter(o => o.userPhone === user.phone || o.client?.phone === user.phone);
+      const totalSum = userOrders.reduce((s, o) => s + (o.total || 0), 0);
+      profileOrdersCount.textContent = userOrders.length;
+      profileTotalSum.textContent = totalSum.toLocaleString() + ' ₽';
+      profileBonuses.textContent = Math.floor(totalSum / 100);
+      const level = getUserLevel(userOrders);
+      profileLevelText.textContent = level.name;
+      profileAuthButtons.style.display = 'none';
+      profileLogoutBlock.style.display = 'block';
+      const eb = document.getElementById('profileEditBtn');
+      if (eb) eb.style.display = 'flex';
+    }
+
+    const profileLoginBtn = document.getElementById('profileLoginBtn');
+    const profileRegisterBtn = document.getElementById('profileRegisterBtn');
+    const profileLogoutBtn = document.getElementById('profileLogoutBtn');
+    const profileMyOrdersBtn = document.getElementById('profileMyOrdersBtn');
+    const profileEditBtn = document.getElementById('profileEditBtn');
+    const profileLangBtn = document.getElementById('profileLangBtn');
+    const profileThemeBtn = document.getElementById('profileThemeBtn');
+
+    if (profileLoginBtn) profileLoginBtn.addEventListener('click', () => { switchAuthTab('login'); showPage('auth'); });
+    if (profileRegisterBtn) profileRegisterBtn.addEventListener('click', () => { switchAuthTab('register'); showPage('auth'); });
+    if (profileLogoutBtn) profileLogoutBtn.addEventListener('click', () => {
+      if (!confirm('Выйти?')) return;
+      saveCurrentUser(null);
+      showToast('Вы вышли');
+      renderProfile();
+    });
+    if (profileMyOrdersBtn) profileMyOrdersBtn.addEventListener('click', () => showPage('history'));
+    if (profileLangBtn) profileLangBtn.addEventListener('click', () => langToggleBtn.click());
+    if (profileThemeBtn) profileThemeBtn.addEventListener('click', () => themeToggleBtn.click());
+
+    if (profileEditBtn) {
+      profileEditBtn.addEventListener('click', () => {
+        if (!state.currentUser) return;
+        editNameInput.value = state.currentUser.name || '';
+        editPhoneInput.value = formatPhone(state.currentUser.phone || '');
+        editPasswordInput.value = '';
+        editProfileHint.textContent = '';
+        editProfileModal.classList.add('visible');
+      });
+    }
+
+    if (editProfileClose) editProfileClose.addEventListener('click', () => editProfileModal.classList.remove('visible'));
+    if (editProfileCancel) editProfileCancel.addEventListener('click', () => editProfileModal.classList.remove('visible'));
+    if (editProfileModal) editProfileModal.addEventListener('click', (e) => { if (e.target === editProfileModal) editProfileModal.classList.remove('visible'); });
+    if (editPhoneInput) {
+      editPhoneInput.addEventListener('input', (e) => { e.target.value = formatPhone(e.target.value); });
+      editPhoneInput.addEventListener('focus', () => { if (!editPhoneInput.value) editPhoneInput.value = '+7 '; });
+    }
+
+    if (editProfileSave) {
+      editProfileSave.addEventListener('click', async () => {
+        if (!state.currentUser) return;
+        const newName = editNameInput.value.trim();
+        const newPhone = normalizePhone(editPhoneInput.value);
+        const newPassword = editPasswordInput.value;
+        if (!newName) { editProfileHint.textContent = '✗ Введите имя'; editProfileHint.className = 'field-hint error'; return; }
+        if (!isValidPhone(newPhone)) { editProfileHint.textContent = '✗ Неверный номер'; editProfileHint.className = 'field-hint error'; return; }
+        if (newPassword && newPassword.length < 6) { editProfileHint.textContent = '✗ мин. 6'; editProfileHint.className = 'field-hint error'; return; }
+        editProfileSave.disabled = true;
+        try {
+          const updateData = { name: newName, phone: newPhone };
+          if (newPassword) updateData.passwordHash = await sha256(newPassword);
+          await updateDoc(doc(db, 'users', state.currentUser.id), updateData);
+          state.currentUser = { ...state.currentUser, name: newName, phone: newPhone };
+          if (newPassword) state.currentUser.passwordHash = updateData.passwordHash;
+          saveCurrentUser(state.currentUser);
+          saveClient(newName, newPhone);
+          editProfileModal.classList.remove('visible');
+          renderProfile();
+          showToast('✓ Сохранено');
+        } catch (err) { editProfileHint.textContent = '✗ Ошибка'; editProfileHint.className = 'field-hint error'; }
+        finally { editProfileSave.disabled = false; }
+      });
+    }
+
+    // ==================== ПАРОЛЬ АДМИНА ====================
     if (savePasswordBtn) {
       savePasswordBtn.addEventListener('click', async () => {
         const p1 = newAdminPasswordInput.value.trim();
@@ -2738,7 +2810,7 @@
       });
     }
 
-    // ==================== ЛОГИН ====================
+    // ==================== ЛОГИН АДМИНА ====================
     function openLoginScreen() {
       state.previousPage = state.currentPage;
       adminCodeInput.value = '';
@@ -2767,7 +2839,7 @@
         setTimeout(() => { showPage('admin'); showToast('✓'); }, 350);
       } else {
         loginError.style.color = 'var(--danger)';
-        loginError.textContent = '✗';
+        loginError.textContent = '✗ Неверный код';
         adminCodeInput.value = '';
         setTimeout(() => adminCodeInput.focus(), 300);
       }
@@ -2812,13 +2884,10 @@
     if (loginSubmitBtn) loginSubmitBtn.addEventListener('click', tryLogin);
     if (loginCancelBtn) loginCancelBtn.addEventListener('click', cancelLogin);
     if (adminCodeInput) {
-      adminCodeInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') tryLogin();
-        if (e.key === 'Escape') cancelLogin();
-      });
+      adminCodeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryLogin(); if (e.key === 'Escape') cancelLogin(); });
     }
 
-    // ==================== НАСТРОЙКИ УВЕДОМЛЕНИЙ ====================
+    // ==================== НАСТРОЙКИ ====================
     function renderNotifToggles() {
       const soundToggle = document.getElementById('notifSoundToggle');
       const bannerToggle = document.getElementById('notifBannerToggle');
@@ -2826,133 +2895,89 @@
       if (bannerToggle) bannerToggle.className = 'stock-toggle ' + (state.notifBanner ? 'on' : 'off');
     }
     const notifSoundEl = document.getElementById('notifSoundToggle');
-    if (notifSoundEl) {
-      notifSoundEl.addEventListener('click', () => {
-        state.notifSound = !state.notifSound;
-        saveNotifSettings();
-        renderNotifToggles();
-      });
-    }
+    if (notifSoundEl) notifSoundEl.addEventListener('click', () => { state.notifSound = !state.notifSound; saveNotifSettings(); renderNotifToggles(); });
     const notifBannerEl = document.getElementById('notifBannerToggle');
-    if (notifBannerEl) {
-      notifBannerEl.addEventListener('click', () => {
-        state.notifBanner = !state.notifBanner;
-        saveNotifSettings();
-        renderNotifToggles();
-      });
-    }
+    if (notifBannerEl) notifBannerEl.addEventListener('click', () => { state.notifBanner = !state.notifBanner; saveNotifSettings(); renderNotifToggles(); });
 
-    // ==================== ТЕМА ====================
     function loadTheme() {
-      try {
-        const t = localStorage.getItem(S.THEME);
-        if (t === 'light') {
-          document.body.classList.add('light-theme');
-          const icon = document.getElementById('themeIcon');
-          if (icon) icon.className = 'fas fa-sun';
-        }
-      } catch (e) {}
+      try { const t = localStorage.getItem(S.THEME); if (t === 'light') { document.body.classList.add('light-theme'); const icon = document.getElementById('themeIcon'); if (icon) icon.className = 'fas fa-sun'; } } catch (e) {}
     }
     function toggleTheme() {
       const isLight = document.body.classList.toggle('light-theme');
       const icon = document.getElementById('themeIcon');
       if (icon) icon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
       try { localStorage.setItem(S.THEME, isLight ? 'light' : 'dark'); } catch (e) {}
+      if (state.currentPage === 'profile') renderProfile();
     }
     if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
 
-    // ==================== ПЕРЕКЛЮЧАТЕЛИ РАЗДЕЛОВ ====================
     const adminFiltersEl = document.getElementById('adminFilters');
-    if (adminFiltersEl) {
-      adminFiltersEl.addEventListener('click', (e) => {
-        const btn = e.target.closest('.filter-btn');
-        if (!btn) return;
-        document.querySelectorAll('#adminFilters .filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        state.adminFilter = btn.dataset.filter;
-        renderAdminOrders();
-      });
-    }
+    if (adminFiltersEl) adminFiltersEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+      document.querySelectorAll('#adminFilters .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.adminFilter = btn.dataset.filter;
+      renderAdminOrders();
+    });
 
     const clientTabEl = document.getElementById('clientTabSwitcher');
-    if (clientTabEl) {
-      clientTabEl.addEventListener('click', (e) => {
-        const btn = e.target.closest('.tab-switch-btn');
-        if (!btn) return;
-        document.querySelectorAll('#clientTabSwitcher .tab-switch-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        state.clientTab = btn.dataset.tab;
-        renderHistory();
-      });
-    }
+    if (clientTabEl) clientTabEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('.tab-switch-btn');
+      if (!btn) return;
+      document.querySelectorAll('#clientTabSwitcher .tab-switch-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.clientTab = btn.dataset.tab;
+      renderHistory();
+    });
 
     const adminTabEl = document.getElementById('adminTabSwitcher');
-    if (adminTabEl) {
-      adminTabEl.addEventListener('click', (e) => {
-        const btn = e.target.closest('.tab-switch-btn');
-        if (!btn) return;
-        document.querySelectorAll('#adminTabSwitcher .tab-switch-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        state.adminTab = btn.dataset.tab;
-        state.adminFilter = 'all';
-        document.querySelectorAll('#adminFilters .filter-btn').forEach(b => b.classList.remove('active'));
-        const allFilter = document.querySelector('#adminFilters .filter-btn[data-filter="all"]');
-        if (allFilter) allFilter.classList.add('active');
-        renderAdminOrders();
-      });
-    }
+    if (adminTabEl) adminTabEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('.tab-switch-btn');
+      if (!btn) return;
+      document.querySelectorAll('#adminTabSwitcher .tab-switch-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.adminTab = btn.dataset.tab;
+      state.adminFilter = 'all';
+      document.querySelectorAll('#adminFilters .filter-btn').forEach(b => b.classList.remove('active'));
+      const allFilter = document.querySelector('#adminFilters .filter-btn[data-filter="all"]');
+      if (allFilter) allFilter.classList.add('active');
+      renderAdminOrders();
+    });
 
     const adminSectionEl = document.getElementById('adminSectionSwitcher');
-    if (adminSectionEl) {
-      adminSectionEl.addEventListener('click', (e) => {
-        const btn = e.target.closest('.tab-switch-btn');
-        if (!btn) return;
-        document.querySelectorAll('#adminSectionSwitcher .tab-switch-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        state.adminSection = btn.dataset.section;
-        adminOrdersSection.style.display = state.adminSection === 'orders' ? 'block' : 'none';
-        adminProductsSection.style.display = state.adminSection === 'products' ? 'block' : 'none';
-        adminAnalyticsSection.style.display = state.adminSection === 'analytics' ? 'block' : 'none';
-        adminMaterialsSection.style.display = state.adminSection === 'materials' ? 'block' : 'none';
-        adminSettingsSection.style.display = state.adminSection === 'settings' ? 'block' : 'none';
-        if (state.adminSection === 'products') renderAdminProducts();
-        if (state.adminSection === 'analytics') renderAnalytics();
-        if (state.adminSection === 'materials') renderMaterials();
-        if (state.adminSection === 'settings') renderNotifToggles();
-      });
-    }
+    if (adminSectionEl) adminSectionEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('.tab-switch-btn');
+      if (!btn) return;
+      document.querySelectorAll('#adminSectionSwitcher .tab-switch-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.adminSection = btn.dataset.section;
+      adminOrdersSection.style.display = state.adminSection === 'orders' ? 'block' : 'none';
+      adminProductsSection.style.display = state.adminSection === 'products' ? 'block' : 'none';
+      adminAnalyticsSection.style.display = state.adminSection === 'analytics' ? 'block' : 'none';
+      adminMaterialsSection.style.display = state.adminSection === 'materials' ? 'block' : 'none';
+      adminSettingsSection.style.display = state.adminSection === 'settings' ? 'block' : 'none';
+      if (state.adminSection === 'products') renderAdminProducts();
+      if (state.adminSection === 'analytics') renderAnalytics();
+      if (state.adminSection === 'materials') renderMaterials();
+      if (state.adminSection === 'settings') renderNotifToggles();
+    });
 
-    // ==================== МАСКА ТЕЛЕФОНА ====================
+    // ==================== МАСКА ТЕЛЕФОНА В КОРЗИНЕ ====================
     if (clientPhone) {
       clientPhone.addEventListener('input', (e) => {
         e.target.value = formatPhone(e.target.value);
         const hint = document.getElementById('phoneHint');
         const digits = extractDigits(e.target.value);
         if (digits.length === 11) {
-          if (isValidPhone(e.target.value)) {
-            e.target.classList.remove('error'); e.target.classList.add('valid');
-            if (hint) { hint.textContent = '✓'; hint.className = 'field-hint valid'; }
-          } else {
-            e.target.classList.remove('valid'); e.target.classList.add('error');
-            if (hint) { hint.textContent = '✗'; hint.className = 'field-hint error'; }
-          }
-        } else {
-          e.target.classList.remove('error', 'valid');
-          if (hint) { hint.textContent = ''; hint.className = 'field-hint'; }
-        }
+          if (isValidPhone(e.target.value)) { e.target.classList.remove('error'); e.target.classList.add('valid'); if (hint) { hint.textContent = '✓'; hint.className = 'field-hint valid'; } }
+          else { e.target.classList.remove('valid'); e.target.classList.add('error'); if (hint) { hint.textContent = '✗'; hint.className = 'field-hint error'; } }
+        } else { e.target.classList.remove('error', 'valid'); if (hint) { hint.textContent = ''; hint.className = 'field-hint'; } }
       });
       clientPhone.addEventListener('focus', (e) => { if (!e.target.value) e.target.value = '+7 '; });
-      clientPhone.addEventListener('blur', (e) => {
-        if (e.target.value === '+7 ' || e.target.value === '+7') {
-          e.target.value = '';
-          e.target.classList.remove('valid', 'error');
-          const hint = document.getElementById('phoneHint');
-          if (hint) { hint.textContent = ''; hint.className = 'field-hint'; }
-        }
-      });
     }
 
-    // ==================== FIREBASE ПОДПИСКИ ====================
+    // ==================== FIREBASE ====================
     async function initServicesFromFirestore() {
       try {
         const snapshot = await getDocs(collection(db, 'services'));
@@ -3006,9 +3031,15 @@
           if (state.notifSound) playSound('new');
         }
         const myUid = getClientUid();
-        state.myOrders = all.filter(o => o.clientUid === myUid);
+        const myPhone = state.currentUser ? state.currentUser.phone : null;
+        state.myOrders = all.filter(o => {
+          if (o.clientUid === myUid) return true;
+          if (myPhone && o.userPhone === myPhone) return true;
+          return false;
+        });
         saveLocalHistory();
         if (state.currentPage === 'history') renderHistory();
+        if (state.currentPage === 'profile') renderProfile();
         if (state.isAdminMode) {
           renderAdminOrders();
           if (state.adminSection === 'analytics') renderAnalytics();
@@ -3018,48 +3049,30 @@
       }, (err) => { showConnectionStatus(false); });
     }
 
-    // ==================== PWA ====================
-    let deferredPrompt = null;
-    const installPwaBtn = document.getElementById('installPwaBtn');
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      if (installPwaBtn) installPwaBtn.style.display = 'flex';
-    });
-    if (installPwaBtn) {
-      installPwaBtn.addEventListener('click', async () => {
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
-        installPwaBtn.style.display = 'none';
-        deferredPrompt = null;
-      });
-    }
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
-      });
+      window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(() => {}); });
     }
 
     // ==================== ИНИЦИАЛИЗАЦИЯ ====================
     const splash = document.getElementById('splash');
     const splashProgressFill = document.getElementById('splashProgressFill');
     const splashPercent = document.getElementById('splashPercent');
-    const splashGreeting = document.getElementById('splashGreeting');
     const appEl = document.getElementById('app');
 
     loadLanguage();
+    applyTranslations();
     loadTheme();
     loadLocalHistory();
     loadNotifSettings();
     loadMaterials();
-    applyTranslations();
+    loadCurrentUser();
     renderCategories();
     renderServices();
     renderBottomNav();
     renderHistory();
     renderNotifToggles();
     renderMaterials();
+    renderProfile();
 
     initServicesFromFirestore().then(() => {
       subscribeServices();
@@ -3082,10 +3095,7 @@
         if (splashPercent) splashPercent.textContent = '100%';
         setTimeout(() => {
           if (splash) splash.classList.add('hidden');
-          if (appEl) {
-            appEl.style.opacity = '1';
-            appEl.classList.add('app-entering');
-          }
+          if (appEl) { appEl.style.opacity = '1'; appEl.classList.add('app-entering'); }
           setTimeout(() => { if (splash && splash.parentNode) splash.parentNode.removeChild(splash); }, 800);
         }, 200);
       }
