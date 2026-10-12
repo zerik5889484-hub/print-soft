@@ -8,10 +8,11 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="PRINT SOFT">
   <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
   <title>PRINT SOFT</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
 
@@ -44,7 +45,8 @@
       padding-top: env(safe-area-inset-top);
     }
 
-    .splash { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10000; background: linear-gradient(160deg, #14152b 0%, #0f1020 60%, #101a2a 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; overflow: hidden; transition: opacity 0.7s ease, transform 0.7s ease, visibility 0.7s ease; }
+    /* ==================== SPLASH ==================== */
+    .splash { position: fixed; inset: 0; z-index: 10000; background: linear-gradient(160deg, #14152b 0%, #0f1020 60%, #101a2a 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; overflow: hidden; transition: opacity 0.7s ease, transform 0.7s ease, visibility 0.7s ease; }
     .splash.hidden { opacity: 0; transform: scale(1.08); visibility: hidden; pointer-events: none; }
     .splash-orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.35; animation: orbFloat 6s ease-in-out infinite; pointer-events: none; }
     .splash-orb.orb-1 { width: 320px; height: 320px; background: radial-gradient(circle, #a8d8e8 0%, transparent 70%); top: -100px; left: -100px; }
@@ -76,6 +78,7 @@
     @keyframes dotPulse { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.15); } }
     .splash-greeting { position: relative; z-index: 2; margin-top: 24px; font-size: 12.5px; color: #8a8aa8; text-align: center; }
 
+    /* ==================== APP ==================== */
     .app {
       width: 100%; max-width: 600px;
       background: var(--app-bg);
@@ -108,7 +111,6 @@
       gap: 2px;
       flex-shrink: 0; flex-grow: 0;
       min-height: 56px; z-index: 100; position: relative;
-      visibility: visible; opacity: 1;
     }
 
     .content-scroll {
@@ -129,7 +131,6 @@
     .header-actions { display: flex; gap: 4px; align-items: center; }
     .icon-btn { background: rgba(168, 216, 232, 0.06); border: 1px solid var(--border-2); color: var(--accent-1); width: 32px; height: 32px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 13px; cursor: pointer; position: relative; flex-shrink: 0; transition: all 0.2s ease; }
     .icon-btn:active { background: rgba(168, 216, 232, 0.18); transform: scale(0.9); }
-    .icon-btn.admin-active { background: rgba(232, 168, 200, 0.15); border-color: rgba(232, 168, 200, 0.5); color: var(--pink); }
     .lang-btn { font-size: 9.5px; font-weight: 800; }
 
     .page { display: none; }
@@ -175,8 +176,6 @@
     @keyframes cardEnter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
     .card:active { background: var(--card-bg-hover); border-color: var(--accent-2); transform: scale(0.98); }
     .card.out-of-stock { opacity: 0.45; cursor: not-allowed; }
-    .fav-btn { background: transparent; border: none; color: var(--text-muted); font-size: 16px; cursor: pointer; padding: 6px; border-radius: 50%; flex-shrink: 0; position: relative; z-index: 2; }
-    .fav-btn.active { color: var(--pink); }
     .card-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
     .card-title { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 6px; color: var(--text-primary); flex-wrap: wrap; }
     .card-title i { color: var(--accent-1); font-size: 14px; flex-shrink: 0; }
@@ -190,6 +189,7 @@
     .btn-small { padding: 8px 14px; font-size: 12.5px; border-radius: 30px; width: auto; margin-bottom: 0; }
     .btn-success { background: rgba(140, 220, 160, 0.15); border-color: var(--success); color: var(--success); }
     .btn-danger { background: rgba(232, 140, 140, 0.1); border-color: var(--danger); color: var(--danger); }
+    .btn-primary { background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); border: none; color: #0f1020; }
 
     .detail-card { background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border-2); padding: 20px 18px; margin-bottom: 14px; }
     .detail-title { font-size: 19px; font-weight: 700; display: flex; align-items: center; gap: 10px; margin-bottom: 12px; color: var(--text-primary); flex-wrap: wrap; }
@@ -247,17 +247,10 @@
     .preorder-fields.visible { display: block; }
     .preorder-input { width: 100%; background: var(--app-bg); border: 1px solid var(--border-2); color: var(--text-primary); padding: 10px 14px; border-radius: 12px; font-size: 13.5px; margin-bottom: 8px; outline: none; font-family: inherit; }
 
-    .login-card { background: var(--card-bg); border-radius: 24px; border: 1px solid rgba(232, 168, 200, 0.25); padding: 28px 22px; margin: 20px 0; text-align: center; }
-    .login-icon { width: 64px; height: 64px; border-radius: 32px; background: rgba(232, 168, 200, 0.1); border: 1px solid rgba(232, 168, 200, 0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: var(--pink); font-size: 26px; }
-    .login-title { font-size: 18px; font-weight: 700; color: var(--pink); margin-bottom: 6px; }
-    .login-desc { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 20px; }
-    .code-input { width: 100%; background: var(--app-bg); border: 1.5px solid rgba(232, 168, 200, 0.3); color: var(--text-primary); padding: 16px 20px; border-radius: 16px; font-size: 22px; font-weight: 700; letter-spacing: 6px; text-align: center; outline: none; font-family: 'Courier New', monospace; margin-bottom: 14px; }
-    .code-input.error { border-color: var(--danger); }
-    .login-error { color: var(--danger); font-size: 12.5px; margin-bottom: 12px; min-height: 18px; font-weight: 500; }
-
     .order-card { background: var(--card-bg); border-radius: 18px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid var(--border-2); position: relative; overflow: hidden; }
     .order-card.status-new { border-color: rgba(168, 216, 232, 0.4); }
     .order-card.status-progress { border-color: rgba(232, 200, 130, 0.4); }
+    .order-card.status-ready { border-color: rgba(232, 168, 200, 0.6); box-shadow: 0 0 20px rgba(232, 168, 200, 0.15); }
     .order-card.status-done { border-color: rgba(140, 220, 160, 0.35); }
     .order-card.status-cancel { border-color: rgba(232, 140, 140, 0.3); opacity: 0.75; }
     .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
@@ -269,12 +262,14 @@
     .order-status { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; padding: 4px 10px; border-radius: 10px; font-weight: 600; }
     .order-status.new { background: rgba(168, 216, 232, 0.15); color: var(--accent-1); border: 1px solid rgba(168, 216, 232, 0.4); }
     .order-status.progress { background: rgba(232, 200, 130, 0.15); color: var(--warning); border: 1px solid rgba(232, 200, 130, 0.4); }
+    .order-status.ready { background: rgba(232, 168, 200, 0.15); color: var(--pink); border: 1px solid rgba(232, 168, 200, 0.5); }
     .order-status.done { background: rgba(140, 220, 160, 0.15); color: var(--success); border: 1px solid rgba(140, 220, 160, 0.4); }
     .order-status.cancel { background: rgba(232, 140, 140, 0.15); color: var(--danger); border: 1px solid rgba(232, 140, 140, 0.4); }
     .order-progress { display: flex; gap: 4px; margin-top: 10px; margin-bottom: 4px; }
     .progress-step { flex: 1; height: 4px; background: rgba(168, 216, 232, 0.08); border-radius: 2px; }
     .progress-step.active { background: var(--accent-1); }
     .progress-step.progress-active { background: var(--warning); }
+    .progress-step.ready-active { background: var(--pink); }
     .progress-step.done-active { background: var(--success); }
     .progress-step.cancel-active { background: var(--danger); }
 
@@ -282,105 +277,27 @@
     .order-file-chip { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; background: rgba(168, 216, 232, 0.08); border: 1px solid rgba(168, 216, 232, 0.2); border-radius: 10px; font-size: 11px; color: var(--accent-1); max-width: 100%; }
     .order-file-chip .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
 
+    /* НОВОЕ: готовая карточка для выдачи */
+    .ready-badge {
+      padding: 14px 16px;
+      background: linear-gradient(135deg, rgba(232, 168, 200, 0.15), rgba(232, 168, 200, 0.05));
+      border: 1px solid rgba(232, 168, 200, 0.5);
+      border-radius: 14px;
+      margin: 10px 0;
+      text-align: center;
+      animation: readyPulse 2s ease-in-out infinite;
+    }
+    @keyframes readyPulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(232, 168, 200, 0.15); }
+      50% { box-shadow: 0 0 30px rgba(232, 168, 200, 0.35); }
+    }
+    .ready-badge-icon { font-size: 32px; color: var(--pink); margin-bottom: 6px; }
+    .ready-badge-title { font-size: 15px; font-weight: 800; color: var(--pink); margin-bottom: 4px; }
+    .ready-badge-text { font-size: 12px; color: var(--text-secondary); }
+
     .order-actions-row { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
     .order-actions-row .btn { flex: 1; min-width: 100px; margin-bottom: 0; padding: 9px 12px; font-size: 12.5px; }
     .order-actions-row .btn-danger { flex: 0 0 auto; }
-
-    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
-    .stat-card { background: var(--card-bg); border-radius: 16px; padding: 12px 8px; text-align: center; border: 1px solid var(--border-2); }
-    .stat-value { font-size: 20px; font-weight: 800; color: var(--accent-3); display: block; }
-    .stat-label { font-size: 10.5px; color: var(--text-muted); margin-top: 3px; text-transform: uppercase; }
-
-    .filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-    .filter-btn { background: transparent; border: 1px solid var(--border-2); color: var(--text-secondary); padding: 6px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; font-family: inherit; }
-    .filter-btn.active { background: rgba(168, 216, 232, 0.12); border-color: var(--accent-1); color: var(--accent-1); }
-
-    .order-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(168, 216, 232, 0.08); }
-
-    .admin-search-wrap { position: relative; margin-bottom: 12px; }
-    .admin-search-input { width: 100%; background: var(--card-bg); border: 1px solid var(--border-2); color: var(--text-primary); padding: 11px 40px 11px 38px; border-radius: 14px; font-size: 13.5px; outline: none; font-family: inherit; }
-    .admin-search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 14px; }
-    .admin-search-clear { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--text-muted); font-size: 15px; cursor: pointer; padding: 6px; border-radius: 50%; display: none; }
-    .admin-search-clear.visible { display: block; }
-
-    .calendar-strip { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; scrollbar-width: none; }
-    .calendar-strip::-webkit-scrollbar { display: none; }
-    .calendar-day { flex-shrink: 0; min-width: 60px; padding: 10px 8px; border-radius: 14px; background: var(--card-bg); border: 1px solid var(--border-2); text-align: center; cursor: pointer; }
-    .calendar-day.active { background: rgba(168, 216, 232, 0.15); border-color: var(--accent-1); }
-    .calendar-day-weekday { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
-    .calendar-day-date { font-size: 16px; font-weight: 800; color: var(--text-primary); margin: 3px 0; }
-    .calendar-day-count { font-size: 10px; color: var(--accent-1); font-weight: 700; }
-
-    .hourly-chart { display: flex; align-items: flex-end; gap: 3px; height: 80px; padding: 8px 0; margin-bottom: 8px; }
-    .hourly-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative; }
-    .hourly-bar { width: 100%; background: linear-gradient(180deg, var(--accent-1), var(--accent-2)); border-radius: 3px 3px 0 0; min-height: 2px; }
-    .hourly-bar-label { font-size: 8px; color: var(--text-muted); margin-top: 4px; }
-
-    .material-item { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--card-bg); border: 1px solid var(--border-2); border-radius: 14px; margin-bottom: 8px; }
-    .material-info { flex: 1; min-width: 0; }
-    .material-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
-    .material-stock { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
-    .material-bar-wrap { height: 5px; background: rgba(168, 216, 232, 0.08); border-radius: 3px; margin-top: 6px; overflow: hidden; }
-    .material-bar { height: 100%; border-radius: 3px; }
-    .material-bar.ok { background: var(--success); }
-    .material-bar.low { background: var(--warning); }
-    .material-bar.critical { background: var(--danger); }
-    .material-value { font-size: 14px; font-weight: 700; color: var(--accent-3); white-space: nowrap; flex-shrink: 0; }
-    .material-edit-btn { background: transparent; border: 1px solid var(--border-2); color: var(--accent-1); width: 32px; height: 32px; border-radius: 10px; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .material-warning { padding: 10px 14px; border-radius: 14px; font-size: 12.5px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-    .material-warning.critical { background: rgba(232, 140, 140, 0.1); border: 1px solid rgba(232, 140, 140, 0.35); color: var(--danger); }
-    .material-warning.low { background: rgba(232, 200, 130, 0.1); border: 1px solid rgba(232, 200, 130, 0.35); color: var(--warning); }
-
-    .product-manage-card { background: var(--card-bg); border-radius: 16px; padding: 12px 14px; margin-bottom: 8px; border: 1px solid var(--border-2); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-    .product-manage-card.out { border-color: rgba(232, 140, 140, 0.25); opacity: 0.75; }
-    .product-manage-info { flex: 1; min-width: 0; }
-    .product-manage-title { font-size: 13px; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .product-manage-title i { color: var(--accent-1); font-size: 12px; flex-shrink: 0; }
-    .product-manage-price { font-size: 11.5px; color: var(--text-secondary); margin-top: 3px; }
-    .product-manage-price strong { color: var(--accent-3); }
-    .product-actions { display: flex; gap: 4px; flex-shrink: 0; }
-    .mini-btn { background: var(--app-bg); border: 1px solid var(--border-2); color: var(--text-secondary); width: 30px; height: 30px; border-radius: 8px; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; font-family: inherit; }
-    .mini-btn.edit { color: var(--accent-1); border-color: rgba(168, 216, 232, 0.35); }
-    .mini-btn.del { color: var(--danger); border-color: rgba(232, 140, 140, 0.35); }
-
-    .stock-toggle { display: flex; align-items: center; gap: 6px; flex-shrink: 0; cursor: pointer; user-select: none; }
-    .toggle-switch { position: relative; width: 42px; height: 24px; background: var(--app-bg); border: 1px solid var(--border-2); border-radius: 30px; flex-shrink: 0; }
-    .toggle-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background: var(--text-muted); border-radius: 50%; transition: transform 0.25s, background-color 0.25s; }
-    .stock-toggle.on .toggle-switch { background: rgba(140, 220, 160, 0.25); border-color: var(--success); }
-    .stock-toggle.on .toggle-switch::after { transform: translateX(18px); background: var(--success); }
-    .stock-toggle.off .toggle-switch { background: rgba(232, 140, 140, 0.15); border-color: var(--danger); }
-    .stock-toggle.off .toggle-switch::after { background: var(--danger); }
-
-    .stock-badge-out { display: inline-block; font-size: 9.5px; padding: 2px 7px; border-radius: 8px; background: rgba(232, 140, 140, 0.15); color: var(--danger); border: 1px solid rgba(232, 140, 140, 0.35); font-weight: 700; text-transform: uppercase; }
-    .stock-badge-in { display: inline-block; font-size: 9.5px; padding: 2px 7px; border-radius: 8px; background: rgba(140, 220, 160, 0.12); color: var(--success); border: 1px solid rgba(140, 220, 160, 0.3); font-weight: 700; text-transform: uppercase; }
-
-    .analytics-block { background: var(--card-bg); border: 1px solid var(--border-2); border-radius: 18px; padding: 16px; margin-bottom: 12px; }
-    .analytics-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
-    .analytics-title span:last-child { font-size: 11px; color: var(--accent-1); font-weight: 600; }
-    .analytics-chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; padding-bottom: 20px; position: relative; margin-bottom: 8px; }
-    .analytics-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative; gap: 4px; }
-    .analytics-bar-value { font-size: 10px; color: var(--accent-1); font-weight: 700; min-height: 12px; }
-    .analytics-bar { width: 100%; max-width: 40px; background: linear-gradient(180deg, var(--accent-1), var(--accent-2)); border-radius: 4px 4px 0 0; min-height: 3px; }
-    .analytics-bar-label { font-size: 9.5px; color: var(--text-muted); text-align: center; position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
-    .analytics-list-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(168, 216, 232, 0.06); }
-    .analytics-list-item:last-child { border-bottom: none; padding-bottom: 0; }
-    .analytics-rank { width: 24px; height: 24px; border-radius: 8px; background: rgba(168, 216, 232, 0.1); color: var(--accent-1); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
-    .analytics-rank.top-1 { background: rgba(232, 200, 130, 0.2); color: var(--warning); }
-    .analytics-rank.top-2 { background: rgba(200, 200, 220, 0.15); color: #c8c8e0; }
-    .analytics-rank.top-3 { background: rgba(232, 168, 200, 0.15); color: var(--pink); }
-    .analytics-list-info { flex: 1; min-width: 0; }
-    .analytics-list-name { font-size: 12.5px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .analytics-list-bar { height: 4px; background: rgba(168, 216, 232, 0.08); border-radius: 2px; margin-top: 5px; overflow: hidden; }
-    .analytics-list-fill { height: 100%; background: linear-gradient(90deg, var(--accent-1), var(--accent-2)); border-radius: 2px; }
-    .analytics-list-value { font-size: 12.5px; font-weight: 700; color: var(--accent-1); text-align: right; white-space: nowrap; flex-shrink: 0; }
-    .analytics-list-sub { font-size: 10.5px; color: var(--text-muted); text-align: right; }
-
-    .modal-backdrop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-    .modal-backdrop.visible { display: flex; }
-    .modal { background: var(--app-bg); border-radius: 20px; border: 1px solid var(--border-1); padding: 20px 18px; width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto; }
-    .modal-title { font-size: 17px; font-weight: 700; color: var(--text-primary); margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
-    .modal-close { background: transparent; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; padding: 4px; }
-    .form-label { font-size: 11.5px; color: var(--text-secondary); margin-bottom: 4px; display: block; font-weight: 600; }
 
     .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; background: transparent; border: none; color: var(--text-muted); font-size: 10px; font-weight: 500; cursor: pointer; padding: 8px 4px; border-radius: 16px; flex: 1; position: relative; font-family: inherit; transition: all 0.2s ease; }
     .nav-item i { font-size: 17px; transition: transform 0.2s ease; }
@@ -396,10 +313,6 @@
 
     .toast { position: fixed; bottom: calc(80px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); background: var(--app-bg); border: 1px solid var(--accent-1); color: var(--text-primary); padding: 11px 20px; border-radius: 36px; font-weight: 500; font-size: 13.5px; z-index: 999; pointer-events: none; white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis; animation: toastIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
     @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 20px) scale(0.9); } to { opacity: 1; transform: translate(-50%, 0) scale(1); } }
-
-    .cart-badge { position: absolute; top: -5px; right: -5px; background: var(--accent-3); color: var(--app-bg); border-radius: 18px; padding: 2px 6px; font-size: 10.5px; font-weight: 800; }
-    .admin-badge { position: absolute; top: -5px; right: -5px; background: var(--pink); color: var(--app-bg); border-radius: 18px; padding: 2px 6px; font-size: 10.5px; font-weight: 800; animation: pulse 1.5s ease-in-out infinite; }
-    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
 
     .input-field { width: 100%; background: var(--app-bg); border: 1px solid var(--border-2); color: var(--text-primary); padding: 10px 14px; border-radius: 12px; font-size: 13.5px; margin-bottom: 8px; outline: none; font-family: inherit; }
     .input-field::placeholder { color: var(--text-muted); }
@@ -418,23 +331,13 @@
     .connection-status.offline { display: flex; background: rgba(232, 140, 140, 0.95); color: #fff; }
     .connection-status.online { display: flex; background: rgba(140, 220, 160, 0.95); color: #1a1a2e; }
 
-    .notif-toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: var(--card-bg); border: 1px solid var(--border-2); border-radius: 14px; margin-bottom: 8px; }
-    .notif-toggle-info { display: flex; flex-direction: column; }
-    .notif-toggle-title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
-    .notif-toggle-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-
     .lang-menu { position: fixed; top: 56px; right: 14px; background: var(--app-bg); border: 1px solid var(--border-1); border-radius: 16px; padding: 8px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 999; display: none; flex-direction: column; gap: 2px; min-width: 140px; }
     .lang-menu.visible { display: flex; }
     .lang-menu-item { padding: 10px 14px; background: transparent; border: none; color: var(--text-primary); font-size: 13px; font-weight: 600; text-align: left; border-radius: 10px; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 8px; }
     .lang-menu-item.active { background: rgba(168, 216, 232, 0.12); color: var(--accent-1); }
 
-    .new-order-notification { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--success), #5ab878); color: #0a0a1a; padding: 14px 20px; border-radius: 20px; box-shadow: 0 8px 32px rgba(140, 220, 160, 0.5); z-index: 1200; display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 14px; max-width: 90vw; cursor: pointer; }
-    .new-order-notification i { font-size: 22px; }
-
-    .files-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.75); display: flex; align-items: center; justify-content: center; z-index: 1100; padding: 20px; }
+    .files-modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); display: flex; align-items: center; justify-content: center; z-index: 1100; padding: 20px; }
     .files-modal-content { background: var(--app-bg); border-radius: 24px; border: 1px solid var(--border-1); padding: 24px 20px; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; }
-
-    #qrReader video { border-radius: 16px; }
 
     .home-hero { text-align: center; padding: 12px 0 16px; }
     .home-hero h1 { font-size: 22px; font-weight: 800; line-height: 1.25; margin-bottom: 10px; background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--pink)); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: titleShift 5s ease-in-out infinite; }
@@ -455,6 +358,9 @@
     .info-block-item i { color: var(--accent-1); margin-top: 3px; flex-shrink: 0; }
     .info-block-item b { color: var(--text-primary); }
 
+    .stock-badge-out { display: inline-block; font-size: 9.5px; padding: 2px 7px; border-radius: 8px; background: rgba(232, 140, 140, 0.15); color: var(--danger); border: 1px solid rgba(232, 140, 140, 0.35); font-weight: 700; text-transform: uppercase; }
+    .stock-badge-in { display: inline-block; font-size: 9.5px; padding: 2px 7px; border-radius: 8px; background: rgba(140, 220, 160, 0.12); color: var(--success); border: 1px solid rgba(140, 220, 160, 0.3); font-weight: 700; text-transform: uppercase; }
+
     .auth-card { background: var(--card-bg); border-radius: 24px; border: 1px solid rgba(168, 216, 232, 0.25); padding: 28px 22px; margin: 20px 0; text-align: center; }
     .auth-icon { width: 64px; height: 64px; border-radius: 32px; background: rgba(168, 216, 232, 0.1); border: 1px solid rgba(168, 216, 232, 0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: var(--accent-1); font-size: 26px; }
     .auth-title { font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
@@ -472,6 +378,15 @@
     .profile-stat { background: var(--card-bg); border: 1px solid var(--border-2); border-radius: 16px; padding: 14px 8px; text-align: center; }
     .profile-stat-value { font-size: 20px; font-weight: 800; color: var(--accent-1); display: block; }
     .profile-stat-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+
+    /* Бонусная карта */
+    .bonus-card { background: linear-gradient(135deg, rgba(232, 200, 130, 0.15), rgba(232, 168, 200, 0.1)); border: 1px solid rgba(232, 200, 130, 0.35); border-radius: 18px; padding: 16px; margin-bottom: 14px; }
+    .bonus-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .bonus-title i { color: var(--warning); }
+    .bonus-progress-bar { height: 8px; background: rgba(0, 0, 0, 0.2); border-radius: 4px; overflow: hidden; margin-bottom: 6px; }
+    .bonus-progress-fill { height: 100%; background: linear-gradient(90deg, var(--warning), var(--pink)); border-radius: 4px; transition: width 0.5s; }
+    .bonus-progress-text { font-size: 11.5px; color: var(--text-secondary); display: flex; justify-content: space-between; }
+
     .profile-menu { background: var(--card-bg); border: 1px solid var(--border-2); border-radius: 18px; overflow: hidden; margin-bottom: 12px; }
     .profile-menu-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border-2); cursor: pointer; background: transparent; border-left: none; border-right: none; border-top: none; width: 100%; text-align: left; font-family: inherit; font-size: 13.5px; color: var(--text-primary); transition: background-color 0.15s ease; }
     .profile-menu-item:last-child { border-bottom: none; }
@@ -479,8 +394,13 @@
     .profile-menu-item i:first-child { color: var(--accent-1); font-size: 16px; width: 22px; text-align: center; flex-shrink: 0; }
     .profile-menu-item span { flex: 1; }
     .profile-menu-item .chevron { color: var(--text-muted); font-size: 12px; flex-shrink: 0; }
-    .profile-menu-item.danger { color: var(--danger); }
-    .profile-menu-item.danger i:first-child { color: var(--danger); }
+    .profile-menu-item .badge-count { background: rgba(232, 168, 200, 0.15); color: var(--pink); border-radius: 10px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+
+    /* Отзывы */
+    .stars-row { display: flex; gap: 6px; justify-content: center; margin: 12px 0; }
+    .star-btn { background: transparent; border: none; font-size: 36px; color: var(--text-muted); cursor: pointer; padding: 0; transition: color 0.15s, transform 0.15s; }
+    .star-btn:hover { transform: scale(1.1); }
+    .star-btn.active { color: var(--warning); }
 
     @media (min-width: 901px) {
       .app { max-width: 900px; }
@@ -528,23 +448,37 @@
       <div class="header-actions">
         <button class="icon-btn lang-btn" id="langToggleBtn">RU</button>
         <button class="icon-btn" id="themeToggleBtn"><i class="fas fa-moon" id="themeIcon"></i></button>
-        <button class="icon-btn" id="scanBtn" style="display:none;" title="Сканер QR"><i class="fas fa-qrcode"></i></button>
-        <button class="icon-btn" id="adminToggleBtn"><i class="fas fa-clipboard-list"></i></button>
       </div>
     </div>
 
     <div class="content-scroll" id="contentScroll">
-
+	      <!-- ==================== HOME ==================== -->
       <div id="homePage" class="page active">
         <div class="home-hero">
           <h1>PRINT SOFT — точная печать без лишних шагов</h1>
           <p>Загружайте файлы онлайн — напечатаем ровно так, как нужно. Печать от 4 ₽, скидки до 20%, быстро и дёшево.</p>
         </div>
         <div class="feature-grid">
-          <div class="feature-card"><div class="feature-card-icon"><i class="fas fa-ruble-sign"></i></div><span class="feature-card-value">от 4 ₽</span><div class="feature-card-label">за страницу</div></div>
-          <div class="feature-card"><div class="feature-card-icon"><i class="fas fa-bolt"></i></div><span class="feature-card-value">1–2 дня</span><div class="feature-card-label">срок печати</div></div>
-          <div class="feature-card"><div class="feature-card-icon"><i class="fas fa-percent"></i></div><span class="feature-card-value">до 20%</span><div class="feature-card-label">скидки</div></div>
-          <div class="feature-card"><div class="feature-card-icon"><i class="fas fa-clock"></i></div><span class="feature-card-value">24/7</span><div class="feature-card-label">приём заказов</div></div>
+          <div class="feature-card">
+            <div class="feature-card-icon"><i class="fas fa-ruble-sign"></i></div>
+            <span class="feature-card-value">от 4 ₽</span>
+            <div class="feature-card-label">за страницу</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon"><i class="fas fa-bolt"></i></div>
+            <span class="feature-card-value">1–2 дня</span>
+            <div class="feature-card-label">срок печати</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon"><i class="fas fa-percent"></i></div>
+            <span class="feature-card-value">до 20%</span>
+            <div class="feature-card-label">скидки</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon"><i class="fas fa-clock"></i></div>
+            <span class="feature-card-value">24/7</span>
+            <div class="feature-card-label">приём заказов</div>
+          </div>
         </div>
         <div class="info-block">
           <div class="info-block-title"><i class="fas fa-building"></i> О компании</div>
@@ -593,6 +527,7 @@
         </div>
       </div>
 
+      <!-- ==================== CATALOG ==================== -->
       <div id="catalogPage" class="page">
         <h2><i class="fas fa-store"></i> <span data-i18n="home_title">Каталог полиграфии</span></h2>
         <div class="subhead" data-i18n="home_subhead">Выберите услугу и оформите заказ</div>
@@ -619,11 +554,13 @@
         <div class="grid" id="servicesGrid"></div>
       </div>
 
+      <!-- ==================== DETAIL ==================== -->
       <div id="detailPage" class="page">
         <button class="back-btn" id="backFromDetailBtn"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Назад</span></button>
         <div class="detail-card" id="detailContent"></div>
       </div>
 
+      <!-- ==================== CART ==================== -->
       <div id="cartPage" class="page">
         <h2><i class="fas fa-shopping-bag"></i> <span data-i18n="cart_title">Корзина</span></h2>
         <div class="subhead" data-i18n="cart_subhead">Ваши услуги</div>
@@ -634,6 +571,7 @@
           <button class="promo-btn" id="promoApplyBtn" data-i18n="promo_apply">Применить</button>
         </div>
         <div class="promo-status" id="promoStatus"></div>
+
         <div id="clientForm" style="display:none;">
           <div style="background:var(--card-bg); border-radius:16px; padding:14px; margin-bottom:10px; border:1px solid var(--border-2);">
             <div style="font-size:13px; color:var(--accent-1); margin-bottom:10px; font-weight:600;">
@@ -652,6 +590,7 @@
             <button type="button" class="clear-client-btn" id="clearSavedClientBtn">
               <i class="fas fa-user-edit"></i> <span data-i18n="clear_data">Ввести заново</span>
             </button>
+
             <div style="font-size:13px; color:var(--accent-1); margin: 14px 0 10px; font-weight:600;">
               <i class="fas fa-paperclip" style="margin-right:6px;"></i><span data-i18n="files">Файлы для печати</span>
             </div>
@@ -662,6 +601,7 @@
               <div class="upload-zone-hint">PDF, JPG, PNG, DOCX • до 5 МБ</div>
             </div>
             <div class="file-list" id="fileList"></div>
+
             <div class="preorder-block">
               <label class="preorder-toggle">
                 <input type="checkbox" id="preorderToggle">
@@ -672,35 +612,54 @@
                 <input type="time" id="preorderTime" class="preorder-input">
               </div>
             </div>
+
             <textarea id="clientComment" class="input-field" placeholder="Комментарий (необязательно)"></textarea>
           </div>
         </div>
-        <button class="btn" id="checkoutBtn"><i class="fas fa-check-circle"></i> <span data-i18n="checkout">Оформить заказ</span></button>
-        <button class="btn btn-outline" id="clearCartBtn"><i class="fas fa-trash-alt"></i> <span data-i18n="clear_cart">Очистить корзину</span></button>
+
+        <button class="btn" id="checkoutBtn">
+          <i class="fas fa-check-circle"></i> <span data-i18n="checkout">Оформить заказ</span>
+        </button>
+        <button class="btn btn-outline" id="clearCartBtn">
+          <i class="fas fa-trash-alt"></i> <span data-i18n="clear_cart">Очистить корзину</span>
+        </button>
       </div>
 
+      <!-- ==================== HISTORY ==================== -->
       <div id="historyPage" class="page">
         <h2><i class="fas fa-history"></i> <span data-i18n="history_title">Мои заказы</span></h2>
         <div class="subhead" data-i18n="history_subhead">Статус заказов</div>
         <div class="tab-switcher" id="clientTabSwitcher">
-          <button class="tab-switch-btn active" data-tab="active"><i class="fas fa-hourglass-half"></i> <span data-i18n="active">Активные</span> <span class="tab-count" id="activeCount">0</span></button>
-          <button class="tab-switch-btn" data-tab="archive"><i class="fas fa-archive"></i> <span data-i18n="archive">Архив</span> <span class="tab-count" id="archiveCount">0</span></button>
+          <button class="tab-switch-btn active" data-tab="active">
+            <i class="fas fa-hourglass-half"></i>
+            <span data-i18n="active">Активные</span>
+            <span class="tab-count" id="activeCount">0</span>
+          </button>
+          <button class="tab-switch-btn" data-tab="archive">
+            <i class="fas fa-archive"></i>
+            <span data-i18n="archive">Архив</span>
+            <span class="tab-count" id="archiveCount">0</span>
+          </button>
         </div>
         <div id="historyContainer"></div>
         <div class="info-banner" style="margin-top:10px; font-size:11.5px; text-align:center;">
-          <i class="fas fa-info-circle" style="margin-right:6px;"></i> <span data-i18n="archive_note">Архив чистит только админ</span>
+          <i class="fas fa-info-circle" style="margin-right:6px;"></i>
+          <span data-i18n="archive_note">Архив чистит только админ</span>
         </div>
       </div>
 
+      <!-- ==================== AUTH ==================== -->
       <div id="authPage" class="page">
         <div class="auth-card">
           <div class="auth-icon"><i class="fas fa-user-circle"></i></div>
           <div class="auth-title" id="authTitle">Регистрация</div>
           <div class="auth-desc" id="authDesc">Создайте аккаунт, чтобы отслеживать заказы</div>
+
           <div class="auth-tabs">
             <button class="auth-tab active" data-auth-tab="register">Регистрация</button>
             <button class="auth-tab" data-auth-tab="login">Вход</button>
           </div>
+
           <div id="authRegisterFields">
             <input type="text" id="authName" class="input-field" placeholder="Ваше имя" autocomplete="name">
             <input type="tel" id="authPhone" class="input-field" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" maxlength="18">
@@ -709,12 +668,14 @@
             <input type="password" id="authPasswordConfirm" class="input-field" placeholder="Повторите пароль" autocomplete="new-password">
             <div class="field-hint" id="authRegisterHint"></div>
           </div>
+
           <div id="authLoginFields" style="display:none;">
             <input type="tel" id="authLoginPhone" class="input-field" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" maxlength="18">
             <div class="field-hint" id="authLoginPhoneHint"></div>
             <input type="password" id="authLoginPassword" class="input-field" placeholder="Пароль" autocomplete="current-password">
             <div class="field-hint" id="authLoginHint"></div>
           </div>
+
           <button class="btn" id="authSubmitBtn" style="margin-top:10px;">
             <i class="fas fa-sign-in-alt"></i> <span id="authSubmitText">Зарегистрироваться</span>
           </button>
@@ -724,235 +685,236 @@
         </div>
       </div>
 
+      <!-- ==================== PROFILE (ОБНОВЛЁННЫЙ) ==================== -->
       <div id="profilePage" class="page">
         <h2><i class="fas fa-user-circle"></i> Профиль</h2>
         <div class="subhead">Ваши данные и статистика</div>
+
         <div class="profile-header">
           <div class="profile-avatar" id="profileAvatar">?</div>
           <div class="profile-name" id="profileName">Гость</div>
           <div class="profile-phone" id="profilePhone">Не авторизован</div>
           <div id="profileLevelBadge">
-            <span class="profile-badge"><i class="fas fa-star"></i> <span id="profileLevelText">Новичок</span></span>
+            <span class="profile-badge">
+              <i class="fas fa-star"></i>
+              <span id="profileLevelText">Новичок</span>
+            </span>
           </div>
         </div>
+
         <div class="profile-stats">
-          <div class="profile-stat"><span class="profile-stat-value" id="profileOrdersCount">0</span><div class="profile-stat-label">Заказов</div></div>
-          <div class="profile-stat"><span class="profile-stat-value" id="profileTotalSum">0 ₽</span><div class="profile-stat-label">Сумма</div></div>
-          <div class="profile-stat"><span class="profile-stat-value" id="profileBonuses">0</span><div class="profile-stat-label">Баллов</div></div>
+          <div class="profile-stat">
+            <span class="profile-stat-value" id="profileOrdersCount">0</span>
+            <div class="profile-stat-label">Заказов</div>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-value" id="profileTotalSum">0 ₽</span>
+            <div class="profile-stat-label">Сумма</div>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-value" id="profileBonuses">0</span>
+            <div class="profile-stat-label">Баллов</div>
+          </div>
         </div>
+
+        <!-- Бонусная карта -->
+        <div class="bonus-card" id="bonusCard">
+          <div class="bonus-title">
+            <i class="fas fa-crown"></i>
+            <span id="bonusTitleText">До уровня «Серебро»</span>
+          </div>
+          <div class="bonus-progress-bar">
+            <div class="bonus-progress-fill" id="bonusProgressFill" style="width:0%"></div>
+          </div>
+          <div class="bonus-progress-text">
+            <span id="bonusCurrentText">0 ₽</span>
+            <span id="bonusTargetText">1 000 ₽</span>
+          </div>
+        </div>
+
         <div class="profile-menu">
-          <button class="profile-menu-item" id="profileMyOrdersBtn"><i class="fas fa-history"></i><span>Мои заказы</span><i class="fas fa-chevron-right chevron"></i></button>
-          <button class="profile-menu-item" id="profileEditBtn" style="display:none;"><i class="fas fa-user-edit"></i><span>Редактировать профиль</span><i class="fas fa-chevron-right chevron"></i></button>
-          <button class="profile-menu-item" id="profileLangBtn"><i class="fas fa-globe"></i><span>Язык: <span id="profileLangValue">Русский</span></span><i class="fas fa-chevron-right chevron"></i></button>
-          <button class="profile-menu-item" id="profileThemeBtn"><i class="fas fa-moon"></i><span>Тема: <span id="profileThemeValue">Тёмная</span></span><i class="fas fa-chevron-right chevron"></i></button>
+          <button class="profile-menu-item" id="profileMyOrdersBtn">
+            <i class="fas fa-shopping-bag"></i>
+            <span>Мои заказы</span>
+            <span class="badge-count" id="profileOrdersBadge">0</span>
+            <i class="fas fa-chevron-right chevron"></i>
+          </button>
+          <button class="profile-menu-item" id="profileReviewsBtn">
+            <i class="fas fa-star"></i>
+            <span>Мои отзывы</span>
+            <span class="badge-count" id="profileReviewsBadge">0</span>
+            <i class="fas fa-chevron-right chevron"></i>
+          </button>
+          <button class="profile-menu-item" id="profileEditBtn" style="display:none;">
+            <i class="fas fa-user-edit"></i>
+            <span>Редактировать профиль</span>
+            <i class="fas fa-chevron-right chevron"></i>
+          </button>
+          <button class="profile-menu-item" id="profileLangBtn">
+            <i class="fas fa-globe"></i>
+            <span>Язык: <span id="profileLangValue">Русский</span></span>
+            <i class="fas fa-chevron-right chevron"></i>
+          </button>
+          <button class="profile-menu-item" id="profileThemeBtn">
+            <i class="fas fa-moon"></i>
+            <span>Тема: <span id="profileThemeValue">Тёмная</span></span>
+            <i class="fas fa-chevron-right chevron"></i>
+          </button>
         </div>
+
         <div id="profileAuthButtons">
-          <button class="btn" id="profileLoginBtn"><i class="fas fa-sign-in-alt"></i> Войти</button>
-          <button class="btn btn-outline" id="profileRegisterBtn"><i class="fas fa-user-plus"></i> Зарегистрироваться</button>
+          <button class="btn" id="profileLoginBtn">
+            <i class="fas fa-sign-in-alt"></i> Войти
+          </button>
+          <button class="btn btn-outline" id="profileRegisterBtn">
+            <i class="fas fa-user-plus"></i> Зарегистрироваться
+          </button>
         </div>
+
         <div id="profileLogoutBlock" style="display:none;">
-          <button class="btn btn-outline" id="profileLogoutBtn" style="color:var(--danger);border-color:rgba(232,140,140,0.4);"><i class="fas fa-sign-out-alt"></i> Выйти из аккаунта</button>
+          <button class="btn btn-outline" id="profileLogoutBtn" style="color:var(--danger);border-color:rgba(232,140,140,0.4);">
+            <i class="fas fa-sign-out-alt"></i> Выйти из аккаунта
+          </button>
         </div>
+
         <div class="info-banner" style="margin-top:14px;font-size:11.5px;text-align:center;">
-          <i class="fas fa-shield-alt" style="margin-right:6px;"></i> Данные хранятся на сервере Firebase
+          <i class="fas fa-shield-alt" style="margin-right:6px;"></i>
+          Данные хранятся на сервере Firebase
         </div>
-      </div>
-
-      <div id="loginPage" class="page">
-        <div class="login-card">
-          <div class="login-icon"><i class="fas fa-lock"></i></div>
-          <div class="login-title" data-i18n="login_title">Вход в панель</div>
-          <div class="login-desc" data-i18n="login_desc">Секретный код</div>
-          <input type="password" id="adminCodeInput" class="code-input" placeholder="•••••••••" inputmode="numeric" maxlength="20" autocomplete="off">
-          <div class="login-error" id="loginError"></div>
-          <button class="btn" id="loginSubmitBtn"><i class="fas fa-sign-in-alt"></i> <span data-i18n="login_submit">Войти</span></button>
-          <button class="btn btn-outline" id="loginCancelBtn"><i class="fas fa-arrow-left"></i> <span data-i18n="cancel">Отмена</span></button>
-        </div>
-      </div>
-
-      <div id="adminPage" class="page">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-          <h2 style="margin-bottom:0;"><i class="fas fa-clipboard-list"></i> <span data-i18n="admin_title">Панель</span></h2>
-          <button class="btn btn-outline btn-small" id="refreshOrdersBtn"><i class="fas fa-sync-alt"></i></button>
-        </div>
-        <div class="subhead" data-i18n="admin_subhead">Управление</div>
-        <div class="tab-switcher" id="adminSectionSwitcher">
-          <button class="tab-switch-btn active" data-section="orders"><i class="fas fa-shopping-bag"></i> <span data-i18n="admin_orders">Заказы</span></button>
-          <button class="tab-switch-btn" data-section="products"><i class="fas fa-boxes"></i> <span data-i18n="admin_products">Товары</span></button>
-          <button class="tab-switch-btn" data-section="analytics"><i class="fas fa-chart-bar"></i> <span data-i18n="admin_analytics">Аналитика</span></button>
-          <button class="tab-switch-btn" data-section="materials"><i class="fas fa-box"></i> <span data-i18n="admin_materials">Материалы</span></button>
-          <button class="tab-switch-btn" data-section="settings"><i class="fas fa-cog"></i> <span data-i18n="admin_settings">Настройки</span></button>
-        </div>
-        <div id="adminOrdersSection">
-          <div class="stats-grid">
-            <div class="stat-card"><span class="stat-value" id="statTotal">0</span><span class="stat-label" data-i18n="stat_total">Всего</span></div>
-            <div class="stat-card"><span class="stat-value" id="statNew">0</span><span class="stat-label" data-i18n="stat_new">Новых</span></div>
-          </div>
-          <div class="admin-search-wrap">
-            <i class="fas fa-search admin-search-icon"></i>
-            <input type="text" id="adminSearchInput" class="admin-search-input" placeholder="Поиск...">
-            <button class="admin-search-clear" id="adminSearchClear"><i class="fas fa-times"></i></button>
-          </div>
-          <div class="calendar-strip" id="calendarStrip"></div>
-          <div class="tab-switcher" id="adminTabSwitcher">
-            <button class="tab-switch-btn active" data-tab="active"><i class="fas fa-hourglass-half"></i> <span data-i18n="active">Активные</span> <span class="tab-count" id="adminActiveCount">0</span></button>
-            <button class="tab-switch-btn" data-tab="archive"><i class="fas fa-archive"></i> <span data-i18n="archive">Архив</span> <span class="tab-count" id="adminArchiveCount">0</span></button>
-          </div>
-          <div class="filter-row" id="adminFilters">
-            <button class="filter-btn active" data-filter="all">Все</button>
-            <button class="filter-btn" data-filter="new">Новые</button>
-            <button class="filter-btn" data-filter="progress">В работе</button>
-            <button class="filter-btn" data-filter="cancel">Отменены</button>
-          </div>
-          <div id="adminOrdersContainer"></div>
-          <div style="display:flex; gap:6px; margin-top:10px;">
-            <button class="btn btn-outline btn-small" id="exportCsvBtn" style="flex:1;"><i class="fas fa-file-csv"></i> CSV</button>
-            <button class="btn btn-outline btn-small" id="clearAllOrdersBtn" style="flex:1;"><i class="fas fa-trash-alt"></i> Удалить</button>
-          </div>
-        </div>
-        <div id="adminProductsSection" style="display:none;">
-          <div class="info-banner">Управление услугами</div>
-          <button class="btn btn-success" id="addProductBtn" style="margin-bottom:12px;"><i class="fas fa-plus"></i> Добавить</button>
-          <div id="adminProductsContainer"></div>
-        </div>
-        <div id="adminAnalyticsSection" style="display:none;">
-          <div class="stats-grid">
-            <div class="stat-card"><span class="stat-value" id="anaRevenue">0 ₽</span><span class="stat-label" data-i18n="ana_revenue">Выручка</span></div>
-            <div class="stat-card"><span class="stat-value" id="anaOrders">0</span><span class="stat-label" data-i18n="ana_orders">Заказов</span></div>
-            <div class="stat-card"><span class="stat-value" id="anaAvg">0 ₽</span><span class="stat-label" data-i18n="ana_avg">Средний чек</span></div>
-            <div class="stat-card"><span class="stat-value" id="anaDone">0%</span><span class="stat-label" data-i18n="ana_done">Выполнено</span></div>
-          </div>
-          <div class="analytics-block">
-            <div class="analytics-title"><span><i class="fas fa-chart-line"></i> <span data-i18n="ana_week">За 7 дней</span></span><span id="anaWeekTotal">0</span></div>
-            <div class="analytics-chart" id="anaChart"></div>
-          </div>
-          <div class="analytics-block">
-            <div class="analytics-title"><span><i class="fas fa-clock"></i> <span data-i18n="ana_hours">По часам</span></span><span id="anaHoursTotal">0</span></div>
-            <div class="hourly-chart" id="anaHoursChart"></div>
-          </div>
-          <div class="analytics-block">
-            <div class="analytics-title"><span><i class="fas fa-fire"></i> <span data-i18n="ana_top">Топ-5 услуг</span></span><span id="anaTopTotal">0</span></div>
-            <div id="anaTopList"></div>
-          </div>
-          <div class="analytics-block">
-            <div class="analytics-title"><span><i class="fas fa-users"></i> <span data-i18n="ana_clients">Топ-5 клиентов</span></span><span id="anaTopClientsTotal">0</span></div>
-            <div id="anaTopClients"></div>
-          </div>
-        </div>
-        <div id="adminMaterialsSection" style="display:none;">
-          <div id="materialsWarningContainer"></div>
-          <div id="materialsContainer"></div>
-        </div>
-        <div id="adminSettingsSection" style="display:none;">
-          <div class="notif-toggle-row">
-            <div class="notif-toggle-info">
-              <div class="notif-toggle-title">Звук при новом заказе</div>
-              <div class="notif-toggle-desc">Играть звук</div>
-            </div>
-            <div class="stock-toggle on" id="notifSoundToggle"><div class="toggle-switch"></div></div>
-          </div>
-          <div class="notif-toggle-row">
-            <div class="notif-toggle-info">
-              <div class="notif-toggle-title">Всплывающее уведомление</div>
-              <div class="notif-toggle-desc">Баннер сверху</div>
-            </div>
-            <div class="stock-toggle on" id="notifBannerToggle"><div class="toggle-switch"></div></div>
-          </div>
-          <h3 style="font-size:15px; font-weight:700; margin: 20px 0 12px;">Пароль админа</h3>
-          <div class="info-banner" style="font-size:11.5px;">
-            <i class="fas fa-shield-alt" style="margin-right:6px;"></i> SHA-256. Заводской: 444555666
-          </div>
-          <input type="password" id="newAdminPasswordInput" class="input-field" placeholder="Новый пароль" maxlength="20" inputmode="numeric">
-          <input type="password" id="newAdminPasswordConfirm" class="input-field" placeholder="Повторите пароль" maxlength="20" inputmode="numeric">
-          <div class="field-hint" id="passwordHint"></div>
-          <button class="btn btn-success" id="savePasswordBtn" style="margin-top:6px;"><i class="fas fa-key"></i> Сохранить пароль</button>
-          <button class="btn btn-outline" id="resetPasswordBtn"><i class="fas fa-undo"></i> Сбросить</button>
-        </div>
-      </div>
-
-      <div id="scanPage" class="page">
-        <button class="back-btn" id="scanBackBtn"><i class="fas fa-arrow-left"></i> Назад</button>
-        <h2><i class="fas fa-qrcode"></i> Сканер заказов</h2>
-        <div class="subhead">Наведите камеру на QR-код клиента</div>
-        <div id="qrReader" style="width:100%; border-radius:20px; overflow:hidden; background:#000; min-height:280px; margin-bottom:12px;"></div>
-        <button class="btn" id="scanStartBtn"><i class="fas fa-camera"></i> Запустить камеру</button>
-        <button class="btn btn-outline" id="scanStopBtn" style="display:none;"><i class="fas fa-stop"></i> Остановить</button>
-        <div id="scanResult" style="display:none; margin-top:8px;"></div>
       </div>
 
     </div>
 
     <div class="bottom-nav" id="bottomNav"></div>
 
-    <div class="modal-backdrop" id="productModal">
-      <div class="modal">
-        <div class="modal-title"><span id="modalTitle">Редактировать</span><button class="modal-close" id="modalCloseBtn"><i class="fas fa-times"></i></button></div>
-        <label class="form-label">Название</label>
-        <input type="text" id="modalTitleInput" class="input-field" placeholder="Название">
-        <label class="form-label">Краткое описание</label>
-        <input type="text" id="modalDescInput" class="input-field" placeholder="Описание">
-        <label class="form-label">Иконка</label>
-        <input type="text" id="modalIconInput" class="input-field" placeholder="fa-file-alt">
-        <label class="form-label">Категория</label>
-        <select id="modalCatInput" class="input-field" style="appearance:none;">
-          <option value="print">Печать</option>
-          <option value="copy">Копирование</option>
-          <option value="scan">Сканирование</option>
-          <option value="finish">Отделка</option>
-          <option value="photo">Фото</option>
-        </select>
-        <label class="form-label">Цена (₽)</label>
-        <input type="number" id="modalPriceInput" class="input-field" placeholder="0" min="0">
-        <label class="form-label">Единица</label>
-        <input type="text" id="modalUnitInput" class="input-field" placeholder="₽ / стр.">
-        <label class="form-label">Описание</label>
-        <textarea id="modalDetailsInput" class="input-field"></textarea>
-        <div style="display:flex; gap:8px; margin-top:10px;">
-          <button class="btn btn-success" id="modalSaveBtn" style="flex:1; margin-bottom:0;"><i class="fas fa-save"></i> Сохранить</button>
-          <button class="btn btn-outline" id="modalCancelBtn" style="flex:1; margin-bottom:0;">Отмена</button>
+    <!-- ==================== EDIT PROFILE MODAL ==================== -->
+    <div class="files-modal" id="editProfileModal" style="display:none;">
+      <div class="files-modal-content">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <div style="font-size:17px; font-weight:700; color:var(--text-primary);">Редактировать профиль</div>
+          <button class="modal-close" id="editProfileClose" style="background:transparent; border:none; color:var(--text-muted); font-size:20px; cursor:pointer;">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
-      </div>
-    </div>
 
-    <div class="modal-backdrop" id="materialModal">
-      <div class="modal">
-        <div class="modal-title"><span>Материал</span><button class="modal-close" id="materialModalClose"><i class="fas fa-times"></i></button></div>
-        <div class="form-label" id="materialNameLabel">Материал</div>
-        <label class="form-label">Остаток</label>
-        <input type="number" id="materialValueInput" class="input-field" placeholder="0" min="0">
-        <label class="form-label">Максимум</label>
-        <input type="number" id="materialMaxInput" class="input-field" placeholder="1000" min="1">
-        <div style="display:flex; gap:8px; margin-top:10px;">
-          <button class="btn btn-success" id="materialSaveBtn" style="flex:1; margin-bottom:0;"><i class="fas fa-save"></i> Сохранить</button>
-          <button class="btn btn-outline" id="materialCancelBtn" style="flex:1; margin-bottom:0;">Отмена</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal-backdrop" id="editProfileModal">
-      <div class="modal">
-        <div class="modal-title"><span>Редактировать профиль</span><button class="modal-close" id="editProfileClose"><i class="fas fa-times"></i></button></div>
-        <label class="form-label">Имя</label>
+        <label class="form-label" style="font-size:11.5px; color:var(--text-secondary); margin-bottom:4px; display:block; font-weight:600;">Имя</label>
         <input type="text" id="editNameInput" class="input-field" placeholder="Ваше имя">
-        <label class="form-label">Телефон</label>
+
+        <label class="form-label" style="font-size:11.5px; color:var(--text-secondary); margin-bottom:4px; display:block; font-weight:600;">Телефон</label>
         <input type="tel" id="editPhoneInput" class="input-field" placeholder="+7 (___) ___-__-__" maxlength="18">
-        <label class="form-label">Новый пароль (пусто — не менять)</label>
+
+        <label class="form-label" style="font-size:11.5px; color:var(--text-secondary); margin-bottom:4px; display:block; font-weight:600;">Новый пароль (пусто — не менять)</label>
         <input type="password" id="editPasswordInput" class="input-field" placeholder="Новый пароль">
         <div class="field-hint" id="editProfileHint"></div>
-        <div style="display:flex; gap:8px; margin-top:10px;">
-          <button class="btn btn-success" id="editProfileSave" style="flex:1; margin-bottom:0;"><i class="fas fa-save"></i> Сохранить</button>
-          <button class="btn btn-outline" id="editProfileCancel" style="flex:1; margin-bottom:0;">Отмена</button>
+
+        <div style="display:flex; gap:8px; margin-top:12px;">
+          <button class="btn btn-success" id="editProfileSave" style="flex:1; margin-bottom:0;">
+            <i class="fas fa-save"></i> Сохранить
+          </button>
+          <button class="btn btn-outline" id="editProfileCancel" style="flex:1; margin-bottom:0;">
+            Отмена
+          </button>
         </div>
+      </div>
+    </div>
+
+    <!-- ==================== REVIEW MODAL (ОТЗЫВ) ==================== -->
+    <div class="files-modal" id="reviewModal" style="display:none;">
+      <div class="files-modal-content">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <div style="font-size:17px; font-weight:700; color:var(--text-primary);">
+            <i class="fas fa-star" style="color:var(--warning); margin-right:6px;"></i>
+            Отзыв на заказ
+          </div>
+          <button class="modal-close" id="reviewClose" style="background:transparent; border:none; color:var(--text-muted); font-size:20px; cursor:pointer;">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div id="reviewOrderInfo" style="font-size:12.5px; color:var(--text-secondary); margin-bottom:16px; padding:8px 12px; background:var(--card-bg); border-radius:10px;"></div>
+
+        <div style="text-align:center; font-size:13px; font-weight:600; color:var(--text-primary); margin-bottom:4px;">
+          Оцените заказ
+        </div>
+        <div class="stars-row" id="reviewStars">
+          <button class="star-btn" data-star="1">★</button>
+          <button class="star-btn" data-star="2">★</button>
+          <button class="star-btn" data-star="3">★</button>
+          <button class="star-btn" data-star="4">★</button>
+          <button class="star-btn" data-star="5">★</button>
+        </div>
+        <div style="text-align:center; font-size:12px; color:var(--text-muted); margin-bottom:14px;" id="reviewStarsLabel">
+          Нажмите на звёзды
+        </div>
+
+        <label class="form-label" style="font-size:11.5px; color:var(--text-secondary); margin-bottom:4px; display:block; font-weight:600;">Комментарий (необязательно)</label>
+        <textarea id="reviewText" class="input-field" placeholder="Отличная печать, всё быстро!" maxlength="500" style="min-height:80px;"></textarea>
+
+        <div class="field-hint" id="reviewHint"></div>
+
+        <div style="display:flex; gap:8px; margin-top:12px;">
+          <button class="btn btn-success" id="reviewSaveBtn" style="flex:1; margin-bottom:0;">
+            <i class="fas fa-paper-plane"></i> Отправить отзыв
+          </button>
+          <button class="btn btn-outline" id="reviewCancelBtn" style="flex:1; margin-bottom:0;">
+            Отмена
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== MY REVIEWS MODAL ==================== -->
+    <div class="files-modal" id="myReviewsModal" style="display:none;">
+      <div class="files-modal-content">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <div style="font-size:17px; font-weight:700; color:var(--text-primary);">
+            <i class="fas fa-star" style="color:var(--warning); margin-right:6px;"></i>
+            Мои отзывы
+          </div>
+          <button class="modal-close" id="myReviewsClose" style="background:transparent; border:none; color:var(--text-muted); font-size:20px; cursor:pointer;">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div id="myReviewsList"></div>
+      </div>
+    </div>
+
+    <!-- ==================== ORDERS MODAL (ИЗ ПРОФИЛЯ) ==================== -->
+    <div class="files-modal" id="profileOrdersModal" style="display:none;">
+      <div class="files-modal-content">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <div style="font-size:17px; font-weight:700; color:var(--text-primary);">
+            <i class="fas fa-shopping-bag" style="color:var(--accent-1); margin-right:6px;"></i>
+            Мои заказы
+          </div>
+          <button class="modal-close" id="profileOrdersClose" style="background:transparent; border:none; color:var(--text-muted); font-size:20px; cursor:pointer;">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="tab-switcher" id="modalOrdersTabSwitcher" style="margin-bottom:12px;">
+          <button class="tab-switch-btn active" data-tab="active">
+            <i class="fas fa-hourglass-half"></i>
+            <span>Активные</span>
+            <span class="tab-count" id="modalActiveCount">0</span>
+          </button>
+          <button class="tab-switch-btn" data-tab="archive">
+            <i class="fas fa-archive"></i>
+            <span>Архив</span>
+            <span class="tab-count" id="modalArchiveCount">0</span>
+          </button>
+        </div>
+
+        <div id="profileOrdersList"></div>
       </div>
     </div>
 
   </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-  <script type="module">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, serverTimestamp, getDocs, setDoc, writeBatch, query, where }
+    import { getFirestore, collection, doc, addDoc, updateDoc, onSnapshot, serverTimestamp, getDocs, query, where, deleteDoc }
       from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     // ==================== ПЕРЕВОДЫ ====================
@@ -968,16 +930,9 @@
         checkout: 'Оформить заказ', clear_cart: 'Очистить корзину',
         history_title: 'Мои заказы', history_subhead: 'Статус заказов', active: 'Активные', archive: 'Архив',
         archive_note: 'Архив чистит только админ',
-        login_title: 'Вход в панель', login_desc: 'Секретный код', login_submit: 'Войти', cancel: 'Отмена',
-        admin_title: 'Панель', admin_subhead: 'Управление', admin_orders: 'Заказы', admin_products: 'Товары',
-        admin_analytics: 'Аналитика', admin_materials: 'Материалы', admin_settings: 'Настройки',
-        stat_total: 'Всего', stat_new: 'Новых',
-        ana_revenue: 'Выручка', ana_orders: 'Заказов', ana_avg: 'Средний чек', ana_done: 'Выполнено',
-        ana_week: 'За 7 дней', ana_hours: 'По часам', ana_top: 'Топ-5 услуг', ana_clients: 'Топ-5 клиентов',
-        order: 'Заказ', status_new: 'Новый', status_progress: 'В работе', status_done: 'Выполнен', status_cancel: 'Отменён',
+        order: 'Заказ', status_new: 'Новый', status_progress: 'В работе', status_ready: 'Готов к выдаче', status_done: 'Выполнен', status_cancel: 'Отменён',
         receipt: 'Чек', repeat: 'Повторить', cancel_order: 'Отменить заказ',
-        empty_cart: 'Корзина пуста', empty_services: 'Услуг пока нет', not_found: 'Ничего не найдено',
-        delete: 'Удалить', add_product: 'Добавить услугу', services_title: 'Все услуги', services_subhead: 'Каталог'
+        empty_cart: 'Корзина пуста', not_found: 'Ничего не найдено'
       },
       en: {
         splash_subtitle: 'Printing', home_title: 'Printing catalog', home_subhead: 'Choose a service and place an order',
@@ -990,16 +945,9 @@
         checkout: 'Place order', clear_cart: 'Clear cart',
         history_title: 'My orders', history_subhead: 'Order status', active: 'Active', archive: 'Archive',
         archive_note: 'Only admin can clear archive',
-        login_title: 'Admin login', login_desc: 'Secret code', login_submit: 'Login', cancel: 'Cancel',
-        admin_title: 'Panel', admin_subhead: 'Management', admin_orders: 'Orders', admin_products: 'Products',
-        admin_analytics: 'Analytics', admin_materials: 'Materials', admin_settings: 'Settings',
-        stat_total: 'Total', stat_new: 'New',
-        ana_revenue: 'Revenue', ana_orders: 'Orders', ana_avg: 'Average', ana_done: 'Completed',
-        ana_week: '7 days', ana_hours: 'By hour', ana_top: 'Top 5 services', ana_clients: 'Top 5 clients',
-        order: 'Order', status_new: 'New', status_progress: 'In progress', status_done: 'Completed', status_cancel: 'Cancelled',
+        order: 'Order', status_new: 'New', status_progress: 'In progress', status_ready: 'Ready', status_done: 'Completed', status_cancel: 'Cancelled',
         receipt: 'Receipt', repeat: 'Repeat', cancel_order: 'Cancel order',
-        empty_cart: 'Cart is empty', empty_services: 'No services yet', not_found: 'Nothing found',
-        delete: 'Delete', add_product: 'Add service', services_title: 'All services', services_subhead: 'Catalog'
+        empty_cart: 'Cart is empty', not_found: 'Nothing found'
       },
       sah: {
         splash_subtitle: 'Полиграфия', home_title: 'Полиграфия каталога', home_subhead: 'Өҥөнү тал уонна заказ оҥор',
@@ -1012,16 +960,9 @@
         checkout: 'Закаһы оҥор', clear_cart: 'Ыраастаа',
         history_title: 'Мин заказтарым', history_subhead: 'Статус', active: 'Көхтөөхтөр', archive: 'Архив',
         archive_note: 'Архивы админ эрэ ыраастыыр',
-        login_title: 'Панелга киирии', login_desc: 'Сэкриэт код', login_submit: 'Киир', cancel: 'Төннүү',
-        admin_title: 'Панель', admin_subhead: 'Салайыы', admin_orders: 'Заказтар', admin_products: 'Табаардар',
-        admin_analytics: 'Аналитика', admin_materials: 'Материаллар', admin_settings: 'Туруоруулар',
-        stat_total: 'Барыта', stat_new: 'Саҥалар',
-        ana_revenue: 'Киирбит', ana_orders: 'Заказтар', ana_avg: 'Орто', ana_done: 'Толоруллубут',
-        ana_week: '7 күн', ana_hours: 'Чааhынан', ana_top: 'Топ-5 өҥө', ana_clients: 'Топ-5 клиен',
-        order: 'Заказ', status_new: 'Саҥа', status_progress: 'Үлэлэhэр', status_done: 'Толоруллубут', status_cancel: 'Киллэммит',
+        order: 'Заказ', status_new: 'Саҥа', status_progress: 'Үлэлэhэр', status_ready: 'Бэлэм', status_done: 'Толоруллубут', status_cancel: 'Киллэммит',
         receipt: 'Чек', repeat: 'Хатылаа', cancel_order: 'Киллэр',
-        empty_cart: 'Кураанах', empty_services: 'Өҥөлөр суохтар', not_found: 'Көстүбэтэ',
-        delete: 'Сот', add_product: 'Өҥө эп', services_title: 'Бары өҥө', services_subhead: 'Каталог'
+        empty_cart: 'Кураанах', not_found: 'Көстүбэтэ'
       }
     };
 
@@ -1051,13 +992,7 @@
       renderServices();
       renderCategories();
       renderHistory();
-      if (state.isAdminMode) {
-        renderAdminOrders();
-        renderAdminProducts();
-        renderAnalytics();
-        renderMaterials();
-      }
-      if (state.currentPage === 'profile') renderProfile();
+      renderProfile();
     }
 
     function loadLanguage() {
@@ -1077,46 +1012,7 @@
       const encoder = new TextEncoder();
       const data = encoder.encode(text);
       const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
-    const DEFAULT_PASSWORD = '444555666';
-
-    async function getPasswordHash() {
-      let saved = localStorage.getItem('printsoft_admin_hash');
-      if (saved) return saved;
-      const hash = await sha256(DEFAULT_PASSWORD);
-      localStorage.setItem('printsoft_admin_hash', hash);
-      return hash;
-    }
-
-    async function checkPassword(input) {
-      const inputHash = await sha256(input);
-      const storedHash = await getPasswordHash();
-      return inputHash === storedHash;
-    }
-
-    // ==================== МАТЕРИАЛЫ ====================
-    const DEFAULT_MATERIALS = [
-      { id: 'a4_80', name: 'Бумага А4 80 г/м²', unit: 'листов', value: 500, max: 1000, min: 100 },
-      { id: 'a4_160', name: 'Бумага А4 160 г/м²', unit: 'листов', value: 150, max: 500, min: 50 },
-      { id: 'a3_80', name: 'Бумага А3 80 г/м²', unit: 'листов', value: 80, max: 300, min: 30 },
-      { id: 'laminate', name: 'Плёнка для ламинации', unit: 'листов', value: 120, max: 300, min: 30 },
-      { id: 'springs', name: 'Пружины для брошюровки', unit: 'шт', value: 45, max: 100, min: 15 },
-      { id: 'toner', name: 'Тонер (картридж)', unit: '%', value: 70, max: 100, min: 20 },
-    ];
-
-    let materials = [];
-    function loadMaterials() {
-      try {
-        const saved = localStorage.getItem('printsoft_materials');
-        if (saved) materials = JSON.parse(saved);
-        else { materials = JSON.parse(JSON.stringify(DEFAULT_MATERIALS)); saveMaterials(); }
-      } catch (e) { materials = JSON.parse(JSON.stringify(DEFAULT_MATERIALS)); }
-    }
-    function saveMaterials() {
-      try { localStorage.setItem('printsoft_materials', JSON.stringify(materials)); } catch (e) {}
+      return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
     // ==================== FIREBASE ====================
@@ -1149,7 +1045,7 @@
       }
     }
 
-    const SESSION_KEY = 'printsoft_admin_session';
+    // ==================== КОНСТАНТЫ ====================
     const SPLASH_DURATION = 3000;
     const MAX_FILE_SIZE = 5 * 1024 * 1024;
     const MAX_FILES = 10;
@@ -1183,27 +1079,52 @@
       { id: 10, title: 'Фотопечать A4', desc: 'Большие фото', price: 90, icon: 'fa-image', details: 'Фотопечать А4 на глянцевой или матовой бумаге.', unit: '₽ / лист', category: 'photo', available: true },
     ];
 
+    // ==================== STATE ====================
     const state = {
-      services: [...DEFAULT_SERVICES], cart: [], myOrders: [], allOrders: [],
-      favorites: new Set(), cartQty: {}, pendingFiles: [],
-      currentDetailId: null, currentPage: 'home', previousPage: 'home',
-      isTransitioning: false, transitionTimer: null, isAdminMode: false,
-      adminFilter: 'all', adminSearchQuery: '', adminSelectedDate: null,
-      clientTab: 'active', adminTab: 'active', adminSection: 'orders',
-      newStatusCount: 0, currentCategory: 'all',
-      searchQuery: '', appliedPromo: null, editingProductId: null,
-      editingMaterialId: null, notifSound: true, notifBanner: true,
-      currentUser: null, authMode: 'register'
+      services: [...DEFAULT_SERVICES],
+      cart: [],
+      myOrders: [],
+      myReviews: [],
+      cartQty: {},
+      pendingFiles: [],
+      currentDetailId: null,
+      currentPage: 'home',
+      isTransitioning: false,
+      transitionTimer: null,
+      clientTab: 'active',
+      modalTab: 'active',
+      currentCategory: 'all',
+      searchQuery: '',
+      appliedPromo: null,
+      currentUser: null,
+      authMode: 'register',
+      editingReviewOrderId: null,
+      currentReviewStars: 0
     };
 
-    const S = { HISTORY: 'printsoft_history', THEME: 'printsoft_theme', CLIENT: 'printsoft_client', NOTIF: 'printsoft_notif', USER: 'printsoft_current_user' };
+    const S = {
+      HISTORY: 'printsoft_history',
+      THEME: 'printsoft_theme',
+      CLIENT: 'printsoft_client',
+      USER: 'printsoft_current_user'
+    };
 
-    function getSavedClient() { try { const c = localStorage.getItem(S.CLIENT); return c ? JSON.parse(c) : null; } catch (e) { return null; } }
-    function saveClient(name, phone) { try { localStorage.setItem(S.CLIENT, JSON.stringify({ name, phone, savedAt: Date.now() })); } catch (e) {} }
-    function clearSavedClient() { try { localStorage.removeItem(S.CLIENT); } catch (e) {} }
-    function loadLocalHistory() { try { const h = localStorage.getItem(S.HISTORY); if (h) state.myOrders = JSON.parse(h); } catch (e) {} }
-    function saveLocalHistory() { try { localStorage.setItem(S.HISTORY, JSON.stringify(state.myOrders)); } catch (e) {} }
-
+    // ==================== LOCAL STORAGE ====================
+    function getSavedClient() {
+      try { const c = localStorage.getItem(S.CLIENT); return c ? JSON.parse(c) : null; } catch (e) { return null; }
+    }
+    function saveClient(name, phone) {
+      try { localStorage.setItem(S.CLIENT, JSON.stringify({ name, phone, savedAt: Date.now() })); } catch (e) {}
+    }
+    function clearSavedClient() {
+      try { localStorage.removeItem(S.CLIENT); } catch (e) {}
+    }
+    function loadLocalHistory() {
+      try { const h = localStorage.getItem(S.HISTORY); if (h) state.myOrders = JSON.parse(h); } catch (e) {}
+    }
+    function saveLocalHistory() {
+      try { localStorage.setItem(S.HISTORY, JSON.stringify(state.myOrders)); } catch (e) {}
+    }
     function loadCurrentUser() {
       try {
         const u = localStorage.getItem(S.USER);
@@ -1218,17 +1139,9 @@
       state.currentUser = user;
     }
 
-    function loadNotifSettings() {
-      try {
-        const n = localStorage.getItem(S.NOTIF);
-        if (n) { const parsed = JSON.parse(n); state.notifSound = parsed.sound !== false; state.notifBanner = parsed.banner !== false; }
-      } catch (e) {}
-    }
-    function saveNotifSettings() {
-      try { localStorage.setItem(S.NOTIF, JSON.stringify({ sound: state.notifSound, banner: state.notifBanner })); } catch (e) {}
-    }
-
+    // ==================== УТИЛИТЫ ====================
     function extractDigits(str) { return String(str).replace(/\D/g, ''); }
+
     function formatPhone(value) {
       let digits = extractDigits(value);
       if (digits.startsWith('8')) digits = '7' + digits.slice(1);
@@ -1242,6 +1155,7 @@
       if (rest.length <= 8) return `+7 (${rest.slice(0,3)}) ${rest.slice(3,6)}-${rest.slice(6)}`;
       return `+7 (${rest.slice(0,3)}) ${rest.slice(3,6)}-${rest.slice(6,8)}-${rest.slice(8,10)}`;
     }
+
     function isValidPhone(value) {
       const digits = extractDigits(value);
       if (digits.length !== 11) return false;
@@ -1249,11 +1163,13 @@
       if (!'34589'.includes(digits[1])) return false;
       return true;
     }
+
     function normalizePhone(value) {
       const digits = extractDigits(value);
       if (digits.length === 11 && digits.startsWith('7')) return '+' + digits;
       return value;
     }
+
     function displayPhone(value) {
       if (!value) return '—';
       const digits = extractDigits(value);
@@ -1263,52 +1179,14 @@
       return value;
     }
 
-    function statusIcon(status) { return { new: 'fa-circle', progress: 'fa-hourglass-half', done: 'fa-check-circle', cancel: 'fa-times-circle' }[status] || 'fa-circle'; }
-    function statusLabel(status) {
-      const map = { new: 'status_new', progress: 'status_progress', done: 'status_done', cancel: 'status_cancel' };
-      return t(map[status] || 'status_new');
-    }
-    function getProgressSteps(status) {
-      if (status === 'new') return ['active', '', '', ''];
-      if (status === 'progress') return ['progress-active', 'progress-active', '', ''];
-      if (status === 'done') return ['done-active', 'done-active', 'done-active', 'done-active'];
-      if (status === 'cancel') return ['cancel-active', 'cancel-active', 'cancel-active', 'cancel-active'];
-      return ['', '', '', ''];
-    }
-    function getActiveOrders(orders) { return orders.filter(o => { const s = o.status || 'new'; return s === 'new' || s === 'progress'; }); }
-    function getArchiveOrders(orders) { return orders.filter(o => { const s = o.status || 'new'; return s === 'done' || s === 'cancel'; }); }
-
-    function showToast(message) {
-      let toastEl = document.querySelector('.toast');
-      if (!toastEl) { toastEl = document.createElement('div'); toastEl.className = 'toast'; document.body.appendChild(toastEl); }
-      toastEl.textContent = message;
-      setTimeout(() => { if (toastEl && toastEl.parentNode) toastEl.remove(); }, 2200);
-    }
-    function showConnectionStatus(online) {
-      const el = document.getElementById('connectionStatus');
-      const txt = document.getElementById('connectionText');
-      if (!el || !txt) return;
-      el.className = 'connection-status ' + (online ? 'online' : 'offline');
-      txt.textContent = online ? 'OK' : '...';
-      if (online) setTimeout(() => { el.className = 'connection-status'; }, 2200);
-    }
-    function playSound(type) {
-      try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator(); const gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.frequency.value = type === 'new' ? 880 : 660;
-        gain.gain.setValueAtTime(0.1, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
-        osc.start(); osc.stop(ctx.currentTime + 0.4);
-      } catch (e) {}
-    }
     function formatBytes(bytes) {
       if (bytes === 0) return '0 Б';
-      const k = 1024; const sizes = ['Б', 'КБ', 'МБ'];
+      const k = 1024;
+      const sizes = ['Б', 'КБ', 'МБ'];
       const i = Math.floor(Math.log(bytes) / Math.log(k));
       return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
     }
+
     function fileIconFA(name) {
       const ext = name.split('.').pop().toLowerCase();
       if (ext === 'pdf') return 'fa-file-pdf';
@@ -1317,6 +1195,7 @@
       if (ext === 'txt') return 'fa-file-alt';
       return 'fa-file';
     }
+
     function fileIconClass(name) {
       const ext = name.split('.').pop().toLowerCase();
       if (ext === 'pdf') return 'pdf';
@@ -1324,22 +1203,81 @@
       if (['doc', 'docx', 'txt', 'rtf'].includes(ext)) return 'doc';
       return '';
     }
+
     function getClientUid() {
       let uid = localStorage.getItem('printsoft_uid');
-      if (!uid) { uid = 'u_' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36); localStorage.setItem('printsoft_uid', uid); }
+      if (!uid) {
+        uid = 'u_' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+        localStorage.setItem('printsoft_uid', uid);
+      }
       return uid;
     }
 
-    function showNewOrderNotification(order) {
-      if (!state.isAdminMode) return;
-      const oldNotif = document.querySelector('.new-order-notification');
-      if (oldNotif) oldNotif.remove();
-      const notif = document.createElement('div');
-      notif.className = 'new-order-notification';
-      notif.innerHTML = `<i class="fas fa-bell"></i><div><div style="font-size:14px;font-weight:700;">${t('order')}!</div><div style="font-size:11.5px;opacity:0.85;">${order.client.name} • ${order.total.toLocaleString()} ₽</div></div>`;
-      notif.addEventListener('click', () => { notif.remove(); showPage('admin'); });
-      document.body.appendChild(notif);
-      setTimeout(() => { if (notif.parentNode) notif.remove(); }, 5000);
+    function statusIcon(status) {
+      return {
+        new: 'fa-circle',
+        progress: 'fa-hourglass-half',
+        ready: 'fa-box-open',
+        done: 'fa-check-circle',
+        cancel: 'fa-times-circle'
+      }[status] || 'fa-circle';
+    }
+
+    function statusLabel(status) {
+      const map = { new: 'status_new', progress: 'status_progress', ready: 'status_ready', done: 'status_done', cancel: 'status_cancel' };
+      return t(map[status] || 'status_new');
+    }
+
+    function getProgressSteps(status) {
+      if (status === 'new') return ['active', '', '', '', ''];
+      if (status === 'progress') return ['progress-active', 'progress-active', '', '', ''];
+      if (status === 'ready') return ['progress-active', 'progress-active', 'ready-active', '', ''];
+      if (status === 'done') return ['done-active', 'done-active', 'done-active', 'done-active', 'done-active'];
+      if (status === 'cancel') return ['cancel-active', 'cancel-active', 'cancel-active', 'cancel-active', 'cancel-active'];
+      return ['', '', '', '', ''];
+    }
+
+    function getActiveOrders(orders) {
+      return orders.filter(o => { const s = o.status || 'new'; return s === 'new' || s === 'progress' || s === 'ready'; });
+    }
+
+    function getArchiveOrders(orders) {
+      return orders.filter(o => { const s = o.status || 'new'; return s === 'done' || s === 'cancel'; });
+    }
+
+    function showToast(message) {
+      let toastEl = document.querySelector('.toast');
+      if (!toastEl) {
+        toastEl = document.createElement('div');
+        toastEl.className = 'toast';
+        document.body.appendChild(toastEl);
+      }
+      toastEl.textContent = message;
+      setTimeout(() => { if (toastEl && toastEl.parentNode) toastEl.remove(); }, 2200);
+    }
+
+    function showConnectionStatus(online) {
+      const el = document.getElementById('connectionStatus');
+      const txt = document.getElementById('connectionText');
+      if (!el || !txt) return;
+      el.className = 'connection-status ' + (online ? 'online' : 'offline');
+      txt.textContent = online ? 'OK' : '...';
+      if (online) setTimeout(() => { el.className = 'connection-status'; }, 2200);
+    }
+
+    function playSound(type) {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.value = type === 'new' ? 880 : 660;
+        gain.gain.setValueAtTime(0.1, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.4);
+      } catch (e) {}
     }
 
     // ==================== DOM ====================
@@ -1351,30 +1289,20 @@
       history: document.getElementById('historyPage'),
       auth: document.getElementById('authPage'),
       profile: document.getElementById('profilePage'),
-      login: document.getElementById('loginPage'),
-      admin: document.getElementById('adminPage'),
-      scan: document.getElementById('scanPage'),
     };
+
     const contentScroll = document.getElementById('contentScroll');
     const servicesGrid = document.getElementById('servicesGrid');
     const detailContent = document.getElementById('detailContent');
     const cartItemsContainer = document.getElementById('cartItemsContainer');
     const cartTotalEl = document.getElementById('cartTotal');
     const historyContainer = document.getElementById('historyContainer');
-    const adminOrdersContainer = document.getElementById('adminOrdersContainer');
-    const adminSearchInput = document.getElementById('adminSearchInput');
-    const adminSearchClear = document.getElementById('adminSearchClear');
-    const calendarStrip = document.getElementById('calendarStrip');
     const backFromDetailBtn = document.getElementById('backFromDetailBtn');
-    const adminToggleBtn = document.getElementById('adminToggleBtn');
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     const langToggleBtn = document.getElementById('langToggleBtn');
     const langMenu = document.getElementById('langMenu');
     const checkoutBtn = document.getElementById('checkoutBtn');
     const clearCartBtn = document.getElementById('clearCartBtn');
-    const refreshOrdersBtn = document.getElementById('refreshOrdersBtn');
-    const clearAllOrdersBtn = document.getElementById('clearAllOrdersBtn');
-    const exportCsvBtn = document.getElementById('exportCsvBtn');
     const clientForm = document.getElementById('clientForm');
     const clientName = document.getElementById('clientName');
     const clientPhone = document.getElementById('clientPhone');
@@ -1387,59 +1315,18 @@
     const preorderDate = document.getElementById('preorderDate');
     const preorderTime = document.getElementById('preorderTime');
     const bottomNav = document.getElementById('bottomNav');
-    const logoText = document.getElementById('logoText');
-    const adminCodeInput = document.getElementById('adminCodeInput');
-    const loginSubmitBtn = document.getElementById('loginSubmitBtn');
-    const loginCancelBtn = document.getElementById('loginCancelBtn');
-    const loginError = document.getElementById('loginError');
     const activeCount = document.getElementById('activeCount');
     const archiveCount = document.getElementById('archiveCount');
-    const adminActiveCount = document.getElementById('adminActiveCount');
-    const adminArchiveCount = document.getElementById('adminArchiveCount');
-    const adminOrdersSection = document.getElementById('adminOrdersSection');
-    const adminProductsSection = document.getElementById('adminProductsSection');
-    const adminAnalyticsSection = document.getElementById('adminAnalyticsSection');
-    const adminMaterialsSection = document.getElementById('adminMaterialsSection');
-    const adminSettingsSection = document.getElementById('adminSettingsSection');
-    const adminProductsContainer = document.getElementById('adminProductsContainer');
-    const materialsContainer = document.getElementById('materialsContainer');
-    const materialsWarningContainer = document.getElementById('materialsWarningContainer');
     const searchInput = document.getElementById('searchInput');
     const searchClear = document.getElementById('searchClear');
     const catFilters = document.getElementById('catFilters');
     const promoInput = document.getElementById('promoInput');
     const promoApplyBtn = document.getElementById('promoApplyBtn');
     const promoStatus = document.getElementById('promoStatus');
-    const addProductBtn = document.getElementById('addProductBtn');
-    const productModal = document.getElementById('productModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalTitleInput = document.getElementById('modalTitleInput');
-    const modalDescInput = document.getElementById('modalDescInput');
-    const modalIconInput = document.getElementById('modalIconInput');
-    const modalCatInput = document.getElementById('modalCatInput');
-    const modalPriceInput = document.getElementById('modalPriceInput');
-    const modalUnitInput = document.getElementById('modalUnitInput');
-    const modalDetailsInput = document.getElementById('modalDetailsInput');
-    const modalSaveBtn = document.getElementById('modalSaveBtn');
-    const modalCancelBtn = document.getElementById('modalCancelBtn');
-    const modalCloseBtn = document.getElementById('modalCloseBtn');
-    const materialModal = document.getElementById('materialModal');
-    const materialNameLabel = document.getElementById('materialNameLabel');
-    const materialValueInput = document.getElementById('materialValueInput');
-    const materialMaxInput = document.getElementById('materialMaxInput');
-    const materialSaveBtn = document.getElementById('materialSaveBtn');
-    const materialCancelBtn = document.getElementById('materialCancelBtn');
-    const materialModalClose = document.getElementById('materialModalClose');
     const uploadZone = document.getElementById('uploadZone');
     const fileInput = document.getElementById('fileInput');
     const fileList = document.getElementById('fileList');
-    const newAdminPasswordInput = document.getElementById('newAdminPasswordInput');
-    const newAdminPasswordConfirm = document.getElementById('newAdminPasswordConfirm');
-    const passwordHint = document.getElementById('passwordHint');
-    const savePasswordBtn = document.getElementById('savePasswordBtn');
-    const resetPasswordBtn = document.getElementById('resetPasswordBtn');
 
-    const authPageEl = document.getElementById('authPage');
     const authTitle = document.getElementById('authTitle');
     const authDesc = document.getElementById('authDesc');
     const authRegisterFields = document.getElementById('authRegisterFields');
@@ -1451,7 +1338,6 @@
     const authPasswordConfirm = document.getElementById('authPasswordConfirm');
     const authRegisterHint = document.getElementById('authRegisterHint');
     const authLoginPhone = document.getElementById('authLoginPhone');
-    const authLoginPhoneHint = document.getElementById('authLoginPhoneHint');
     const authLoginPassword = document.getElementById('authLoginPassword');
     const authLoginHint = document.getElementById('authLoginHint');
     const authSubmitBtn = document.getElementById('authSubmitBtn');
@@ -1469,22 +1355,49 @@
     const profileLogoutBlock = document.getElementById('profileLogoutBlock');
     const profileLangValue = document.getElementById('profileLangValue');
     const profileThemeValue = document.getElementById('profileThemeValue');
+    const profileOrdersBadge = document.getElementById('profileOrdersBadge');
+    const profileReviewsBadge = document.getElementById('profileReviewsBadge');
 
+    // Bonus card
+    const bonusCard = document.getElementById('bonusCard');
+    const bonusTitleText = document.getElementById('bonusTitleText');
+    const bonusProgressFill = document.getElementById('bonusProgressFill');
+    const bonusCurrentText = document.getElementById('bonusCurrentText');
+    const bonusTargetText = document.getElementById('bonusTargetText');
+
+    // Edit profile modal
     const editProfileModal = document.getElementById('editProfileModal');
     const editNameInput = document.getElementById('editNameInput');
     const editPhoneInput = document.getElementById('editPhoneInput');
     const editPasswordInput = document.getElementById('editPasswordInput');
     const editProfileHint = document.getElementById('editProfileHint');
+    const editProfileClose = document.getElementById('editProfileClose');
+    const editProfileCancel = document.getElementById('editProfileCancel');
+    const editProfileSave = document.getElementById('editProfileSave');
 
-    const scanBtn = document.getElementById('scanBtn');
-    const scanBackBtn = document.getElementById('scanBackBtn');
-    const qrReaderEl = document.getElementById('qrReader');
-    const scanStartBtn = document.getElementById('scanStartBtn');
-    const scanStopBtn = document.getElementById('scanStopBtn');
-    const scanResultEl = document.getElementById('scanResult');
+    // Review modal
+    const reviewModal = document.getElementById('reviewModal');
+    const reviewOrderInfo = document.getElementById('reviewOrderInfo');
+    const reviewStars = document.getElementById('reviewStars');
+    const reviewStarsLabel = document.getElementById('reviewStarsLabel');
+    const reviewText = document.getElementById('reviewText');
+    const reviewHint = document.getElementById('reviewHint');
+    const reviewClose = document.getElementById('reviewClose');
+    const reviewCancelBtn = document.getElementById('reviewCancelBtn');
+    const reviewSaveBtn = document.getElementById('reviewSaveBtn');
 
-    let html5QrCode = null;
-    let isScanning = false;
+    // My reviews modal
+    const myReviewsModal = document.getElementById('myReviewsModal');
+    const myReviewsClose = document.getElementById('myReviewsClose');
+    const myReviewsList = document.getElementById('myReviewsList');
+
+    // Profile orders modal
+    const profileOrdersModal = document.getElementById('profileOrdersModal');
+    const profileOrdersClose = document.getElementById('profileOrdersClose');
+    const profileOrdersList = document.getElementById('profileOrdersList');
+    const modalActiveCount = document.getElementById('modalActiveCount');
+    const modalArchiveCount = document.getElementById('modalArchiveCount');
+    const modalOrdersTabSwitcher = document.getElementById('modalOrdersTabSwitcher');
 
     // ==================== НАВИГАЦИЯ ====================
     function showPage(pageId) {
@@ -1496,7 +1409,7 @@
       if (currentEl) currentEl.classList.remove('active');
       nextEl.classList.add('active');
       state.currentPage = pageId;
-      if (pageId === 'history') { renderHistory(); state.newStatusCount = 0; }
+      if (pageId === 'history') renderHistory();
       if (pageId === 'catalog') renderServices();
       if (pageId === 'profile') renderProfile();
       renderBottomNav();
@@ -1507,41 +1420,15 @@
 
     function renderBottomNav() {
       if (!bottomNav) return;
-      if (state.currentPage === 'login' || state.currentPage === 'auth') { bottomNav.innerHTML = ''; return; }
-      if (state.isAdminMode) {
-        bottomNav.innerHTML = `
-          <button class="nav-item ${state.currentPage === 'admin' ? 'active' : ''}" data-page="admin"><i class="fas fa-clipboard-list"></i> ${t('admin_title')}</button>
-          <button class="nav-item ${state.currentPage === 'scan' ? 'active' : ''}" data-page="scan"><i class="fas fa-qrcode"></i> Сканер</button>
-          <button class="nav-item" data-page="exit"><i class="fas fa-sign-out-alt"></i> ${t('cancel')}</button>
-        `;
-        bottomNav.querySelectorAll('.nav-item').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const p = btn.dataset.page;
-            if (p === 'exit') {
-              sessionStorage.removeItem(SESSION_KEY);
-              state.isAdminMode = false;
-              adminToggleBtn.classList.remove('admin-active');
-              if (scanBtn) scanBtn.style.display = 'none';
-              if (isScanning) stopScanning();
-              logoText.innerHTML = `<i class="fas fa-print"></i> <span>PRINT</span><span style="color:var(--accent-2);">SOFT</span>`;
-              updateAdminBadge();
-              showToast('OK');
-              showPage('home');
-            } else showPage(p);
-          });
-        });
-      } else {
-        const unseen = state.newStatusCount;
-        const historyBadge = unseen > 0 ? `<span class="nav-badge">${unseen}</span>` : '';
-        bottomNav.innerHTML = `
-          <button class="nav-item ${state.currentPage === 'home' ? 'active' : ''}" data-page="home"><i class="fas fa-home"></i> Главная</button>
-          <button class="nav-item ${state.currentPage === 'catalog' || state.currentPage === 'detail' ? 'active' : ''}" data-page="catalog"><i class="fas fa-store"></i> Каталог</button>
-          <button class="nav-item ${state.currentPage === 'cart' ? 'active' : ''}" data-page="cart"><i class="fas fa-shopping-cart"></i> ${t('cart_title')}</button>
-          <button class="nav-item ${state.currentPage === 'history' ? 'active' : ''}" data-page="history"><i class="fas fa-history"></i> Заказы${historyBadge}</button>
-          <button class="nav-item ${state.currentPage === 'profile' ? 'active' : ''}" data-page="profile"><i class="fas fa-user-circle"></i> Профиль</button>
-        `;
-        bottomNav.querySelectorAll('.nav-item').forEach(btn => btn.addEventListener('click', () => showPage(btn.dataset.page)));
-      }
+      if (state.currentPage === 'auth') { bottomNav.innerHTML = ''; return; }
+      bottomNav.innerHTML = `
+        <button class="nav-item ${state.currentPage === 'home' ? 'active' : ''}" data-page="home"><i class="fas fa-home"></i> Главная</button>
+        <button class="nav-item ${state.currentPage === 'catalog' || state.currentPage === 'detail' ? 'active' : ''}" data-page="catalog"><i class="fas fa-store"></i> Каталог</button>
+        <button class="nav-item ${state.currentPage === 'cart' ? 'active' : ''}" data-page="cart"><i class="fas fa-shopping-cart"></i> ${t('cart_title')}</button>
+        <button class="nav-item ${state.currentPage === 'history' ? 'active' : ''}" data-page="history"><i class="fas fa-history"></i> Заказы</button>
+        <button class="nav-item ${state.currentPage === 'profile' ? 'active' : ''}" data-page="profile"><i class="fas fa-user-circle"></i> Профиль</button>
+      `;
+      bottomNav.querySelectorAll('.nav-item').forEach(btn => btn.addEventListener('click', () => showPage(btn.dataset.page)));
     }
 
     // ==================== ЯЗЫК ====================
@@ -1592,7 +1479,11 @@
           return;
         }
         try {
-          await addDoc(collection(db, 'design_subscribers'), { email, createdAt: serverTimestamp(), date: new Date().toLocaleString('ru-RU') });
+          await addDoc(collection(db, 'design_subscribers'), {
+            email,
+            createdAt: serverTimestamp(),
+            date: new Date().toLocaleString('ru-RU')
+          });
         } catch (e) {
           try {
             const list = JSON.parse(localStorage.getItem('printsoft_design_subs') || '[]');
@@ -1633,7 +1524,10 @@
     }
     if (searchClear) {
       searchClear.addEventListener('click', () => {
-        searchInput.value = ''; state.searchQuery = ''; searchClear.classList.remove('visible'); renderServices();
+        searchInput.value = '';
+        state.searchQuery = '';
+        searchClear.classList.remove('visible');
+        renderServices();
       });
     }
 
@@ -1719,7 +1613,8 @@
       const calcTotal = document.getElementById('calcTotal');
       const updateTotal = () => {
         let v = parseInt(qtyInput.value) || 1;
-        if (v < 1) v = 1; if (v > 10000) v = 10000;
+        if (v < 1) v = 1;
+        if (v > 10000) v = 10000;
         state.cartQty[id] = v;
         calcTotal.textContent = (service.price * v).toLocaleString() + ' ₽';
       };
@@ -1727,7 +1622,9 @@
       document.getElementById('qtyPlus').addEventListener('click', () => { qtyInput.value = Math.min(10000, (parseInt(qtyInput.value) || 1) + 1); updateTotal(); });
       qtyInput.addEventListener('input', updateTotal);
 
-      if (available) document.getElementById('addToCartFromDetailBtn').addEventListener('click', () => addToCart(service.id, state.cartQty[id] || 1));
+      if (available) {
+        document.getElementById('addToCartFromDetailBtn').addEventListener('click', () => addToCart(service.id, state.cartQty[id] || 1));
+      }
       showPage('detail');
     }
 
@@ -1749,7 +1646,8 @@
 
     function clearCart() {
       if (state.cart.length === 0) return;
-      state.cart = []; state.appliedPromo = null;
+      state.cart = [];
+      state.appliedPromo = null;
       state.pendingFiles = [];
       if (preorderToggle) preorderToggle.checked = false;
       if (preorderFields) preorderFields.classList.remove('visible');
@@ -1822,7 +1720,10 @@
       }
       if (clientName.value.trim() && clientPhone.value && isValidPhone(clientPhone.value)) return;
       const saved = getSavedClient();
-      if (!saved) { if (clientSavedHint) clientSavedHint.style.display = 'none'; return; }
+      if (!saved) {
+        if (clientSavedHint) clientSavedHint.style.display = 'none';
+        return;
+      }
       if (!clientName.value.trim() && saved.name) clientName.value = saved.name;
       if (!clientPhone.value && saved.phone) {
         clientPhone.value = formatPhone(saved.phone);
@@ -1839,7 +1740,10 @@
     if (cartItemsContainer) {
       cartItemsContainer.addEventListener('click', (e) => {
         const btn = e.target.closest('.cart-remove');
-        if (btn) { e.stopPropagation(); removeFromCart(parseInt(btn.dataset.id, 10)); }
+        if (btn) {
+          e.stopPropagation();
+          removeFromCart(parseInt(btn.dataset.id, 10));
+        }
       });
     }
 
@@ -1849,8 +1753,11 @@
         if (!code) { promoStatus.textContent = '×'; promoStatus.className = 'promo-status err'; return; }
         const promo = PROMOCODES[code];
         if (!promo) {
-          promoStatus.textContent = '✗'; promoStatus.className = 'promo-status err';
-          state.appliedPromo = null; renderCartItems(); return;
+          promoStatus.textContent = '✗';
+          promoStatus.className = 'promo-status err';
+          state.appliedPromo = null;
+          renderCartItems();
+          return;
         }
         state.appliedPromo = { ...promo, code };
         promoStatus.textContent = `✓ ${promo.label}`;
@@ -1937,12 +1844,24 @@
         files_count: state.pendingFiles.length,
         to_email: ADMIN_EMAIL,
       };
-      try { await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams); return { ok: true }; }
-      catch (err) { return { ok: false }; }
+      try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+        return { ok: true };
+      } catch (err) {
+        return { ok: false };
+      }
     }
 
+    // ==================== ЧЕК ====================
     function generateReceipt(order) {
-      const itemsHtml = order.items.map(i => `<tr><td style="padding:6px 0;border-bottom:1px dashed #ccc;">${i.title}</td><td style="padding:6px 0;border-bottom:1px dashed #ccc;text-align:center;">${i.qty}</td><td style="padding:6px 0;border-bottom:1px dashed #ccc;text-align:right;">${i.price.toLocaleString()} ₽</td><td style="padding:6px 0;border-bottom:1px dashed #ccc;text-align:right;">${(i.qty * i.price).toLocaleString()} ₽</td></tr>`).join('');
+      const itemsHtml = order.items.map(i => `
+        <tr>
+          <td style="padding:6px 0;border-bottom:1px dashed #ccc;">${i.title}</td>
+          <td style="padding:6px 0;border-bottom:1px dashed #ccc;text-align:center;">${i.qty}</td>
+          <td style="padding:6px 0;border-bottom:1px dashed #ccc;text-align:right;">${i.price.toLocaleString()} ₽</td>
+          <td style="padding:6px 0;border-bottom:1px dashed #ccc;text-align:right;">${(i.qty * i.price).toLocaleString()} ₽</td>
+        </tr>
+      `).join('');
       const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${order.orderId}</title>
         <style>body{font-family:'Courier New',monospace;max-width:500px;margin:20px auto;padding:20px;color:#000;}
         .header{text-align:center;border-bottom:2px solid #000;padding-bottom:12px;margin-bottom:16px;}
@@ -1966,7 +1885,7 @@
       win.document.close();
     }
 
-    // ==================== ОФОРМЛЕНИЕ ====================
+    // ==================== ОФОРМЛЕНИЕ ЗАКАЗА ====================
     async function checkout() {
       if (state.cart.length === 0) { showToast(t('empty_cart')); return; }
       const name = clientName.value.trim();
@@ -1996,10 +1915,12 @@
         client: { name, phone, comment },
         items: state.cart.map(item => ({ title: item.title, qty: item.quantity, price: item.price })),
         files: filesList,
-        preorder: preorder,
-        total, baseTotal,
+        preorder,
+        total,
+        baseTotal,
         promo: state.appliedPromo ? state.appliedPromo.code : null,
         status: 'new',
+        cellNumber: null,
         createdAt: serverTimestamp(),
         clientUid: getClientUid(),
         userPhone: state.currentUser ? state.currentUser.phone : phone
@@ -2014,14 +1935,17 @@
         saveLocalHistory();
         if (rememberMe && rememberMe.checked) saveClient(name, phone);
 
-        state.cart = []; state.appliedPromo = null;
+        state.cart = [];
+        state.appliedPromo = null;
         state.pendingFiles = [];
         if (preorderToggle) preorderToggle.checked = false;
         if (preorderFields) preorderFields.classList.remove('visible');
         if (preorderDate) preorderDate.value = '';
         if (preorderTime) preorderTime.value = '';
         renderFileList();
-        clientName.value = ''; clientPhone.value = ''; clientComment.value = '';
+        clientName.value = '';
+        clientPhone.value = '';
+        clientComment.value = '';
         clientPhone.classList.remove('valid', 'error');
         if (promoInput) promoInput.value = '';
         if (promoStatus) { promoStatus.textContent = ''; promoStatus.className = 'promo-status'; }
@@ -2057,164 +1981,165 @@
         historyContainer.innerHTML = `<div class="empty-message"><i class="fas fa-inbox"></i> —</div>`;
         return;
       }
-      historyContainer.innerHTML = list.map(order => {
-        const status = order.status || 'new';
-        const stepActive = getProgressSteps(status);
-        const canCancel = status === 'new';
-        const preorderBadge = order.preorder && order.preorder.date
-          ? `<div style="font-size:11.5px;color:var(--warning);margin-bottom:6px;"><i class="fas fa-clock"></i> ${order.preorder.date} ${order.preorder.time}</div>` : '';
-        return `<div class="order-card status-${status}">
-          <div class="order-header"><span class="order-id">${order.orderId}</span><span class="order-date">${order.date}</span></div>
-          <div class="order-items">${order.items.map(i => `• ${i.title} — ${i.qty} × ${i.price.toLocaleString()} ₽`).join('<br>')}</div>
-          ${preorderBadge}
-          ${order.promo ? `<div style="font-size:11.5px;color:var(--success);margin-bottom:6px;"><i class="fas fa-tag"></i> ${order.promo}</div>` : ''}
-          ${order.files && order.files.length > 0 ? `<div class="order-files">${order.files.map(f => `<span class="order-file-chip"><i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span></span>`).join('')}</div>` : ''}
-          <div class="order-progress">${stepActive.map(cls => `<div class="progress-step ${cls}"></div>`).join('')}</div>
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-top:8px;">
-            <span class="order-status ${status}"><i class="fas ${statusIcon(status)}"></i> ${statusLabel(status)}</span>
-            <span class="order-total">${order.total.toLocaleString()} ₽</span>
-          </div>
-          <div class="order-actions-row">
-            <button class="btn btn-outline btn-small" data-qr="${order.orderId}"><i class="fas fa-qrcode"></i> QR</button>
-            <button class="btn btn-outline btn-small" data-receipt="${order.orderId}"><i class="fas fa-receipt"></i> ${t('receipt')}</button>
-            <button class="btn btn-outline btn-small" data-repeat="${order.orderId}"><i class="fas fa-redo"></i> ${t('repeat')}</button>
-            ${canCancel ? `<button class="btn btn-outline btn-small btn-danger" data-cancel-order="${order.id}"><i class="fas fa-times"></i></button>` : ''}
-          </div>
-        </div>`;
-      }).join('');
+      historyContainer.innerHTML = list.map(order => renderOrderCard(order, false)).join('');
+    }
+
+    function renderOrderCard(order, isInModal) {
+      const status = order.status || 'new';
+      const stepActive = getProgressSteps(status);
+      const canCancel = status === 'new';
+      const isReady = status === 'ready';
+      const isDone = status === 'done';
+      const hasReview = state.myReviews.some(r => r.orderId === (order.orderId || order.id));
+
+      const preorderBadge = order.preorder && order.preorder.date
+        ? `<div style="font-size:11.5px;color:var(--warning);margin-bottom:6px;"><i class="fas fa-clock"></i> ${order.preorder.date} ${order.preorder.time}</div>`
+        : '';
+
+      // Готов к выдаче — большая плашка
+      const readyBlock = isReady
+        ? `<div class="ready-badge">
+            <div class="ready-badge-icon"><i class="fas fa-box-open"></i></div>
+            <div class="ready-badge-title">Готов к выдаче</div>
+            <div class="ready-badge-text">Покажите QR-код на кассе</div>
+           </div>`
+        : '';
+
+      // Кнопка QR показывается только когда ready
+      const qrBtn = isReady
+        ? `<button class="btn btn-outline btn-small" data-qr="${order.orderId}"><i class="fas fa-qrcode"></i> QR</button>`
+        : '';
+
+      // Кнопка "Оставить отзыв" — только для done и если ещё нет отзыва
+      const reviewBtn = (isDone && !hasReview)
+        ? `<button class="btn btn-outline btn-small" data-review="${order.id}" data-orderid="${order.orderId}"><i class="fas fa-star"></i> Отзыв</button>`
+        : '';
+
+      // Если отзыв уже есть — показываем галочку
+      const reviewDone = (isDone && hasReview)
+        ? `<button class="btn btn-outline btn-small" style="color:var(--success);border-color:rgba(140,220,160,0.4);" disabled><i class="fas fa-check-circle"></i> Отзыв оставлен</button>`
+        : '';
+
+      return `<div class="order-card status-${status}">
+        <div class="order-header"><span class="order-id">${order.orderId}</span><span class="order-date">${order.date}</span></div>
+        <div class="order-items">${order.items.map(i => `• ${i.title} — ${i.qty} × ${i.price.toLocaleString()} ₽`).join('<br>')}</div>
+        ${preorderBadge}
+        ${order.promo ? `<div style="font-size:11.5px;color:var(--success);margin-bottom:6px;"><i class="fas fa-tag"></i> ${order.promo}</div>` : ''}
+        ${order.files && order.files.length > 0 ? `<div class="order-files">${order.files.map(f => `<span class="order-file-chip"><i class="fas ${fileIconFA(f.name)}"></i><span class="name">${f.name}</span></span>`).join('')}</div>` : ''}
+        <div class="order-progress">${stepActive.map(cls => `<div class="progress-step ${cls}"></div>`).join('')}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-top:8px;">
+          <span class="order-status ${status}"><i class="fas ${statusIcon(status)}"></i> ${statusLabel(status)}</span>
+          <span class="order-total">${order.total.toLocaleString()} ₽</span>
+        </div>
+        ${readyBlock}
+        <div class="order-actions-row">
+          ${qrBtn}
+          <button class="btn btn-outline btn-small" data-receipt="${order.orderId}"><i class="fas fa-receipt"></i> ${t('receipt')}</button>
+          <button class="btn btn-outline btn-small" data-repeat="${order.orderId}"><i class="fas fa-redo"></i> ${t('repeat')}</button>
+          ${reviewBtn}
+          ${reviewDone}
+          ${canCancel ? `<button class="btn btn-outline btn-small btn-danger" data-cancel-order="${order.id}"><i class="fas fa-times"></i></button>` : ''}
+        </div>
+      </div>`;
     }
 
     if (historyContainer) {
-      historyContainer.addEventListener('click', async (e) => {
-        const qrBtn = e.target.closest('[data-qr]');
-        if (qrBtn) { e.stopPropagation(); showQRModal(qrBtn.dataset.qr); return; }
-        const receiptBtn = e.target.closest('[data-receipt]');
-        if (receiptBtn) { e.stopPropagation(); const o = state.myOrders.find(x => x.orderId === receiptBtn.dataset.receipt); if (o) generateReceipt(o); return; }
-        const repeatBtn = e.target.closest('[data-repeat]');
-        if (repeatBtn) { e.stopPropagation(); repeatOrder(repeatBtn.dataset.repeat); return; }
-        const cancelBtn = e.target.closest('[data-cancel-order]');
-        if (cancelBtn) {
-          e.stopPropagation();
-          if (confirm(t('cancel_order') + '?')) {
-            try { await updateDoc(doc(db, 'orders', cancelBtn.dataset.cancelOrder), { status: 'cancel' }); showToast('OK'); }
-            catch (err) { showToast('✗'); }
+      historyContainer.addEventListener('click', handleHistoryClick);
+    }
+
+    async function handleHistoryClick(e) {
+      const qrBtn = e.target.closest('[data-qr]');
+      if (qrBtn) {
+        e.stopPropagation();
+        showQRModal(qrBtn.dataset.qr);
+        return;
+      }
+
+      const receiptBtn = e.target.closest('[data-receipt]');
+      if (receiptBtn) {
+        e.stopPropagation();
+        const o = state.myOrders.find(x => x.orderId === receiptBtn.dataset.receipt);
+        if (o) generateReceipt(o);
+        return;
+      }
+
+      const repeatBtn = e.target.closest('[data-repeat]');
+      if (repeatBtn) {
+        e.stopPropagation();
+        repeatOrder(repeatBtn.dataset.repeat);
+        return;
+      }
+
+      const reviewBtn = e.target.closest('[data-review]');
+      if (reviewBtn) {
+        e.stopPropagation();
+        openReviewModal(reviewBtn.dataset.review, reviewBtn.dataset.orderid);
+        return;
+      }
+
+      const cancelBtn = e.target.closest('[data-cancel-order]');
+      if (cancelBtn) {
+        e.stopPropagation();
+        if (confirm(t('cancel_order') + '?')) {
+          try {
+            await updateDoc(doc(db, 'orders', cancelBtn.dataset.cancelOrder), { status: 'cancel' });
+            showToast('OK');
+          } catch (err) {
+            showToast('✗');
           }
         }
-      });
+      }
     }
 
     // ==================== QR ====================
-    async function ensureQRCodeLib() {
-      if (window.QRCode && typeof window.QRCode.toCanvas === 'function') return true;
-      const start = Date.now();
-      while (!window.QRCode && Date.now() - start < 5000) { await new Promise(r => setTimeout(r, 100)); }
-      return !!(window.QRCode && typeof window.QRCode.toCanvas === 'function');
-    }
-
-    async function showQRModal(orderId) {
+    function showQRModal(orderId) {
       const old = document.getElementById('qrModalBackdrop');
       if (old) old.remove();
-      const modalHtml = `<div class="files-modal" id="qrModalBackdrop"><div class="files-modal-content" style="text-align:center;">
-        <div style="font-size:17px;font-weight:700;color:var(--text-primary);margin-bottom:6px;">Ваш QR-код</div>
-        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:16px;">Покажите этот код администратору</div>
-        <div id="qrCanvasHolder" style="display:flex;justify-content:center;align-items:center;margin-bottom:16px;background:#fff;padding:16px;border-radius:16px;min-height:272px;">
-          <div style="color:#14162a;font-size:13px;">Генерация...</div>
+
+      const modalHtml = `
+        <div class="files-modal" id="qrModalBackdrop">
+          <div class="files-modal-content" style="text-align:center;">
+            <div style="font-size:17px;font-weight:700;color:var(--text-primary);margin-bottom:6px;">Ваш QR-код</div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-bottom:16px;">Покажите этот код администратору</div>
+            <div id="qrCanvasHolder" style="display:flex;justify-content:center;align-items:center;margin-bottom:16px;background:#fff;padding:16px;border-radius:16px;min-height:272px;">
+              <div style="color:#14162a;font-size:13px;">Генерация...</div>
+            </div>
+            <div style="font-size:15px;font-weight:800;color:var(--accent-1);margin-bottom:16px;">${orderId}</div>
+            <button class="btn" id="qrModalCloseBtn" style="margin-bottom:0;"><i class="fas fa-check"></i> Закрыть</button>
+          </div>
         </div>
-        <div style="font-size:15px;font-weight:800;color:var(--accent-1);margin-bottom:16px;">${orderId}</div>
-        <button class="btn" id="qrModalCloseBtn" style="margin-bottom:0;"><i class="fas fa-check"></i> Закрыть</button>
-      </div></div>`;
+      `;
       document.body.insertAdjacentHTML('beforeend', modalHtml);
+
       const backdrop = document.getElementById('qrModalBackdrop');
       const closeBtn = document.getElementById('qrModalCloseBtn');
       closeBtn.addEventListener('click', () => backdrop.remove());
       backdrop.addEventListener('click', (e) => { if (e.target === backdrop) backdrop.remove(); });
+
       const holder = document.getElementById('qrCanvasHolder');
-      const libOk = await ensureQRCodeLib();
-      if (!libOk) { holder.innerHTML = `<div style="color:#c84a4a;font-size:13px;padding:20px;">Ошибка QR</div>`; return; }
-      const canvas = document.createElement('canvas');
-      holder.innerHTML = '';
-      holder.appendChild(canvas);
-      try {
-        await window.QRCode.toCanvas(canvas, String(orderId), { width: 240, margin: 1, color: { dark: '#14162a', light: '#ffffff' } });
-      } catch (err) { holder.innerHTML = `<div style="color:#c84a4a;font-size:13px;">Ошибка QR</div>`; }
-    }
 
-    // ==================== СКАНЕР ====================
-    if (scanBtn) scanBtn.addEventListener('click', () => { showPage('scan'); if (scanResultEl) scanResultEl.style.display = 'none'; });
-    if (scanBackBtn) scanBackBtn.addEventListener('click', () => { stopScanning(); showPage('admin'); });
-    if (scanStartBtn) scanStartBtn.addEventListener('click', startScanning);
-    if (scanStopBtn) scanStopBtn.addEventListener('click', stopScanning);
-
-    async function startScanning() {
-      if (isScanning) return;
-      if (!window.Html5Qrcode) { showToast('Сканер не загрузился'); return; }
-      try {
-        html5QrCode = new Html5Qrcode("qrReader");
-        isScanning = true;
-        scanStartBtn.style.display = 'none';
-        scanStopBtn.style.display = 'flex';
-        await html5QrCode.start(
-          { facingMode: "environment" },
-          { fps: 10, qrbox: { width: 250, height: 250 } },
-          (decodedText) => { stopScanning(); handleScannedOrder(decodedText); },
-          (errorMessage) => {}
-        );
-      } catch (err) {
-        isScanning = false;
-        scanStartBtn.style.display = 'flex';
-        scanStopBtn.style.display = 'none';
-        showToast('Нет доступа к камере');
-      }
-    }
-
-    async function stopScanning() {
-      if (!html5QrCode || !isScanning) return;
-      try { await html5QrCode.stop(); html5QrCode.clear(); } catch (e) {}
-      isScanning = false;
-      if (scanStartBtn) scanStartBtn.style.display = 'flex';
-      if (scanStopBtn) scanStopBtn.style.display = 'none';
-    }
-
-    function handleScannedOrder(orderId) {
-      const order = state.allOrders.find(o => (o.orderId || o.id) === orderId);
-      if (!order) {
-        if (scanResultEl) { scanResultEl.style.display = 'block'; scanResultEl.innerHTML = `<div class="order-card" style="border-color:var(--danger);"><div style="text-align:center;padding:14px;"><i class="fas fa-times-circle" style="font-size:36px;color:var(--danger);margin-bottom:8px;"></i><div style="font-size:15px;font-weight:700;color:var(--danger);">Заказ не найден</div><div style="font-size:12.5px;color:var(--text-secondary);margin-top:6px;">Код: ${orderId}</div></div></div>`; }
-        showToast('✗ Заказ не найден');
-        playSound('status');
+      if (!window.QRCode) {
+        holder.innerHTML = `<div style="color:#c84a4a;font-size:13px;padding:20px;text-align:center;">QR-библиотека не загрузилась.<br><br>Проверьте интернет и обновите страницу.</div>`;
         return;
       }
-      const status = order.status || 'new';
-      const isDone = status === 'done';
-      const stepActive = getProgressSteps(status);
-      if (scanResultEl) {
-        scanResultEl.style.display = 'block';
-        scanResultEl.innerHTML = `<div class="order-card status-${status}" style="border-color:var(--accent-1);box-shadow:0 0 30px rgba(168,216,232,0.3);">
-          <div style="text-align:center;margin-bottom:10px;"><i class="fas fa-check-circle" style="font-size:34px;color:var(--accent-1);"></i><div style="font-size:13px;color:var(--accent-1);margin-top:6px;font-weight:700;">ЗАКАЗ НАЙДЕН</div></div>
-          <div class="order-header"><span class="order-id">${order.orderId || order.id}</span><span class="order-date">${order.date}</span></div>
-          <div class="order-client"><i class="fas fa-user"></i> ${order.client ? order.client.name : '—'}&nbsp;<i class="fas fa-phone"></i> ${order.client ? displayPhone(order.client.phone) : '—'}</div>
-          <div class="order-items">${order.items.map(i => `• ${i.title} — ${i.qty} × ${i.price.toLocaleString()} ₽`).join('<br>')}</div>
-          <div class="order-progress">${stepActive.map(cls => `<div class="progress-step ${cls}"></div>`).join('')}</div>
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-top:8px;">
-            <span class="order-status ${status}"><i class="fas ${statusIcon(status)}"></i> ${statusLabel(status)}</span>
-            <span class="order-total">${order.total.toLocaleString()} ₽</span>
-          </div>
-          ${isDone ? `<div style="margin-top:12px;padding:12px;border-radius:12px;background:rgba(140,220,160,0.1);border:1px solid rgba(140,220,160,0.3);text-align:center;color:var(--success);font-weight:700;"><i class="fas fa-check-circle"></i> Заказ уже выдан</div>` : `<button class="btn btn-success" id="giveOrderBtn" style="margin-top:14px;margin-bottom:0;"><i class="fas fa-hand-holding-heart"></i> Выдать заказ</button>`}
-        </div>`;
-      }
-      playSound('new');
-      const giveBtn = document.getElementById('giveOrderBtn');
-      if (giveBtn) {
-        giveBtn.addEventListener('click', async () => {
-          try {
-            await updateDoc(doc(db, 'orders', order.id), { status: 'done' });
-            showToast('✓ Заказ выдан');
-            playSound('new');
-            if (scanResultEl) {
-              scanResultEl.innerHTML = `<div class="order-card status-done" style="text-align:center;padding:24px;border-color:var(--success);"><i class="fas fa-check-circle" style="font-size:52px;color:var(--success);margin-bottom:12px;"></i><div style="font-size:18px;font-weight:800;color:var(--success);">Заказ выдан!</div><div style="font-size:13px;color:var(--text-secondary);margin-top:8px;">${order.orderId || order.id}</div><button class="btn btn-outline" id="scanAgainBtn" style="margin-top:16px;margin-bottom:0;"><i class="fas fa-qrcode"></i> Сканировать ещё</button></div>`;
-              document.getElementById('scanAgainBtn').addEventListener('click', () => { scanResultEl.style.display = 'none'; startScanning(); });
-            }
-          } catch (err) { showToast('✗ Ошибка'); }
+
+      try {
+        holder.innerHTML = '';
+        const qrDiv = document.createElement('div');
+        qrDiv.id = 'qrContainer';
+        holder.appendChild(qrDiv);
+
+        new QRCode(qrDiv, {
+          text: String(orderId),
+          width: 240,
+          height: 240,
+          colorDark: '#14162a',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.H
         });
+      } catch (err) {
+        console.error('QR error:', err);
+        holder.innerHTML = `<div style="color:#c84a4a;font-size:13px;padding:20px;text-align:center;">Ошибка генерации QR:<br>${err.message}</div>`;
       }
     }
 
@@ -2232,338 +2157,178 @@
         }
       });
       updateCartUI();
-      if (added > 0) { showToast(`✓ ${added}`); showPage('cart'); }
-      else showToast('✗');
-    }
-
-    function updateAdminBadge() {
-      if (!adminToggleBtn) return;
-      const newCount = state.allOrders.filter(o => (o.status || 'new') === 'new').length;
-      if (newCount > 0 && !state.isAdminMode) adminToggleBtn.innerHTML = `<i class="fas fa-clipboard-list"></i><span class="admin-badge">${newCount}</span>`;
-      else if (state.allOrders.length > 0 && !state.isAdminMode) adminToggleBtn.innerHTML = `<i class="fas fa-clipboard-list"></i><span class="admin-badge" style="background:var(--accent-1);">${state.allOrders.length}</span>`;
-      else adminToggleBtn.innerHTML = `<i class="fas fa-clipboard-list"></i>`;
-    }
-
-    function renderAdminStats() {
-      const elTotal = document.getElementById('statTotal');
-      const elNew = document.getElementById('statNew');
-      if (elTotal) elTotal.textContent = state.allOrders.length;
-      if (elNew) elNew.textContent = state.allOrders.filter(o => (o.status || 'new') === 'new').length;
-    }
-
-    if (adminSearchInput) {
-      adminSearchInput.addEventListener('input', (e) => {
-        state.adminSearchQuery = e.target.value.trim().toLowerCase();
-        adminSearchClear.classList.toggle('visible', state.adminSearchQuery.length > 0);
-        renderAdminOrders();
-      });
-    }
-    if (adminSearchClear) {
-      adminSearchClear.addEventListener('click', () => {
-        adminSearchInput.value = ''; state.adminSearchQuery = ''; adminSearchClear.classList.remove('visible'); renderAdminOrders();
-      });
-    }
-
-    function renderCalendarStrip() {
-      if (!calendarStrip) return;
-      const days = [];
-      for (let i = -1; i < 7; i++) {
-        const d = new Date();
-        d.setDate(d.getDate() + i);
-        const key = d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        const dateShort = d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' });
-        const weekday = d.toLocaleDateString('ru-RU', { weekday: 'short' }).slice(0, 2);
-        const count = state.allOrders.filter(o => (o.date || '').split(',')[0].trim().startsWith(dateShort)).length;
-        days.push({ key, dateShort, weekday, count });
-      }
-      calendarStrip.innerHTML = days.map(d => `<div class="calendar-day ${state.adminSelectedDate === d.key ? 'active' : ''}" data-date="${d.key}"><div class="calendar-day-weekday">${d.weekday}</div><div class="calendar-day-date">${d.dateShort}</div><div class="calendar-day-count">${d.count > 0 ? d.count : '—'}</div></div>`).join('');
-      calendarStrip.querySelectorAll('.calendar-day').forEach(day => {
-        day.addEventListener('click', () => {
-          const dateKey = day.dataset.date;
-          state.adminSelectedDate = state.adminSelectedDate === dateKey ? null : dateKey;
-          renderCalendarStrip();
-          renderAdminOrders();
-        });
-      });
-    }
-
-    function renderAdminOrders() {
-      if (!adminOrdersContainer) return;
-      renderAdminStats();
-      renderCalendarStrip();
-      const active = getActiveOrders(state.allOrders);
-      const archive = getArchiveOrders(state.allOrders);
-      if (adminActiveCount) adminActiveCount.textContent = active.length;
-      if (adminArchiveCount) adminArchiveCount.textContent = archive.length;
-      let list = state.adminTab === 'active' ? active : archive;
-      if (state.adminFilter !== 'all') list = list.filter(o => (o.status || 'new') === state.adminFilter);
-      if (state.adminSelectedDate) {
-        const dateShort = state.adminSelectedDate.split('.').slice(0, 2).join('.');
-        list = list.filter(o => (o.date || '').split(',')[0].trim().startsWith(dateShort));
-      }
-      if (state.adminSearchQuery) {
-        const q = state.adminSearchQuery;
-        list = list.filter(o => {
-          const id = (o.orderId || o.id || '').toLowerCase();
-          const name = (o.client?.name || '').toLowerCase();
-          const phone = (o.client?.phone || '').toLowerCase();
-          const phoneDisplay = displayPhone(o.client?.phone || '').toLowerCase();
-          return id.includes(q) || name.includes(q) || phone.includes(q) || phoneDisplay.includes(q);
-        });
-      }
-      if (list.length === 0) { adminOrdersContainer.innerHTML = `<div class="empty-message"><i class="fas fa-inbox"></i> —</div>`; return; }
-      adminOrdersContainer.innerHTML = list.map(order => {
-        const status = order.status || 'new';
-        const oid = order.orderId || order.id;
-        return `<div class="order-card status-${status}">
-          <div class="order-header"><span class="order-id">${oid}</span><span class="order-date">${order.date}</span></div>
-          <div class="order-client"><i class="fas fa-user"></i> ${order.client ? order.client.name : '—'}&nbsp;<i class="fas fa-phone"></i> ${order.client ? displayPhone(order.client.phone) : '—'}</div>
-          ${order.client && order.client.comment ? `<div style="font-size:12px;color:var(--accent-1);background:rgba(168,216,232,0.06);padding:6px 10px;border-radius:10px;margin-bottom:8px;"><i class="fas fa-comment" style="margin-right:4px;"></i>${order.client.comment}</div>` : ''}
-          <div class="order-items">${order.items.map(i => `• ${i.title} — ${i.qty} × ${i.price.toLocaleString()} ₽`).join('<br>')}</div>
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-            <span class="order-status ${status}"><i class="fas ${statusIcon(status)}"></i> ${statusLabel(status)}</span>
-            <span class="order-total">${order.total.toLocaleString()} ₽</span>
-          </div>
-          <div class="order-actions">
-            <button class="btn btn-outline btn-small" data-action="new" data-id="${order.id}"><i class="fas fa-circle" style="color:var(--accent-1);"></i></button>
-            <button class="btn btn-outline btn-small" data-action="progress" data-id="${order.id}"><i class="fas fa-hourglass-half" style="color:var(--warning);"></i></button>
-            <button class="btn btn-outline btn-small" data-action="done" data-id="${order.id}"><i class="fas fa-check-circle" style="color:var(--success);"></i></button>
-            <button class="btn btn-outline btn-small" data-action="cancel" data-id="${order.id}"><i class="fas fa-times-circle" style="color:var(--danger);"></i></button>
-            <button class="btn btn-outline btn-small" data-admin-receipt="${oid}"><i class="fas fa-receipt"></i></button>
-            <button class="btn btn-outline btn-small btn-danger" data-delete-order="${order.id}"><i class="fas fa-trash"></i></button>
-          </div>
-        </div>`;
-      }).join('');
-    }
-
-    if (adminOrdersContainer) {
-      adminOrdersContainer.addEventListener('click', async (e) => {
-        const actionBtn = e.target.closest('[data-action]');
-        if (actionBtn) {
-          try {
-            await updateDoc(doc(db, 'orders', actionBtn.dataset.id), { status: actionBtn.dataset.action });
-            showToast(`✓ ${statusLabel(actionBtn.dataset.action)}`);
-            playSound('status');
-          } catch (err) { showToast('✗'); }
-          return;
-        }
-        const receiptBtn = e.target.closest('[data-admin-receipt]');
-        if (receiptBtn) { e.stopPropagation(); const order = state.allOrders.find(o => (o.orderId || o.id) === receiptBtn.dataset.adminReceipt); if (order) generateReceipt(order); return; }
-        const deleteBtn = e.target.closest('[data-delete-order]');
-        if (deleteBtn) {
-          e.stopPropagation();
-          if (confirm(t('delete') + '?')) {
-            try { await deleteDoc(doc(db, 'orders', deleteBtn.dataset.deleteOrder)); showToast('✓'); } catch (err) { showToast('✗'); }
-          }
-        }
-      });
-    }
-
-    if (clearAllOrdersBtn) {
-      clearAllOrdersBtn.addEventListener('click', async () => {
-        if (state.allOrders.length === 0) return;
-        if (!confirm('OK?')) return;
-        try {
-          const batch = writeBatch(db);
-          state.allOrders.forEach(o => batch.delete(doc(db, 'orders', o.id)));
-          await batch.commit();
-          showToast('✓');
-        } catch (e) { showToast('✗'); }
-      });
-    }
-
-    if (exportCsvBtn) {
-      exportCsvBtn.addEventListener('click', () => {
-        if (state.allOrders.length === 0) { showToast('—'); return; }
-        const rows = [['ID', 'Date', 'Name', 'Phone', 'Items', 'Total', 'Status']];
-        state.allOrders.forEach(o => {
-          const items = o.items.map(i => `${i.title}×${i.qty}`).join('; ');
-          rows.push([o.orderId || o.id, o.date, o.client.name, displayPhone(o.client.phone), items, o.total, statusLabel(o.status || 'new')]);
-        });
-        const csv = '\uFEFF' + rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url; a.download = `orders_${new Date().toISOString().slice(0,10)}.csv`;
-        a.click(); URL.revokeObjectURL(url);
-        showToast('✓ CSV');
-      });
-    }
-
-    // ==================== АНАЛИТИКА ====================
-    function renderAnalytics() {
-      const all = state.allOrders;
-      const done = all.filter(o => o.status === 'done');
-      const revenue = done.reduce((s, o) => s + o.total, 0);
-      const avg = done.length > 0 ? Math.round(revenue / done.length) : 0;
-      const donePercent = all.length > 0 ? Math.round(done.length / all.length * 100) : 0;
-      document.getElementById('anaRevenue').textContent = revenue.toLocaleString() + ' ₽';
-      document.getElementById('anaOrders').textContent = all.length;
-      document.getElementById('anaAvg').textContent = avg.toLocaleString() + ' ₽';
-      document.getElementById('anaDone').textContent = donePercent + '%';
-      const days = [];
-      for (let i = 6; i >= 0; i--) {
-        const d = new Date();
-        d.setDate(d.getDate() - i);
-        const key = d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' });
-        const count = all.filter(o => (o.date || '').split(',')[0].trim().startsWith(key)).length;
-        days.push({ label: d.toLocaleDateString('ru-RU', { weekday: 'short' }).slice(0, 2), count });
-      }
-      const maxCount = Math.max(1, ...days.map(d => d.count));
-      document.getElementById('anaWeekTotal').textContent = days.reduce((s, d) => s + d.count, 0);
-      document.getElementById('anaChart').innerHTML = days.map(d => `<div class="analytics-bar-wrap"><div class="analytics-bar-value">${d.count > 0 ? d.count : ''}</div><div class="analytics-bar" style="height:${(d.count / maxCount) * 100}%;"></div><div class="analytics-bar-label">${d.label}</div></div>`).join('');
-      const hours = {};
-      for (let h = 0; h < 24; h++) hours[h] = 0;
-      all.forEach(o => { const match = (o.date || '').match(/(\d{2}):(\d{2})/); if (match) hours[parseInt(match[1], 10)]++; });
-      const maxHour = Math.max(1, ...Object.values(hours));
-      document.getElementById('anaHoursTotal').textContent = Object.values(hours).reduce((s, v) => s + v, 0);
-      const hoursChart = document.getElementById('anaHoursChart');
-      if (hoursChart) {
-        const displayHours = [8,9,10,11,12,13,14,15,16,17,18,19,20,21,22];
-        hoursChart.innerHTML = displayHours.map(h => `<div class="hourly-bar-wrap"><div class="hourly-bar" style="height:${(hours[h] / maxHour) * 100}%;"></div><div class="hourly-bar-label">${h}</div></div>`).join('');
-      }
-      const itemCount = {}, itemRevenue = {};
-      all.forEach(o => o.items.forEach(i => { itemCount[i.title] = (itemCount[i.title] || 0) + i.qty; itemRevenue[i.title] = (itemRevenue[i.title] || 0) + (i.price * i.qty); }));
-      const topItems = Object.entries(itemCount).sort((a, b) => b[1] - a[1]).slice(0, 5);
-      document.getElementById('anaTopTotal').textContent = Object.keys(itemCount).length;
-      document.getElementById('anaTopList').innerHTML = topItems.length === 0 ? `<div style="text-align:center;padding:16px;color:var(--text-muted);font-size:12px;">—</div>` : topItems.map(([name, count], i) => { const rankClass = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : ''; const maxTop = topItems[0][1]; return `<div class="analytics-list-item"><div class="analytics-rank ${rankClass}">${i + 1}</div><div class="analytics-list-info"><div class="analytics-list-name">${name}</div><div class="analytics-list-bar"><div class="analytics-list-fill" style="width:${(count / maxTop) * 100}%"></div></div></div><div><div class="analytics-list-value">${count}</div><div class="analytics-list-sub">${(itemRevenue[name] || 0).toLocaleString()} ₽</div></div></div>`; }).join('');
-      const clientStats = {};
-      all.forEach(o => { const key = o.client?.phone || o.client?.name || '?'; if (!clientStats[key]) clientStats[key] = { name: o.client?.name || '?', orders: 0, total: 0 }; clientStats[key].orders++; clientStats[key].total += o.total || 0; });
-      const topClients = Object.entries(clientStats).sort((a, b) => b[1].total - a[1].total).slice(0, 5);
-      document.getElementById('anaTopClientsTotal').textContent = Object.keys(clientStats).length;
-      document.getElementById('anaTopClients').innerHTML = topClients.length === 0 ? `<div style="text-align:center;padding:16px;color:var(--text-muted);font-size:12px;">—</div>` : topClients.map(([key, c], i) => { const rankClass = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : ''; const maxClient = topClients[0][1].total; return `<div class="analytics-list-item"><div class="analytics-rank ${rankClass}">${i + 1}</div><div class="analytics-list-info"><div class="analytics-list-name">${c.name}</div><div class="analytics-list-bar"><div class="analytics-list-fill" style="width:${(c.total / maxClient) * 100}%"></div></div></div><div><div class="analytics-list-value">${c.total.toLocaleString()} ₽</div><div class="analytics-list-sub">${c.orders}</div></div></div>`; }).join('');
-    }
-
-    // ==================== МАТЕРИАЛЫ ====================
-    function renderMaterials() {
-      if (!materialsContainer) return;
-      const critical = materials.filter(m => m.value <= m.min);
-      const low = materials.filter(m => m.value > m.min && m.value <= m.min * 1.5);
-      let warningHtml = '';
-      if (critical.length > 0) warningHtml += `<div class="material-warning critical"><i class="fas fa-exclamation-triangle"></i> Критически мало: ${critical.map(m => m.name).join(', ')}</div>`;
-      if (low.length > 0) warningHtml += `<div class="material-warning low"><i class="fas fa-info-circle"></i> Заканчивается: ${low.map(m => m.name).join(', ')}</div>`;
-      if (materialsWarningContainer) materialsWarningContainer.innerHTML = warningHtml;
-      materialsContainer.innerHTML = materials.map(m => {
-        const pct = Math.min(100, Math.round((m.value / m.max) * 100));
-        let barClass = 'ok';
-        if (m.value <= m.min) barClass = 'critical';
-        else if (m.value <= m.min * 1.5) barClass = 'low';
-        return `<div class="material-item"><div class="material-info"><div class="material-name">${m.name}</div><div class="material-stock">${m.value} ${m.unit} • мин. ${m.min}</div><div class="material-bar-wrap"><div class="material-bar ${barClass}" style="width:${pct}%;"></div></div></div><div class="material-value">${pct}%</div><button class="material-edit-btn" data-edit-material="${m.id}"><i class="fas fa-pen"></i></button></div>`;
-      }).join('');
-      materialsContainer.querySelectorAll('[data-edit-material]').forEach(btn => {
-        btn.addEventListener('click', () => { const m = materials.find(x => x.id === btn.dataset.editMaterial); if (m) openMaterialModal(m); });
-      });
-    }
-
-    function openMaterialModal(material) {
-      state.editingMaterialId = material.id;
-      materialNameLabel.textContent = material.name;
-      materialValueInput.value = material.value;
-      materialMaxInput.value = material.max;
-      materialModal.classList.add('visible');
-    }
-
-    if (materialSaveBtn) {
-      materialSaveBtn.addEventListener('click', () => {
-        const m = materials.find(x => x.id === state.editingMaterialId);
-        if (!m) return;
-        const v = parseInt(materialValueInput.value, 10);
-        const mx = parseInt(materialMaxInput.value, 10);
-        if (isNaN(v) || v < 0 || isNaN(mx) || mx < 1) { showToast('!'); return; }
-        m.value = v; m.max = mx;
-        saveMaterials();
-        renderMaterials();
-        materialModal.classList.remove('visible');
-        showToast('✓');
-      });
-    }
-    if (materialCancelBtn) materialCancelBtn.addEventListener('click', () => materialModal.classList.remove('visible'));
-    if (materialModalClose) materialModalClose.addEventListener('click', () => materialModal.classList.remove('visible'));
-
-    // ==================== ТОВАРЫ ====================
-    function renderAdminProducts() {
-      if (!adminProductsContainer) return;
-      adminProductsContainer.innerHTML = state.services.map(s => {
-        const available = s.available !== false;
-        return `<div class="product-manage-card ${available ? '' : 'out'}" data-id="${s.id}"><div class="product-manage-info"><div class="product-manage-title"><i class="fas ${s.icon}"></i> ${s.title}</div><div class="product-manage-price"><strong>${s.price.toLocaleString()} ₽</strong> • ${s.unit || ''}</div></div><div class="product-actions"><button class="mini-btn edit" data-edit="${s.id}"><i class="fas fa-pen"></i></button><button class="mini-btn del" data-del="${s.id}"><i class="fas fa-trash"></i></button></div><div class="stock-toggle ${available ? 'on' : 'off'}" data-toggle="${s.id}"><div class="toggle-switch"></div></div></div>`;
-      }).join('');
-    }
-
-    if (adminProductsContainer) {
-      adminProductsContainer.addEventListener('click', async (e) => {
-        const editBtn = e.target.closest('[data-edit]');
-        if (editBtn) { openProductModal(parseInt(editBtn.dataset.edit, 10)); return; }
-        const delBtn = e.target.closest('[data-del]');
-        if (delBtn) {
-          if (confirm('?')) {
-            const id = parseInt(delBtn.dataset.del, 10);
-            try { await deleteDoc(doc(db, 'services', String(id))); showToast('✓'); } catch (err) { showToast('✗'); }
-          }
-          return;
-        }
-        const toggle = e.target.closest('[data-toggle]');
-        if (toggle) {
-          const id = parseInt(toggle.dataset.toggle, 10);
-          const s = state.services.find(x => x.id === id);
-          if (!s) return;
-          const newAvail = s.available === false;
-          try { await updateDoc(doc(db, 'services', String(id)), { available: newAvail }); showToast(newAvail ? '✓' : '✗'); }
-          catch (err) { showToast('✗'); }
-        }
-      });
-    }
-
-    function openProductModal(id = null) {
-      state.editingProductId = id;
-      if (id) {
-        const s = state.services.find(sv => sv.id === id);
-        if (!s) return;
-        modalTitle.textContent = 'Edit';
-        modalTitleInput.value = s.title;
-        modalDescInput.value = s.desc || '';
-        modalIconInput.value = s.icon;
-        modalCatInput.value = s.category || 'print';
-        modalPriceInput.value = s.price;
-        modalUnitInput.value = s.unit || '';
-        modalDetailsInput.value = s.details || '';
+      if (added > 0) {
+        showToast(`✓ ${added}`);
+        showPage('cart');
       } else {
-        modalTitle.textContent = t('add_product');
-        modalTitleInput.value = '';
-        modalDescInput.value = '';
-        modalIconInput.value = 'fa-file-alt';
-        modalCatInput.value = 'print';
-        modalPriceInput.value = '';
-        modalUnitInput.value = '₽ / стр.';
-        modalDetailsInput.value = '';
+        showToast('✗');
       }
-      productModal.classList.add('visible');
     }
 
-    if (modalSaveBtn) {
-      modalSaveBtn.addEventListener('click', async () => {
-        const title = modalTitleInput.value.trim();
-        const desc = modalDescInput.value.trim();
-        const icon = modalIconInput.value.trim() || 'fa-file-alt';
-        const category = modalCatInput.value;
-        const price = parseInt(modalPriceInput.value, 10);
-        const unit = modalUnitInput.value.trim() || '₽ / шт.';
-        const details = modalDetailsInput.value.trim() || desc;
-        if (!title || !price || price < 1) { showToast('!'); return; }
-        try {
-          if (state.editingProductId) {
-            await updateDoc(doc(db, 'services', String(state.editingProductId)), { title, desc, icon, category, price, unit, details });
-          } else {
-            const newId = Math.max(0, ...state.services.map(s => s.id)) + 1;
-            await setDoc(doc(db, 'services', String(newId)), { id: newId, title, desc, icon, category, price, unit, details, available: true });
-          }
-          showToast('✓');
-          productModal.classList.remove('visible');
-        } catch (err) { showToast('✗'); }
+    const clientTabEl = document.getElementById('clientTabSwitcher');
+    if (clientTabEl) {
+      clientTabEl.addEventListener('click', (e) => {
+        const btn = e.target.closest('.tab-switch-btn');
+        if (!btn) return;
+        document.querySelectorAll('#clientTabSwitcher .tab-switch-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.clientTab = btn.dataset.tab;
+        renderHistory();
       });
     }
-    if (modalCancelBtn) modalCancelBtn.addEventListener('click', () => productModal.classList.remove('visible'));
-    if (modalCloseBtn) modalCloseBtn.addEventListener('click', () => productModal.classList.remove('visible'));
-    if (addProductBtn) addProductBtn.addEventListener('click', () => openProductModal(null));
+
+    // ==================== ОТЗЫВЫ ====================
+    function openReviewModal(orderId, humanOrderId) {
+      state.editingReviewOrderId = orderId;
+      state.currentReviewStars = 0;
+      reviewOrderInfo.innerHTML = `<i class="fas fa-box"></i> Заказ <b>${humanOrderId}</b>`;
+      reviewText.value = '';
+      reviewHint.textContent = '';
+      updateStars(0);
+      reviewModal.style.display = 'flex';
+    }
+
+    function updateStars(n) {
+      state.currentReviewStars = n;
+      const stars = reviewStars.querySelectorAll('.star-btn');
+      stars.forEach((s, i) => {
+        s.classList.toggle('active', i < n);
+      });
+      const labels = ['', 'Плохо', 'Так себе', 'Нормально', 'Хорошо', 'Отлично!'];
+      reviewStarsLabel.textContent = n > 0 ? labels[n] : 'Нажмите на звёзды';
+    }
+
+    if (reviewStars) {
+      reviewStars.addEventListener('click', (e) => {
+        const btn = e.target.closest('.star-btn');
+        if (!btn) return;
+        const n = parseInt(btn.dataset.star, 10);
+        updateStars(n);
+      });
+    }
+
+    function closeReviewModal() {
+      reviewModal.style.display = 'none';
+      state.editingReviewOrderId = null;
+      state.currentReviewStars = 0;
+    }
+
+    if (reviewClose) reviewClose.addEventListener('click', closeReviewModal);
+    if (reviewCancelBtn) reviewCancelBtn.addEventListener('click', closeReviewModal);
+    if (reviewModal) reviewModal.addEventListener('click', (e) => { if (e.target === reviewModal) closeReviewModal(); });
+
+    if (reviewSaveBtn) {
+      reviewSaveBtn.addEventListener('click', async () => {
+        if (!state.editingReviewOrderId) return;
+        if (state.currentReviewStars < 1) {
+          reviewHint.textContent = '✗ Поставьте оценку';
+          reviewHint.className = 'field-hint error';
+          return;
+        }
+
+        const order = state.myOrders.find(o => o.id === state.editingReviewOrderId);
+        if (!order) return;
+
+        reviewSaveBtn.disabled = true;
+        reviewSaveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+        try {
+          const reviewData = {
+            orderId: order.orderId || order.id,
+            orderDocId: state.editingReviewOrderId,
+            userId: state.currentUser?.id || null,
+            userName: state.currentUser?.name || order.client?.name || 'Гость',
+            userPhone: state.currentUser?.phone || order.client?.phone || '',
+            stars: state.currentReviewStars,
+            text: reviewText.value.trim(),
+            items: order.items,
+            total: order.total,
+            createdAt: serverTimestamp(),
+            date: new Date().toLocaleString('ru-RU')
+          };
+
+          await addDoc(collection(db, 'reviews'), reviewData);
+
+          // Добавляем локально, чтобы сразу показать статус
+          state.myReviews.push({ ...reviewData, id: 'local_' + Date.now() });
+
+          showToast('✓ Спасибо за отзыв!');
+          playSound('new');
+          closeReviewModal();
+          renderHistory();
+          renderProfile();
+        } catch (err) {
+          console.error('Review error:', err);
+          reviewHint.textContent = '✗ Ошибка отправки';
+          reviewHint.className = 'field-hint error';
+        } finally {
+          reviewSaveBtn.disabled = false;
+          reviewSaveBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить отзыв';
+        }
+      });
+    }
+
+    // Мои отзывы
+    function renderMyReviews() {
+      if (!myReviewsList) return;
+      if (state.myReviews.length === 0) {
+        myReviewsList.innerHTML = `<div class="empty-message"><i class="fas fa-star"></i> Пока нет отзывов</div>`;
+        return;
+      }
+      myReviewsList.innerHTML = state.myReviews.map(r => {
+        const stars = '★'.repeat(r.stars) + '☆'.repeat(5 - r.stars);
+        return `
+          <div class="order-card status-done" style="margin-bottom:10px;">
+            <div class="order-header">
+              <span class="order-id">${r.orderId}</span>
+              <span class="order-date">${r.date || ''}</span>
+            </div>
+            <div style="font-size:22px; color:var(--warning); letter-spacing:4px; margin:8px 0;">${stars}</div>
+            ${r.text ? `<div style="font-size:13px; color:var(--text-secondary); line-height:1.5; margin-bottom:6px;">${r.text}</div>` : ''}
+            <div style="font-size:11.5px; color:var(--text-muted);">
+              ${r.items ? r.items.map(i => i.title).join(', ') : ''} • ${r.total ? r.total.toLocaleString() + ' ₽' : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    if (myReviewsClose) myReviewsClose.addEventListener('click', () => myReviewsModal.style.display = 'none');
+    if (myReviewsModal) myReviewsModal.addEventListener('click', (e) => { if (e.target === myReviewsModal) myReviewsModal.style.display = 'none'; });
+
+    // ==================== ЗАКАЗЫ В ПРОФИЛЕ (МОДАЛКА) ====================
+    function renderProfileOrders() {
+      if (!profileOrdersList) return;
+      const active = getActiveOrders(state.myOrders);
+      const archive = getArchiveOrders(state.myOrders);
+      if (modalActiveCount) modalActiveCount.textContent = active.length;
+      if (modalArchiveCount) modalArchiveCount.textContent = archive.length;
+
+      const list = state.modalTab === 'active' ? active : archive;
+      if (list.length === 0) {
+        profileOrdersList.innerHTML = `<div class="empty-message"><i class="fas fa-inbox"></i> —</div>`;
+        return;
+      }
+      profileOrdersList.innerHTML = list.map(order => renderOrderCard(order, true)).join('');
+    }
+
+    if (modalOrdersTabSwitcher) {
+      modalOrdersTabSwitcher.addEventListener('click', (e) => {
+        const btn = e.target.closest('.tab-switch-btn');
+        if (!btn) return;
+        modalOrdersTabSwitcher.querySelectorAll('.tab-switch-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.modalTab = btn.dataset.tab;
+        renderProfileOrders();
+      });
+    }
+
+    if (profileOrdersList) {
+      profileOrdersList.addEventListener('click', handleHistoryClick);
+    }
+
+    if (profileOrdersClose) profileOrdersClose.addEventListener('click', () => profileOrdersModal.style.display = 'none');
+    if (profileOrdersModal) profileOrdersModal.addEventListener('click', (e) => { if (e.target === profileOrdersModal) profileOrdersModal.style.display = 'none'; });
 
     // ==================== АВТОРИЗАЦИЯ ====================
     function switchAuthTab(mode) {
@@ -2593,9 +2358,22 @@
         e.target.value = formatPhone(e.target.value);
         const digits = extractDigits(e.target.value);
         if (digits.length === 11) {
-          if (isValidPhone(e.target.value)) { e.target.classList.remove('error'); e.target.classList.add('valid'); authPhoneHint.textContent = '✓'; authPhoneHint.className = 'field-hint valid'; }
-          else { e.target.classList.remove('valid'); e.target.classList.add('error'); authPhoneHint.textContent = '✗'; authPhoneHint.className = 'field-hint error'; }
-        } else { e.target.classList.remove('error', 'valid'); authPhoneHint.textContent = ''; authPhoneHint.className = 'field-hint'; }
+          if (isValidPhone(e.target.value)) {
+            e.target.classList.remove('error');
+            e.target.classList.add('valid');
+            authPhoneHint.textContent = '✓';
+            authPhoneHint.className = 'field-hint valid';
+          } else {
+            e.target.classList.remove('valid');
+            e.target.classList.add('error');
+            authPhoneHint.textContent = '✗';
+            authPhoneHint.className = 'field-hint error';
+          }
+        } else {
+          e.target.classList.remove('error', 'valid');
+          authPhoneHint.textContent = '';
+          authPhoneHint.className = 'field-hint';
+        }
       });
       authPhone.addEventListener('focus', () => { if (!authPhone.value) authPhone.value = '+7 '; });
     }
@@ -2605,17 +2383,65 @@
       authLoginPhone.addEventListener('focus', () => { if (!authLoginPhone.value) authLoginPhone.value = '+7 '; });
     }
 
+    if (clientPhone) {
+      clientPhone.addEventListener('input', (e) => {
+        e.target.value = formatPhone(e.target.value);
+        const hint = document.getElementById('phoneHint');
+        const digits = extractDigits(e.target.value);
+        if (digits.length === 11) {
+          if (isValidPhone(e.target.value)) {
+            e.target.classList.remove('error');
+            e.target.classList.add('valid');
+            if (hint) { hint.textContent = '✓'; hint.className = 'field-hint valid'; }
+          } else {
+            e.target.classList.remove('valid');
+            e.target.classList.add('error');
+            if (hint) { hint.textContent = '✗'; hint.className = 'field-hint error'; }
+          }
+        } else {
+          e.target.classList.remove('error', 'valid');
+          if (hint) { hint.textContent = ''; hint.className = 'field-hint'; }
+        }
+      });
+      clientPhone.addEventListener('focus', (e) => { if (!e.target.value) e.target.value = '+7 '; });
+    }
+
+    if (clearSavedClientBtn) {
+      clearSavedClientBtn.addEventListener('click', () => {
+        clearSavedClient();
+        clientName.value = '';
+        clientPhone.value = '';
+        clientComment.value = '';
+        clientPhone.classList.remove('valid', 'error');
+        const hint = document.getElementById('phoneHint');
+        if (hint) { hint.textContent = ''; hint.className = 'field-hint'; }
+        if (clientSavedHint) clientSavedHint.style.display = 'none';
+        showToast('OK');
+      });
+    }
+
     async function registerUser() {
       const name = authName.value.trim();
       const phone = normalizePhone(authPhone.value);
       const password = authPassword.value;
       const passwordConfirm = authPasswordConfirm.value;
+
       if (!name) { showToast('Введите имя'); return; }
       if (!isValidPhone(phone)) { showToast('Введите корректный номер'); return; }
-      if (password.length < 6) { authRegisterHint.textContent = '✗ мин. 6'; authRegisterHint.className = 'field-hint error'; return; }
-      if (password !== passwordConfirm) { authRegisterHint.textContent = '✗ не совпадают'; authRegisterHint.className = 'field-hint error'; return; }
+      if (password.length < 6) {
+        authRegisterHint.textContent = '✗ мин. 6';
+        authRegisterHint.className = 'field-hint error';
+        return;
+      }
+      if (password !== passwordConfirm) {
+        authRegisterHint.textContent = '✗ не совпадают';
+        authRegisterHint.className = 'field-hint error';
+        return;
+      }
+
       authSubmitBtn.disabled = true;
       authSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
       try {
         const usersRef = collection(db, 'users');
         const q = query(usersRef, where('phone', '==', phone));
@@ -2626,65 +2452,112 @@
           authRegisterHint.className = 'field-hint error';
           return;
         }
+
         const passwordHash = await sha256(password);
-        const docRef = await addDoc(usersRef, { name, phone, passwordHash, createdAt: serverTimestamp(), date: new Date().toLocaleString('ru-RU') });
+        const docRef = await addDoc(usersRef, {
+          name, phone, passwordHash,
+          createdAt: serverTimestamp(),
+          date: new Date().toLocaleString('ru-RU')
+        });
+
         const user = { id: docRef.id, name, phone, passwordHash };
         saveCurrentUser(user);
         saveClient(name, phone);
+
         showToast('✓ Регистрация успешна');
         showPage('profile');
-      } catch (err) { showToast('✗ Ошибка'); }
-      finally {
+      } catch (err) {
+        showToast('✗ Ошибка');
+      } finally {
         authSubmitBtn.disabled = false;
-        authSubmitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> <span>' + (state.authMode === 'register' ? 'Зарегистрироваться' : 'Войти') + '</span>';
+        authSubmitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> <span>Зарегистрироваться</span>';
       }
     }
 
     async function loginUser() {
       const phone = normalizePhone(authLoginPhone.value);
       const password = authLoginPassword.value;
+
       if (!isValidPhone(phone)) { showToast('Введите корректный номер'); return; }
       if (!password) { showToast('Введите пароль'); return; }
+
       authSubmitBtn.disabled = true;
       authSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
       try {
         const usersRef = collection(db, 'users');
         const q = query(usersRef, where('phone', '==', phone));
         const snap = await getDocs(q);
-        if (snap.empty) { authLoginHint.textContent = '✗ Не найден'; authLoginHint.className = 'field-hint error'; return; }
+        if (snap.empty) {
+          authLoginHint.textContent = '✗ Не найден';
+          authLoginHint.className = 'field-hint error';
+          return;
+        }
+
         const docData = snap.docs[0].data();
         const passwordHash = await sha256(password);
-        if (docData.passwordHash !== passwordHash) { authLoginHint.textContent = '✗ Неверный пароль'; authLoginHint.className = 'field-hint error'; return; }
-        const user = { id: snap.docs[0].id, name: docData.name, phone: docData.phone, passwordHash: docData.passwordHash };
+        if (docData.passwordHash !== passwordHash) {
+          authLoginHint.textContent = '✗ Неверный пароль';
+          authLoginHint.className = 'field-hint error';
+          return;
+        }
+
+        const user = {
+          id: snap.docs[0].id,
+          name: docData.name,
+          phone: docData.phone,
+          passwordHash: docData.passwordHash
+        };
         saveCurrentUser(user);
         saveClient(user.name, user.phone);
+
         showToast('✓ Добро пожаловать!');
         showPage('profile');
-      } catch (err) { showToast('✗ Ошибка'); }
-      finally {
+      } catch (err) {
+        showToast('✗ Ошибка');
+      } finally {
         authSubmitBtn.disabled = false;
-        authSubmitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> <span>' + (state.authMode === 'register' ? 'Зарегистрироваться' : 'Войти') + '</span>';
+        authSubmitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> <span>Войти</span>';
       }
     }
 
     if (authSubmitBtn) {
-      authSubmitBtn.addEventListener('click', () => { if (state.authMode === 'register') registerUser(); else loginUser(); });
+      authSubmitBtn.addEventListener('click', () => {
+        if (state.authMode === 'register') registerUser();
+        else loginUser();
+      });
     }
     if (authSkipBtn) authSkipBtn.addEventListener('click', () => showPage('home'));
 
     // ==================== ПРОФИЛЬ ====================
     function getUserLevel(orders) {
       const total = orders.reduce((s, o) => s + (o.total || 0), 0);
-      if (total >= 20000) return { name: 'Золото', color: 'var(--warning)' };
-      if (total >= 5000) return { name: 'Серебро', color: '#c8c8e0' };
-      if (total >= 1000) return { name: 'Бронза', color: '#cd7f32' };
-      return { name: 'Новичок', color: 'var(--success)' };
+      if (total >= 20000) return { name: 'Золото', level: 4 };
+      if (total >= 5000) return { name: 'Серебро', level: 3 };
+      if (total >= 1000) return { name: 'Бронза', level: 2 };
+      return { name: 'Новичок', level: 1 };
+    }
+
+    function getNextLevelInfo(total) {
+      if (total >= 20000) return { name: 'Максимум', current: total, target: total, percent: 100 };
+      if (total >= 5000) return { name: 'Золото', current: total, target: 20000, percent: Math.round((total - 5000) / (20000 - 5000) * 100) };
+      if (total >= 1000) return { name: 'Серебро', current: total, target: 5000, percent: Math.round((total - 1000) / (5000 - 1000) * 100) };
+      return { name: 'Бронза', current: total, target: 1000, percent: Math.round(total / 1000 * 100) };
     }
 
     function renderProfile() {
       if (!profileName) return;
       if (profileLangValue) profileLangValue.textContent = currentLang === 'ru' ? 'Русский' : currentLang === 'en' ? 'English' : 'YKT';
       if (profileThemeValue) profileThemeValue.textContent = document.body.classList.contains('light-theme') ? 'Светлая' : 'Тёмная';
+
+      const userOrders = state.currentUser
+        ? state.myOrders.filter(o => o.userPhone === state.currentUser.phone || o.client?.phone === state.currentUser.phone)
+        : [];
+      const activeOrders = getActiveOrders(userOrders);
+
+      if (profileOrdersBadge) profileOrdersBadge.textContent = activeOrders.length;
+      if (profileReviewsBadge) profileReviewsBadge.textContent = state.myReviews.length;
+
       if (!state.currentUser) {
         profileAvatar.textContent = '?';
         profileName.textContent = 'Гость';
@@ -2697,20 +2570,38 @@
         profileLogoutBlock.style.display = 'none';
         const eb = document.getElementById('profileEditBtn');
         if (eb) eb.style.display = 'none';
+        if (bonusCard) bonusCard.style.display = 'none';
         return;
       }
+
       const user = state.currentUser;
       const initials = (user.name || '?').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
       profileAvatar.textContent = initials || '?';
       profileName.textContent = user.name || 'Без имени';
       profilePhone.textContent = displayPhone(user.phone);
-      const userOrders = state.myOrders.filter(o => o.userPhone === user.phone || o.client?.phone === user.phone);
+
       const totalSum = userOrders.reduce((s, o) => s + (o.total || 0), 0);
       profileOrdersCount.textContent = userOrders.length;
       profileTotalSum.textContent = totalSum.toLocaleString() + ' ₽';
       profileBonuses.textContent = Math.floor(totalSum / 100);
-      const level = getUserLevel(userOrders);
-      profileLevelText.textContent = level.name;
+      profileLevelText.textContent = getUserLevel(userOrders).name;
+
+      // Бонусная карта
+      if (bonusCard) {
+        const next = getNextLevelInfo(totalSum);
+        if (next.name === 'Максимум') {
+          bonusTitleText.textContent = '🏆 Максимальный уровень';
+          bonusProgressFill.style.width = '100%';
+          bonusCurrentText.textContent = totalSum.toLocaleString() + ' ₽';
+          bonusTargetText.textContent = 'Максимум';
+        } else {
+          bonusTitleText.textContent = `До уровня «${next.name}»`;
+          bonusProgressFill.style.width = next.percent + '%';
+          bonusCurrentText.textContent = totalSum.toLocaleString() + ' ₽';
+          bonusTargetText.textContent = next.target.toLocaleString() + ' ₽';
+        }
+      }
+
       profileAuthButtons.style.display = 'none';
       profileLogoutBlock.style.display = 'block';
       const eb = document.getElementById('profileEditBtn');
@@ -2721,6 +2612,7 @@
     const profileRegisterBtn = document.getElementById('profileRegisterBtn');
     const profileLogoutBtn = document.getElementById('profileLogoutBtn');
     const profileMyOrdersBtn = document.getElementById('profileMyOrdersBtn');
+    const profileReviewsBtn = document.getElementById('profileReviewsBtn');
     const profileEditBtn = document.getElementById('profileEditBtn');
     const profileLangBtn = document.getElementById('profileLangBtn');
     const profileThemeBtn = document.getElementById('profileThemeBtn');
@@ -2733,7 +2625,27 @@
       showToast('Вы вышли');
       renderProfile();
     });
-    if (profileMyOrdersBtn) profileMyOrdersBtn.addEventListener('click', () => showPage('history'));
+
+    // Мои заказы — модалка
+    if (profileMyOrdersBtn) {
+      profileMyOrdersBtn.addEventListener('click', () => {
+        state.modalTab = 'active';
+        if (modalOrdersTabSwitcher) {
+          modalOrdersTabSwitcher.querySelectorAll('.tab-switch-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === 'active'));
+        }
+        renderProfileOrders();
+        profileOrdersModal.style.display = 'flex';
+      });
+    }
+
+    // Мои отзывы — модалка
+    if (profileReviewsBtn) {
+      profileReviewsBtn.addEventListener('click', () => {
+        renderMyReviews();
+        myReviewsModal.style.display = 'flex';
+      });
+    }
+
     if (profileLangBtn) profileLangBtn.addEventListener('click', () => langToggleBtn.click());
     if (profileThemeBtn) profileThemeBtn.addEventListener('click', () => themeToggleBtn.click());
 
@@ -2744,13 +2656,13 @@
         editPhoneInput.value = formatPhone(state.currentUser.phone || '');
         editPasswordInput.value = '';
         editProfileHint.textContent = '';
-        editProfileModal.classList.add('visible');
+        editProfileModal.style.display = 'flex';
       });
     }
 
-    if (editProfileClose) editProfileClose.addEventListener('click', () => editProfileModal.classList.remove('visible'));
-    if (editProfileCancel) editProfileCancel.addEventListener('click', () => editProfileModal.classList.remove('visible'));
-    if (editProfileModal) editProfileModal.addEventListener('click', (e) => { if (e.target === editProfileModal) editProfileModal.classList.remove('visible'); });
+    if (editProfileClose) editProfileClose.addEventListener('click', () => editProfileModal.style.display = 'none');
+    if (editProfileCancel) editProfileCancel.addEventListener('click', () => editProfileModal.style.display = 'none');
+    if (editProfileModal) editProfileModal.addEventListener('click', (e) => { if (e.target === editProfileModal) editProfileModal.style.display = 'none'; });
     if (editPhoneInput) {
       editPhoneInput.addEventListener('input', (e) => { e.target.value = formatPhone(e.target.value); });
       editPhoneInput.addEventListener('focus', () => { if (!editPhoneInput.value) editPhoneInput.value = '+7 '; });
@@ -2762,10 +2674,13 @@
         const newName = editNameInput.value.trim();
         const newPhone = normalizePhone(editPhoneInput.value);
         const newPassword = editPasswordInput.value;
+
         if (!newName) { editProfileHint.textContent = '✗ Введите имя'; editProfileHint.className = 'field-hint error'; return; }
         if (!isValidPhone(newPhone)) { editProfileHint.textContent = '✗ Неверный номер'; editProfileHint.className = 'field-hint error'; return; }
         if (newPassword && newPassword.length < 6) { editProfileHint.textContent = '✗ мин. 6'; editProfileHint.className = 'field-hint error'; return; }
+
         editProfileSave.disabled = true;
+
         try {
           const updateData = { name: newName, phone: newPhone };
           if (newPassword) updateData.passwordHash = await sha256(newPassword);
@@ -2774,134 +2689,30 @@
           if (newPassword) state.currentUser.passwordHash = updateData.passwordHash;
           saveCurrentUser(state.currentUser);
           saveClient(newName, newPhone);
-          editProfileModal.classList.remove('visible');
+          editProfileModal.style.display = 'none';
           renderProfile();
           showToast('✓ Сохранено');
-        } catch (err) { editProfileHint.textContent = '✗ Ошибка'; editProfileHint.className = 'field-hint error'; }
-        finally { editProfileSave.disabled = false; }
+        } catch (err) {
+          editProfileHint.textContent = '✗ Ошибка';
+          editProfileHint.className = 'field-hint error';
+        } finally {
+          editProfileSave.disabled = false;
+        }
       });
     }
 
-    // ==================== ПАРОЛЬ АДМИНА ====================
-    if (savePasswordBtn) {
-      savePasswordBtn.addEventListener('click', async () => {
-        const p1 = newAdminPasswordInput.value.trim();
-        const p2 = newAdminPasswordConfirm.value.trim();
-        if (p1.length < 6) { passwordHint.textContent = '✗ мин. 6'; passwordHint.className = 'field-hint error'; return; }
-        if (!/^\d+$/.test(p1)) { passwordHint.textContent = '✗ цифры'; passwordHint.className = 'field-hint error'; return; }
-        if (p1 !== p2) { passwordHint.textContent = '✗ не совпадают'; passwordHint.className = 'field-hint error'; return; }
-        const hash = await sha256(p1);
-        localStorage.setItem('printsoft_admin_hash', hash);
-        newAdminPasswordInput.value = '';
-        newAdminPasswordConfirm.value = '';
-        passwordHint.textContent = '✓ сохранён';
-        passwordHint.className = 'field-hint valid';
-        showToast('✓');
-      });
-    }
-    if (resetPasswordBtn) {
-      resetPasswordBtn.addEventListener('click', async () => {
-        if (!confirm('?')) return;
-        const hash = await sha256(DEFAULT_PASSWORD);
-        localStorage.setItem('printsoft_admin_hash', hash);
-        passwordHint.textContent = '✓ заводской';
-        passwordHint.className = 'field-hint valid';
-        showToast('✓');
-      });
-    }
-
-    // ==================== ЛОГИН АДМИНА ====================
-    function openLoginScreen() {
-      state.previousPage = state.currentPage;
-      adminCodeInput.value = '';
-      loginError.textContent = '';
-      showPage('login');
-      setTimeout(() => adminCodeInput.focus(), 350);
-    }
-
-    async function tryLogin() {
-      const entered = adminCodeInput.value.trim();
-      const ok = await checkPassword(entered);
-      if (ok) {
-        sessionStorage.setItem(SESSION_KEY, 'true');
-        loginError.textContent = '✓';
-        loginError.style.color = 'var(--success)';
-        state.isAdminMode = true;
-        adminToggleBtn.classList.add('admin-active');
-        adminToggleBtn.innerHTML = `<i class="fas fa-home"></i>`;
-        logoText.innerHTML = `<i class="fas fa-clipboard-list" style="color:var(--pink);"></i> <span>PRINT</span><span style="color:var(--pink);">ADMIN</span>`;
-        if (scanBtn) scanBtn.style.display = 'flex';
-        renderAdminOrders();
-        renderAdminProducts();
-        renderAnalytics();
-        renderMaterials();
-        renderNotifToggles();
-        setTimeout(() => { showPage('admin'); showToast('✓'); }, 350);
-      } else {
-        loginError.style.color = 'var(--danger)';
-        loginError.textContent = '✗ Неверный код';
-        adminCodeInput.value = '';
-        setTimeout(() => adminCodeInput.focus(), 300);
-      }
-    }
-
-    function cancelLogin() {
-      adminCodeInput.value = ''; loginError.textContent = '';
-      showPage(state.previousPage === 'login' ? 'home' : state.previousPage);
-    }
-
-    function onAdminIconClick() {
-      if (state.isAdminMode) {
-        sessionStorage.removeItem(SESSION_KEY);
-        state.isAdminMode = false;
-        adminToggleBtn.classList.remove('admin-active');
-        if (scanBtn) scanBtn.style.display = 'none';
-        if (isScanning) stopScanning();
-        logoText.innerHTML = `<i class="fas fa-print"></i> <span>PRINT</span><span style="color:var(--accent-2);">SOFT</span>`;
-        updateAdminBadge();
-        showToast('OK');
-        showPage('home');
-        return;
-      }
-      if (sessionStorage.getItem(SESSION_KEY) === 'true') {
-        state.isAdminMode = true;
-        adminToggleBtn.classList.add('admin-active');
-        adminToggleBtn.innerHTML = `<i class="fas fa-home"></i>`;
-        logoText.innerHTML = `<i class="fas fa-clipboard-list" style="color:var(--pink);"></i> <span>PRINT</span><span style="color:var(--pink);">ADMIN</span>`;
-        if (scanBtn) scanBtn.style.display = 'flex';
-        renderAdminOrders();
-        renderAdminProducts();
-        renderAnalytics();
-        renderMaterials();
-        renderNotifToggles();
-        showPage('admin');
-        return;
-      }
-      openLoginScreen();
-    }
-
-    if (adminToggleBtn) adminToggleBtn.addEventListener('click', onAdminIconClick);
-    if (loginSubmitBtn) loginSubmitBtn.addEventListener('click', tryLogin);
-    if (loginCancelBtn) loginCancelBtn.addEventListener('click', cancelLogin);
-    if (adminCodeInput) {
-      adminCodeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryLogin(); if (e.key === 'Escape') cancelLogin(); });
-    }
-
-    // ==================== НАСТРОЙКИ ====================
-    function renderNotifToggles() {
-      const soundToggle = document.getElementById('notifSoundToggle');
-      const bannerToggle = document.getElementById('notifBannerToggle');
-      if (soundToggle) soundToggle.className = 'stock-toggle ' + (state.notifSound ? 'on' : 'off');
-      if (bannerToggle) bannerToggle.className = 'stock-toggle ' + (state.notifBanner ? 'on' : 'off');
-    }
-    const notifSoundEl = document.getElementById('notifSoundToggle');
-    if (notifSoundEl) notifSoundEl.addEventListener('click', () => { state.notifSound = !state.notifSound; saveNotifSettings(); renderNotifToggles(); });
-    const notifBannerEl = document.getElementById('notifBannerToggle');
-    if (notifBannerEl) notifBannerEl.addEventListener('click', () => { state.notifBanner = !state.notifBanner; saveNotifSettings(); renderNotifToggles(); });
-
+    // ==================== ТЕМА ====================
     function loadTheme() {
-      try { const t = localStorage.getItem(S.THEME); if (t === 'light') { document.body.classList.add('light-theme'); const icon = document.getElementById('themeIcon'); if (icon) icon.className = 'fas fa-sun'; } } catch (e) {}
+      try {
+        const t = localStorage.getItem(S.THEME);
+        if (t === 'light') {
+          document.body.classList.add('light-theme');
+          const icon = document.getElementById('themeIcon');
+          if (icon) icon.className = 'fas fa-sun';
+        }
+      } catch (e) {}
     }
+
     function toggleTheme() {
       const isLight = document.body.classList.toggle('light-theme');
       const icon = document.getElementById('themeIcon');
@@ -2911,80 +2722,11 @@
     }
     if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
 
-    const adminFiltersEl = document.getElementById('adminFilters');
-    if (adminFiltersEl) adminFiltersEl.addEventListener('click', (e) => {
-      const btn = e.target.closest('.filter-btn');
-      if (!btn) return;
-      document.querySelectorAll('#adminFilters .filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      state.adminFilter = btn.dataset.filter;
-      renderAdminOrders();
-    });
-
-    const clientTabEl = document.getElementById('clientTabSwitcher');
-    if (clientTabEl) clientTabEl.addEventListener('click', (e) => {
-      const btn = e.target.closest('.tab-switch-btn');
-      if (!btn) return;
-      document.querySelectorAll('#clientTabSwitcher .tab-switch-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      state.clientTab = btn.dataset.tab;
-      renderHistory();
-    });
-
-    const adminTabEl = document.getElementById('adminTabSwitcher');
-    if (adminTabEl) adminTabEl.addEventListener('click', (e) => {
-      const btn = e.target.closest('.tab-switch-btn');
-      if (!btn) return;
-      document.querySelectorAll('#adminTabSwitcher .tab-switch-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      state.adminTab = btn.dataset.tab;
-      state.adminFilter = 'all';
-      document.querySelectorAll('#adminFilters .filter-btn').forEach(b => b.classList.remove('active'));
-      const allFilter = document.querySelector('#adminFilters .filter-btn[data-filter="all"]');
-      if (allFilter) allFilter.classList.add('active');
-      renderAdminOrders();
-    });
-
-    const adminSectionEl = document.getElementById('adminSectionSwitcher');
-    if (adminSectionEl) adminSectionEl.addEventListener('click', (e) => {
-      const btn = e.target.closest('.tab-switch-btn');
-      if (!btn) return;
-      document.querySelectorAll('#adminSectionSwitcher .tab-switch-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      state.adminSection = btn.dataset.section;
-      adminOrdersSection.style.display = state.adminSection === 'orders' ? 'block' : 'none';
-      adminProductsSection.style.display = state.adminSection === 'products' ? 'block' : 'none';
-      adminAnalyticsSection.style.display = state.adminSection === 'analytics' ? 'block' : 'none';
-      adminMaterialsSection.style.display = state.adminSection === 'materials' ? 'block' : 'none';
-      adminSettingsSection.style.display = state.adminSection === 'settings' ? 'block' : 'none';
-      if (state.adminSection === 'products') renderAdminProducts();
-      if (state.adminSection === 'analytics') renderAnalytics();
-      if (state.adminSection === 'materials') renderMaterials();
-      if (state.adminSection === 'settings') renderNotifToggles();
-    });
-
-    // ==================== МАСКА ТЕЛЕФОНА В КОРЗИНЕ ====================
-    if (clientPhone) {
-      clientPhone.addEventListener('input', (e) => {
-        e.target.value = formatPhone(e.target.value);
-        const hint = document.getElementById('phoneHint');
-        const digits = extractDigits(e.target.value);
-        if (digits.length === 11) {
-          if (isValidPhone(e.target.value)) { e.target.classList.remove('error'); e.target.classList.add('valid'); if (hint) { hint.textContent = '✓'; hint.className = 'field-hint valid'; } }
-          else { e.target.classList.remove('valid'); e.target.classList.add('error'); if (hint) { hint.textContent = '✗'; hint.className = 'field-hint error'; } }
-        } else { e.target.classList.remove('error', 'valid'); if (hint) { hint.textContent = ''; hint.className = 'field-hint'; } }
-      });
-      clientPhone.addEventListener('focus', (e) => { if (!e.target.value) e.target.value = '+7 '; });
-    }
-
-    // ==================== FIREBASE ====================
+    // ==================== FIREBASE ПОДПИСКИ ====================
     async function initServicesFromFirestore() {
       try {
         const snapshot = await getDocs(collection(db, 'services'));
         if (snapshot.empty) {
-          const batch = writeBatch(db);
-          DEFAULT_SERVICES.forEach(s => batch.set(doc(db, 'services', String(s.id)), s));
-          await batch.commit();
           state.services = [...DEFAULT_SERVICES];
         } else {
           const arr = [];
@@ -3006,11 +2748,14 @@
         const arr = [];
         snapshot.forEach(d => arr.push({ ...d.data(), id: parseInt(d.id, 10) }));
         arr.sort((a, b) => a.id - b.id);
-        state.services = arr;
-        renderServices();
-        renderCategories();
-        if (state.isAdminMode) renderAdminProducts();
-        if (state.currentPage === 'detail' && state.currentDetailId) openDetail(state.currentDetailId);
+        if (arr.length > 0) {
+          state.services = arr;
+          renderServices();
+          renderCategories();
+          if (state.currentPage === 'detail' && state.currentDetailId) {
+            openDetail(state.currentDetailId);
+          }
+        }
       }, (err) => {});
     }
 
@@ -3023,34 +2768,49 @@
           const tb = b.createdAt && b.createdAt.toMillis ? b.createdAt.toMillis() : 0;
           return tb - ta;
         });
-        const prevCount = state.allOrders.length;
-        state.allOrders = all;
-        if (state.isAdminMode && all.length > prevCount && prevCount > 0) {
-          const newest = all[0];
-          if (state.notifBanner) showNewOrderNotification(newest);
-          if (state.notifSound) playSound('new');
-        }
+
         const myUid = getClientUid();
         const myPhone = state.currentUser ? state.currentUser.phone : null;
+
         state.myOrders = all.filter(o => {
           if (o.clientUid === myUid) return true;
           if (myPhone && o.userPhone === myPhone) return true;
           return false;
         });
+
         saveLocalHistory();
         if (state.currentPage === 'history') renderHistory();
         if (state.currentPage === 'profile') renderProfile();
-        if (state.isAdminMode) {
-          renderAdminOrders();
-          if (state.adminSection === 'analytics') renderAnalytics();
-        }
-        updateAdminBadge();
-        renderBottomNav();
-      }, (err) => { showConnectionStatus(false); });
+        if (profileOrdersModal && profileOrdersModal.style.display === 'flex') renderProfileOrders();
+      }, (err) => {
+        showConnectionStatus(false);
+      });
     }
 
+    function subscribeReviews() {
+      onSnapshot(collection(db, 'reviews'), (snapshot) => {
+        const all = [];
+        snapshot.forEach(d => all.push({ ...d.data(), id: d.id }));
+
+        // Фильтруем только свои отзывы
+        const myPhone = state.currentUser?.phone || null;
+        const myUid = getClientUid();
+
+        state.myReviews = all.filter(r => {
+          if (myPhone && r.userPhone === myPhone) return true;
+          return false;
+        });
+
+        if (state.currentPage === 'history') renderHistory();
+        if (state.currentPage === 'profile') renderProfile();
+      }, (err) => {});
+    }
+
+    // ==================== SERVICE WORKER ====================
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(() => {}); });
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
     }
 
     // ==================== ИНИЦИАЛИЗАЦИЯ ====================
@@ -3063,23 +2823,20 @@
     applyTranslations();
     loadTheme();
     loadLocalHistory();
-    loadNotifSettings();
-    loadMaterials();
     loadCurrentUser();
     renderCategories();
     renderServices();
     renderBottomNav();
     renderHistory();
-    renderNotifToggles();
-    renderMaterials();
     renderProfile();
 
     initServicesFromFirestore().then(() => {
       subscribeServices();
       subscribeOrders();
+      subscribeReviews();
     });
 
-    // Заставка
+    // ==================== ЗАСТАВКА ====================
     let progress = 0;
     const startTime = Date.now();
     const step = () => {
@@ -3095,15 +2852,22 @@
         if (splashPercent) splashPercent.textContent = '100%';
         setTimeout(() => {
           if (splash) splash.classList.add('hidden');
-          if (appEl) { appEl.style.opacity = '1'; appEl.classList.add('app-entering'); }
-          setTimeout(() => { if (splash && splash.parentNode) splash.parentNode.removeChild(splash); }, 800);
+          if (appEl) {
+            appEl.style.opacity = '1';
+            appEl.classList.add('app-entering');
+          }
+          setTimeout(() => {
+            if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
+          }, 800);
         }, 200);
       }
     };
     requestAnimationFrame(step);
 
+    // ==================== ONLINE/OFFLINE ====================
     window.addEventListener('online', () => showConnectionStatus(true));
     window.addEventListener('offline', () => showConnectionStatus(false));
+
   </script>
 </body>
 </html>
